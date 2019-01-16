@@ -259,7 +259,7 @@ public class GrjxAjWsServiceImpl implements GrjxAjWsService {
                 ajInfo = grjxAjWsMapper.getAj(dwbm, gh, kssj, jssj);
                 // 刑事申诉案件需要排除备案审查案件
                 for (int i = 0; i < ajInfo.size(); i++) {
-                    if (ajInfo.get(i).get("AJLB_BM").equals("090")) {
+                    if (ajInfo.get(i).get("AJLB_BM").equals("0901")) {
                         ajInfo.remove(i);
                     }
                 }
