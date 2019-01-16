@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:对应的mapper文件包名 -->
+<mapper namespace="com.swx.ibms.business.rbac.mapper.GlyMapper">
+    <!-- 人员编码结果集 -->
+	<resultMap id="GlyMapa" type="RYBM">
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="gh" column="gh" javaType="java.lang.String"></result>
+		<result property="dlbm" column="dlbm" javaType="java.lang.String"></result>
+		<result property="kl" column="kl" javaType="java.lang.String"></result>
+		<result property="mc" column="mc" javaType="java.lang.String"></result>
+		<result property="gzzh" column="gzzh" javaType="java.lang.String"></result>
+		<result property="yddhhm" column="yddhhm" javaType="java.lang.String"></result>
+		<result property="dzyj" column="dzyj" javaType="java.lang.String"></result>
+		<result property="ydwbm" column="ydwbm" javaType="java.lang.String"></result>
+		<result property="ydwmc" column="ydwmc" javaType="java.lang.String"></result>
+		<result property="sflsry" column="sflsry" javaType="java.lang.String"></result>
+		<result property="sfsc" column="sfsc" javaType="java.lang.String"></result>
+		<result property="sftz" column="sftz" javaType="java.lang.String"></result>
+		<result property="xb" column="xb" javaType="java.lang.String"></result>
+		<result property="caid" column="caid" javaType="java.lang.String"></result>
+		<result property="zrjcggh" column="zrjcggh" javaType="java.lang.String"></result>
+	</resultMap>
+	<!-- 插入管理员数据 -->
+	<insert id="insertGly" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[
+ 		 {call PKG_Gly.insert_gly( 
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_bmbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_jsbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_dlbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_kl,mode=IN,jdbcType=VARCHAR},
+  		    #{p_mc,mode=IN,jdbcType=VARCHAR},
+  		    #{p_xb,mode=IN,jdbcType=VARCHAR},
+  		    #{p_qxxx,mode=IN,jdbcType=CLOB},
+  		    #{message,mode=OUT,jdbcType=VARCHAR}
+  		)} 
+  		]]>
+	</insert>
+	<delete id="deleteGly" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[
+ 		 {call PKG_Gly.delete_gly( 
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_gh,mode=IN,jdbcType=VARCHAR}
+  		)} 
+  		]]>
+	</delete>
+	<update id="updateGly" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[
+ 		 {call PKG_Gly.update_gly( 
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_gh,mode=IN,jdbcType=VARCHAR},
+  		    #{p_dlbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_kl,mode=IN,jdbcType=VARCHAR},
+  		    #{p_mc,mode=IN,jdbcType=VARCHAR},
+  		    #{p_xb,mode=IN,jdbcType=VARCHAR},
+  		    #{p_qxxx,mode=IN,jdbcType=CLOB}
+  		)} 
+  		]]>
+	</update>
+	<select id="selectGly" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[
+ 		 {call PKG_Gly.pro_selectGlyPageList( 
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_sfsc,mode=IN,jdbcType=VARCHAR},
+  		    #{p_start,mode=IN,jdbcType=INTEGER},
+  		    #{p_end,mode=IN,jdbcType=INTEGER},
+  		    #{p_total,mode=OUT,jdbcType=INTEGER},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=GlyMapa}
+  		)} 
+  		]]>
+	</select>
+</mapper>

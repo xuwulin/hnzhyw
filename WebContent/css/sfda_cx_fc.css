@@ -1,0 +1,287 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.queryimj{
+    width: 100%;
+    height: 600px;
+    background-color: #efeef4;
+    min-width: 1000px;
+  
+}
+.title_logo{
+    width: 1016px;
+    height: 46px;
+    margin:auto;
+}
+
+
+.imj_content{
+    width: 930px;
+    height: 420px;
+    margin: 20px auto;
+}
+.all_input{
+    width: 100%;
+    height: 50px;
+    border: 1px solid #e1871d;
+    border-radius: 5px;
+    background-color: white;
+    border-right:2px ;
+}
+.all_input button{
+    width: 155.5px;
+    height: 100%;
+    background-color: #e1871d;
+    color: white;
+    float: left;
+    border: 1px solid #e1871d;
+    font-size: 18px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+
+}
+.content_bt{
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px dashed #9d9d9d;
+    margin-top: 30px;
+}
+.content_dd{
+    width: 100%;
+    height:250px;
+    margin-top: 20px;
+}
+.content_dd ul{
+    width: 100%;
+    height: 100%;
+
+}
+.content_dd ul li {
+    margin-left: 10px;
+    list-style: none;
+    float: left;
+    width: 80px;
+    height: 80px;
+    box-sizing:border-box
+
+}
+.content_dd ul li img{
+    margin-top: 7px;
+    margin-left: 18px;
+    width: 44px;
+    height: 44px;
+}
+.content_dd ul li p{
+    text-align: center;
+}
+.text_ver{
+    background-color: #D8D8DA;
+    border: 1px solid #C1C2C5;
+}
+
+.selectFile {
+	background-color: #D0E4FC;
+	border:  1px solid #7DA2CE;
+	cursor: pointer;
+}
+
+.file_hover {
+	background-color: #ECF3FD;
+	border: 1px solid #B8D6FB;
+	cursor: pointer;
+}
+.textbox{
+	margin-right:50px;
+}
+
+.imj_content>div>span{
+/* 	margin-right:50px; */
+}
+.xiadivbt{
+	width:95%;
+	height:50px;
+}
+.xiadivbt input{
+	width:60px;
+	height:32px;
+	border:1px solid  #2B9DD7;
+	background-color:#2B9DD7;
+	color:#fff;
+	border-radius: 3px;
+	float:right;
+	cursor: pointer;
+	
+}
+.xiadivbt1{
+	margin-top:40px;
+	width:95%;
+	height:50px;
+
+}
+   
+   
+   
+   .calendar-header {
+	display: none;
+}
+.ju_btn_white {
+	display: inline-block;
+	width: 80px;
+	height: 32px;
+	background: #fff;
+	border-radius: 4px;
+	text-align: center;
+	line-height: 32px;
+	color: #000;
+	font-size: 13px;
+	border: 1px solid #ccc;
+	cursor: pointer;
+}
+
+.ju_btn_white:hover {
+	background: #ccc;
+}
+
+.ju_btn {
+	display: inline-block;
+	width: 80px;
+	height: 32px;
+	background: #176ea5;
+	border-radius: 4px;
+	text-align: center;
+	line-height: 32px;
+	color: white;
+	font-size: 13px;
+	border: 1px solid #ccc;
+	cursor: pointer;
+}
+
+.ju_btn:hover {
+	background: #0587d9;
+}
+
+.entertain {
+	margin: 0 20px;
+}
+
+.entertain_tilte {
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	font-size: 12px;
+	color: #666666;
+	float: left
+}
+
+.entertain_center {
+	width: 100%;
+	height: 72px;
+	border-radius: 4px;
+	background: white;
+	float: left;
+	border: 1px solid #efefef;
+	box-shadow: 0 0 0.5px 0 #ccc
+}
+
+.textan1 {
+	background: #D8D8DA;
+	border: 1px solid #C1C2C5;
+}
+
+.combo {
+	border-color: #c1c1c1;
+	background-color: #fff;
+	font-size: 16px;
+}
+
+.combobox-item, .combobox-group {
+	font-size: 18px;
+}
+
+.textbox .textbox-text {
+	font-size: 16px;
+}
+
+.combo-arrow {
+	background-color: #fff;
+}
+
+.combo-arrow:hover {
+	background-color: #fff;
+}
+.file_hover {
+	background-color: #ECF3FD;
+	border: 1px solid #B8D6FB;
+	cursor: pointer;
+}
+.li_title{
+     width:300px;
+     height:170px;
+     background:rgba(255,255,255,0.8);
+     border:1px solid #c1c1c1;
+     border-radius:3px;
+     position: absolute;
+     display: none;
+     font-size: 14px;
+     top: 44px;
+     left: 45px;
+     z-index: 100;
+     padding: 10px 10px;
+     overflow: auto;
+}
+.text_1{
+     position: relative;
+   
+}
+.bounced_all_1{
+	width: 500px;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    background-color: #fff;
+    margin: 4% auto;
+}
+.bot_btn_1{
+	height: 32px;
+    width: 70px;
+    color: white;
+    background: #2B9DD7;
+    border: 1px solid #2B9DD7;
+    border-radius: 5px;
+    margin-left:291px;
+    cursor: pointer;
+}
+.bot_btn_2{
+	margin-left:10px;
+    height: 32px;
+    width: 70px;
+    color: #999;
+    background: #fff;
+    border: 1px solid #c1c1c1;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.bot_btn{
+	margin-top: 80px;
+	margin-bottom: 40px;
+}
+.cx_fc_bt{
+	height: 34px;
+    width: 130px;
+    float: right;
+    margin: 10px 15px 0 0;
+    border: 1px solid #92918f;
+    background: #fff;
+    border-radius: 5px;
+    outline: none;
+}
+.cx_fc_bt:hover{
+	 background: #c9c9c9;
+}
+
+
+
+
+
+

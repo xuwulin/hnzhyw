@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.performance.mapper.ZbpzbtMapper">
+<resultMap id="btMap" type="Zbpzbt">
+    <result property="id" column="id" javaType="java.lang.String"></result>
+    <result property="cjsj" column="cjsj" javaType="java.sql.Date"></result>
+    <result property="cjr" column="cjr" javaType="java.lang.String"></result>
+    <result property="btsj" column="btsj" javaType="java.lang.String"></result>
+</resultMap>
+
+<select id="getBt" resultType="Zbpzbt">
+  select * from XT_GRJX_ZBPZBT a where a.id=#{id}
+</select>
+
+<insert id="insertBt" parameterType="java.util.Map" statementType="CALLABLE">
+    <![CDATA[{call PKG_ZBPZ.insert_bt(
+        #{p_cjr,mode=IN,jdbcType=VARCHAR},
+        #{p_tabletop,mode=IN,jdbcType=VARCHAR},
+        #{p_khsjdata,mode=IN,jdbcType=VARCHAR},
+        #{p_id,mode=OUT,jdbcType=VARCHAR}
+    )}
+    ]]>
+</insert>
+
+
+
+
+</mapper>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.appraisal.mapper.YwgzzbMapper">
+
+	<resultMap id="Ywgzkhmap" type="Ywgzzbpz">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="dwjb" column="dwjb" javaType="java.lang.String"></result>
+		<result property="khlx" column="khlx" javaType="java.lang.String"></result>
+		<result property="khlxmc" column="khlxmc" javaType="java.lang.String"></result>
+		<result property="pznr" column="pznr" javaType="java.lang.String"></result>
+		<result property="zbnr" column="zbnr" javaType="java.lang.String"></result>
+		<result property="pjf" column="pjf" javaType="java.lang.String"></result>
+		<result property="czr" column="czr" javaType="java.lang.String"></result>
+		<result property="czsj" column="czsj" javaType="java.util.Date"></result>
+		<result property="pzbtid" column="pzbtid" javaType="java.lang.String"></result>
+		<result property="version" column="version" javaType="java.lang.String"></result>
+		<result property="ssrq" column="ssrq" javaType="java.lang.String"></result>
+		<result property="status" column="status" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<resultMap id="Ywgzkhbtmap" type="Ywgzzbpzbt">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="czsj" column="czsj" javaType="java.sql.Date"></result>
+		<result property="czr" column="czr" javaType="java.lang.String"></result>
+		<result property="btsj" column="btsj" javaType="java.lang.String"></result>
+		<result property="pzbtsj" column="pzbtsj" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<select id="insert" parameterType="java.util.Map" statementType="CALLABLE">   
+		<![CDATA[  
+         	{call PKG_YWGZ_PZ.proc_i_ywgzpz(
+	           		#{p_dwjb,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_khlx,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_pznr,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_zbnr,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_pjf,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_czr,mode=IN,jdbcType=VARCHAR},	
+	           		sysdate,
+	           		#{p_pzbtid,mode=IN,jdbcType=VARCHAR},
+	           		#{p_ssrq,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_status,mode=IN,jdbcType=VARCHAR},
+	           		#{p_sysid,mode=OUT,jdbcType=VARCHAR},
+	           		#{p_msg,mode=OUT,jdbcType=VARCHAR} 
+         		)}  
+    	]]> 
+	</select>
+	
+	<select id="selectbyid" parameterType="java.util.Map" statementType="CALLABLE">   
+		<![CDATA[  
+         	{call PKG_YWGZ_PZ.proc_sid_ywgzpz(
+	           		#{p_id,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=Ywgzkhmap}
+         		)}  
+    	]]> 
+	</select>
+	
+	
+	<select id="deletebyid" parameterType="java.util.Map" statementType="CALLABLE">   
+		<![CDATA[  
+         	{call PKG_YWGZ_PZ.proc_d_ywgzpz(
+	           		#{p_id,mode=IN,jdbcType=VARCHAR},
+	           		#{p_msg,mode=OUT,jdbcType=VARCHAR}
+         		)}  
+    	]]> 
+	</select>
+	
+	<select id="update" parameterType="java.util.Map" statementType="CALLABLE">   
+		<![CDATA[  
+         	{call PKG_YWGZ_PZ.proc_u_ywgzpz(
+	           		#{p_id,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_dwjb,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_khlx,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_pznr,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_zbnr,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_pjf,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_czr,mode=IN,jdbcType=VARCHAR},	
+	           		sysdate,
+	           		#{p_pzbtid,mode=IN,jdbcType=VARCHAR},
+	           		#{p_ssrq,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_status,mode=IN,jdbcType=VARCHAR},		
+	           		#{p_msg,mode=OUT,jdbcType=VARCHAR} 
+         		)}  
+    	]]> 
+	</select>
+	
+	<select id="search" parameterType="java.util.Map" statementType="CALLABLE">   
+		<![CDATA[  
+         	{call PKG_YWGZ_PZ.proc_s_ywgzpz(
+	           		#{p_pages,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_pagee,mode=IN,jdbcType=VARCHAR},
+	           		#{p_dwjb,mode=IN,jdbcType=VARCHAR},
+	           		#{p_total,mode=OUT,jdbcType=VARCHAR},
+	           		#{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=Ywgzkhmap}
+         	)}  
+    	]]> 
+	</select>
+	
+	<select id="selectone" parameterType="java.util.Map" statementType="CALLABLE">   
+		<![CDATA[  
+         	{call PKG_YWGZ_PZ.proc_slx_ywgzpz(
+	           		#{p_dwjb,mode=IN,jdbcType=VARCHAR},
+	           		#{p_khlx,mode=IN,jdbcType=VARCHAR},
+	           		#{p_ssrq,mode=IN,jdbcType=VARCHAR},
+	           		#{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=Ywgzkhmap}
+         	)}  
+    	]]> 
+	</select>
+	
+	<!-- 表头部分  -->
+	
+	<select id="insertbt" parameterType="java.util.Map" statementType="CALLABLE">   
+		<![CDATA[  
+         	{call PKG_YWGZ_PZ.proc_i_ywgzpzbt(
+	           		#{p_cjr,mode=IN,jdbcType=VARCHAR},	
+	           		sysdate,
+	           		#{p_btsj,mode=IN,jdbcType=VARCHAR},
+	           		#{p_pzbtsj,mode=IN,jdbcType=VARCHAR},
+	           		#{p_id,mode=OUT,jdbcType=VARCHAR}
+         	)}  
+    	]]> 
+	</select>
+	
+	<select id="selectbyidbt" parameterType="java.util.Map" statementType="CALLABLE">   
+		<![CDATA[  
+         	{call PKG_YWGZ_PZ.proc_s_ywgzpzbt(
+	           		#{p_id,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=Ywgzkhbtmap}
+         	)}  
+    	]]> 
+	</select>
+	
+	<select id="updatebt" parameterType="java.util.Map" statementType="CALLABLE">   
+		<![CDATA[  
+         	{call PKG_YWGZ_PZ.proc_u_ywgzpzbt(
+	           		#{p_id,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_btsj,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_pzbtsj,mode=IN,jdbcType=VARCHAR},	
+	           		#{p_msg,mode=OUT,jdbcType=VARCHAR}
+         	)}  
+    	]]> 
+	</select>
+	
+	<select id="deletebyidbt" parameterType="java.util.Map" statementType="CALLABLE">   
+		<![CDATA[  
+         	{call PKG_YWGZ_PZ.proc_d_ywgzpzbt(
+	           		#{p_id,mode=IN,jdbcType=VARCHAR},
+	           		#{p_msg,mode=OUT,jdbcType=VARCHAR}
+         		)}
+    	]]> 
+	</select>
+	
+	<!-- 根据所属年份、状态、考核类型、单位级别查询业务考核指标配置信息  NVL(COUNT(*),0)、like CONCAT('%',#{dwjb},'%') -->
+	<select id="getYwkhZbpzByParams" parameterType="java.util.Map" resultType="Ywgzzbpz">   
+		SELECT * FROM XT_YWGZ_ZBPZ t 
+			WHERE t.khlx = #{khlx} AND t.SSRQ = #{ssrq} AND t.DWJB like CONCAT(CONCAT('%',#{dwjb}),'%') AND t.STATUS = '0' 
+			ORDER BY t.CZSJ desc
+	</select>
+	
+	
+	
+	
+</mapper>

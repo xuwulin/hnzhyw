@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.common.mapper.SyCountMapper">
+<!-- author:李佳 -->
+   <resultMap id="CountSySfdaMap" type="CountSySfda">
+        <result property="lb" column="lb"  javaType="java.lang.String"></result>
+        <result property="sl" column="sl"  javaType="java.lang.Integer"></result>
+   </resultMap>
+   <resultMap id="getDagzMap" type="DAGZGD">
+        <result property="ssr" column="ssr"  javaType="java.lang.String"></result>
+         <result property="ssrdwbm" column="ssrdwbm"  javaType="java.lang.String"></result>
+        <result property="kssj" column="kssj"  javaType="java.lang.String"></result>
+         <result property="jssj" column="jssj"  javaType="java.lang.String"></result>
+        <result property="sfgs" column="sfgs"  javaType="java.lang.String"></result>
+   </resultMap>
+   <resultMap id="gsjlXxMap" type="Gsjl">
+        <result property="id" column="id"  javaType="java.lang.String"></result>
+        <result property="dagzid" column="dagzid"  javaType="java.lang.String"></result>
+        <result property="dwbm" column="dwbm"  javaType="java.lang.String"></result>
+        <result property="czrgh" column="czrgh"  javaType="java.lang.String"></result>
+        <result property="czsj" column="czsj"  javaType="java.sql.Date"></result>
+        <result property="czlx" column="czlx"  javaType="java.lang.String"></result>
+        <result property="gsJzsj" column="jssj"  javaType="java.sql.Date"></result>
+        <result property="gsxx" column="gsxx"  javaType="java.lang.String"></result>
+   </resultMap>
+   
+   <!--根据归档id统计平均案件办理时长-->
+   <select id="pjajBlsc" parameterType="java.util.Map" statementType="CALLABLE" >      
+	      {call pkg_dbyw.select_pjajblsc(
+	      #{gdid,mode=IN,jdbcType=VARCHAR},	
+	      #{count,mode=OUT,jdbcType=VARCHAR}
+          )}   
+	</select>
+	<!--根据归档id统计全院案件平均办理时长   -->
+	<select id="qypjajBlsc" parameterType="java.util.Map" statementType="CALLABLE" >  
+	{call pkg_dbyw.select_qypjajblsc(
+	      #{count,mode=OUT,jdbcType=DOUBLE},
+	      #{gdid,mode=IN,jdbcType=VARCHAR}
+          )}   
+	</select>
+	<!-- 根据归档id统计档案的个人绩效得分     -->
+	<select id="countGrjx" parameterType="java.util.Map" statementType="CALLABLE" >   
+	{call pkg_dbyw.select_countgrjx(
+	      #{count,mode=OUT,jdbcType=DOUBLE},	
+	      #{gdid,mode=IN,jdbcType=VARCHAR}
+          )}   
+	</select>
+	<!--  根据归档id、档案类型查询档案中不同类别(司法技能、司法责任...)的数量-->
+	<select id="countSfda" parameterType="java.util.Map" statementType="CALLABLE" >   
+		{call pkg_dbyw.select_countsfda(
+		#{cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=CountSySfdaMap},
+		#{gdid,mode=IN,jdbcType=VARCHAR},
+		#{dalx,mode=IN,jdbcType=VARCHAR}
+		)}
+	</select>
+	<!-- 根据当前登录人员工号、所属人单位编码查询最新的档案是否公示 -->
+	<select id="sfGs" parameterType="java.util.Map" statementType="CALLABLE"> 
+		{call pkg_dbyw.select_sfgs(
+		#{sfgs,mode=OUT,jdbcType=VARCHAR},
+		#{gh,mode=IN,jdbcType=VARCHAR},
+		#{ssrdwbm,mode=IN,jdbcType=VARCHAR}
+		)}
+	</select> 
+	<!-- 根据当前登录人员工号、所属人单位编码查询该登录人员是否有司法档案   --> 
+    <select id="sfySfda" parameterType="java.util.Map" statementType="CALLABLE" >   
+	{call pkg_dbyw.select_sfysfda(
+	      #{count,mode=OUT,jdbcType=DOUBLE},
+	      #{gh,mode=IN,jdbcType=VARCHAR},	
+	      #{ssrdwbm,mode=IN,jdbcType=VARCHAR}
+          )}   
+	</select>
+	<!-- 根据归档id 计算个人绩效得分   -->
+	<select id="grjxDf" parameterType="string" resultType="double">   
+	    select sum(ywzf) from YX_SFDA_GRJX  where daid=#{gdid}
+	</select>
+	<!--根据当前登录人员工号、所属人单位编码、年度、档案类型查询不同类别的数量     -->
+	<select id="getGdid" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		{call pkg_dbyw.select_getgdid(
+		#{gh,mode=IN,jdbcType=VARCHAR},
+		#{dwbm,mode=IN,jdbcType=VARCHAR},
+		#{sffc,mode=IN,jdbcType=VARCHAR},
+		#{gdid,mode=OUT,jdbcType=VARCHAR}
+		)}
+	</select>
+    <!--根据工号、所属人单位编码、档案开始时间、档案结束时间 查询归档id  -->
+	<select id="getGdidBySj" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		{call pkg_dbyw.select_getgdidbysj(
+		#{gh,mode=IN,jdbcType=VARCHAR},
+		#{dwbm,mode=IN,jdbcType=VARCHAR},
+		#{kssj,mode=IN,jdbcType=VARCHAR},
+		#{jssj,mode=IN,jdbcType=VARCHAR},
+		#{gdid,mode=OUT,jdbcType=VARCHAR}
+		)}
+	</select>
+	<!--根据工号、所属人单位编码、档案开始时间、档案结束时间 查询归档id -->
+	<select id="getDagzByGdid" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		{call pkg_dbyw.select_getdagzbygdid(
+		#{cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=getDagzMap},
+		#{gdid,mode=IN,jdbcType=VARCHAR}
+		)}
+	</select>
+		<!--根据归档id和操作类型查询出公示信息 -->
+	<select id="getGsJzSj" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		{call pkg_zhyw_sfda.select_gsjlxx(
+		#{gdid,mode=IN,jdbcType=VARCHAR},
+		#{czlx,mode=IN,jdbcType=VARCHAR},
+		#{cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=gsjlXxMap}
+		)}
+	</select>
+	
+	<!-- 根据业务类型查询考核类型 -->
+	<select id="getKhlx" resultType="java.lang.String">
+		select khlxpz.khlx 
+	    from XT_YWGZ_KHLXPZ khlxpz
+	    where khlxpz.ywlx in
+	    <if test='ywlxList != null and ywlxList.size() > 0'>
+	        <foreach item='item' index='index' collection='ywlxList' open='('
+					separator=',' close=')'>
+				#{item}
+			</foreach>
+		</if>
+	</select>
+	
+	<!-- 查询业务考核的时间段:开始时间，结束时间 -->
+	<select id="getYwkhData" resultType="java.util.HashMap">
+		select * 
+	    from(
+	      select ywlxkh.id,
+	           	 ywlxkh.khid,
+	           	 ywlxkhfz.id khfzid,
+	           	 ywlxkh.year,
+	           	 ywlxkh.kssj,
+	           	 ywlxkh.jssj,
+	           	 ywlxkhfz.ywzf,
+	           	 ywlxkhfz.zpjdf,
+	           	 dbms_lob.substr(ywlxkhfz.zbkpdf,4000,1) zbkpdf,
+	           	 pz.khmc
+	      from YX_YWGZ_YWLXKH ywlxkh
+	      inner join YX_YWGZ_YWLXKHFZ ywlxkhfz on ywlxkhfz.ywlxkhid = ywlxkh.id
+	      inner join XT_YWGZ_KHLXPZ pz on pz.khlx = ywlxkhfz.khlx
+	      where ywlxkh.khid = (
+			      			   select a.id
+			                   from(
+			                        select kh.id 
+			                        from YX_YWGZ_KH kh 
+			                        where kh.khdw = #{dwbm}
+			                        order by kh.year desc
+			                       ) a
+			                   where rownum = 1
+	                 		  )
+	             and ywlxkh.sfsc = 'N'
+	             and ywlxkhfz.sfsc = 'N'
+	             and ywlxkhfz.spsftg = '1'
+	             <if test='khlxList != null and khlxList.size() > 0'>
+	             and ywlxkhfz.khlx in
+	             	<foreach item='item' index='index' collection='khlxList' open='('
+							separator=',' close=')'>
+						#{item}
+					</foreach>
+	             </if>
+	      order by ywlxkh.year desc,ywlxkh.khid
+	      )
+	    <!-- where rownum = 1 -->
+	</select>
+
+	<select id="getSfgs" resultType="java.lang.String">
+		select sfgs
+		from yx_sfda_dagz
+		where id = #{daId}
+	</select>
+</mapper>

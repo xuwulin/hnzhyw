@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:对应的mapper文件包名 -->
+<mapper namespace="com.swx.ibms.business.appraisal.mapper.YwgzkhSpMapper">
+
+
+	<!-- 业务工作考核 -->
+	<resultMap id="ndYwGzKhMap" type="Ywgzkh">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="year" column="year" javaType="java.lang.Integer"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="bmbm" column="bmbm" javaType="java.lang.String"></result>
+		<result property="zt" column="zt" javaType="java.lang.String"></result>
+		<result property="cjgh" column="cjgh" javaType="java.lang.String"></result>
+		<result property="cjsj" column="cjsj" javaType="java.sql.Date"></result>
+		<result property="bz" column="bz" javaType="java.lang.String"></result>
+		<result property="sjqx" column="sjqx" javaType="java.lang.String"></result>
+		<result property="khdw" column="khdw" javaType="java.lang.String"></result>
+		<result property="khdwsj" column="khdwsj" javaType="java.lang.String"></result>
+		<result property="khdwjb" column="khdwjb" javaType="java.lang.String"></result>
+		<result property="yyzt" column="yyzt" javaType="java.lang.String"></result>
+		<result property="lclx" column="lclx" javaType="java.lang.String"></result>
+		<result property="jdlx" column="jdlx" javaType="java.lang.String"></result>
+		<result property="lcjd" column="lcjd" javaType="java.lang.String"></result>
+		<result property="yysm" column="yysm" javaType="java.lang.String"></result>
+		<result property="createDate" column="start_Date" javaType="java.lang.String"></result>
+		<result property="endDate" column="end_date" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<!-- 业务工作类型考核-->
+	<resultMap id="ywGzLxKhMap" type="com.swx.ibms.business.appraisal.bean.Ywgzlxkh">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="khId" column="khId" javaType="java.lang.String"></result>
+		<result property="year" column="year" javaType="java.lang.String"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="fprBmbm" column="fprBmbm" javaType="java.lang.String"></result>
+		<result property="fprGh" column="fprGh" javaType="java.lang.String"></result>
+		<result property="fprMc" column="fprMc" javaType="java.lang.String"></result>
+		<result property="khrBmbm" column="khrBmbm" javaType="java.lang.String"></result>
+		<result property="khrGh" column="khrGh" javaType="java.lang.String"></result>
+		<result property="khrMc" column="khrMc" javaType="java.lang.String"></result>
+		<result property="khlx" column="khlx" javaType="java.lang.String"></result>
+		<result property="zt" column="zt" javaType="java.lang.String"></result>
+		<result property="bz" column="bz" javaType="java.lang.String"></result>
+		<result property="dwjb" column="dwjb" javaType="java.lang.String"></result>
+		<result property="cjsj" column="cjsj" javaType="java.sql.Date"></result>
+		<result property="xgsj" column="xgsj" javaType="java.sql.Date"></result>
+	</resultMap>
+
+	<resultMap id="PersonTreeMap" type="com.swx.ibms.business.common.bean.PersonTree">
+		<result property="id" column="TID" javaType="java.lang.String"></result>
+		<result property="pId" column="TPID" javaType="java.lang.String"></result>
+		<result property="type" column="nodeType" javaType="java.lang.String"></result>
+		<result property="name" column="TEXT" javaType="java.lang.String"></result>
+		<result property="open" column="opened" javaType="java.lang.Boolean"></result>
+	</resultMap>
+	
+	<resultMap id="sjdwMap" type="com.swx.ibms.business.rbac.bean.DWBM">
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="dwmc" column="dwmc" javaType="java.lang.String"></result>
+		<result property="bmbm" column="bmbm" javaType="java.lang.String"></result>
+		<result property="dwjb" column="dwjb" javaType="java.lang.String"></result>
+		<result property="bmmc" column="bmmc" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	
+	<!-- 省院案件管理处创建各市院、基层院的业务工作年度考核 -->
+	<insert id="insertNdYwgzkh" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWGZ_SP.pro_insertNdYwgzkh(
+          		#{p_year,mode=IN,jdbcType=INTEGER},
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},
+          		#{p_sjqx,mode=IN,jdbcType=VARCHAR},
+          		#{p_createDate,mode=IN,jdbcType=DATE},
+          		#{p_endDate,mode=IN,jdbcType=DATE},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</insert>
+	
+	<!-- 添加指定考核人信息 [修改考核类型表考核人信息] -->
+	<update id="addYwgzkhSpr" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWGZ_SP.PRO_UPDATEKHR(
+          		#{p_ywlxkhid,mode=IN,jdbcType=VARCHAR},
+          		#{p_khlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_fprbmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_fprgh,mode=IN,jdbcType=VARCHAR},
+          		#{p_fprmc,mode=IN,jdbcType=VARCHAR},
+          		#{p_khrbmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_khrgh,mode=IN,jdbcType=VARCHAR},
+          		#{p_khrmc,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+	
+	
+	<!-- 发起审批、修改审批状态 -->
+	<update id="updateYwgzkhSpZt" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWGZ_SP.pro_updateZt(
+          		#{p_ywlxkhid,mode=IN,jdbcType=VARCHAR},
+          		#{p_zt,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+	
+	<!-- 审批开始 -->
+	<update id="updateSplc" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWGZ_SP.pro_updateSplc(
+          		#{p_ywlxkhid,mode=IN,jdbcType=VARCHAR},
+          		#{p_ywkhid,mode=IN,jdbcType=VARCHAR},
+          		#{p_spslid,mode=IN,jdbcType=VARCHAR},
+          		#{p_splcid,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},
+          		#{p_fqrgh,mode=IN,jdbcType=VARCHAR},
+          		#{p_mc,mode=IN,jdbcType=VARCHAR},
+          		#{p_spyj,mode=IN,jdbcType=VARCHAR},
+          		#{p_spjl,mode=IN,jdbcType=VARCHAR},
+          		#{p_zt,mode=OUT,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+	
+	<!--获取某个单位的部门下属人员列表-->
+	<select id="selectBmkhry" parameterType="java.util.Map" statementType="CALLABLE">
+		{call pkg_ywgz_sp.pro_select_bmkhry(
+		#{p_khlx,mode=IN,jdbcType=VARCHAR},
+		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+		#{p_gh,mode=IN,jdbcType=VARCHAR},
+		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=PersonTreeMap}
+		)}
+	</select>
+	
+	<!-- 修改业务考核表的异议说明、状态  -->
+	<update id="updateYwgzkhYYSpZt" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWGZ_SP.pro_update_yyzt(
+          		#{p_khid,mode=IN,jdbcType=VARCHAR},
+          		#{p_yyzt,mode=IN,jdbcType=VARCHAR},
+          		#{p_yysm,mode=IN,jdbcType=VARCHAR},
+          		#{p_lclx,mode=IN,jdbcType=VARCHAR},
+          		#{p_jdlx,mode=IN,jdbcType=VARCHAR}, 
+          		#{p_lcjd,mode=IN,jdbcType=VARCHAR},     
+          		#{p_lcid,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+	
+	
+	<!-- 查询本部门所有人员树的方法 -->
+	<select id="selectAllBmry" parameterType="java.util.Map" statementType="CALLABLE">
+		{call pkg_ywgz_sp.pro_select_bmry(
+		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+		#{p_gh,mode=IN,jdbcType=VARCHAR},
+		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=PersonTreeMap}
+		)}
+	</select>
+
+	<resultMap id="hashMap" type="java.util.Map"/>
+	<!--根据id查询YX_YWGZ_KH记录-->
+	<select id="getKhById" parameterType="string" resultType="java.util.HashMap">
+		 SELECT * FROM YX_YWGZ_KH WHERE id=#{id}
+	</select>
+	
+	<!-- 修改业务考核活动表的异议审批信息 -->
+	<update id="updateYwgzYyLc" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWGZ_SP.pro_update_yy_lc(
+          		#{p_ywkhid,mode=IN,jdbcType=VARCHAR},
+          		#{p_spslid,mode=IN,jdbcType=VARCHAR},
+          		#{p_splcid,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR}, 
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},     
+          		#{p_mc,mode=IN,jdbcType=VARCHAR},
+          		#{p_spyj,mode=IN,jdbcType=VARCHAR},
+          		#{p_spjl,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+	
+	<!--根据单位编码查询此单位编码上级单位编码以及安管部门编码-->
+	<select id="getSjDwbmAndAgByDwbm" parameterType="java.util.Map" statementType="CALLABLE">
+		 {call pkg_ywgz_sp.pro_getSjDwbmAndAgByDwbm(
+			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+			#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sjdwMap}
+		)}
+	</select>
+	
+	<!-- 修改业务考核活动表的异议发起审批信息 -->
+	<update id="updateYwgzYyFqSpLc" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWGZ_SP.pro_updateYySpsl(
+          		#{p_ywkhid,mode=IN,jdbcType=VARCHAR},
+          		#{p_spslid,mode=IN,jdbcType=VARCHAR},
+          		#{p_splcid,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR}, 
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},     
+          		#{p_mc,mode=IN,jdbcType=VARCHAR},
+          		#{p_spyj,mode=IN,jdbcType=VARCHAR},
+          		#{p_spjl,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+	
+	<!-- 根据条件查询业务考核信息 -->
+	<select id ="getYwkhByParams" resultType = "Ywgzkh" parameterType="java.util.Map">
+		select * FROM YX_YWGZ_KH t WHERE t.start_date = to_date(#{kssj},'YYYY-MM-dd') 
+		                             AND t.end_date = to_date(#{jssj},'YYYY-MM-dd') 
+		                             <if test='khdwList != null and khdwList.size() > 0'>
+								   		AND t.khdw in
+									   <foreach item='item' index='index' collection='khdwList' open='(' separator=',' close=')'>
+											#{item}
+									   </foreach>
+									 </if>
+									 <if test="year!=null and year!='' ">
+									 	AND t.year = #{year} 
+									 </if>
+	</select>
+	
+	<!-- 查询业务考核类型信息 -->
+	<select id ="getYwkhlxByParams" resultType = "Ywgzlxkh" parameterType="java.util.Map">
+		select * FROM YX_YWGZ_YWLXKH t WHERE t.kssj = to_date(#{kssj},'YYYY-MM-dd') 
+		                             	 AND t.jssj = to_date(#{jssj},'YYYY-MM-dd')
+										 <if test='khidList != null and khidList.size() > 0'>
+									   		AND t.khid in
+										   <foreach item='item' index='index' collection='khidList' open='(' separator=',' close=')'>
+												#{item}
+										   </foreach>
+										 </if> 
+										 <if test='khlxList != null and khlxList.size() > 0'>
+									   		AND t.khlx in
+										   <foreach item='item' index='index' collection='khlxList' open='(' separator=',' close=')'>
+												#{item}
+										   </foreach>
+										 </if> 
+	</select> 
+	
+	<delete id="delYwkh" parameterType="java.util.Map">
+		DELETE FROM YX_YWGZ_KH t WHERE t.start_date = to_date(#{kssj},'yyyy-MM-dd') and t.end_date = to_date(#{jssj},'yyyy-MM-dd')
+		<if test='khidList != null and khidList.size() > 0'>
+			AND t.id in
+			<foreach item='item' index='index' collection='khidList' open='(' separator=',' close=')'>
+				#{item}
+			</foreach>
+		</if>
+	</delete>
+	
+	<delete id="delYwkhlx" parameterType="java.lang.String">
+		DELETE FROM yx_ywgz_ywlxkh t WHERE t.id = #{khlxid} 
+	</delete>
+	
+	<delete id="delYwkhlxfz" parameterType="java.lang.String">
+		DELETE FROM yx_ywgz_ywlxkhfz t WHERE t.ywlxkhid = #{ywlxid}
+	</delete>
+	
+	<select id ="getYwkhByDate" resultType = "Ywgzkh" parameterType="java.util.Map">
+		select * FROM YX_YWGZ_KH t WHERE t.start_date = to_date(#{kssj},'YYYY-MM-dd') 
+		                             AND t.end_date = to_date(#{jssj},'YYYY-MM-dd') 
+	</select> 
+	
+</mapper>

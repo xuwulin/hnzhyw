@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>在编人数界面</title>
+	<link rel="stylesheet" type="text/css" href="../../../css/xtpz_rygl.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/xtpz.css" />
+	<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/bootstrap/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/icon.css">
+	<!--<link type="text/css" rel="stylesheet" href="../../../js/plugin/easyui/themes/default/easyui.css" />-->
+	<link rel="stylesheet" href="../../../css/zTreeStyle/ztreedemo.css" type="text/css" />
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css" />
+	<script type="text/javascript" src="../../../js/plugin/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../js/zhyw/utils/constant.js"></script>
+	<script type="text/javascript" src="../../../js/zhyw/utils/common.js"></script>
+	<script type="text/javascript" src="../../../js/plugin/easyui/jquery.easyui.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../../../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+	</head>
+<style>
+
+/*.left_ul li:nth-of-type(10) a{
+	background-color:#0876D5;
+	color:#fff;
+	border: 1px solid #0876D5;
+	cursor:pointer;
+}*/
+</style>
+<body>
+	<div class="xtpz">
+		<!--<div class="xtpz_top">当前位置 : 系统配置</div>-->
+              <!--<div class="xtpz_content">-->
+                        <!--<div class="content_left">-->
+							<!--<div class="left_tree"></div>-->
+                        <!--</div>-->
+                <!--<div class="content_right">-->
+                        <!--<div class="right_top">-->
+                               <!--<img src="../../../image/icon_sd.png" style="float: left;margin: 17px 12px 0px 12px; ">政法编制实有在编人数配置-->
+                        <!--</div>-->
+
+                  <div class="right_btnk" style="width:97%">
+					<!--<ul class="right_ul">-->
+						<!--<li class="right_li" id="bmlb" style="width:105px;">在编干警列表</li>-->
+						<!--<li id='addZbrs' style="width:105px;">添加在编干警</li>-->
+					<!--</ul>-->
+
+					<div class="right_com_zbrs">
+						<div id="zbrsToolbar" style="width: 100%; padding: 10px;">
+						    <span style=" float: left; font-size: 14px;margin-top: 3px">单位:</span>
+						    <!-- 单位树 -->
+								<div style="float:left;height: 20px;margin-top: 2px; position: relative; margin-left: 10px;width: 18%; border: 1px solid #c1c1c1; border-radius: 4px;">
+									<input id="citySel2_zbrs" type="text" readonly style="border: none; width: 90%" /> 
+									<a id="menuBtn2_zbrs" href="#" onclick="showMenu2(); return false;" class="a_style" style="height: 20px;background: url('../../../js/plugin/easyui/themes/bootstrap/images/combo_arrow.png') no-repeat center center; background-color: #F2F2F2"></a>
+									<div id="menuContent2_zbrs" style="display: none; position: fixed; z-index: 2;">
+										<ul id="treeDemo2_zbrs" class="ztree" style="margin-top: 0; width:262px; background-color: #fff"></ul>
+									</div>
+								</div>
+							<!-- 单位树 --><input type="hidden" id="qxYwgzZbrsDwbm">
+						    <a id="zbrsReload" href="javascript:void(0)" class="easyui-linkbutton"  onclick="clearLoad();" style="margin-left: 10px;">重新加载</a>
+							<a id="addZbrs" class="addZbrsIcon" style="margin-left: 10px;">添加在编干警</a>
+						</div>
+						<table id="ywgzZbrsTable" style="width: 100%;"></table>
+					</div>
+
+					<div class="right_coml_zbrs" style="display: none">
+						<div style="width: 100%; float: left;height:500px;">
+							<div style="width: 700px; float: left;margin-top: 50px;height:100%;">
+								<div class="right_list">
+									<span>
+										<div class="list_1">单位名称:</div>
+									</span>
+									<!-- 单位树 -->
+									<div style="float:left;height: 30px; position: relative;width: 400px; border: 1px solid #c1c1c1; border-radius: 4px;">
+										<input id="citySel1_zbrs" type="text" readonly style="height: 25px; border: none; width: 370px;margin-top: 2px;" />
+										<a id="menuBtn1_zbrs" href="#" onclick="showMenu1(); return false;" class="a_style" style="height: 30px;background: url('../../../js/plugin/easyui/themes/bootstrap/images/combo_arrow.png') no-repeat center center; background-color: #F2F2F2"></a>
+										<div id="menuContent1_zbrs" style="display: none; position: absolute; z-index: 2;top:31px;width:399px;">
+										    <ul id="treeDemo1_zbrs" class="ztree" style="margin-top: 0; width: 100%; background-color: #fff;padding:0;"></ul>
+										</div>
+									</div>
+									<!-- 单位树 --> 
+									<input type="hidden" id="ywgzZbrsDwbm" name="ywgzZbrsDwbm">
+									<input type="hidden" id="ywgzZbrsId" name="ywgzZbrsId">
+								</div>
+								<div class="right_list">
+									<span>
+										<div class="list_1">在编干警人数:</div>
+									</span> <input id="ywgzZbrsNum" name="ywgzZbrsNum" style="width: 400px">
+								</div>
+								<div class="right_list">
+								    <button id="addfgld_zbrs" onclick="addYwgzZbrs();" class="fgld_btn" >新增</button>
+ 								    <button id="updatefgld_zbrs" onclick="updateYwgzZbrs()" class="fgld_btn">修改</button> 
+							    </div>
+							</div>
+						</div>
+						<div style="width: 28%; float: left"></div>
+					</div>
+				</div>
+				
+		      <!--</div>-->
+			  <!--</div>-->
+       </div>
+
+</body>
+<script type="text/javascript">
+	$(".left_tree").load("../left_menu.html");
+	
+	$("#addZbrs").click(function() {
+		// $('.right_li').removeClass('right_li');
+		// $(this).addClass('right_li');
+		$('.right_com_zbrs').css('display', ' none');
+		$('.right_coml_zbrs').css('display', ' block');
+		$("#updatefgld_zbrs").css('display', 'none');
+	})
+	/*$(".right_ul li:first").click(function() {
+		$('.right_li').removeClass('right_li');
+		$(this).addClass('right_li');
+		$('.right_coml_zbrs').css('display', ' none');
+		$('.right_com_zbrs').css('display', ' block');
+		$("#addZbrs").text("在编干警人数");
+		$('#addfgld_zbrs').css('display', ' block');
+		$("#citySel1_zbrs").attr("value", "");
+		$("#ywgzZbrsNum").val("");
+	})*/
+// 	$("#zbrsEdit").click(function(){
+// 		$('.right_coml_zbrs').css('display', ' none');
+// 		$('.right_com_zbrs').css('display', ' block');
+// 		$("#addZbrs").text("修改在编人数");
+// 		$("#addfgld_zbrs").text("修改");
+// 		$("#addZbrs").addClass('right_li')
+// 	})
+	
+</script>
+<script type="text/javascript" src="../../../js/zhyw/ywgzkh/ywgzkh_zbrs.js" charset="utf-8"></script>
+</html>

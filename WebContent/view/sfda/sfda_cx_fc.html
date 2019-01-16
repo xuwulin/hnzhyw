@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>司法档案-封存档案查询</title>
+    <link type="text/css" rel="stylesheet" href="../../css/sfda_cx_fc.css">
+    <link href="../../css/bounced.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/bootstrap/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/icon.css">
+    <link rel="stylesheet" href="../../css/zTreeStyle/ztreedemo.css" type="text/css"/>
+    <link rel="stylesheet" href="../../css/zTreeStyle/zTreeStyle.css" type="text/css"/>
+
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/ztree/ztreemodel.js"></script>
+
+</head>
+<style>
+</style>
+<body style=" font-family: '微软雅黑';">
+<div class="queryimj">
+    <div style="width: 100%; height: 80px;">
+        <button id='sfda_cx_fc' class="cx_fc_bt">
+            <a id='sfda_cx_a'
+               style="width: 100%; height: 100%; text-decoration: none; color: #0081c2;display: inline-block;padding-top: 6px;box-sizing: border-box;font-family: 微软雅黑;">司法档案管理&nbsp;&gt;&gt;</a>
+        </button>
+    </div>
+    <div class="title_logo">
+        <div
+                style="border: 0.5px solid #c1c1c1; margin-top: 22px; width: 328px; float: left"></div>
+        <div style="float: left;">
+            <div
+                    style="width: 46px; height: 46px; margin-left: 34px; background: url('../../image/cx_fc.png') no-repeat; float: left"></div>
+            <div
+                    style="font-size: 24px; color: #333; margin-left: 22px; line-height: 46px;; float: left;">
+                封存司法档案查询
+            </div>
+        </div>
+        <div
+                style="border: 0.5px solid #c1c1c1; margin-top: 22px; width: 327px; float: left; margin-left: 34px"></div>
+    </div>
+    <div class="imj_content">
+        <div style="width: 100%; height: 40px;">
+            <!--<div style="width: 250px; height: 40px; float: left;">
+					<span
+                            style="float: left; line-height: 27px; margin-right: 5px; font-size: 13px;">检察院</span>
+                <div
+                        style="height: 25px; position: relative; width: 180px; border: 1px solid #c1c1c1; border-radius: 4px; float: left; background: #fff;">
+                    <input id="citySel" type="text" readonly
+                           style="border: none; width: 90%; height: 25px; margin-left: 3px;"/>
+                    <a id="menuBtn" href="#" onclick="showMenu(); return false;"
+                       class="a_style"
+                       style="height: 25px; line-height: 25px; background: url('../../js/plugin/easyui/themes/bootstrap/images/combo_arrow.png') no-repeat center center; background-color: #F2F2F2"></a>
+                    <div id="menuContent" style="display: none; position: absolute; z-index: 110;">
+                        <ul id="treeDemo" class="ztree"
+                            style="margin-top: 0; width: 200px; background-color: #fff ; "></ul>
+                    </div>
+                </div>
+            </div>-->
+
+            <!--单位树改造-->
+            <div style="width: 275px; height: 40px; line-height: 28px; float: left;">
+                <span style="float: left; line-height: 27px; margin-right: 5px; font-size: 13px;">单位名称：</span>
+                <input id="citySel" style="width: 200px;height: 25px;line-height:32px;"/>
+            </div>
+
+            <div style="width: 250px; height: 40px; line-height: 28px; float: left; margin-left: 14px;">
+                <label style="font-size: 14px; color: #333; line-height: 28px; float: left;">起始时间：</label>
+                <input class="easyui-datebox" id="startDate" class="startDate" name="startDate"
+                       style="width: 80px;height:28px;"></input> -
+                <input class="easyui-datebox" id="endDate" class="endDate" name="endDate"
+                       style="width: 80px;height:28px;"></input>
+            </div>
+
+        </div>
+
+        <div class="all_input">
+            <input id="ssrmc" type="text" placeholder="请输入你要查询的内容"
+                   style="width: 773px; height: 100%; border: none; border-left: 1px solid #c9c9c9; text-indent: 15px; float: left; line-height: 50px; border-bottom-left-radius: 5px; border-top-left-radius: 5px;">
+            <button onclick="cx(0)" style="cursor: pointer;">查询</button>
+        </div>
+        <div class="content_bt">
+				<span id="selectcount"
+                      style="display: inline-block; font-size: 14px; color: #333"></span>
+        </div>
+        <div class="content_dd">
+            <ul id='dagzlist'></ul>
+            <!-- 				 <div class="li_title"> </div> -->
+        </div>
+    </div>
+
+    <div id="xjtjnfDetail" class="bounced" style="display: none">
+        <div class="bounced_all" style="height:250px">
+            <div class="bounced_tot">
+                <span>新建我的司法档案</span>
+                <div class="tot_img" onclick="closeDetail()"></div>
+            </div>
+            <div class="xiadivbt1">
+                <span style="margin-left: 42px;">选择起始年月</span>
+                <input class="easyui-datebox" id="xjStartDate" class="xjStartDate" name="xjStartDate"
+                       style="width: 100px;height:28px;    border: 1px solid #c1c1c1;"></input>
+                <span>-</span>
+                <input class="easyui-datebox" id="xjEndDate" class="xjEndDate" name="xjEndDate"
+                       style="width: 100px; height:28px;   border: 1px solid #c1c1c1;"></input>
+            </div>
+            <div class="xiadivbt" style="margin-top: 40px;">
+                <input type="button" onclick="closeDetail();" value="取消"
+                       style="background:#fff;border:1px solid #c1c1c1;color:#666;"/>
+                <input type="button" onclick="jx();" value="确定" style="margin-right: 10px;"/>
+            </div>
+        </div>
+    </div>
+    <div class="ajwtfk_foot_foot" style="text-align:center;">
+        <div class="r_page">
+            <a id="syid" class="ju_btn_white en_btn" style="width: 45px">首页</a>
+            <a id="shangyyid" class="ju_btn_white en_btn">上一页</a>
+            <a id="xiayiid" class="ju_btn_white en_btn">下一页</a>
+            <a id="zhyid" class="ju_btn_white en_btn" style="width: 50px">最后页</a>
+            <span>当前第<span id="currentPage">0</span>页，共<span id="totalPages">0</span>页</span>
+        </div>
+    </div>
+</div>
+
+<!-- 填写公示信息-->
+<div id="gsinfo" class="bounced" style="display: none">
+    <div class="bounced_all_1">
+        <form id="gsinfoform" method='post'>
+            <div class="bounced_tot">
+                <span id="gsinfotitle">公示信息</span>
+                <div class="tot_img" onclick="closeGsDetail()"></div>
+            </div>
+            <div class="bounced_select"
+                 style="margin: 0 auto; margin-top: 20px; width: 444px; height: 55px; position: relative;">
+                <div>
+                    <p id="info">评分理由</p>
+                    <textarea id="gstext" style=" resize: none;width:400px;height:120px;"></textarea>
+                </div>
+            </div>
+        </form>
+        <div class="bot_btn">
+            <button id="bcButton1" onclick="closeGsDetail();"
+                    class="bot_btn_2">取消
+            </button>
+            <button id="qdButton1"
+                    class="bot_btn_1">确定
+            </button>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="../../js/zhyw/sfda/sfda_cx_fc.js"></script>
+</html>
+
+

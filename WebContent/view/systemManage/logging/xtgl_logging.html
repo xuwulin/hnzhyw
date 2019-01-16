@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>系统配置-日志管理</title>
+
+	<link rel="stylesheet" type="text/css" href="../../../css/xtpz.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/xtgl_logging.css" />
+	<link rel="stylesheet" type="text/css"href="../../../js/plugin/easyui/themes/bootstrap/easyui.css">
+	<link rel="stylesheet" type="text/css"href="../../../js/plugin/easyui/themes/icon.css">
+	<!--<link type="text/css" rel="stylesheet"href="../../../js/plugin/easyui/themes/default/easyui.css" />-->
+	<link rel="stylesheet" href="../../../css/zTreeStyle/ztreedemo.css" type="text/css" />
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css" />
+	<script type="text/javascript" src="../../../js/zhyw/utils/constant.js"></script>
+	<script type="text/javascript" src="../../../js/plugin/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../js/plugin/easyui/jquery.easyui.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+	<script type="text/javascript" src="../../../js/zhyw/utils/constant.js"></script>
+	<script type="text/javascript"src="../../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+<style>
+.xiadivbt2{
+/*     overflow: hidden; */
+    float: left;
+}
+.left_ul li:nth-of-type(10) a{
+	background-color:#0876D5;
+	color:#fff;
+	border: 1px solid #0876D5;
+	cursor:pointer;
+}
+</style>
+</head>
+<body>
+	<div class="xtpz">
+               <div class="xtpz_top">当前位置 : 系统配置</div> 
+               <div class="xtpz_content">
+                        <div class="content_left">
+                                <!-- <ul class="left_ul">
+									<li><a href="../system/xtpz_fgld.html">分管领导配置管理</a></li>
+									<li><a href="../department/xtpz.html">部门管理</a></li>
+									<li><a href="../role/xtpz_jsgl.html">角色管理</a></li>
+									<li><a href="../person/xtpz_rygl.html">人员管理</a></li>
+									<li><a href="../system/xtpz_filepath.html">系统配置管理</a></li>
+									<li><a href="../quartz/xt_quartz_pz.html" >同步任务配置管理</a></li>
+									<li><a href="../ywlx/ywlxfp.html">业务类型/业务类型分配管理</a></li>
+									<li><a href="../jxkh/xtpz_ywkhzbgl.html">个人绩效-考核指标配置</a></li>
+									<li><a href="../jchc/xtpz_hcpz.html">个人绩效-交叉核查配置</a></li>
+									<li><a href="../bmzdpz/xtpz_bmzdpz.html">部门审批人配置</a></li>
+									<li><a href="../ywkh/ywkh_khdwpz.html">业务考核-考核单位配置</a></li>
+									<li><a href="../ywkh/ywkh_khlxpz.html" >业务考核-考核类型配置</a></li>
+									<li><a href="../zbrs/zbrs.html">业务考核-在编人数配置</a></li>
+									<li><a href="../ywgz/xtpz_ywgzpzgl.html">业务考核-考核指标管理</a></li>
+									<li><a href="../dataDict/data_dict.html">数据字典管理</a></li>
+									<li><a href="../logging/xtgl_logging.html" class="xtpzli">日志管理</a></li>
+                                </ul> -->
+                                <div class="left_tree"></div>
+
+                        </div>
+                     <div class="content_right">
+                        <div class="right_top">
+                               <img src="../../../image/icon_sd.png" style="float: left;margin: 17px 12px 0px 12px; ">日志管理
+                        </div>
+                        
+                        <!-- datagrid -->
+                        <div class="right_table" style="width:100%;height:70%">
+                        	<table id="logging_table" title="日志信息" style="width:100%;height:90%">
+							</table>
+							<!-- toolbar -->
+							<div id="logging_toolbar" style="height:36px">
+								<div class="xiadivbt2" >
+									<span style="float: left;line-height: 28px;margin-left:10px;">单位:</span> 
+									<div style="height: 28px; position: relative; width: 200px; border: 1px solid #c1c1c1; border-radius: 4px;    float: left;">
+										<input id="citySel" type="text" readonly style="border: none; width: 90%;border-radius: 4px;height: 28px;" /> 
+										<a id="menuBtn" href="#" onclick="showMenu(); return false;" class="a_style" style="background: url('../../../js/plugin/easyui/themes/bootstrap/images/combo_arrow.png') no-repeat center center; background-color: #F2F2F2;height: 28px;"></a>
+										<div id="menuContent"style="display: none; position: absolute; z-index: 2;">
+											<ul id="treeDemo" class="ztree"	style="margin-top: 0; width: 110%; background-color: #fff">
+											</ul>
+										</div>
+									</div>
+								</div>
+								
+								<div class="xiadivbt2" style="float: left;" >
+									<span style="float: left;margin: 5px 5px 0 10px;">日志类型:</span> 
+									<select id="srzlx"  class="easyui-combobox" style="width:100px;height:28px;padding:0;">
+										   <option value="">显示所有</option>   
+										   <option value="1">操作日志</option>   
+										   <option value="2">错误日志</option>    
+									</select>
+								</div>
+								
+								<div class="xiadivbt2" style="float: left;" >
+									<span style="float: left;margin: 5px 5px 0 10px;">内容:</span> 
+									<input id = "srznr"  style="width: 120px; border: 1px solid #c1c1c1; border-radius: 4px;float: left;height:28px;"/>
+								</div>
+								<div class="xiadivbt2" style="float: left;" >
+									<span style="float: left;margin: 5px 5px 0 10px;">操作人:</span> 
+									<input id = "sczr"  style="width: 80px; border: 1px solid #c1c1c1; border-radius: 4px;float: left;height:28px;"/>
+								</div>
+								
+								<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="msearch()" style="margin-left: 10px;">搜索</a>
+								<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="clearLoad()" style="margin-left: 10px;">重新加载</a>
+							    <a id="delSomeButton" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="deleteSome()" style="margin-left: 10px;">删除</a>
+							    <a id="delAllButton" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="deleteAll()" style="margin-left: 10px;">全部删除</a>
+							</div>
+                        
+                        </div>
+                        <!--  -->
+		             </div>
+               </div>
+       </div>
+</body>
+<script type="text/javascript" src="../../../js/zhyw/xtgl/xtgl_logging.js"></script>
+<script type="text/javascript">
+	$(".left_tree").load("../left_menu.html");
+	
+	var sdwjb = top.currentUserInfo.dwjb;
+	if(sdwjb!=2){
+		$("#xtpzgl").css("display","none");
+	}
+</script>
+</html>

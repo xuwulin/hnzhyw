@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>司法档案-案件问题反馈页面</title>
+    <link type="text/css" rel="stylesheet" href="../css/zhyw_ajwtfk.css">
+    <link rel="stylesheet" type="text/css" href="../js/plugin/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../js/plugin/easyui/themes/icon.css">
+
+    <script type="text/javascript" src="../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script>
+        // 	parent.min_width2();
+        $(document).ready(function () {
+            fileSelect();
+            var text1 = $(".content_dd ul li")
+            text1.click(function () {
+                $('.textan1').removeClass('textan1');
+                $(this).addClass('textan1');
+            });
+
+        })
+    </script>
+    <style type="text/css">
+        .ju_btn_white {
+            display: inline-block;
+            width: 80px;
+            height: 32px;
+            background: #fff;
+            border-radius: 4px;
+            text-align: center;
+            line-height: 32px;
+            color: #000;
+            font-size: 13px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .ju_btn_white:hover {
+            background: #ccc;
+        }
+
+        .ju_btn {
+            display: inline-block;
+            width: 80px;
+            height: 32px;
+            background: #176ea5;
+            border-radius: 4px;
+            text-align: center;
+            line-height: 32px;
+            color: white;
+            font-size: 13px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .ju_btn:hover {
+            background: #0587d9;
+        }
+
+        .entertain {
+            margin: 0 20px;
+        }
+
+        .entertain_tilte {
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            font-size: 12px;
+            color: #666666;
+            float: left
+        }
+
+        .entertain_center {
+            width: 100%;
+            height: 72px;
+            border-radius: 4px;
+            background: white;
+            float: left;
+            border: 1px solid #efefef;
+            box-shadow: 0 0 0.5px 0 #ccc
+        }
+
+        .textan1 {
+            background: #D8D8DA;
+            border: 1px solid #C1C2C5;
+        }
+
+        .combo {
+            border: none;
+            border-color: #c1c1c1;
+            background-color: #fff;
+            font-size: 16px;
+        }
+
+        .combobox-item, .combobox-group {
+            font-size: 18px;
+        }
+
+        .textbox .textbox-text {
+            font-size: 16px;
+        }
+
+        .combo-arrow {
+            background-color: #fff;
+        }
+
+        .combo-arrow:hover {
+            background-color: #fff;
+        }
+
+        .file_hover {
+            background-color: #ECF3FD;
+            border: 1px solid #B8D6FB;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="queryimj">
+    <div style="width: 100%; height: 80px;"></div>
+    <div class="title_logo">
+        <div
+                style="border: 0.5px solid #c1c1c1; margin-top: 22px; width: 328px; float: left"></div>
+        <div style="float: left;">
+            <div
+                    style="width: 46px; height: 46px; margin-left: 34px; background: url('../image/cx.png') no-repeat; float: left"></div>
+            <div
+                    style="font-size: 24px; color: #333; margin-left: 22px; line-height: 46px;; float: left;">
+                案件问题反馈查询
+            </div>
+        </div>
+        <div
+                style="border: 0.5px solid #c1c1c1; margin-top: 22px; width: 327px; float: left; margin-left: 34px"></div>
+    </div>
+    <div class="imj_content">
+        <div class="all_input">
+            <div style="width: 100px; height: 50px; float: left;">
+                <select id="selectyear" class="combo">
+                    <option value='2017' selected>2017</option>
+                    <option value='2016'>2016</option>
+                    <option value='2015'>2015</option>
+                    <option value='2014'>2014</option>
+                    <option value='2013'>2013</option>
+                    <option value='2012'>2012</option>
+                    <option value='2011'>2011</option>
+                </select>
+            </div>
+            <input id="selectbmsah" type="text" placeholder="请输入你要查询单内容"
+                   style="width: 673px; height: 44px; border: none; border-left: 1px solid #c9c9c9; text-indent: 15px; float: left; outline: none; margin-top: 3px; font-size: 18px;">
+            <button onclick="ajxxcx(1,'0')">查询</button>
+        </div>
+        <div class="content_bt">
+				<span id="selectcount"
+                      style="display: inline-block; font-size: 14px; color: #333"></span>
+            <div
+                    style="border-radius: 3px; border: 1px solid #0574d3; width: 95px; height: 30px; float: right; color: #0574d3; line-height: 30px; margin-right: 10px; cursor: pointer;">
+                <img alt="" src="../image/wjdc.png"
+                     style="float: left; margin: 7px 5px 0 5px;"> 导出信息
+            </div>
+        </div>
+        <div class="content_dd">
+            <ul id="ajjbxxlist">
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="ajwtfk_foot_foot" style="text-align:center;">
+        <div class="r_page">
+            <a id="syid" class="ju_btn_white en_btn" style="width: 45px">首页</a>
+            <a id="shangyyid" class="ju_btn_white en_btn">上一页</a>
+            <!--                 <a class="ju_btn en_btn">1</a> -->
+            <!--                 <a class="ju_btn_white en_btn">2</a> -->
+            <!--                 <a class="ju_btn_white en_btn">3</a> -->
+            <!--                 <span style="float: left;margin: 0 5px">...</span> -->
+            <!--                 <a class="ju_btn_white en_btn">10</a> -->
+            <a id="xiayiid" class="ju_btn_white en_btn">下一页</a> <a id="zhyid"
+                                                                   class="ju_btn_white en_btn"
+                                                                   style="width: 50px">最后页</a>
+        </div>
+    </div>
+
+</div>
+</body>
+<script type="text/javascript">
+    var count = 0;
+    //全局变量用于存储当前页数
+    var mrpage = 1;
+    $(jz());
+    //加载
+    function jz() {
+        ajxxcx(1, '2017');
+        fy();
+    }
+    function ajxxcx(page, isyear) {
+        var year = isyear;
+        if (year == '0')
+            year = $("#selectyear").combobox("getValue");
+//        console.log(year);
+        var bmsah = $("#selectbmsah").val();
+        $
+            .ajax({
+                url: rootPath + "/service/ajxxcx/getajxxcx",
+                type: 'post',
+                async: false,
+                data: {
+                    "year": year,
+                    "bmsah": bmsah,
+                    "page": page
+                },
+                dataType: 'json',
+                success: function (data) {
+                    $('#selectcount').text(
+                        "查询结果，一共查询到" + year + "年" + data.count
+                        + "个案件，如下:");
+                    $('#ajjbxxlist').empty();
+                    for (var i = 0; i < data.data.length; i++) {
+                        var d = data.data[i];
+                        var li = null;
+                        if (d.ct == '0') {
+                            li = "<li><img src='../image/default_document.png'><p>"
+                                + d.bmsah + "</p></li>";
+                        } else {
+                            li = "<li><img src='../image/default_document1.png'><p>"
+                                + d.bmsah + "</p></li>";
+                        }
+                        var $li = $(li);
+                        $('#ajjbxxlist').append($li);
+                        $li.attr('data', d.bmsah + "&cbdw_bm=" + d.cbdw_bm
+                            + "&tysah=" + d.tysah);
+                        $li.bind("dblclick", function (e) {
+                            location.href = encodeURI("AJXX.html?bmsah="
+                                + $(e.currentTarget).attr("data"));
+                        });
+                    }
+                    count = data.count;
+                    fileSelect();
+
+                    resizeParentIframe();
+                }
+            });
+    }
+    //分页
+    function fy() {
+        //给按钮绑定单击事件实现分页查询
+        //首页
+        $("#syid").bind("click", function () {
+            $("#ajwtfk_footid").html("");
+            mrpage = 1;
+            ajxxcx(1, '0');
+        });
+        //最后一页
+        $("#zhyid").bind("click", function () {
+            $("#ajwtfk_footid").html("");
+            mrpage = (count % 16 == 0 ? count / 16 : Math.ceil(count / 16));
+            ajxxcx(mrpage, '0');
+        });
+        //上一页
+        $("#shangyyid").bind("click", function () {
+            mrpage--;
+            if (mrpage <= 1) {
+                mrpage = 1;
+            }
+            $("#ajwtfk_footid").html("");
+            ajxxcx(mrpage, '0');
+        });
+        //下一页
+        $("#xiayiid").bind(
+            "click",
+            function () {
+                mrpage++;
+                if (mrpage > Math.ceil(count / 16)) {
+                    mrpage = (count % 16 == 0 ? count / 16 : Math
+                        .ceil(count / 16));
+                }
+                $("#ajwtfk_footid").html("");
+                ajxxcx(mrpage, '0');
+            });
+    }
+    $('.combo').combobox({
+        width: 100,
+        height: 50
+    })
+    function fileSelect() {
+        var text1 = $(".content_dd ul li")
+        text1.click(function () {
+            $('.textan1').removeClass('textan1');
+            $(this).addClass('textan1');
+        });
+        text1.mouseover(function () {
+            if ($(this).hasClass('textan1')) {
+                return;
+            }
+
+            $(".file_hover").removeClass("file_hover");
+            $(this).addClass("file_hover");
+        });
+
+        text1.mouseout(function () {
+            $(this).removeClass("file_hover");
+        });
+    }
+
+    resizeParentIframe();
+</script>
+</html>
+
+

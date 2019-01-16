@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swx.ibms.business.cases.mapper.AgbZlpcMapper" >
+  
+  <resultMap id="AgbZlpcResult" type="com.swx.ibms.business.cases.bean.AgbZlpc">
+  	<id column="ID" property="id" jdbcType="VARCHAR"/>
+  	<result column="AJMC" property="ajmc" jdbcType="VARCHAR"/>
+  	<result column="DID" property="did" jdbcType="VARCHAR"/>
+  	<result column="YWLB" property="ywlb" jdbcType="VARCHAR"/>
+  	<result column="PCZL" property="pczl" jdbcType="VARCHAR"/>
+  	<result column="BLXS" property="blxs" jdbcType="VARCHAR"/>
+  	<result column="PCKSSJ" property="pckssj" jdbcType="VARCHAR"/>
+  	<result column="PCJSSJ" property="pcjssj" jdbcType="VARCHAR"/>
+  	<result column="PCWTGS" property="pcwtgs" jdbcType="INTEGER"/>
+  	<result column="PCJGXS" property="pcjgxs" jdbcType="VARCHAR"/>
+  	<result column="ZGQK" property="zgqk" jdbcType="CHAR"/>
+  	<result column="ZHGXBM" property="zhgxbm" jdbcType="CHAR"/>
+  	<result column="ZHGXR" property="zhgxr" jdbcType="CHAR"/>
+  	<result column="ZHGXSJ" property="zhgxsj" jdbcType="VARCHAR"/>
+  	<result column="SPR" property="spr" jdbcType="VARCHAR"/>
+  	<result column="CBXZ" property="cbxz" jdbcType="VARCHAR"/>
+  	<result column="CBXZBM" property="cbxzbm" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <sql id="field_list">
+  	ID,DID,AJMC,YWLB,PCZL,BLXS,PCKSSJ,PCJSSJ,PCWTGS,PCJGXS,ZGQK,ZHGXBM,ZHGXR,ZHGXSJ,SPR,CBXZ,CBXZBM
+  </sql>
+  
+  <select id="getAllZlpcByBlxs" resultMap="AgbZlpcResult">
+  	select ID,DID,AJMC,YWLB,PCZL,BLXS,PCKSSJ,PCJSSJ,PCWTGS,PCJGXS,ZGQK,ZHGXBM,ZHGXR,ZHGXSJ,SPR,CBXZ,CBXZBM
+  	from YX_SFDA_AGBZLPC
+  	where SFSC = 'N'
+	and status = '1'
+  	and did = #{did}
+	<!-- and (cbxzbm is null or cbxzbm ='') -->
+  	<choose>
+  		<when test="blxs != 'all'">  <!-- 办理形式为空则获取全部记录 -->
+  			and BLXS = #{blxs}
+  		</when>
+  		<otherwise>
+  			and 1 = 1
+  		</otherwise>
+  	</choose>
+
+	  <!--union ALL
+
+	  select ID,DID,AJMC,YWLB,PCZL,b.BLFSBM BLXS,PCKSSJ,PCJSSJ,PCWTGS,PCJGXS,ZGQK,ZHGXBM,ZHGXR,ZHGXSJ,SPR,a.CBXZ,a.CBXZBM
+	  from YX_SFDA_AGBZLPC a 
+	  inner join yx_sfda_cbxz b 
+	  on a.cbxzbm=b.cbxzbm
+	  where b.gh=#{gh} 
+	  and b.dwbm=#{dwbm}
+	  <choose>
+		  <when test="blxs != 'all'">  &lt;!&ndash; 办理形式为空则获取全部记录 &ndash;&gt;
+			  and b.blfsbm = #{blxs}
+		  </when>
+		  <otherwise>
+			  and 1 = 1
+		  </otherwise>
+	  </choose>-->
+  </select>
+  
+  <select id="getZlpcById" resultMap="AgbZlpcResult">
+  		select ID,DID,AJMC,YWLB,PCZL,BLXS,PCKSSJ,PCJSSJ,PCWTGS,PCJGXS,ZGQK,ZHGXBM,ZHGXR,ZHGXSJ,SPR
+  	from yx_sfda_agbzlpc
+  	where sfsc = 'N'
+  	and id = #{id,jdbcType=VARCHAR}
+  	and (cbxzbm is null or cbxzbm ='')
+
+  	 union
+
+	select ID,DID,AJMC,YWLB,PCZL,b.blfsbm,PCKSSJ,PCJSSJ,PCWTGS,PCJGXS,ZGQK,ZHGXBM,ZHGXR,ZHGXSJ,SPR
+	from yx_sfda_agbzlpc a 
+	inner join yx_sfda_cbxz b 
+	on a.cbxzbm=b.cbxzbm
+	where a.id = #{id,jdbcType=VARCHAR} 
+	and b.dwbm=#{dwbm,jdbcType=VARCHAR} 
+	and b.gh=#{gh,jdbcType=VARCHAR}
+  </select>
+  
+ <sql id="comm_sql">
+ 	select count(*) num,ag.did 
+ 	from yx_sfda_agbzlpc ag
+	where ag.did in (<include refid="didsql"/>)
+	group by y.id
+ </sql>
+ 
+ <!-- 父部门下所有档案id -->
+ <sql id="didsql">
+ 	select distinct y.id 
+ 	from xt_zzjg_bmbm_tyyw b 
+	left join xt_qx_ryjsfp_tyyw x
+	on b.bmbm = x.bmbm
+	left join xt_zzjg_rybm_tyyw r
+	on x.gh = r.gh
+	left join yx_sfda_dagz y
+	on r.gh = y.ssr
+	where r.sfsc = 'N'
+	and b.dwbm = #{dwbm}
+	and r.dwbm = #{dwbm}
+	and x.dwbm = #{dwbm}
+	and y.ssrdwbm = #{dwbm}
+	and (b.bmbm = #{fbmbm} or b.fbmbm = #{fbmbm})
+ </sql>
+ 
+ <!-- 获取每个办理形式的数量 -->
+ <select id="getCountByBlxs" resultType="java.util.HashMap">
+ 	select count(*) amount, blxs 
+ 	from(
+	select blxs 
+	from YX_SFDA_AGBZLPC
+  	where did = #{did}
+  	and sfsc = 'N'
+	and status = '1'
+	<!-- and (cbxzbm is null or cbxzbm ='') -->
+ 	)
+ 	group by blxs
+ </select>
+ 
+ <!-- 获取本部门办案平均数 -->
+ <select id="getCaseAvg" resultType="java.util.HashMap">
+   select avg(num) avg 
+   from (
+         select count(*) num,ag.did 
+ 	     from yx_sfda_agbzlpc ag
+	     where ag.sfsc = 'N'
+	     	   and ag.status = '1'
+	     	   and ag.did in (
+               select distinct y.id 
+               from xt_zzjg_bmbm_tyyw b 
+	               left join xt_qx_ryjsfp_tyyw x on b.bmbm = x.bmbm
+	               left join xt_zzjg_rybm_tyyw r on x.gh = r.gh
+	               left join yx_sfda_dagz y on r.gh = y.ssr
+               where r.sfsc = 'N'
+	               and b.dwbm = #{dwbm}
+	               and r.dwbm = #{dwbm}
+	               and x.dwbm = #{dwbm}
+	               and y.ssrdwbm = #{dwbm}
+	               and (b.bmbm = #{bmbm} or b.fbmbm = #{bmbm})
+	               and y.kssj = #{kssj}
+                   and y.jssj = #{jssj}
+	       	   group by y.id
+         ) group by ag.did
+   )
+ </select>
+ 
+ <!-- 获取本部门最多和最少办案数 -->
+ <select id="getCaseMaxAndMin" resultType="java.util.HashMap">
+ 	select max(num) maxNum,min(num) minNum 
+ 	from (
+ 		  select count(*) num,ag.did 
+ 	      from yx_sfda_agbzlpc ag
+	      where ag.sfsc = 'N'
+	      		and ag.status = '1'
+	     	    and ag.did in (
+                select distinct y.id 
+                from xt_zzjg_bmbm_tyyw b 
+	                left join xt_qx_ryjsfp_tyyw x on b.bmbm = x.bmbm
+	                left join xt_zzjg_rybm_tyyw r on x.gh = r.gh
+	                left join yx_sfda_dagz y on r.gh = y.ssr
+                where r.sfsc = 'N'
+	                and b.dwbm = #{dwbm}
+	                and r.dwbm = #{dwbm}
+	                and x.dwbm = #{dwbm}
+	                and y.ssrdwbm = #{dwbm}
+	                and (b.bmbm = #{bmbm} or b.fbmbm = #{bmbm})
+	                and y.kssj = #{kssj}
+                    and y.jssj = #{jssj}
+	       		group by y.id
+         ) group by ag.did
+ 	)
+ </select>
+ 
+ <!-- 获取在本部门办案数的名次 -->
+ <select id="getRank" resultType="java.util.HashMap">
+ 	select rank from (
+ 		select num,did,rank() over(order by num desc) rank 
+ 		from (
+	 		  select count(*) num,ag.did 
+	 	      from yx_sfda_agbzlpc ag
+		      where ag.sfsc = 'N'
+		      	  and ag.status = '1'
+	     	      and ag.did in (
+	              select distinct y.id 
+	              from xt_zzjg_bmbm_tyyw b 
+	              left join xt_qx_ryjsfp_tyyw x on b.bmbm = x.bmbm
+	              left join xt_zzjg_rybm_tyyw r on x.gh = r.gh
+	              left join yx_sfda_dagz y on r.gh = y.ssr
+	              where r.sfsc = 'N'
+		              and b.dwbm = #{dwbm}
+		              and r.dwbm = #{dwbm}
+		              and x.dwbm = #{dwbm}
+		              and y.ssrdwbm = #{dwbm}
+		              and (b.bmbm = #{bmbm} or b.fbmbm = #{bmbm})
+		              and y.kssj = #{kssj}
+                      and y.jssj = #{jssj}
+		       	  group by y.id
+	         	)group by ag.did
+ 	         )
+ 	) t
+ 	where t.did = #{did} 
+ </select>
+ 
+<!--  逻辑删除 -->
+  <update id="updateSFSCById" parameterType="java.util.List">
+  	UPDATE YX_SFDA_AGBZLPC 
+  	SET SFSC = 'Y' 
+  	where id
+  	in
+  	<foreach collection="list" item="id" index="index" separator="," open="(" close=")">
+  		#{id,jdbcType=VARCHAR}
+  	</foreach>
+  </update>
+ 
+  <!-- 新增案管办质量评查 -->
+  <insert id="addAgbZlpc" parameterType="java.util.List">
+ 	insert into YX_SFDA_AGBZLPC(
+ 								ID,
+ 								AJMC,
+ 								YWLB,
+ 								PCZL,
+ 								BLXS,
+ 								PCKSSJ,
+ 								PCJSSJ,
+ 								PCWTGS,
+ 								PCJGXS,
+ 								ZGQK,
+ 								SFSC,
+ 								DID,
+ 								ZHGXBM,
+ 								ZHGXR,
+ 								ZHGXSJ,
+ 								SPR,
+ 								CBXZBM,
+ 								CBXZ,
+ 								STATUS
+ 							   )
+ 						values
+	 						  (
+						 		#{id,jdbcType=VARCHAR},
+						 		#{ajmc,jdbcType=VARCHAR},
+						 		#{ywlb,jdbcType=VARCHAR},
+						 		#{pczl,jdbcType=VARCHAR},
+						 		#{blxs,jdbcType=VARCHAR},
+						 		#{pckssj,jdbcType=TIMESTAMP},
+						 		#{pcjssj,jdbcType=TIMESTAMP},
+						 		#{pcwtgs,jdbcType=INTEGER},
+						 		#{pcjgxs,jdbcType=VARCHAR},
+						 		#{zgqk,jdbcType=CHAR},
+						 		#{sfsc,jdbcType=CHAR},
+						 		#{did,jdbcType=VARCHAR},
+						 		#{zhgxbm,jdbcType=CHAR},
+						 		#{zhgxr,jdbcType=CHAR},
+						 		#{zhgxsj,jdbcType=TIMESTAMP},
+						 		#{spr,jdbcType=VARCHAR},
+						 		#{cbxzbm,jdbcType=VARCHAR},
+						 		#{cbxz,jdbcType=VARCHAR},
+						 		#{status,jdbcType=VARCHAR}
+						 	 )
+ </insert>
+  
+    <!-- 根据id和业务类别删除安管办新增列表中的质量评查并删除附件 -->
+    <delete id="deleteAgbZlpc" parameterType="java.util.Map">
+    	delete from YX_SFDA_AGBZLPC where id = #{id,jdbcType=VARCHAR}
+    </delete>
+  	
+  	<delete id="deleteAgbZlpcFj" parameterType="java.util.Map">
+    	delete from YX_FJ where wbid = #{id,jdbcType=VARCHAR}
+    </delete>
+    
+ <update id="updateAgbZlpcById" parameterType="java.util.Map">
+ 	update YX_SFDA_AGBZLPC
+ 		<set>
+ 			AJMC = #{ajmc,jdbcType=VARCHAR},
+ 			YWLB = #{ywlb,jdbcType=VARCHAR},
+ 			PCZL = #{pczl,jdbcType=VARCHAR},
+ 			BLXS = #{blxs,jdbcType=VARCHAR},
+ 			PCKSSJ = #{pckssj,jdbcType=VARCHAR},
+ 			PCJSSJ = #{pcjssj,jdbcType=VARCHAR},
+ 			PCWTGS = #{pcwtgs,jdbcType=INTEGER},
+ 			PCJGXS = #{pcjgxs,jdbcType=VARCHAR},
+ 			ZGQK = #{zgqk,jdbcType=CHAR},
+ 			ZHGXBM = #{zhgxbm,jdbcType=CHAR},
+ 			ZHGXR = #{zhgxr,jdbcType=CHAR},
+ 			ZHGXSJ = #{zhgxsj,jdbcType=VARCHAR},
+			SPR = #{spr,jdbcType=VARCHAR},
+			CBXZ = #{cbxz,jdbcType=VARCHAR},
+			CBXZBM = #{cbxzbm,jdbcType=VARCHAR},
+		</set>
+ 	where id = #{id,jdbcType=VARCHAR}
+ </update>
+ 
+	 <!-- 根据id查询质量评查用于表单回显 -->
+    <select id="getZlpc" resultMap="AgbZlpcResult">
+        select
+        ID,DID,AJMC,YWLB,PCZL,BLXS,PCKSSJ,PCJSSJ,PCWTGS,PCJGXS,ZGQK,ZHGXBM,ZHGXR,ZHGXSJ,SPR,CBXZ,CBXZBM
+        from YX_SFDA_AGBZLPC
+        where id = #{id}
+	</select> 
+ 
+</mapper>

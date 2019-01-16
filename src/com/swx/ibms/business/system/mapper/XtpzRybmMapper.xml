@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.system.mapper.XtpzRybmMapper">
+
+	<select id="getMax" resultType="RYBM">
+		select max(gh) gh,max(gzzh) gzzh from XT_ZZJG_RYBM t where dwbm = #{dwbm}
+	</select>
+	
+	<insert id="insert">
+		insert into XT_ZZJG_RYBM(dwbm, gh, dlbm, kl, mc, gzzh) 
+					values(#{dwbm,jdbcType=VARCHAR},#{gh,jdbcType=VARCHAR},#{dlbm,jdbcType=VARCHAR},#{kl,jdbcType=VARCHAR},#{mc,jdbcType=VARCHAR},#{gzzh,jdbcType=VARCHAR})
+	</insert>
+	
+	<insert id="insertRyfp">
+		insert into XT_ZZJG_RYJSFP(dwbm,bmbm,jsbm,gh) 
+					values(#{dwbm,jdbcType=VARCHAR},#{bmbm,jdbcType=VARCHAR},#{jsbm,jdbcType=VARCHAR},#{gh,jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="update">
+		update XT_ZZJG_RYBM set dlbm = #{dlbm},mc = #{mc} where dwbm=#{dwbm} and gh=#{gh}
+	</update>
+	
+	<update id="updateRyfp">
+		update XT_ZZJG_RYJSFP set bmbm = #{bmbm},jsbm = #{jsbm} where bmbm=#{oldbmbm} and jsbm=#{oldjsbm} and dwbm=#{dwbm} and gh=#{gh}
+	</update>
+	
+	<select id="checkDlbm" resultType="Integer">
+		<!--  
+		select count(*)
+		  from xt_zzjg_ryjsfp a,
+		       (select * from XT_ZZJG_RYBM t where t.dwbm = #{dwbm} and t.dlbm = #{dlbm}) t
+		 where a.dwbm = t.dwbm
+		   and a.gh = t.gh
+		-->
+		SELECT COUNT(*) FROM 
+			(select dwbm,
+					gh,
+					gzzh,
+					mc,
+					dlbm,
+					sfsc,
+					sflsry,
+					sftz 
+			 from XT_ZZJG_RYBM t 
+              where t.dwbm = #{dwbm}
+                and t.dlbm = #{dlbm}
+		        and t.sfsc = 'N'
+		        and t.sftz = 'N'
+          UNION all 
+            select dwbm,
+            	   gh,
+            	   gzzh,
+            	   mc,
+            	   dlbm,
+            	   sfsc,
+            	   sflsry,
+            	   sftz 
+            from XT_ZZJG_RYBM_tyyw t1 
+            where t1.dwbm = #{dwbm}
+              and t1.dlbm = #{dlbm}
+			  and t1.sfsc = 'N'
+			  and t1.sftz = 'N'
+            )
+	</select>
+	
+	<delete id="deletery">
+		delete from XT_ZZJG_RYJSFP t where t.dwbm=#{dwbm} and t.bmbm=#{bmbm} and t.jsbm=#{jsbm} and t.gh=#{gh}
+	</delete>
+	
+	<delete id="deleteRybm">
+		delete from XT_ZZJG_RYBM r where r.dwbm=#{dwbm} and r.gh=#{gh}
+	</delete>
+	
+	<update id="updatepassword">
+		update XT_ZZJG_RYBM t set t.kl = #{kl} where t.dwbm = #{dwbm} and t.gh = #{gh}
+	</update>
+	
+	<select id="canupdate" resultType="RYBM">
+		select * from XT_ZZJG_RYBM t where t.dwbm = #{dwbm} and t.gh = #{gh} and t.sfsc = 'N' and t.sftz = 'N'
+	</select>
+</mapper>

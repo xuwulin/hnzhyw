@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" name="" content="IE=edge,chrome=1"/>
+    <title>海南省人民检察院综合业务管理系统-首页页面</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="js/plugin/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="js/plugin/easyui/themes/icon.css">
+
+    <script type="text/javascript" src="js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="js/zhyw/utils/constant.js"></script>
+    <script src="js/zhyw/utils/base64.js"></script>
+    <!--<script type="text/javascript" src="js/zhyw/isOrNotAdmin.js"></script>-->
+    <script type="text/javascript" src="js/zhyw/index.js"></script>
+    <script type="text/javascript">
+
+        //全局用户信息
+        window.currentUserInfo = {};
+
+        //菜单权限配置
+        var menuPermission = {
+            //系统管理员
+            admin: {
+                idSelectors: ["#liGl"],
+                firstURL: "view/systemManage/system/xtpz_fgld.html"
+            },
+            //一般用户
+            normal: {
+                idSelectors: ["#liIndex", "#liCx", "#liYw", "#liGrjx", "#liSfda"],
+                firstURL: "view/main.html"
+            },
+            //综合业务库录入的人员
+            zhyw: {
+                idSelectors: ["#liIndex", "#liGrjx"],
+                firstURL: "view/main.html"
+            },
+            //统一用户
+            tyyw: {
+                idSelectors: ["#liIndex", "#liCx", "#liYw", "#liGrjx", "#liSfda"],
+                firstURL: "view/main.html"
+            }
+        };
+
+        /**
+         * 修改密码
+         */
+        function updatePassword() {
+
+            var kl = $("input[name='kl']").val();
+            var qrkl = $("input[name='qrkl']").val();
+
+            if (!kl) {
+                return top.msgAlertInfo("密码不能为空!");
+            }
+
+            if (kl != qrkl) {
+                return top.msgAlertInfo("两次输入的密码不一致!");
+            }
+
+            var data = {
+                kl: kl,
+                dwbm: currentUserInfo.dwbm,
+                gh: currentUserInfo.gh
+            };
+
+            $.post(rootPath + '/service/rybm/updatepassword', data, function (data) {
+                if ("success" === data) {
+                    top.msgAlertInfo("密码修改成功!");
+                    closeModifyPasswordWindow();
+                }
+            });
+        }
+
+        /**
+         * 关闭示修改密码窗口
+         */
+        function closeModifyPasswordWindow() {
+            $("#updatepassword").fadeOut("fast");
+        }
+
+        /**
+         * 显示修改密码窗口
+         */
+        function displayModifyPasswordWindow() {
+            $("#xgmmts").css("display", "none");//隐藏提示
+            $("#updatepassword").fadeIn("fast");
+        }
+
+        /**
+         * 退出登录
+         */
+        function logout() {
+            $.post(rootPath + "/service/login/logout", function () {
+                location.href = rootPath + "/login.html";
+            });
+        }
+
+        /**
+         * 加载子页面
+         *
+         * @param type
+         * @param li
+         */
+        function loadChildPage(type, li) {
+
+            //切换选中样式
+            toggleStyle(li);
+
+            //组装参数
+            var params = "";
+            if (type == 2) {
+                var dwbm = currentUserInfo.dwbm;
+                var gh = currentUserInfo.gh;
+                params = "?dwbm=" + dwbm + "&gh=" + gh;
+            }
+
+            loadPage(li.getAttribute("x-url") + params);
+        }
+
+        /**
+         * 切换显示样式
+         * @param li
+         */
+        function toggleStyle(li) {
+            $(".button_dh").removeClass("button_dh");
+            $(li).addClass("button_dh");
+            // 	    	$("#iframe").css({height:"0px"});
+        }
+
+
+        /**
+         * 判断是否是统一软件用户
+         * @param dwbm
+         * @param gh
+         */
+        function judgeIsTyywUser(dwbm, gh) {
+
+            var deferred = $.post(rootPath + '/service/rybm/canupdate?dwbm=' + dwbm + '&gh=' + gh,"json");
+
+            //
+            deferred.done(function (data) {
+                //根据data处理菜单权限
+                var msgObj = JSON.parse(data);
+                handleMenuPermission(msgObj);
+            });
+
+            //如果是统一业务的人 就显示修改密码按钮
+            deferred.done(function (data) {
+                var resultObj = JSON.parse(data);
+                if(resultObj){
+                    if ("tyyw" != resultObj.msg) {
+                        $(".xgmm").css("display", "block");
+
+                        /* if ("true" == data) {	//如果密码还是默认密码就提示
+                            showDetail();
+                        } */
+                    }
+                }
+            });
+        }
+
+
+        /**
+         * 联合统一业务、综合业务查询该登录人是不是管理员
+         * @param dwbm
+         * @param dlbm
+         */
+        function judgeIsAdmin(dwbm, dlbm) {
+            //请求
+            var deferred = $.ajax({
+                type: 'post',
+                url: rootPath + '/service/login/isOrNotAdmin',
+                async: false,
+                dataType: 'json',
+                data: {
+                    dwbm: dwbm,
+                    dlbm: dlbm
+                }
+            });
+
+            //
+            deferred.done(function (data) {
+                //根据data处理菜单权限
+                handleMenuPermission(data);
+            });
+
+            //
+            deferred.done(function (data) {
+                //加载第一屏页面
+                loadPage(menuPermission[data.msg]['firstURL']);
+                //resizeParentIframe();
+            });
+        }
+
+        /**
+         * 处理嵌套页面，如过有则加载嵌套页面
+         */
+        function handleNestedURL() {
+            var URL = document.URL;
+
+            if (URL.indexOf("URL") != -1) {
+                var src = base64decode(URL.substring(URL.indexOf("=") + 1, URL.length));
+                if (src.indexOf(".html") != -1) {
+                    loadPage(src);
+                }
+            }
+        }
+
+        /**
+         * 处理菜单权限
+         */
+        function handleMenuPermission(data) {
+            //根据权限来判断是否显示
+            var permissions = menuPermission[data.msg]['idSelectors'];
+            for (var i = 0; i < permissions.length; i++) {
+                $(permissions[i]).css("display", "block");
+            }
+
+            //移除没有权限的页面元素，防止用户漏洞利用
+            $(".navigation").find("li").each(function () {
+                if ($.inArray("#" + this.id, permissions) < 0) {
+                    $(this).remove();
+                }
+            });
+        }
+
+        /**
+         * 持久化用户信息，并赋值给全局变量
+         */
+        function persistentUserInfo(userInfo,orgInfo) {
+            //个人信息存入
+            currentUserInfo.dwmc = userInfo.dwmc;
+            currentUserInfo.bmmc = userInfo.bmmc;
+            currentUserInfo.bmbm = userInfo.bmbm;
+            currentUserInfo.bmyss = userInfo.bmys || "";
+            currentUserInfo.isag = userInfo.isag;
+            currentUserInfo.ryjs = userInfo.ryjs;
+            currentUserInfo.dwjb = userInfo.dwjb;
+
+            var ry = userInfo.ry;
+            currentUserInfo.dwbm = ry.dwbm;
+            currentUserInfo.gh = ry.gh;
+            currentUserInfo.dlbm = ry.dlbm;
+            currentUserInfo.mc = ry.mc;
+            currentUserInfo.gzzh = ry.gzzh;
+            currentUserInfo.zrjcggh = ry.zrjcggh;
+
+            //组织机构信息存入
+            var bmmcList = [];//部门名称列表
+            var bmbmList = [];//部门编码列表
+            if (orgInfo.length > 0) {
+                for (var i = 0; i < orgInfo.length; i++) {
+                    bmmcList.push(orgInfo[i]["BMMC"]);
+                    bmbmList.push(orgInfo[i]["BMBM"]);
+                }
+            }
+            //当前登录人可能存在于多个部门，需要按，分开
+            currentUserInfo.bmmcList = bmmcList;
+            currentUserInfo.bmbmList = bmbmList;
+
+        }
+
+        /**
+         * 临时处理
+         *
+         * <p> 临时处理的方法名一般意义不大，所以用日期来标识
+         */
+        function temp2019_12_20() { // FIXME 以后可删除
+            //临时方法，全省试用“检察官司法档案管理”模块时，隐藏“检察官个人绩效考核”、“检察院业务工作考核”功能模块
+            if (showGrjx == 0) {
+                $("#liGrjx").hide();//隐藏“个人绩效考核”模块
+            }
+
+            if (showYwkh == 0) {
+                $("#liYw").hide();//隐藏“检察院业务工作考核”模块
+            }
+        }
+
+
+        /********************************************************************/
+
+        $(function () {
+
+            //从外部系统进入该页面，隐藏banner
+            if ("lygxt" === getQueryString("type")) {
+                hideBanner();
+            }
+
+            //获取登录人信息
+            var deferredUserInfo = $.ajax({
+                type: 'post',
+                url: rootPath + "/service/sy/grxx",
+                dataType: 'json'
+            });
+
+            //获取登录人的全部部门、角色信息
+            var deferredOrgInfo = $.ajax({
+                url: rootPath + "/service/login/getGrxxByDwbmAndGh",
+                type: 'post',
+                async: false,
+                dataType: 'json'
+            });
+
+            $.when(deferredUserInfo, deferredOrgInfo).done(function (userInfo, orgInfo) {
+                userInfo = userInfo[0];
+                orgInfo = orgInfo[0];
+
+                if (userInfo) {
+
+                    //持久化用户信息
+                    persistentUserInfo(userInfo,orgInfo);
+
+                    //是案管则显示案件问题反馈
+                    if (currentUserInfo.isag == "1") {
+                        $("#ajwtfk").slideDown();
+                    } else {
+                        $("#ajwtfk").hide();
+                    }
+
+                    //判断是否是管理员
+                    judgeIsAdmin(currentUserInfo.dwbm, currentUserInfo.dlbm);
+                    //判断是否是统一业务用户
+                    judgeIsTyywUser(currentUserInfo.dwbm, currentUserInfo.gh);
+                    //     					sendMsgNoticeArgs(ry.dwbm,ry.gh)
+                }
+
+            });
+
+            //处理嵌套页面，如过有则加载嵌套页面
+            handleNestedURL();
+
+            //重新计算本页面的高度
+            resizeParentIframe();
+
+            //临时处理
+            temp2019_12_20();
+
+        });
+
+    </script>
+    <script type="text/javascript" src="js/zhyw/websocket/websocket.js"></script>
+
+    <style>
+        .updatep {
+            margin: 20px 0 0 5px;
+            width: 250px;
+            height: 25px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+
+        .addfilebt {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            width: 73px;
+            height: 30px;
+            border: 1px solid #0575d2;
+            border-radius: 3px;
+            background: #0575d2;
+            color: white;
+            margin-right: 5px;
+            cursor: pointer;
+            margin-left: 270px
+        }
+
+        /**操作手册（帮助）的样式**/
+        .help_book {
+            color: #FFFFFF;
+            font-size: 19px;
+            font-weight: bolder;
+            float: right;
+            text-align: center;
+            margin-top: 16px;
+            margin-right: 20px;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        .help_book:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <!--头-->
+    <div class="header">
+        <div class="logo">
+            <div class="exit" onclick="logout();">退出登录</div>
+            <a class="help_book" target="_blank" href="helpWord/help_book.html">帮助</a>
+            <div class="xgmm" style="display:none" onclick="displayModifyPasswordWindow()"></div>
+        </div>
+
+        <div id="updatepassword" class="bounced" style="display:none">
+            <div class="bounced_all" style="height:270px;width: 390px">
+                <div class="bounced_tot">
+                    <span style="margin-left: 10px;line-height: 40px;">修改密码</span>
+                    <div class="tot_img" onclick="closeModifyPasswordWindow()"></div>
+                </div>
+                <div style="width: 100%;">
+                    <span id="xgmmts"
+                          style="margin-left: 3%; display: inline-block;height: 50px; width: 95%; color: #f32424;">您的密码是初始密码，为了保证您账号的安全，请修改密码!</span>
+                    <div style="margin-left: 30px;">
+                        <span style="color:#666;">新密码:</span>
+                        <input class="updatep" type="password" name="kl"/>
+                    </div>
+                    <div style="margin-left: 30px;">
+                        <span style="color:#666;">请确认:</span>
+                        <input class="updatep" type="password" name="qrkl"/>
+                    </div>
+                </div>
+                <div style="margin-top:30px;">
+                    <button class="addfilebt" style="cursor: pointer;" onclick="updatePassword()">确认</button>
+                </div>
+            </div>
+        </div>
+
+        <!--导航-->
+        <div class="navigation">
+            <ul>
+                <li id="liIndex" x-url="view/main.html" onclick="loadChildPage(1, this);" class="button_dh"
+                    style="background-image: url(image/sy.png); background-position: 30px 50%; padding-left: 60px; cursor: pointer;display: none">
+                    首页
+                </li>
+                <li id="liCx" x-url="view/sfda/sfda_cx.html" onclick="loadChildPage(2, this);"
+                    style="background-image: url(image/glda.png); cursor: pointer;display: none">
+                    检察官司法档案管理
+                </li>
+                <!-- jcggrjxkh.png 这张图片比较大,所以会出现加载慢的情况,改为jcggrjxkh-min.png这张图 -->
+                <li id="liGrjx" x-url="view/grjx/zhyw_grjx.html" class="lijxkh" onclick="loadChildPage(3, this);"
+                    style="background-image: url(image/jcggrjxkh-min.png); cursor: pointer;display: none">
+                    个人绩效考核
+                </li>
+                <li id="liYw" x-url="view/ywgzkh/ywgzkh_index.html" onclick="loadChildPage(4, this);"
+                    style="background-image: url(image/gzkh.png); cursor: pointer;display: none">
+                    检察院业务工作考核
+                </li>
+                <li id="liSfda" x-url="view/sfdaCount/sfdaCount.html" onclick="loadChildPage(5, this);"
+                    style="background-image: url(image/gzkh.png); cursor: pointer;display: none">
+                    检察院司法档案统计
+                </li>
+                <!-- <li id="ajwtfk"  onclick="sx(5, this);" style="display:none;background-image: url(image/ajwtfk.png);cursor:pointer;">案件问题反馈</li> -->
+                <li id="liGl" x-url="view/systemManage/system/xtpz_fgld.html" onclick="loadChildPage(6, this);"
+                    style="background-image: url(image/pz.png); cursor: pointer; display: none;">系统设置
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <iframe src="" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" width="100%"
+                height="100%" id="iframe" onload="iFrameHeight();"></iframe>
+    </div>
+</div>
+
+<div class="back_beiji"></div>
+<div id="msgNoticeSlide" style="display:none">
+    <a href="#" class="easyui-linkbutton" onclick="slide();"></a>
+</div>
+
+</body>
+
+</html>

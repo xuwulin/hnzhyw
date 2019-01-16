@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.rbac.mapper.LoginMapper">
+	<!-- 人员编码结果集 -->
+	<resultMap id="RybmMapa" type="RYBM">
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="gh" column="gh" javaType="java.lang.String"></result>
+		<result property="dlbm" column="dlbm" javaType="java.lang.String"></result>
+		<result property="kl" column="kl" javaType="java.lang.String"></result>
+		<result property="mc" column="mc" javaType="java.lang.String"></result>
+		<result property="gzzh" column="gzzh" javaType="java.lang.String"></result>
+		<result property="yddhhm" column="yddhhm" javaType="java.lang.String"></result>
+		<result property="dzyj" column="dzyj" javaType="java.lang.String"></result>
+		<result property="ydwbm" column="ydwbm" javaType="java.lang.String"></result>
+		<result property="ydwmc" column="ydwmc" javaType="java.lang.String"></result>
+		<result property="sflsry" column="sflsry" javaType="java.lang.String"></result>
+		<result property="sfsc" column="sfsc" javaType="java.lang.String"></result>
+		<result property="sftz" column="sftz" javaType="java.lang.String"></result>
+		<!-- <result property="zp" column="zp" javaType="java.lang.String"></result> -->
+		<result property="xb" column="xb" javaType="java.lang.String"></result>
+		<result property="caid" column="caid" javaType="java.lang.String"></result>
+		<result property="zrjcggh" column="zrjcggh" javaType="java.lang.String"></result>
+	</resultMap>
+	<!-- 部门角色 -->
+	<resultMap id="JSBMMap" type="JSBM">
+		<result property="bmjs" column="bmjs" javaType="java.lang.String"></result>
+		<result property="jsbm" column="jsbm" javaType="java.lang.String"></result>
+		<result property="bmys" column="bmys" javaType="java.lang.String"></result>
+	</resultMap>
+	<!-- 根据登录别名获取人员信息 -->
+	<select id="getRyByGzzh" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_XTGL.proc_getrybygzzh(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_yhm,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=RybmMapa},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</select>
+	<select id="getbmjs" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_XTGL.get_bmbm_jsbm(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=JSBMMap}
+          		)} 
+    	]]>
+	</select>
+	<!-- 根据CA证号获取人员信息 -->
+	<!-- <select id="getRyByDlbm" parameterType="java.util.Map" statementType="CALLABLE"> -->
+	<!-- -->
+	<!-- </select> -->
+	
+	
+	<!--根据登录别名和单位编码查询登录人的工号，再结合单位编码查询管理员表，该登录人是不是超级管理员PKG_GLY.pro_isAdmin -->
+	<select id="isOrNotAdmin" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_GLY.pro_isAdmin(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_dlbm,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=RybmMapa}
+          		)} 
+    	]]>
+	</select>
+	
+	<!--根据登录工号和单位编码查询登录人所有部门、所有角色 -->
+	<resultMap id="DlrGrxxMap" type="java.util.Map"/>
+	<select id="getGrxxByDwbmAndGh" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_XTGL.pro_getGrxxByDwbmAndGh(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=DlrGrxxMap}
+          		)} 
+    	]]>
+	</select> 
+	
+	
+		<select id="getYhm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_XTGL.pro_getYhm(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},
+          		#{p_yhm,mode=OUT,jdbcType=VARCHAR}
+          		)}
+    	]]>
+	</select>
+
+	<select id = "getRybmInfoByDwGh" resultType="RYBM">
+		SELECT * FROM (
+			SELECT r.dwbm,
+						r.gh,
+						r.dlbm,
+						r.gzzh,
+						r.mc,
+						r.caid,
+						'1' TYPE
+			FROM xt_zzjg_rybm_tyyw r WHERE r.sfsc = 'N' AND r.sftz = 'N'
+			UNION
+			SELECT r.dwbm,
+						r.gh,
+						r.dlbm,
+						r.gzzh,
+						r.mc,
+						r.caid,
+						'2' TYPE
+			FROM xt_zzjg_rybm r WHERE r.sfsc = 'N' AND r.sftz = 'N'
+		  ) t WHERE t.dwbm = #{dwbm} AND t.gh = #{gh}
+			GROUP BY t.dwbm,
+					 t.gh,
+					 t.dlbm,
+				     t.gzzh,
+					 t.mc,
+					 t.caid,
+					 TYPE
+	</select>
+
+</mapper>

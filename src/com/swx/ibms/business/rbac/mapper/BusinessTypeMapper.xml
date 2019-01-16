@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:对应的mapper文件包名 -->
+<mapper namespace="com.swx.ibms.business.rbac.mapper.BusinessTypeMapper">
+	<!-- 业务类别mapper，对统一业务中业务类别的实现相关操作 -->
+	
+	<!-- 
+		角色配置的结果集  id：结果集名称   type:实体类名称  
+		property:实体类属性名      column：数据库对应列的字段名
+		javaType:数据库列的字段所对应的java中的数据类型
+		
+		重要字段名: id：业务类别ID      
+				bmlbbm：部门类别编码
+				ywbm：业务编码
+				ywmc：业务名称 
+				dwbm：单位编码
+				sfsc：是否删除 Y:是  N：否
+				businessTypeMap：业务类别map
+	-->
+	
+	<resultMap id="businessTypeMap" type="com.swx.ibms.business.rbac.bean.BusinessType">
+		<result property="id" column="id" javaType="java.lang.Integer"></result>
+		<result property="bmlbbm" column="bmlbbm" javaType="java.lang.String"></result>
+		<result property="ywbm" column="ywbm" javaType="java.lang.String"></result>
+		<result property="ywmc" column="ywmc" javaType="java.lang.String"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="sfsc" column="sfsc" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<!-- 根据是否删除标示查询此单位下部门的所有业务类别  -->
+	<select id="selectList" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_BM_YWLB.pro_selectList( 
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=businessTypeMap}
+  		)} 
+  		]]>
+	</select> 
+	
+	
+</mapper>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>个人绩效-绩效考核审批页面</title>
+
+    <link rel="stylesheet" type="text/css" href="../js/plugin/easyui/themes/bootstrap/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../js/plugin/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/jxkhsp.css">
+
+    <script type="text/javascript" src="../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+
+</head>
+<style>
+    #grjx_sp_ckbox{
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+    }
+</style>
+<body style="background: #efeef4;margin: 0 auto;padding: 0;font-family: 微软雅黑">
+
+<div id="judicialfilesmanage" class="judicialfilesmanage">
+    <div class="judicialfilesmanage_tilte">
+        <span>当前位置:待办事项审批</span>
+    </div>
+
+    <div class="judicialfilesmanage_one">
+        <div class="judicialfilesmanage_two" style="height: 13px;">
+        </div>
+        <div class="judicail_table" style="margin: 0 20px;">
+            <table class="r_table" style="width: 100%;border: 1px solid #cae3fd;" cellpadding="0" cellspacing="0">
+                <tbody id='splc'>
+                <tr  id="splctr1" style="background: #d8ecff;height: 31px;line-height: 31px;text-align: left;color: #134671">
+                    <td style="width:2%"></td>
+                    <td style="width:18%">单位名称</td>
+                    <td style="width:10%">部门名称</td>
+                    <td style="width:10%">处理人</td>
+                    <td style="width:40%">处理意见</td>
+                    <td style="width:10%">处理时间</td>
+                    <td style="width:10%">处理结果</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id= "spyj_div" class="judicialfilesmanage_two" style="margin: 20px 20px;height: 32px;position: relative;">
+            <span style="width: 128px;font-size: 18px;">处理意见:</span>
+            <input id="spyj" class="judicialfilesmanage_two_input2" type="text" style="width: calc(100% - 144px);line-height: 26px;border: 1px solid #ddd;border-radius: 3px;"/>
+            <br/><br/>
+            <div id="grjx_xzspr_div">
+                <div style="height: 40px;">
+                    <div style=" width: 150px;float: left;font-size: 18px;">绩效考核等次：</div>
+                    <input id="grjx_pddj_select" name="grjx_pddj_select" style="width: 230px;height:30px;"/>
+                </div>
+                <div style="height: 40px;">
+                    <input type="checkbox" checked="true" id="grjx_sp_ckbox" style="zoom: 160%; margin: 0;"/>
+                    <div>
+                        <div style="margin-bottom: 13px; width: 160px;float: left;font-size: 18px;">选择下一审核人：</div>
+                        <div id="grjx_next_xzspr_div">
+                            <input id="grjx_spr_select" name="grjx_spr_select" type="text" style="width: 230px;height:30px;"/>
+                        </div>
+                        <span style="font-size:20px;color:mediumvioletred;margin-bottom: 20px;display: inline-block;width: 100%;">(注：勾选下一审核人表示流程尚未结束。)</span>
+                    </div>
+                </div>
+            </div>
+            <div style='margin-top: 10px;margin-right: 21px;margin-bottom: 20px;overflow: hidden; position: absolute;right: -18px;top: 37px;' id="shengpidivid">
+                <a id="button_agree" class="ju_btn" style="float: right;margin-left: 35px" onclick="addspyj(1)">同意</a>
+                <a id="button_refuse" class="ju_btn_white" style="float: right;margin-left: 10px" onclick="addspyj(2)">退回</a>
+                <a id="button_read" class="ju_btn" style="float: right;margin-left: 35px" onclick="addspyj(3)">设为已读</a>
+                <a id="button_recall" class="ju_btn" style="display:none;float: right;margin-left: 35px">撤回</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="../js/zhyw/grjx/jxkhsp.js"></script>
+<!--<script type="text/javascript" src="../js/zhyw/grjx/jxkh.js"></script>-->
+</html>

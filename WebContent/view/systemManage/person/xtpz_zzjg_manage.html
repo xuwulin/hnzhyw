@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>系统管理-组织机构管理界面</title>
+    <!--<link rel="stylesheet" type="text/css" href="../../../css/easyui.css"/>-->
+    <link rel="stylesheet" type="text/css" href="../../../css/xtpz.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/xtpz_rygl.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/icon.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="../../../css/zTreeStyle/zTreeStyle.css"/>-->
+    <!--<link rel="stylesheet" type="text/css" href="../../../css/card.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/bounced.css"/>-->
+    <!--  <link type="text/css" rel="stylesheet" href="../../../js/plugin/easyui/themes/default/easyui.css" />-->
+    <script type="text/javascript" src="../../../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../../../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../../js/zhyw/utils/common.js"></script>
+    <style type="text/css">
+        .cza {
+            color: blue;
+        }
+
+        .left_ul li:nth-of-type(2) a {
+            background-color: #0876D5;
+            color: #fff;
+            border: 1px solid #0876D5;
+            cursor: pointer;
+        }
+
+        .tree-title {
+            font-size: 14px;
+        }
+
+        .add_table table {
+            width: 100%;
+            border-bottom: 1px solid #C3E3FC;
+            border-right: 1px solid #C3E3FC;
+        }
+
+        .add_table table td {
+            border: 1px solid #C3E3FC;
+            border-bottom: none;
+            border-right: none;
+            padding-left: 4px;
+            font-size: 14px;
+            height: 30px;
+        }
+
+        .add_table table td:nth-of-type(odd) {
+            background-color: #fafbfd;
+            width: 130px;
+            text-align: right;
+            padding-right: 10px;
+        }
+
+        .add_table input {
+            border: none;
+            width: 100%;
+            height: 28px;
+            background: transparent;
+        }
+
+        #addDeptFbmbm + span.textbox,
+        #addDeptLsjg + span.textbox,
+        #addDeptCbbm + span.textbox,
+        #addDeptBmys + span.textbox,
+        #addRoleBmbm + span.textbox,
+        #addPerXb + span.textbox,
+        #addPerBmbm + span.textbox,
+        #addPerJsbm + span.textbox,
+        #addPerLsry + span.textbox{
+            width: 100% !important;
+            border: none;
+        }
+
+        #addDeptFbmbm + span.textbox > span.textbox-addon > a,
+        #addDeptLsjg + span.textbox > span.textbox-addon > a,
+        #addDeptCbbm + span.textbox > span.textbox-addon > a,
+        #addDeptBmys + span.textbox > span.textbox-addon > a,
+        #addRoleBmbm + span.textbox > span.textbox-addon > a,
+        #addPerXb + span.textbox > span.textbox-addon > a,
+        #addPerBmbm + span.textbox > span.textbox-addon > a,
+        #addPerJsbm + span.textbox > span.textbox-addon > a,
+        #addPerLsry + span.textbox > span.textbox-addon > a{
+            background-color: #fff !important;
+        }
+
+        #addDeptFbmbm + span.textbox > input.textbox-text,
+        #addDeptLsjg + span.textbox > input.textbox-text,
+        #addDeptCbbm + span.textbox > input.textbox-text,
+        #addDeptBmys + span.textbox > input.textbox-text,
+        #addRoleBmbm + span.textbox > input.textbox-text,
+        #addPerXb + span.textbox > input.textbox-text,
+        #addPerBmbm + span.textbox > input.textbox-text,
+        #addPerJsbm + span.textbox > input.textbox-text,
+        #addPerLsry + span.textbox > input.textbox-text{
+            width: calc(100% - 18px) !important;
+            padding: 0 !important;
+        }
+
+        #addDeptBz + span.textbox ,#addRoleDesc + span.textbox {
+            width: 100% !important;
+            border: none;
+        }
+        #addDeptBz + span.textbox>textarea, #addRoleDesc + span.textbox>textarea{
+            width: 100%!important;
+        }
+        .bounced_save {
+            width: 92%;
+            height: 65px;
+        }
+
+        .bounced_save > button {
+            width: 90px;
+            height: 35px;
+            border: 1px solid #2B9CD8;
+            border-radius: 4px;
+            background-color: #2B9CD8;
+            color: white;
+            font-size: 16px;
+            float: right;
+        }
+
+        .archives_search {
+            background: #0674D3;
+            width: 60px;
+            height: 30px;
+            border: 1px solid #0674D3;
+            color: #fff;
+            margin-right: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+<div class="xtpz">
+    <div class="xtpz_top">当前位置 : 组织机构管理</div>
+    <div class="xtpz_content">
+        <div class="content_left">
+            <div class="left_tree"></div>
+        </div>
+        <div class="content_right" style="">
+            <div class="right_top" style="width:100%;">
+                <img src="../../../image/icon_sd.png" style="float: left; margin: 17px 12px 0px 12px;">组织机构管理
+            </div>
+            <div class="content_right_tree" style="display:block;float:left;width:25%;">
+                <div style="margin-top: 10px;">
+                    <div style="display:block;float:left;margin-left: 6px;margin-top: 4px;">单位：</div>
+                    <input id="dw_tree" style="display:block;float:left;width:220px;height: 30px;margin-top: 6px;"/>
+                </div>
+                <div style="margin-top: 10px;">
+                    <ul id="dw_bm_js_tree" style="width: 90%;padding-top: 10px;padding-left: 20px;font-size:16px;"></ul>
+                </div>
+            </div>
+            <div class="content_right_content" style="display:block;float:left;border:1px solid #ddd;width:74%;">
+                <div style="margin-top: 10px">
+                    <form id="dw_bm_js_ry_query_form">
+                        <div>
+                            <div style="float: left; margin-left: 5px">
+                                <span>部门：</span>
+                                <input id="dw_bm" name="dwbm" type="hidden" style="float: left"/>
+                                <input id="bm_tree" name="bmbm" style="float: left" class="combo"/>
+                            </div>
+                            <div style="float: left; margin-left: 10px">
+                                <span>角色：</span>
+                                <input id="js_tree" name="jsbm" style="float: left"/>
+                            </div>
+                            <div>
+                                <span style="float: left; margin-left: 10px">姓名：</span>
+                                <input id="rymc" name="dlbm"/>
+                                <a id="ry_query_btn">查询</a>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div style="margin-top: 10px">
+                    <div id="dw_bm_js_gh_edit_btn" style="padding: 10px;">
+                        <a id="addDept_btn" class="add_btn" href="javascript:void(0)">添加部门</a>
+                        <a id="addRole_btn" class="add_btn" href="javascript:void(0)">添加角色</a>
+                        <a id="addPer_btn" class="add_btn" href="javascript:void(0)">添加人员</a>
+                    </div>
+                    <table id="dw_bm_js_gh_table"></table>
+                </div>
+            </div>
+
+            <!--添加-->
+            <div>
+                <!--添加页面标题-->
+                <div>
+                    <!--返回按钮-->
+                    <button id="back" style="outline: none;cursor: pointer;background-color: #fff;display: none;
+                                width: 70px;float: right; margin-right: 30px; border: 1px solid #c1c1c1;
+                                border-radius: 5px; margin-top: 10px;" onclick="clickBack();">
+                        <img src="../../../image/fh.png" style="float: left; margin: 8px 5px 0 12px;">
+                        <span style="display: inline-block; float: left; color: #095EDA; line-height: 30px;">返回</span>
+                    </button>
+                    <!--标题-->
+                    <ul class="right_ul" style="width: 95%">
+                        <li id="titleOfDep" class="right_li" style="display: none;">添加部门</li>
+                        <li id="titleOfDep_update" class="right_li" style="display: none;">修改部门</li>
+                        <li id="titleOfRole" class="right_li" style="display: none;">添加角色</li>
+                        <li id="titleOfRole_update" class="right_li" style="display: none;">修改角色</li>
+                        <li id="titleOfPer" class="right_li" style="display: none;">添加人员</li>
+                        <li id="titleOfPer_update" class="right_li" style="display: none;">修改人员</li>
+                    </ul>
+
+                </div>
+                <!--添加部门-->
+                <div id="addDepartment" class="addDepartment add_table" style="display:none">
+                    <div style="padding: 0 10px;">
+                        <div style="margin-top: 14px;width: 96.5%;margin-left: 20px">
+                            <form id="addDepartment_form">
+                                <table cellpadding="0" cellspacing="0" style='width: 100%;' class='table_tbys'>
+                                    <tr style="height:30px;display:none;">
+                                        <td align="center">单位编码</td>
+                                        <td><input type="text" id="addDeptDwbm" name="dwbm" class="textbo"></td>
+                                        <td align="center">部门编码</td>
+                                        <td><input type="text" id="addDeptBmbm" name="bmbm" class="textbo"></td>
+                                    </tr>
+
+                                    <tr style="height: 30px;">
+                                        <td align="center">部门名称&nbsp;<span style='color : red'>*</span></td>
+                                        <td><input type="text" id="addDeptBmmc" name="bmmc" class="textbo"
+                                                   placeholder="注意：部门名称一旦确定将不可修改！">
+                                        <td align="center">部门简称</td>
+                                        <td><input type="text" id="addDeptBmjc" name="bmjc" class="textbo"></td>
+                                    </tr>
+
+                                    <tr style="height: 30px;">
+                                        <td align="center">父部门</td>
+                                        <td><input type="text" id="addDeptFbmbm" name="fbmbm" class="combo">
+                                        <td align="center">部门序号</td>
+                                        <td><input type="text" id="addDeptBmxh" name="bmxh" class="textbox"
+                                                   placeholder="请输入数字！">
+                                    </tr>
+
+                                    <tr style="height: 30px;">
+                                        <td align="center">部门文号简称</td>
+                                        <td><input type="text" id="addDeptBmwhjc" name="bmwhjc" class="textbo"></td>
+                                        <td align="center">部门案号简称</td>
+                                        <td><input type="text" id="addDeptBmahjc" name="bmahjc" class="textbo"></td>
+                                    </tr>
+
+                                    <tr style="height: 30px;">
+                                        <td align="center">是否临时机构</td>
+                                        <td><input type="text" id="addDeptLsjg" name="sflsjg" class="combo"></td>
+                                        <td align="center">是否承办部门</td>
+                                        <td><input type="text" id="addDeptCbbm" name="sfcbbm" class="combo"></td>
+                                    </tr>
+
+                                    <tr style="height: 70px;">
+                                        <td align="center">部门类别</td>
+                                        <td><input type="text" id="addDeptBmys" name="bmys" class="combo"></td>
+                                        <td align="center">备注</td>
+                                        <td colspan="5"><input type="text" id="addDeptBz" name="bz" style="height: 70px;"></td>
+                                    </tr>
+
+                                </table>
+                            </form>
+                        </div>
+
+                        <div class="bounced_save" style="text-align: center; margin-top: 20px;">
+                            <button id="deptSave" class="action_button">保存</button>
+                        </div>
+                    </div>
+                </div>
+                <!--添加角色-->
+                <div id="addRole" class="addRole add_table" style="display:none">
+                    <div style="padding: 0 10px;">
+                        <div style="margin-top: 14px;width: 96.5%;margin-left: 20px">
+                            <form id="addRole_form">
+                                <table cellpadding="0" cellspacing="0" style='width: 100%;' class='table_tbys'>
+                                    <tr style="height:30px;display:none;">
+                                        <td align="center">单位编码</td>
+                                        <td><input type="text" id="addRoleDwbm" name="dwbm" class="textbo"></td>
+                                        <td align="center">角色编码</td>
+                                        <td><input type="text" id="addRoleJsbm" name="jsbm" class="textbo"></td>
+                                        <td align="center">审批角色编码</td>
+                                        <td><input type="text" id="addRoleSpjs" name="spjsbm" class="textbo"></td>
+                                    </tr>
+
+                                    <tr style="height: 30px;">
+                                        <td align="center">部门&nbsp;<span style='color : red'>*</span></td>
+                                        <td><input type="text" id="addRoleBmbm" name="bmbm" class="textbo"
+                                                   data-options="required:true"></td>
+                                        <td align="center">角色名称&nbsp;<span style='color : red'>*</span></td>
+                                        <td><input type="text" id="addRoleJsmc" name="jsmc" class="textbo"></td>
+                                        <td align="center">角色序号</td>
+                                        <td><input type="text" id="addRoleJsxh" name="jsxh" class="textbox"
+                                                   placeholder="请输入数字！">
+                                    </tr>
+
+                                    <tr style="height: 30px;">
+                                        <td align="center">角色描述</td>
+                                        <td colspan="5"><input type="text" id="addRoleDesc" name="description"
+                                                               style="height: 70px;width: 1040px"></td>
+                                    </tr>
+
+                                </table>
+                            </form>
+                        </div>
+
+                        <div class="bounced_save" style="text-align: center; margin-top: 20px;">
+                            <button id="roleSave" class="action_button">保存</button>
+                        </div>
+                    </div>
+                </div>
+                <!--添加人员-->
+                <div id="addPerson" class="addPerson add_table" style="display:none">
+                    <div style="padding: 0 10px;">
+                        <div style="margin-top: 14px;width: 96.5%;margin-left: 20px">
+                            <form id="addPerson_form">
+                                <table cellpadding="0" cellspacing="0" style='width: 100%;' class='table_tbys'>
+                                    <tr style="height:30px;display:none;">
+                                        <td align="center">单位编码</td>
+                                        <td><input type="text" id="addPerDwbm" name="dwbm" class="textbo"></td>
+                                        <!--<td align="center">工号</td>
+                                        <td><input type="text" id="addPerGh" name="gh" class="textbo"></td>-->
+                                    </tr>
+
+                                    <tr style="height: 30px;">
+                                        <td align="center">名称&nbsp;<span style='color : red'>*</span></td>
+                                        <td><input type="text" id="addPerMc" name="mc" class="textbo"></td>
+                                        <td align="center">登录别名&nbsp;<span style='color : red'>*</span></td>
+                                        <td><input type="text" id="addPerDlbm" name="dlbm" class="textbo"
+                                                   placeholder="注意：登录别名一旦确定将不可修改">
+                                    </tr>
+
+                                    <tr style="height: 30px;">
+                                        <td align="center">性别&nbsp;<span style='color : red'>*</span></td>
+                                        <td><input type="text" id="addPerXb" name="xb" class="combo"></td>
+                                        <td align="center">密码</td>
+                                        <td><input type="text" id="addPerKl" name="kl" class="textbox"
+                                                   placeholder="默认密码：11111111"></td>
+                                    </tr>
+
+                                    <tr style="height: 30px;">
+                                        <td align="center">部门&nbsp;<span style='color : red'>*</span></td>
+                                        <td><input type="text" id="addPerBmbm" name="bmbm" class="combo"></td>
+                                        <td align="center">角色&nbsp;<span style='color : red'>*</span></td>
+                                        <td><input type="text" id="addPerJsbm" name="jsbm" class="combo"></td>
+                                    </tr>
+
+                                    <tr style="height: 30px;">
+                                        <td align="center">工号</td>
+                                        <td><input type="text" id="addPerGh" name="gh" class="textbox" onkeyup="value=value.replace(/[^\d]/g,'')",
+                                                   maxlength="4", minlength="4"
+                                                   placeholder="注意：工号只能是4位数字，如果不填写，系统将自动生成"></td>
+                                        <td align="center">工作证号</td>
+                                        <td><input type="text" id="addPerGzzh" name="gzzh" class="textbox"></td>
+                                        <!--<td align="center">是否是临时人员</td>-->
+                                        <!--<td><input type="text" id="addPerLsry" name="sflsry" class="combo"></td>-->
+                                    </tr>
+
+                                </table>
+                            </form>
+                        </div>
+
+                        <div class="bounced_save" style="text-align: center; margin-top: 20px;">
+                            <button id="perSave" class="action_button">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--datagrid表格展示-->
+            <div style="margin-left: 20px">
+                <table id="departmentDatagrid"></table>
+                <table id="roleDatagrid"></table>
+
+                <div class="queryByName" style="display: none; margin-bottom: 10px">
+                    <span style="float: left; margin-left: 10px;">姓名：</span>
+                    <input id="name" name="dlbm" placeholder="请输入姓名或登录别名"/>
+                    <!--<a id="queryPerByName">查询</a>-->
+                    <button id="queryPerByName" class="archives_search" style="height:30px;">查询</button>
+                </div>
+
+                <table id="personDatagrid"></table>
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+
+</body>
+<script type="text/javascript">
+    // 加载左边的菜单树
+    $(".left_tree").load("../left_menu.html");
+</script>
+<script src="../../../js/zhyw/xtgl/xtpz_zzjg_manage.js" charset="utf-8"></script>
+</html>

@@ -1,0 +1,165 @@
+* {
+	margin: 0;
+	font-family: 'Microsoft YaHei UI';
+	padding: 0;
+}
+
+.login {
+	min-width: 1007px;
+	/*min-height: 700px;*/
+	position: absolute;
+	width: 99.8%;
+	height: 99.8%;
+}
+
+.login2 {
+	width: 32%;
+	height: 40%;
+	margin-top: 10%;
+	margin-left: 6%;
+	float: left;
+}
+
+.login1 {
+	float: left;
+	width: 49%;
+	height: 35%;
+	margin-left: 8%;
+	margin-top: 9%;
+}
+
+.login1_input {
+	width: 100%;
+	height: 50px;
+}
+
+.login1_input select {
+	width: 14%;
+	height: 34px;
+	text-indent: 10px;
+	font-size: 14px;
+	color: #888;
+	line-height: 34px;
+	border: 1px solid #666666;
+	border-radius: 4px;
+	float: right;
+}
+
+.login1_input input {
+	width: 60%;
+	height: 30px;
+	text-indent: 10px;
+	font-size: 14px;
+	color: #888;
+	line-height: 34px;
+	border: 1px solid #c1c1c1;
+	border-radius: 4px;
+}
+
+.login1_input2 {
+	width: 61%;
+	height: 40px;
+	float: right
+}
+
+.login1_input2 input {
+	width: 15px;
+	height: 15px;
+	float: left;
+	margin-top: 5px;
+}
+
+.login1_input2 span {
+	display: inline-block;
+	float: left;
+	margin-left: 3px;
+	font-size: 14px;
+	color: #333;
+}
+
+.login1_input3 {
+	
+	width: 61%;
+	height: 38px;
+	position: relative;
+	float: right;
+	cursor:pointer;
+}
+
+.login1_input3 span {
+	display: inline-block;
+    position: absolute;
+    top: 0;
+    /* left: 42%; */
+    font-weight: bold;
+    color: wheat;
+    letter-spacing: 5px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 38px;
+}
+
+.login1_input div {
+	width: 38%;
+	height: 40px;
+	font-size: 14px;
+	color: #666;
+	float: left;
+	line-height: 35px;
+}
+
+.login1_input div span {
+	display: inline-block;
+	float: right;
+
+}
+.login1_input>div>span{
+	padding-right: 8px;
+}
+.login_all {
+	width: 50%;
+	height: 54%;
+	margin: 12% auto 0 auto;
+}
+/*@media screen and (max-width: 1040px){*/
+	/*.login_all{*/
+		/*margin: 19% auto 0 auto;*/
+	/*}*/
+/*}*/
+@media screen and (min-width: 10px) and (max-width:1006px){
+	.login_all{
+		margin: 13% auto 0 auto;
+	}
+	.login1_input>div>span{
+		padding-right: 5px;
+	}
+}
+@media screen and (min-width: 1007px) and (max-width:1100px){
+	.login_all{
+		margin: 19% auto 0 auto;
+	}
+	.login1_input>div>span{
+		padding-right: 7px;
+	}
+}
+@media screen and (min-width: 1151px) and (max-width:1279px) {
+	.login_all{
+		margin: 15% auto 0 auto;
+	}
+}
+@media screen and (min-width: 1280px) and (max-width:1365px) {
+	.login_all{
+		margin: 19% auto 0 auto;
+	}
+}
+@media screen and (min-width: 1366px) and (max-width:1399px) {
+	.login_all{
+		margin: 9% auto 0 auto;
+	}
+}
+@media screen and (min-width: 1400px) and (max-width:1599px) {
+	.login_all{
+		margin: 16% auto 0 auto;
+	}
+}

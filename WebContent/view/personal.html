@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../css/personal.css">
+    <link rel="stylesheet" type="text/css" href="../css/easyui.css">
+
+    <script type="text/javascript" src="../js/plugin/easyui/jquery.min.js"></script>
+    <script src="../js/zhyw/utils/history.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../js/plugin/echarts-all.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/zhyw/macarons.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/zhyw/grjx/personal.js"></script>
+</head>
+<body>
+<div class="personal">
+    <div class="title_tit">
+        <div class="title_tit_al">
+            <div style="color: #333;display: inline-block;font-size: 18px;float: left;line-height: 35px;margin-left: 10px">
+                个人绩效总分
+            </div>
+            <span style="display: inline-block;font-size: 25px;color: #ff5401;float: left;margin-left: 10px"
+                  id="grjxdf"></span>
+        </div>
+        <button id="goback"
+                style="cursor:pointer;color: #666;display: inline-block;font-size: 15px;float: right;line-height: 20px;">
+            <img alt="" src="../image/fh.png">返回
+        </button>
+    </div>
+    <div class="al_center">
+        <ul class="al_center_ul">
+            <li style="border-bottom: 2px solid #0864ac;color: #0360a9;">侦监</li>
+            <li>公诉</li>
+            <li>民行</li>
+        </ul>
+        <div id="main" style="height: 500px"></div>
+    </div>
+    <div class="al_botton">
+        <div class="al_botton_1">
+            <div style="background: url('../image/grjx.png') no-repeat;width: 22px;height: 22px;float: left;margin: 15px 5px 0 20px;"></div>
+            <span style="color:#1874dc;display: inline-block;margin-top: 14px">个人绩效</span>
+        </div>
+
+        <div style=" width: 100%; ">
+            <table id="dg" class="tab_le"></table>
+            <div class="but_last">
+                <button id="i_button" style="cursor:pointer;">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    resizeParentIframe();
+</script>
+</html>

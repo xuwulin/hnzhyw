@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.system.mapper.FgldMapper">
+
+	<select id="getFgld" resultType="com.swx.ibms.business.system.bean.Fgld">
+		<!-- select * from XT_FGLD t where -->
+		<!-- t.dwbm = #{dwbm} -->
+		select t.*,
+		a.mc ldxm
+		from XT_FGLD t
+		left join xt_zzjg_rybm_tyyw a on a.gh = t.ldgh and a.dwbm = t.dwbm
+		where a.sfsc='N'
+		and t.dwbm = #{dwbm}
+		union all
+		select t2.*,
+		b.mc ldxm
+		from xt_fgld t2
+		left join xt_zzjg_rybm b on b.gh = t2.ldgh and b.dwbm = t2.dwbm
+		where b.sfsc = 'N'
+		and t2.dwbm = #{dwbm}
+
+	</select>
+	<select id="getBmmc" resultType="com.swx.ibms.business.rbac.bean.BMBM">
+		select *
+		from xt_zzjg_bmbm_tyyw t
+		where t.dwbm = #{dwbm}
+		and t.bmbm in (
+		<foreach collection="bmbm" item="b" separator=",">
+			#{b}
+		</foreach>
+		)
+		AND T.SFSC = 'N'
+
+		union all
+
+		select *
+		from xt_zzjg_bmbm t
+		where t.dwbm = #{dwbm}
+		and t.bmbm in (
+		<foreach collection="bmbm" item="b" separator=",">
+			#{b}
+		</foreach>
+		)
+		AND T.SFSC = 'N'
+	</select>
+
+	<select id="getLd" resultType="com.swx.ibms.business.rbac.bean.RYBM">
+		SELECT   r.gh,
+		r.dwbm,
+		r.dlbm,
+		r.kl,
+		r.mc,
+		r.gzzh,
+		r.yddhhm,
+		r.dzyj,
+		r.ydwbm,
+		r.ydwmc,
+		r.sflsry,
+		r.sfsc,
+		r.sftz
+		FROM xt_zzjg_rybm_tyyw r
+		INNER JOIN xt_qx_ryjsfp_tyyw p ON p.gh = r.gh
+		INNER JOIN xt_qx_jsbm_tyyw j ON j.jsbm = p.jsbm
+		INNER JOIN xt_zzjg_bmbm_tyyw b ON b.bmbm = j.bmbm
+		and r.sfsc = 'N'
+		and b.sfsc = 'N'
+		AND r.sftz = 'N'
+		AND j.bmbm = p.bmbm
+		AND p.dwbm = #{dwbm}
+		AND b.dwbm = #{dwbm}
+		AND r.dwbm = #{dwbm}
+		AND j.dwbm = #{dwbm}
+		<!-- AND r.mc  not like '%管理员%' -->
+		AND b.bmys = '0000'
+		<!--  AND j.jsbm = '002' -->
+	</select>
+
+	<!-- 根据单位编码和部门名称获取院领导信息【当根据部门映射查找院领导失败时调用】 -->
+	<select id="getAllLdByDwBmmc" resultType="com.swx.ibms.business.rbac.bean.RYBM">
+		SELECT r.gh,
+		r.dwbm,
+		r.dlbm,
+		r.kl,
+		r.mc,
+		r.gzzh,
+		r.yddhhm,
+		r.dzyj,
+		r.ydwbm,
+		r.ydwmc,
+		r.sflsry,
+		r.sfsc,
+		r.sftz
+		FROM xt_zzjg_rybm_tyyw r
+		INNER JOIN xt_qx_ryjsfp_tyyw p ON p.dwbm=r.dwbm AND p.gh = r.gh
+		INNER JOIN xt_qx_jsbm_tyyw j   ON j.dwbm=r.dwbm AND j.jsbm = p.jsbm
+		INNER JOIN xt_zzjg_bmbm_tyyw b ON j.bmbm = p.bmbm AND b.dwbm=r.dwbm AND b.bmbm = j.bmbm
+		INNER JOIN xt_zzjg_dwbm_tyyw d ON r.dwbm=d.dwbm AND b.dwbm=d.dwbm AND j.dwbm=d.dwbm
+		WHERE r.sfsc = 'N' and r.sftz = 'N'
+		AND b.sfsc = 'N'
+		AND d.sfsc = 'N'
+		AND d.dwbm = #{dwbm}
+		<!-- and b.bmys in ('0000') -->
+		AND  j.jsmc like '%副检察长%'
+		ORDER BY r.dwbm,b.bmbm,j.jsbm,r.gh
+	</select>
+
+
+	<select id="getBm" resultType="com.swx.ibms.business.rbac.bean.BMBM">
+		select *
+		from xt_zzjg_bmbm_tyyw t
+		where t.dwbm = #{dwbm}
+		  AND T.SFSC = 'N'
+		union all
+		select *
+		from xt_zzjg_bmbm b
+		where b.dwbm = #{dwbm}
+		  and b.sfsc = 'N'
+	</select>
+
+	<insert id="addFgld">
+		insert into XT_FGLD(
+				id,
+				dwbm,
+				ldgh,
+				bmbm,
+				cjsj)
+		values(
+				sys_guid(),
+				#{dwbm},
+				#{ldgh},
+				#{bmbm},
+				sysdate)
+	</insert>
+
+	<update id="updateFgld">
+		UPDATE XT_FGLD T SET T.DWBM = #{dwbm},
+							 T.LDGH = #{ldgh},
+							 T.BMBM =#{bmbm},
+							 T.CJSJ = SYSDATE
+		WHERE T.ID = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from XT_FGLD t where t.id=#{id}
+	</delete>
+
+</mapper>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swx.ibms.business.archives.mapper.SfdaJdqkMapper">
+	<!-- 司法档案下监督情况 -->
+	<resultMap id="sfdaJdqkResultMap" type="SfdaJdqk">
+		<result column="id" property="id" javaType="java.lang.String" />
+		<result column="jdzl" property="jdzl" javaType="java.lang.String" />
+		<result column="jdbm" property="jdbm" javaType="java.lang.String" />
+		<result column="jdsj" property="jdsj" javaType="java.lang.String" />
+		<result column="jdsy" property="jdsy" javaType="java.lang.String" />
+		<result column="jdcl" property="jdcl" jdbcType="CHAR" />
+		<result column="zgqk" property="zgqk" jdbcType="CHAR" />
+		<result column="jdqtqk" property="jdqtqk" javaType="java.lang.String" />
+		<result column="did" property="gdid" javaType="java.lang.String" />
+		<result column="sfsc" property="sfsc" jdbcType="CHAR" />
+		<result column="zhgxbm" property="zhgxbm" jdbcType="CHAR" />
+		<result column="zhgxr" property="zhgxr" jdbcType="CHAR" />
+		<result column="zhgxsj" property="zhgxsj" javaType="java.lang.String" />
+		<result column="status" property="status" javaType="java.lang.String" />
+	</resultMap>
+
+	<!-- 展示监督情况（根据档案id） -->
+	<select id="getSfdaJdqkPageList" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+	 		{call PKG_SFDA_JDQK.pro_getSfdaJdqkPageList( 
+	 			#{p_gdid,mode=IN,jdbcType=VARCHAR},
+	  		    #{p_start,mode=IN,jdbcType=INTEGER},
+	  		    #{p_end,mode=IN,jdbcType=INTEGER},
+	  		    #{p_total,mode=OUT,jdbcType=INTEGER},
+	  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sfdaJdqkResultMap}
+	  		)} 
+  		]]>
+	</select>
+
+	<!-- 新增监督情况 -->
+	<insert id="addSfdaJdqk" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_SFDA_JDQK.pro_addSfdaJdqk(
+          		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_jdzl,mode=IN,jdbcType=VARCHAR},
+          		#{p_jdbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_jdsj,mode=IN,jdbcType=VARCHAR},
+          		#{p_jdsy,mode=IN,jdbcType=VARCHAR},
+          		#{p_jdcl,mode=IN,jdbcType=CHAR},
+          		#{p_zgqk,mode=IN,jdbcType=CHAR},
+          		#{p_jdqtqk,mode=IN,jdbcType=VARCHAR},
+          		#{p_gdid,mode=IN,jdbcType=VARCHAR},
+          		#{p_sfsc,mode=IN,jdbcType=CHAR},
+          		#{p_zhgxbm,mode=IN,jdbcType=CHAR},
+          		#{p_zhgxr,mode=IN,jdbcType=CHAR},
+          		#{p_zhgxsj,mode=IN,jdbcType=VARCHAR},
+          		#{Y,mode=OUT,jdbcType=VARCHAR}
+          	)} 
+    	]]>
+	</insert>
+
+	<!-- 修改监督情况 -->
+	<update id="updateSfdaJdqk" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_SFDA_JDQK.pro_updateSfdaJdqk(
+        		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_jdzl,mode=IN,jdbcType=VARCHAR},
+          		#{p_jdbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_jdsj,mode=IN,jdbcType=VARCHAR},
+          		#{p_jdsy,mode=IN,jdbcType=VARCHAR},
+          		#{p_jdcl,mode=IN,jdbcType=CHAR},
+          		#{p_zgqk,mode=IN,jdbcType=CHAR},
+          		#{p_jdqtqk,mode=IN,jdbcType=VARCHAR},
+          		#{p_zhgxbm,mode=IN,jdbcType=CHAR},
+          		#{p_zhgxr,mode=IN,jdbcType=CHAR},
+          		#{p_zhgxsj,mode=IN,jdbcType=VARCHAR},
+          		#{Y,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+
+	<!-- 删除监督情况 -->
+	<delete id="deleteSfdaJdqk" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_SFDA_JDQK.pro_deleteSfdaJdqk(
+          		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{Y,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</delete>
+
+	<select id="serachJdqkByType" resultMap="sfdaJdqkResultMap">
+		select * from yx_sfda_jdqk
+		where DID = #{daid}
+		  and SFSC = 'N'
+		  and JDSJ between #{kssj} and #{jssj}
+	</select>
+
+</mapper>

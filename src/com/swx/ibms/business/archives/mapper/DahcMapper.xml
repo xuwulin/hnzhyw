@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.archives.mapper.DahcMapper">
+
+	<select id="getHcdafl" resultType="Hcdafl">
+		select * from XT_DAHC_DAFL
+	</select>
+	<select id="getHcwtfl" resultType="Hcwtfl">
+		select * from XT_DAHC_WTFL
+	</select>
+
+
+	<insert id="addDahcsl">
+		insert into YX_DAHC_HCSL(id,
+		dagzid,
+		wtfl,
+		wtmc,
+		dafl,
+		damc,
+		fjid,
+		zt,
+		clr,
+		clsj,
+		cljg,
+		clyj,
+		wtms,
+		clrdwbm,
+		clrdwmc,
+		clrbmbm,
+		clrbmmc,
+		fqrgh
+		) values(
+		#{id},
+		#{dagzid},
+		#{wtfl},
+		#{wtmc},
+		#{dafl},
+		#{damc},
+		#{fjid},
+		#{zt},
+		#{clr},
+		sysdate,
+		#{cljg},
+		#{clyj},
+		#{wtms},
+		#{clrdwbm},
+		#{clrdwmc},
+		#{clrbmbm},
+		#{clrbmmc},
+		#{fqrgh}
+		)
+	</insert>
+
+	<select id="dahcDbyw" resultType="Dahcsl">
+		select * from YX_DAHC_HCSL t
+		where t.clrdwbm = #{dwbm} and t.zt ='1' and t.sfcl='N'
+	</select>
+	<select id="getDbyw" resultType="Dahcsl">
+		select * from YX_DAHC_HCSL t
+		where t.dagzid = #{id} order by t.clsj
+	</select>
+	<select id="getFjlj" resultType="String">
+		select * from (
+		select t.wjdz from YX_FJ t where t.wbid=#{wbid} order
+		by t.scrq desc
+		) where rownum <![CDATA[ < ]]>
+		2
+	</select>
+	<select id="grdahcdbyw" resultType="Dahcsl">
+		select * from YX_DAHC_HCSL t
+		where t.clrdwbm = #{dwbm} and t.fqrgh = #{gh} and t.zt='1' and
+		t.sfcl='Y'
+	</select>
+
+
+	<delete id="deleteDahcsl">
+		delete from YX_DAHC_HCSL t where t.dagzid = #{dagzid}
+	</delete>
+
+	<update id="complete">
+		update YX_DAHC_HCSL t set t.sfcl='Y' where
+		t.dagzid=#{dagzid} and t.zt='1'
+	</update>
+
+	<update id="dahcupdate">
+		update YX_SFDA_SPLCSL t set t.spzt='5' where
+		t.spstid=#{dagzid} and t.spzt='4' and t.splx='2'
+	</update>
+
+
+	<select id="daspzt" resultType="String">
+		select * from (
+		select t.spzt from YX_SFDA_SPLCSL t where
+		t.spstid=#{dagzid} and t.splx='2' order by
+		t.spsj desc
+		) where rownum <![CDATA[ < ]]>
+		2
+	</select>
+
+
+	<select id="sfgs" resultType="String">
+		select t.sfgs from YX_SFDA_DAGZ t
+		where t.id=#{dagzid}
+	</select>
+
+
+	<select id="getfj" resultType="Integer">
+		select count(*) from YX_FJ t where
+		t.wbid=#{wbid} and t.fjlx=4
+	</select>
+
+
+	<select id="sfzzhc" resultType="Splcsl">
+		select * from (
+		select * from
+		YX_SFDA_SPLCSL t where t.splx='8'and
+		t.spstid=#{wbid} order by spsj
+		desc
+		) where rownum =1
+	</select>
+
+
+	<select id="sfgq" resultType="Splcsl">
+		select * from YX_SFDA_SPLCSL t
+		where t.splx='2' and t.spzt = '4'
+		and t.spstid=#{wbid} and rownum =1
+		order by
+		t.spsj desc
+	</select>
+
+	<select id="getMon" resultType="Double">
+		select
+		months_between(add_months(#{spDate},(#{hcqx}/30)),sysdate ) mon from
+		YX_SFDA_SPLCSL t where t.spstid=#{wbid} and t.splx='2'and t.spzt='4'
+		and rownum =1 order by t.spsj
+	</select>
+
+
+	<update id="updateRyjn">
+		update YX_SFDA_SPLCSL t set t.spzt='5' where
+		t.splx='4' and t.spstid=#{dagzid}
+		and t.spzt ='4'
+	</update>
+
+
+
+</mapper>

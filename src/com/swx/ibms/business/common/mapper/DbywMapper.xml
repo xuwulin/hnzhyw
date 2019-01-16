@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.common.mapper.DbywMapper">
+	<!-- 自定义结果集 -->
+	<!-- 单位编码结果集 -->
+	<resultMap id="DbywMap" type="DBYW">
+		<result property="clnr" column="clnr" javaType="java.lang.String"></result>
+		<result property="lx" column="lx" javaType="java.lang.String"></result>
+		<result property="rq" column="rq" javaType="java.lang.String"></result>
+		<result property="wbid" column="wbid" javaType="java.lang.String"></result>
+		<result property="ssr" column="ssr" javaType="java.lang.String"></result>
+		<result property="ssrdwbm" column="ssrdwbm" javaType="java.lang.String"></result>
+		<result property="nf" column="nf" javaType="java.lang.String"></result>
+		<result property="jd" column="jd" javaType="java.lang.String"></result>
+		<result property="spzt" column="spzt" javaType="java.lang.String"></result>
+		<result property="jdlx" column="jdlx" javaType="java.lang.String"></result>
+		<result property="cljs" column="cljs" javaType="java.lang.String"></result>
+		<result property="kssj" column="kssj" javaType="java.lang.String"></result>
+		<result property="jssj" column="jssj" javaType="java.lang.String"></result>
+		<result property="bspdwmc" column="bspdwmc" javaType="java.lang.String"></result>
+		<result property="bspbmmc" column="bspbmmc" javaType="java.lang.String"></result>
+		<result property="bspdwbm" column="spdw" javaType="java.lang.String"></result>
+		<result property="bspbmbm" column="spbm" javaType="java.lang.String"></result>
+		<result property="spId" column="spid" javaType="java.lang.String"></result>
+		<result property="ywlx" column="ywlx" javaType="java.lang.String"></result>
+	</resultMap>
+	<!-- 查询待办业务 -->
+	<select id="getDbyw" parameterType="java.util.Map"
+		statementType="CALLABLE">
+			<![CDATA[  
+        	{call pkg_dbyw.proc_getdbyw(
+        	    #{spdw,mode=IN,jdbcType=VARCHAR},
+        	    #{spr,mode=IN,jdbcType=VARCHAR},
+        	    #{bmbmSql,mode=IN,jdbcType=VARCHAR},
+        	    #{jsbmSql,mode=IN,jdbcType=VARCHAR},
+          		#{cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=DbywMap},
+          		#{Y,mode=OUT,jdbcType=VARCHAR}
+          	)} 
+    ]]>
+	</select>
+	<!-- 分页查询所有待办业务  -->
+	<select id="getDbywAll" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+		{call pkg_dbyw.proc_getdbywall(
+ 		    #{spdw,mode=IN,jdbcType=VARCHAR},
+         	#{spr,mode=IN,jdbcType=VARCHAR},
+         	#{bmbmSql,mode=IN,jdbcType=VARCHAR},
+         	#{jsbmSql,mode=IN,jdbcType=VARCHAR},
+         	#{p_tj,mode=IN,jdbcType=VARCHAR},
+         	#{p_dbtj,mode=IN,jdbcType=VARCHAR},
+         	#{p_fkyd,mode=IN,jdbcType=VARCHAR},
+         	#{begin,mode=IN,jdbcType=INTEGER},
+         	#{end,mode=IN,jdbcType=INTEGER},
+        	#{cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=DbywMap},
+         	#{Y1,mode=OUT,jdbcType=VARCHAR}
+ 		)}
+ 	]]>   
+	</select>
+	
+	<!-- 查询总行数 -->
+	<select id="getDbywRows" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_dbyw.pro_getdbywrows( 
+  		    #{spdw,mode=IN,jdbcType=VARCHAR}, 
+         	#{spr,mode=IN,jdbcType=VARCHAR}, 
+         	#{bmbmSql,mode=IN,jdbcType=VARCHAR},
+         	#{jsbmSql,mode=IN,jdbcType=VARCHAR},
+         	#{p_tj,mode=IN,jdbcType=VARCHAR},
+         	#{p_dbtj,mode=IN,jdbcType=VARCHAR},
+         	#{p_fkyd,mode=IN,jdbcType=VARCHAR},
+          	#{count,mode=OUT,jdbcType=INTEGER}, 
+          	#{Y2,mode=OUT,jdbcType=VARCHAR} 
+  		)} 
+  	]]>  
+	</select>
+	
+	
+	<!-- 查询某人或者某部门的待审批信息【档案、个人绩效、业务考核】 -->
+	<select id="getAllSpInfoByDwbmGhOrBm" resultType="DBYW">
+		(
+		select distinct 
+		           s.id spid,
+		           spstid wbid,
+		           spdw,
+		           d.dwmc bspdwmc,
+		           spbm,
+		           bmmc bspbmmc,
+		           spr,
+		           s.splx lx,
+		           to_char(s.spsj, 'yyyy-mm-dd hh24:mi') rq,
+		           s.spsj spsj,
+		           s.spzt spzt,
+		           a.ssrdwbm ssrdwbm,
+		           a.ssr ssr, 
+		           a.tjnf nf, 
+		           null jd, 
+		           c.clnr clnr,
+		           s.spyj spyj,
+		           s.cljs cljs,
+		           s.lcjd lcjd,
+		           s.jdlx jdlx,
+		           s.lcid lcid,
+		           null ywlx,
+		           a.kssj,
+           		   a.jssj
+		from YX_SFDA_SPLCSL s 
+		inner join xt_zzjg_dwbm_tyyw d on d.sfsc = 'N' and d.dwbm = s.spdw
+		inner join (
+		      select dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh from xt_zzjg_bmbm_tyyw b where b.sfsc = 'N'
+		      union all
+		      select dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh from xt_zzjg_bmbm b where b.sfsc = 'N'
+		      group by dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh order by dwbm,bmxh
+		) t on t.dwbm = s.spdw and t.bmbm = s.spbm
+		inner join yx_sfda_clsw c on c.wbid = s.spstid and trim(c.cllx) = trim(s.splx) and c.lcid = s.lcid 
+		inner join yx_sfda_dagz a ON a.id = s.spstid
+		where 1=1
+		    <if test="spzt != null and spzt != '' ">
+				and instr(#{spzt},s.spzt)>0
+			</if>
+			<if test="dwbm != null and dwbm != '' ">
+				and s.spdw = #{dwbm}
+			</if>
+			<!-- <if test="bmbm != null and bmbm != '' ">
+				and instr(#{bmbm},s.spbm)>0
+			</if> -->
+			<if test="gh != null and gh != '' ">
+				and s.spr = #{gh}
+			</if>
+			<if test="clnr != null and clnr != '' ">
+				and c.clnr like '%#{clnr}%' 
+			</if>
+		)
+		union 
+		(
+		select distinct 
+		           s.id spid,
+		           spstid wbid,
+		           spdw,
+		           d.dwmc bspdwmc,
+		           spbm,
+		           bmmc bspbmmc,
+		           spr,
+		           s.splx lx,
+		           to_char(s.spsj, 'yyyy-mm-dd hh24:mi') rq,
+		           s.spsj spsj,
+		           s.spzt spzt,
+		           a.ssrdwbm ssrdwbm,
+		           a.ssr ssr, 
+		           a.tjnf nf, 
+		           null jd, 
+		           c.clnr clnr,
+		           s.spyj spyj,
+		           s.cljs cljs,
+		           s.lcjd lcjd,
+		           s.jdlx jdlx,
+		           s.lcid lcid,
+		           null ywlx,
+		           a.kssj,
+           		   a.jssj
+		from YX_SFDA_SPLCSL s 
+		inner join xt_zzjg_dwbm_tyyw d on d.sfsc = 'N' and d.dwbm = s.spdw
+		inner join (
+		      select dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh from xt_zzjg_bmbm_tyyw b where b.sfsc = 'N'
+		      union all
+		      select dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh from xt_zzjg_bmbm b where b.sfsc = 'N'
+		      group by dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh order by dwbm,bmxh
+		) t on t.dwbm = s.spdw and t.bmbm = s.spbm
+		inner join yx_sfda_clsw c on c.wbid = s.spstid and trim(c.cllx) = trim(s.splx) and c.lcid = s.lcid 
+		inner join yx_sfda_dagz a ON a.id = s.spstid
+		where 1=1 and s.spr is null
+		    <if test="spzt != null and spzt != '' ">
+				and instr(#{spzt},s.spzt)>0
+			</if>
+			<if test="dwbm != null and dwbm != '' ">
+				and s.spdw = #{dwbm}
+			</if>
+			<if test="bmbm != null and bmbm != '' ">
+				and instr(#{bmbm},s.spbm)>0
+			</if>
+			<if test="clnr != null and clnr != '' ">
+				and c.clnr like '%#{clnr}%' 
+			</if>
+		)
+		union 
+		(
+		select distinct 
+		           s.id spid,
+		           spstid wbid,
+		           spdw,
+		           d.dwmc bspdwmc,
+		           spbm,
+		           bmmc bspbmmc,
+		           spr,
+		           s.splx lx,
+		           to_char(s.spsj, 'yyyy-mm-dd hh24:mi') rq,
+		           s.spsj spsj,
+		           s.spzt spzt,
+		           (select ssrdwbm from yx_sfda_dagz where id in (select distinct da_id  from yx_sfda_ajxx a where instr(spstid,a.ajid)>0 )) ssrdwbm,
+               	   (select ssr from yx_sfda_dagz where id in (select distinct da_id  from yx_sfda_ajxx a where instr(spstid,a.ajid)>0 )) ssr, 
+                   (select TJNF from yx_sfda_dagz where id in (select distinct da_id  from yx_sfda_ajxx a where instr(spstid,a.ajid)>0 )) nf, 
+		           null jd, 
+		           c.clnr clnr,
+		           s.spyj spyj,
+		           s.cljs cljs,
+		           s.lcjd lcjd,
+		           s.jdlx jdlx,
+		           s.lcid lcid,
+		           null ywlx,
+		            (select kssj from yx_sfda_dagz where id in (select distinct da_id  from yx_sfda_ajxx a where instr(spstid,a.ajid)>0 )) kssj,
+               		(select jssj from yx_sfda_dagz where id in (select distinct da_id  from yx_sfda_ajxx a where instr(spstid,a.ajid)>0 )) jssj
+		from YX_SFDA_SPLCSL s 
+		inner join xt_zzjg_dwbm_tyyw d on d.sfsc = 'N' and d.dwbm = s.spdw
+		inner join (
+		      select dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh from xt_zzjg_bmbm_tyyw b where b.sfsc = 'N'
+		      union all
+		      select dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh from xt_zzjg_bmbm b where b.sfsc = 'N'
+		      group by dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh order by dwbm,bmxh
+		) t on t.dwbm = s.spdw and t.bmbm = s.spbm
+		inner join yx_sfda_clsw c on c.wbid = s.spstid and trim(c.cllx) = trim(s.splx) and c.lcid = s.lcid 
+		where s.splx in ('12') 
+		    <if test="spzt != null and spzt != '' ">
+				and instr(#{spzt},s.spzt)>0
+			</if>
+			<if test="dwbm != null and dwbm != '' ">
+				and s.spdw = #{dwbm}
+			</if>
+			<!-- <if test="bmbm != null and bmbm != '' ">
+				and instr(#{bmbm},s.spbm)>0
+			</if> -->
+			<if test="gh != null and gh != '' ">
+				and s.spr = #{gh}
+			</if>
+			<if test="clnr != null and clnr != '' ">
+				and c.clnr like '%#{clnr}%' 
+			</if>
+		)
+		union all
+		(
+		select distinct 
+		           s.id spid,
+		           spstid wbid,
+		           spdw,
+		           d.dwmc bspdwmc,
+		           spbm,
+		           bmmc bspbmmc,
+		           spr,
+		           s.splx lx,
+		           to_char(s.spsj, 'yyyy-mm-dd hh24:mi') rq,
+		           s.spsj,
+		           s.spzt,
+		           h.dwbm ssrdwbm,
+		           h.gh ssr, 
+		           to_char(h.year) nf,
+		           to_char(h.jd) jd, 
+		           c.clnr clnr,
+		           s.spyj spyj,
+		           s.cljs cljs,
+		           s.lcjd lcjd,
+		           s.jdlx jdlx,
+		           s.lcid lcid,
+		           null ywlx,
+		           null kssj,
+           		   null jssj
+		from YX_SFDA_SPLCSL s 
+		inner join xt_zzjg_dwbm_tyyw d on d.sfsc = 'N' and d.dwbm = s.spdw
+		inner join (
+		      select dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh from xt_zzjg_bmbm_tyyw b where b.sfsc = 'N'
+		      union all
+		      select dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh from xt_zzjg_bmbm b where b.sfsc = 'N'
+		      group by dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh order by dwbm,bmxh
+		) t on t.dwbm = s.spdw and t.bmbm = s.spbm
+		inner join yx_sfda_clsw c on c.wbid = s.spstid and trim(c.cllx) = trim(s.splx) and c.lcid = s.lcid 
+		inner join yx_grjx_ydkh h ON s.spstid = h.id
+		where 1=1
+		     <if test="spzt != null and spzt != '' ">
+				and instr(#{spzt},s.spzt)>0
+			</if>
+			<if test="dwbm != null and dwbm != '' ">
+				and s.spdw = #{dwbm}
+			</if>
+			<!-- <if test="bmbm != null and bmbm != '' ">
+				and instr(#{bmbm},s.spbm)>0
+			</if> -->
+			<if test="gh != null and gh != '' ">
+				and s.spr = #{gh}
+			</if>
+			<if test="clnr != null and clnr != '' ">
+				and c.clnr like '%#{clnr}%' 
+			</if>
+		)
+		union all
+		(
+		select distinct 
+		           s.id spid,
+		           spstid wbid,
+		           spdw,
+		           d.dwmc bspdwmc,
+		           spbm,
+		           bmmc bspbmmc,
+		           spr,
+		           s.splx lx,
+		           to_char(s.spsj, 'yyyy-mm-dd hh24:mi') rq,
+		           s.spsj,
+		           s.spzt,
+		           null ssrdwbm,
+		           d1.khrmc ssr, 
+		           to_char(d1.year) nf, 
+		           null jd, 
+		           concat(concat(concat(concat(rpad(to_char(d1.kssj,'yyyy-MM-dd'),12,'至'),to_char(d1.jssj,'yyyy-MM-dd')),w.dwmc),'-业务考核-'),l.khmc ) clnr,
+		           s.spyj spyj,
+		           s.cljs cljs,
+		           s.lcjd lcjd,
+		           s.jdlx jdlx,
+		           s.lcid lcid,
+		           d1.khlx ywlx,
+		           null kssj,
+           		   null jssj
+		from YX_SFDA_SPLCSL s 
+		inner join xt_zzjg_dwbm_tyyw d on d.sfsc = 'N' and d.dwbm = s.spdw
+		inner join (
+		      select dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh from xt_zzjg_bmbm_tyyw b where b.sfsc = 'N'
+		      union all
+		      select dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh from xt_zzjg_bmbm b where b.sfsc = 'N'
+		      group by dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh order by dwbm,bmxh
+		) t on t.dwbm = s.spdw and t.bmbm = s.spbm
+		INNER JOIN yx_ywgz_ywlxkh d1  ON s.spstid = d1.id
+		INNER JOIN xt_ywgz_khdw w ON d1.dwbm = w.dwbm
+		INNER JOIN xt_ywgz_khlxpz l ON d1.khlx  = l.khlx
+		where 1=1
+		    <if test="spzt != null and spzt != '' ">
+				and instr(#{spzt},s.spzt)>0
+			</if>
+			<if test="dwbm != null and dwbm != '' ">
+				and s.spdw = #{dwbm}
+			</if>
+			<!-- <if test="bmbm != null and bmbm != '' ">
+				and instr(#{bmbm},s.spbm)>0
+			</if> -->
+			<if test="gh != null and gh != '' ">
+				and s.spr = #{gh}
+			</if>
+		)
+		union all
+		(
+		select distinct 
+		           s.id spid,
+		           spstid wbid,
+		           spdw,
+		           d.dwmc bspdwmc,
+		           spbm,
+		           bmmc bspbmmc,
+		           spr,
+		           s.splx lx,
+		           to_char(s.spsj, 'yyyy-mm-dd hh24:mi') rq,
+		           s.spsj,
+		           s.spzt,
+		           null ssrdwbm,
+		           null ssr, 
+		           to_char(d1.year) nf, 
+		           null jd, 
+		           concat(concat(concat(concat(rpad(to_char(d1.start_date,'yyyy-MM-dd'),12,'至'),to_char(d1.end_date,'yyyy-MM-dd')),w.dwmc),'-业务考核'),'' ) clnr,
+		           s.spyj spyj,
+		           s.cljs cljs,
+		           s.lcjd lcjd,
+		           s.jdlx jdlx,
+		           s.lcid lcid,
+		           null ywlx,
+		           null kssj,
+           		   null jssj
+		from YX_SFDA_SPLCSL s 
+		inner join xt_zzjg_dwbm_tyyw d on d.sfsc = 'N' and d.dwbm = s.spdw
+		inner join (
+		      select dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh from xt_zzjg_bmbm_tyyw b where b.sfsc = 'N'
+		      union all
+		      select dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh from xt_zzjg_bmbm b where b.sfsc = 'N'
+		      group by dwbm,bmbm,fbmbm,bmmc,bmjc,bmys,bmxh order by dwbm,bmxh
+		) t on t.dwbm = s.spdw and t.bmbm = s.spbm
+		INNER JOIN yx_ywgz_kh d1  ON s.spstid = d1.id
+		INNER JOIN xt_ywgz_khdw w ON d1.khdw = w.dwbm
+		where 1=1
+		    <if test="spzt != null and spzt != '' ">
+				and instr(#{spzt},s.spzt)>0
+			</if>
+			<if test="dwbm != null and dwbm != '' ">
+				and s.spdw = #{dwbm}
+			</if>
+			<!-- <if test="bmbm != null and bmbm != '' ">
+				and instr(#{bmbm},s.spbm)>0
+			</if> -->
+			<if test="gh != null and gh != '' ">
+				and s.spr = #{gh}
+			</if>
+		)
+		order by spsj desc
+	</select>	
+	
+	
+	
+	
+	
+	
+</mapper>

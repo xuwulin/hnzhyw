@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.archives.mapper.SfdacjMapper">
+
+	<!-- 司法档案创建案件信息 -->
+	<resultMap id="SFDAAJMap" type="SFDAAJ">
+		<result property="cbrgh" column="cbrgh" javaType="java.lang.String"></result>
+		<result property="dwbm" column="cbdw_bm" javaType="java.lang.String"></result>
+		<result property="tysah" column="tysah" javaType="java.lang.String"></result>
+		<result property="ajmc" column="ajmc" javaType="java.lang.String"></result>
+		<result property="baxl" column="blts" javaType="java.lang.String"></result>
+		<result property="ywlx" column="ywlx" javaType="java.lang.String"></result>
+		<result property="ajlb" column="ajlb_mc" javaType="java.lang.String"></result>
+		<result property="cbr" column="cbr" javaType="java.lang.String"></result>
+		<result property="slrq" column="slrq" javaType="java.sql.Date"></result>
+		<result property="wcrq" column="wcrq" javaType="java.sql.Date"></result>
+		<result property="cbdw" column="cbdw_mc" javaType="java.lang.String"></result>
+		<result property="cbbm" column="cbbm_mc" javaType="java.lang.String"></result>
+		<result property="ajzt" column="ajzt" javaType="java.lang.String"></result>
+		<result property="bmsah" column="bmsah" javaType="java.lang.String"></result>
+		<result property="aqzy" column="aqzy" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<resultMap id="DACJAJXYRXXMap" type="DACJAJXYRXX">
+		<result property="bmsah" column="bmsah" javaType="java.lang.String"></result>
+		<result property="tysah" column="tysah" javaType="java.lang.String"></result>
+		<result property="xyrbh" column="xyrbh" javaType="java.lang.String"></result>
+		<result property="xm" column="xm" javaType="java.lang.String"></result>
+		<result property="xb" column="xb_mc" javaType="java.lang.String"></result>
+		<result property="zw" column="zw" javaType="java.lang.String"></result>
+		<result property="zj" column="zj_mc" javaType="java.lang.String"></result>
+		<result property="csrq" column="csrq" javaType="java.sql.Date"></result>
+		<result property="zjhm" column="zjhm" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<resultMap id="JCGDAAJZLMap" type="JCGDAAJZL">
+		<result property="tysah" column="tysah" javaType="java.lang.String"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="cbrgh" column="cbrgh" javaType="java.lang.String"></result>
+		<result property="cjr" column="cjr" javaType="java.lang.String"></result>
+		<result property="baxg" column="baxg" javaType="java.lang.String"></result>
+		<result property="wfxszqqk" column="wfxszqqk" javaType="java.lang.String"></result>
+		<result property="baaq" column="baaq" javaType="java.lang.String"></result>
+		<result property="sfxc" column="sfxc" javaType="java.lang.String"></result>
+		<result property="ajzlpcjg" column="ajzlpcjg" javaType="java.lang.String"></result>
+	</resultMap>
+
+
+	<resultMap id="DAGZGDMap" type="DAGZGD">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="ssr" column="ssr" javaType="java.lang.String"></result>
+		<result property="tjnf" column="tjnf" javaType="java.lang.String"></result>
+		<result property="kssj" column="kssj" javaType="java.lang.String"></result>
+		<result property="jssj" column="jssj" javaType="java.lang.String"></result>
+		<result property="cjr" column="cjr" javaType="java.lang.String"></result>
+		<result property="cjsj" column="cjsj" javaType="java.lang.String"></result>
+		<result property="ssrdwbm" column="ssrdwbm" javaType="java.lang.String"></result>
+		<result property="cjrdwbm" column="cjrdwbm" javaType="java.lang.String"></result>
+		<result property="sfgs" column="sfgs" javaType="java.lang.String"></result>
+		<result property="sffc" column="sffc" javaType="java.lang.String"></result>
+		<result property="fcsj" column="fcsj" javaType="java.lang.String"></result>
+		<result property="spzt" column="spzt" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<resultMap id="xyrdetailMap" type="DACJAJXYRXX">
+		<result property="xm" column="XM" javaType="java.lang.String"></result>
+		<result property="xb" column="XB_MC" javaType="java.lang.String"></result>
+		<result property="mz_mc" column="MZ_MC" javaType="java.lang.String"></result>
+		<result property="csrq" column="CSRQ" javaType="java.sql.Date"></result>
+		<result property="hjszd_mc" column="HJSZD_MC" javaType="java.lang.String"></result>
+		<result property="zjlx_mc" column="ZJLX_MC" javaType="java.lang.String"></result>
+		<result property="zjhm" column="ZJHM" javaType="java.lang.String"></result>
+		<result property="cym" column="CYM" javaType="java.lang.String"></result>
+		<result property="ch" column="CH" javaType="java.lang.String"></result>
+		<result property="zasnl" column="ZASNL" javaType="java.lang.Integer"></result>
+		<result property="nl" column="NL" javaType="java.lang.Integer"></result>
+		<result property="csd_mc" column="CSD_MC" javaType="java.lang.String"></result>
+		<result property="gj_mc" column="GJ_MC" javaType="java.lang.String"></result>
+		<result property="zsd_mc" column="ZSD_MC" javaType="java.lang.String"></result>
+		<result property="zsdxxdz" column="ZSDXXDZ" javaType="java.lang.String"></result>
+		<result property="gzdwszd_mc" column="GZDWSZD_MC" javaType="java.lang.String"></result>
+		<result property="gzdw" column="GZDW" javaType="java.lang.String"></result>
+		<result property="sf_mc" column="SF_MC" javaType="java.lang.String"></result>
+		<result property="sjyzk_mc" column="SJYZK_MC" javaType="java.lang.String"></result>
+		<result property="zzmc_mc" column="ZZMM_MC" javaType="java.lang.String"></result>
+		<result property="zw" column="ZW" javaType="java.lang.String"></result>
+		<result property="zj" column="ZJ_MC" javaType="java.lang.String"></result>
+		<result property="zy_mc" column="ZY_MC" javaType="java.lang.String"></result>
+		<result property="sfdrsz" column="SFDRSZ" javaType="java.lang.String"></result>
+		<result property="sfdwld" column="SFDWLD" javaType="java.lang.String"></result>
+		<result property="sfncjczzry" column="SFNCJCZZRY" javaType="java.lang.String"></result>
+		<result property="sfdwzfld" column="SFDWZFLD" javaType="java.lang.String"></result>
+		<result property="sfwljysrddb" column="SFWLJYSRDDB" javaType="java.lang.String"></result>
+		<result property="sfwljyszxwy" column="SFWLJYSZXWY" javaType="java.lang.String"></result>
+		<result property="fddlr" column="FDDLR" javaType="java.lang.String"></result>
+		<result property="sfzf" column="SFZF" javaType="java.lang.String"></result>
+		<result property="sfzt" column="SFZT" javaType="java.lang.String"></result>
+		<result property="jyksrq" column="JYKSRQ" javaType="java.sql.Date"></result>
+		<result property="jydqrq" column="JYDQRQ" javaType="java.sql.Date"></result>
+		<result property="jyyjzt" column="JYYJZT" javaType="java.lang.String"></result>
+		<result property="jyts" column="JYTS" javaType="java.lang.Integer"></result>
+	</resultMap>
+
+	<!-- 根据部门受案号、嫌疑人编号查嫌疑人详细信息 -->
+	<select id="selectXyrDetail" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        	{call pkg_zhyw_sfda.select_xyr_detail(
+          		#{p_bmsah,mode=IN,jdbcType=VARCHAR},
+          		#{p_xyrbh,mode=IN,jdbcType=VARCHAR},
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=xyrdetailMap}
+          		)} 
+    	]]>
+	</select>
+
+	<!-- 根据承办单位和承办人人工号获取承办案件列表 -->
+	<select id="getCbAjList" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        	{call pkg_zhyw_sfda.select_cbaj_list(
+          		#{p_cbrgh,mode=IN,jdbcType=CHAR},
+          		#{p_dwbm,mode=IN,jdbcType=CHAR},
+          		#{p_kssj,mode=IN,jdbcType=CHAR},
+          		#{p_jssj,mode=IN,jdbcType=CHAR},
+          		#{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=SFDAAJMap}
+          		)} 
+    	]]>
+	</select>
+	
+	<!-- 根据统一受案号获取嫌疑人列表 -->
+	<select id="getAjXyrList" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[
+			{call pkg_zhyw_sfda.select_xyr_list(
+				#{p_tysah,mode=IN,jdbcType=CHAR},
+				#{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=DACJAJXYRXXMap}
+			)}
+		]]>
+	</select>
+	
+	<!-- 添加办案质量 -->
+	<insert id="addBazl" parameterType="java.util.Map"
+		statementType="CALLABLE">
+	<![CDATA[
+		{call pkg_zhyw_sfda.insert_jcgda(
+			#{p_tysah,mode=IN,jdbcType=CHAR},
+			#{p_dwbm,mode=IN,jdbcType=CHAR},
+			#{p_cbrgh,mode=IN,jdbcType=CHAR},
+			sysdate,
+			#{p_cjr,mode=IN,jdbcType=CHAR},
+			#{p_baxg,mode=IN,jdbcType=CHAR},
+			#{p_wfxszqqk,mode=IN,jdbcType=CHAR},
+			#{p_baaq,mode=IN,jdbcType=CHAR},
+			#{p_sfxc,mode=IN,jdbcType=CHAR},
+			#{p_ajzlpcjg,mode=IN,jdbcType=CHAR},
+			#{Y,mode=OUT,jdbcType=VARCHAR}
+		)}
+	]]>
+	</insert>
+	
+	<!-- 根据归档id查询归档信息 -->
+	<select id="selectDagzId" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[
+			{call pkg_zhyw_sfda.select_dagz_gdid(
+				#{p_gdid,mode=IN,jdbcType=VARCHAR},
+				#{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=DAGZGDMap}
+			)}
+		]]>
+	</select>
+	
+	<!-- 根据统一受案号查询案件信息 -->
+	<select id="selectajbytysah" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[
+			{call pkg_zhyw_sfda.select_aj_tysah(
+				#{p_tysah,mode=IN,jdbcType=VARCHAR},
+				#{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=SFDAAJMap}
+			)}
+		]]>
+	</select>
+	
+	<!-- 根据所属人,所属人单位编码查询档案归档 -->
+	<select id="selectdassrdwbm" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[
+			{call pkg_zhyw_sfda.select_da_ssr_dwbm(
+				#{p_ssr,mode=IN,jdbcType=VARCHAR},
+				#{p_ssrdwbm,mode=IN,jdbcType=VARCHAR},
+				#{p_id,mode=IN,jdbcType=VARCHAR},
+				#{p_sffc,mode=IN,jdbcType=VARCHAR},
+				#{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=DAGZGDMap}
+			)}
+		]]>
+	</select>
+	<!-- 查询办案质量 -->
+	<insert id="getBazl" parameterType="java.util.Map"
+		statementType="CALLABLE">
+	<![CDATA[
+		{call pkg_zhyw_sfda.select_jcgda(
+			#{p_bmsah,mode=IN,jdbcType=CHAR},
+			#{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=JCGDAAJZLMap}
+		)}
+	]]>
+	</insert>
+
+	<!-- 修改办案质量 -->
+	<update id="updateBazl" parameterType="java.util.Map"
+		statementType="CALLABLE">
+	<![CDATA[
+		{call pkg_zhyw_sfda.update_jcgda(
+			#{p_bmsah,mode=IN,jdbcType=CHAR},
+			#{p_baxg,mode=IN,jdbcType=CHAR},
+			#{p_wfxszqqk,mode=IN,jdbcType=CHAR},
+			#{p_baaq,mode=IN,jdbcType=CHAR},
+			#{p_sfxc,mode=IN,jdbcType=CHAR},
+			#{p_ajzlpcjg,mode=IN,jdbcType=CHAR},
+			#{Y,mode=OUT,jdbcType=VARCHAR}
+		)}
+	]]>
+	</update>
+
+	<select id="getZbAjList" resultMap="SFDAAJMap">
+		select  cbrgh,
+				tysah,
+				dwbm,
+				ajmc,
+				blts,
+				ywlx,
+				ajlb_mc,
+				cbr,
+				slrq,
+				wcrq,
+				cbdw_mc,
+				cbbm_mc,
+				ajzt,
+				bmsah,
+				aqzy
+		from (
+			   select rownum r, 
+			   		    cbrgh,
+						tysah,
+						cbdw_bm as dwbm,
+						ajmc,
+						round(to_number(to_date(t.wcrq)-to_date(t.slrq))) as blts,
+						nvl((select ywmc from xt_dm_ywbm_tyyw where sfsc = 'N' and ywbm = substr(ajlb_bm, 1,2)),'') ywlx,
+						ajlb_mc,
+						cbr,
+						slrq,
+						wcrq,
+						cbdw_mc,
+						cbbm_mc,
+						ajzt,
+						bmsah,
+						aqzy
+				from tyyw_gg_ajjbxx_tyyw t
+				where sfsc ='N' 
+				 and slrq IS not NULL
+    			 and wcrq IS not NULL
+				 and cbrgh = #{cbrgh}
+				 and cbdw_bm = #{dwbm}
+				 and to_date(to_char(t.wcrq, 'yyyy-mm'),'yyyy-mm') 
+				 	between to_date(#{kssj}, 'yyyy-mm') and to_date(#{jssj},'yyyy-mm') 
+				 and rownum <![CDATA[< ]]> #{end}
+			) 
+		where r <![CDATA[ > ]]> #{start}
+	</select>
+	
+	
+	<select id="getCbAjNum" resultType="SFDAAJ">
+		select  b.cbrgh,
+				b.tysah,
+				b.cbdw_bm as dwbm,
+				b.ajmc,
+				round(to_number(to_date(t.wcrq)-to_date(t.slrq))) as blts,
+				nvl((select ywmc from xt_dm_ywbm_tyyw where sfsc='N' and ywbm = substr(ajlb_bm,1, 2)),'') ywlx,
+				b.ajlb_mc,
+				b.cbr,
+				b.slrq,
+				b.wcrq,
+				b.cbdw_mc,
+				b.cbbm_mc,
+				b.ajzt,
+				b.bmsah,
+				b.aqzy
+		from YX_XT_XTCBR_tyyw a
+		left join tyyw_gg_ajjbxx_tyyw b on b.badybm = a.xtbadybm and b.sfsc = 'N' 
+		where a.sfsc = 'N'
+			and a.xtcbrgh = #{cbrgh}
+			and xtcbrdw_bm = #{dwbm}
+			and a.cjsj between to_date(#{kssj},'yyyy-mm') and to_date(#{jssj}, 'yyyy-mm')
+	</select>
+	
+	<select id="getCbAj" resultType="SFDAAJ">
+		SELECT  b.cbrgh,
+				b.tysah,
+				b.cbdw_bm as dwbm,
+				b.ajmc,
+				round(to_number(to_date(t.wcrq)-to_date(t.slrq))) as blts,
+				nvl((select ywmc from xt_dm_ywbm_tyyw where sfsc = 'N' and ywbm = substr(ajlb_bm, 1, 2)),'') ywlx,
+				b.ajlb_mc,
+				b.cbr,
+				b.slrq,
+				b.wcrq,
+				b.cbdw_mc,
+				b.cbbm_mc,
+				b.ajzt,
+				b.bmsah,
+				b.aqzy
+		FROM YX_XT_XTCBR_tyyw a
+		left join tyyw_gg_ajjbxx_tyyw b on b.badybm = a.xtbadybm and b.sfsc = 'N'
+		where a.sfsc = 'N'
+			and a.xtcbrgh = #{cbrgh}
+			and xtcbrdw_bm = #{dwbm}
+			and a.cjsj between to_date(#{kssj}, 'yyyy-mm') and to_date(#{jssj}, 'yyyy-mm') 
+			and rownum between #{start} and #{end} order by a.cjsj desc
+	</select>
+
+	<select id="getFileCreater" resultType="Integer">
+		select count(*)
+		from XT_SP_BMZDPZ
+		where dwbm = #{dwbm}
+		  and gh = #{gh}
+		  and splx = '13'
+	</select>
+	
+	<insert id="uniteCreate" parameterType="java.util.HashMap">
+		insert into YX_SFDA_DAGZ (
+								   ID,
+								   SSR,
+								   TJNF,
+								   CJR,
+								   CJSJ,
+								   SSRDWBM,
+								   CJRDWBM,
+								   SFGS,
+								   SFGD,
+								   SFFC,
+								   SFSC,
+								   KSSJ,
+								   JSSJ
+								 )
+						  VALUES (
+								  #{id},
+								  #{ssr},
+								  #{tjnf},
+								  #{cjr},
+								  sysdate,
+								  #{ssrdwbm},
+								  #{cjrdwbm},
+								  '2',
+								  '2',
+								  '0',
+								  'N',
+								  #{kssj},
+								  #{jssj}
+						  )
+	</insert>
+	
+	<select id="getInfoOfPer" resultType="Integer">
+		select count(*)
+		from YX_SFDA_DAGZ
+		where ssrdwbm = #{dwbm}
+		  and ssr = #{gh}
+		  and kssj = #{kssj}
+		  and jssj = #{jssj}
+		  and sfsc = 'N'
+	</select>
+
+	<select id="getAllBmbm" resultType="java.util.HashMap">
+		SELECT * FROM (
+        SELECT d.DWMC,
+               r.DWBM,
+               d.DWJC,
+               d.DWJB,
+               d.FDWBM,
+               b.BMMC,
+               j.JSMC,
+               r.MC,
+               r.GH,
+               j.JSBM,
+               b.BMBM,
+               b.fbmbm,
+               b.BMYS,
+               b.bmxh
+         FROM xt_zzjg_rybm_tyyw r
+         INNER JOIN xt_qx_ryjsfp_tyyw p ON r.sfsc = 'N' AND p.dwbm=r.dwbm AND p.gh = r.gh
+         INNER JOIN xt_qx_jsbm_tyyw j   ON r.sfsc = 'N' AND j.dwbm=r.dwbm AND j.jsbm = p.jsbm
+         INNER JOIN xt_zzjg_bmbm_tyyw b ON b.sfsc = 'N' AND r.sfsc = 'N' AND j.bmbm = p.bmbm AND b.dwbm=r.dwbm AND b.bmbm = j.bmbm
+         INNER JOIN xt_zzjg_dwbm_tyyw d ON d.sfsc = 'N' AND r.sfsc = 'N' AND b.sfsc = 'N' AND r.dwbm=d.dwbm AND b.dwbm=d.dwbm AND j.dwbm=d.dwbm
+         WHERE r.GH = #{gh} AND r.dwbm = #{dwbm}
+         GROUP BY d.DWMC,
+                  r.DWBM,
+                  d.DWJC,
+                  d.DWJB,
+                  d.FDWBM,
+                  b.BMMC,
+                  j.JSMC,
+                  r.MC,
+                  r.GH,
+                  j.JSBM,
+                  b.BMBM,
+                  b.fbmbm,
+                  b.BMYS,
+                  b.bmxh
+        UNION
+        SELECT D.DWMC,
+               R.DWBM,
+               D.DWJC,
+               D.DWJB,
+               D.FDWBM,
+               B.BMMC,
+               J.JSMC,
+               R.MC,
+               R.GH,
+               J.JSBM,
+               B.BMBM,
+               b.fbmbm,
+               B.BMYS,
+               B.BMXH
+          FROM xt_zzjg_rybm r
+          INNER JOIN xt_zzjg_ryjsfp p ON r.sfsc = 'N' AND p.dwbm=r.dwbm AND p.gh = r.gh
+          INNER JOIN xt_zzjg_jsbm j   ON r.sfsc = 'N' AND j.dwbm=r.dwbm AND j.jsbm = p.jsbm
+          INNER JOIN (SELECT * FROM (SELECT b1.dwbm,b1.bmbm,b1.fbmbm,b1.bmmc,b1.bmjc,b1.bmwhjc,b1.bmahjc,b1.sfcbbm,b1.bmxh,b1.bz,b1.bmys,b1.sfsc FROM xt_zzjg_bmbm_tyyw b1 UNION SELECT  b2.dwbm,b2.bmbm,b2.fbmbm,b2.bmmc,b2.bmjc,b2.bmwhjc,b2.bmahjc,b2.sfcbbm,b2.bmxh,b2.bz,b2.bmys,b2.sfsc FROM xt_zzjg_bmbm b2 ) t GROUP BY t.dwbm,t.bmbm,t.fbmbm,t.bmmc,t.bmjc,t.bmwhjc,t.bmahjc,t.sfcbbm,t.bmxh,t.bz,t.bmys,t.sfsc  ) b ON b.sfsc = 'N' AND r.sfsc = 'N' AND j.bmbm = p.bmbm AND b.dwbm=r.dwbm AND b.bmbm = j.bmbm
+          INNER JOIN xt_zzjg_dwbm_tyyw d ON d.sfsc = 'N' AND r.sfsc = 'N' AND b.sfsc = 'N' AND r.dwbm=d.dwbm AND b.dwbm=d.dwbm AND j.dwbm=d.dwbm
+          WHERE r.gh = #{gh} AND r.dwbm = #{dwbm}
+
+        union
+        SELECT D.DWMC,
+               R.DWBM,
+               D.DWJC,
+               D.DWJB,
+               D.FDWBM,
+               B.BMMC,
+               J.JSMC,
+               R.MC,
+               R.GH,
+               J.JSBM,
+               B.BMBM,
+               b.fbmbm,
+               B.BMYS,
+               B.BMXH
+          FROM xt_zzjg_rybm r
+          INNER JOIN xt_zzjg_ryjsfp p ON r.sfsc = 'N' AND p.dwbm=r.dwbm AND p.gh = r.gh
+          INNER JOIN xt_qx_jsbm_tyyw j   ON r.sfsc = 'N' AND j.dwbm=r.dwbm AND j.jsbm = p.jsbm
+          INNER JOIN (SELECT * FROM (SELECT b1.dwbm,b1.bmbm,b1.fbmbm,b1.bmmc,b1.bmjc,b1.bmwhjc,b1.bmahjc,b1.sfcbbm,b1.bmxh,b1.bz,b1.bmys,b1.sfsc FROM xt_zzjg_bmbm_tyyw b1 UNION SELECT  b2.dwbm,b2.bmbm,b2.fbmbm,b2.bmmc,b2.bmjc,b2.bmwhjc,b2.bmahjc,b2.sfcbbm,b2.bmxh,b2.bz,b2.bmys,b2.sfsc FROM xt_zzjg_bmbm b2 ) t GROUP BY t.dwbm,t.bmbm,t.fbmbm,t.bmmc,t.bmjc,t.bmwhjc,t.bmahjc,t.sfcbbm,t.bmxh,t.bz,t.bmys,t.sfsc  ) b ON b.sfsc = 'N' AND r.sfsc = 'N' AND j.bmbm = p.bmbm AND b.dwbm=r.dwbm AND b.bmbm = j.bmbm
+          INNER JOIN xt_zzjg_dwbm_tyyw d ON d.sfsc = 'N' AND r.sfsc = 'N' AND b.sfsc = 'N' AND r.dwbm=d.dwbm AND b.dwbm=d.dwbm AND j.dwbm=d.dwbm
+          WHERE r.gh = #{gh} AND r.dwbm = #{dwbm}
+         GROUP BY D.DWMC,
+                  R.DWBM,
+                  D.DWJC,
+                  D.DWJB,
+                  D.FDWBM,
+                  B.BMMC,
+                  J.JSMC,
+                  R.MC,
+                  R.GH,
+                  J.JSBM,
+                  B.BMBM,
+                  b.fbmbm,
+                  B.BMYS,
+                  b.bmxh
+           ) T  ORDER BY T.dwjb,T.dwbm,T.bmbm,T.jsbm,T.bmxh,T.gh
+	</select>
+
+</mapper>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>消息通知页面</title>
+<script type="text/javascript" src="../../js/plugin/easyui/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/notice.css">
+<script type="text/javascript" src="../../js/zhyw/utils/constant.js"></script>
+</head>
+<body>
+  <div class="notice">
+     <div class="title_logo">
+		<div style="border: 0.5px solid #c1c1c1; margin-top: 22px; width: 390px; float: left"></div>
+		<div style="float: left;">
+			<div style="width: 46px; height: 46px; margin-left: 34px; background: url('../../image/cx.png') no-repeat; float: left"></div>
+			<div style="font-size: 24px; color: #333; margin-left: 22px; line-height: 46px;; float: left;">
+				消息通知</div>
+		</div>
+		<div style="border: 0.5px solid #c1c1c1; margin-top: 22px; width: 390px; float: left; margin-left: 34px"></div>
+	</div>
+     <div class="top_xz">
+        <span style="float:left;line-height: 70px;margin-left: 20px;">消息内容</span>
+        <input id="msCxContent" type="text" style="width:200px;height:26px;float:left;margin: 19px 0 0 10px;">
+        <span style="float:left;line-height: 70px;margin-left: 20px;">状态</span>
+        <select id="msCxStatus" style="width: 100px;height: 32px;margin: 19px 0 0 10px;float:left;">
+           <!-- <option value="">==请选择==</option> -->
+           <option value="1">未查看</option>
+           <option value="2">已查看 </option>
+        </select>
+        <button style="color: #fff;background: #0575d2;height:32px;width: 80px; margin: 20px;border-radius: 5px;border: 1px solid #0575d2;" onclick="queryMsgNotice();">查询</button>
+     </div>
+     
+     <div class="content">
+         <ol class="content_ul" style="list-style:none;">
+          
+         </ol>
+         <div class="entertain_foot_foot">
+            <div class="r_page">
+                <a id="syid" class="ju_btn_white en_btn" style="width: 45px" onclick='goToNowPage();'>首页</a>
+                <a id="shangyyid" class="ju_btn_white en_btn" onclick="goToLastPage();">上一页</a>
+                <a id="xiayiid" class="ju_btn_white en_btn" onclick="goToNextPage();">下一页</a>
+                <a id="zhyid" class="ju_btn_white en_btn" style="width: 50px" onclick="goToFinallyPage();">最后页</a>
+            </div>
+        </div>
+     </div>
+  </div>
+</body>
+<script type="text/javascript" src="../../js/zhyw/msgNotice/msgNotice.js"></script>
+</html>

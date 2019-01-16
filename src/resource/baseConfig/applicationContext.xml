@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+
+	<description>Spring主配置文件</description>
+
+	<!-- 导入数据源、事务配置 -->
+	<import resource="spring-jdbc-data-tx.xml"/>
+
+	<!-- 导入工作流配置 -->
+	<import resource="spring-activiti.xml"/>
+
+	<!-- 导入定时任务配置 -->
+	<import resource="spring-quartz.xml"/>
+
+	<!-- 导入其他配置 -->
+	<import resource="spring-others.xml"/>
+
+
+</beans>

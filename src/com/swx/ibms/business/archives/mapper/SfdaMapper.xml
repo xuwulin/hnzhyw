@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.archives.mapper.SfdaMapper">
+	<!-- author：李佳 -->
+	<resultMap id="sfdaMap" type="Sfda">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="lb" column="lb" javaType="java.lang.String"></result>
+		<result property="ms" column="ms" javaType="java.lang.String"></result>
+		<result property="cjr" column="cjr" javaType="java.lang.String"></result>
+		<result property="cjsj" column="cjsj" javaType="java.lang.String"></result>
+		<result property="dalx" column="dalx" javaType="java.lang.String"></result>
+		<result property="gdId" column="gdId" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<resultMap id="sfdaTjMap" type="Count">
+		<result property="dalx" column="dalx" javaType="java.lang.String"></result>
+		<result property="count" column="count" javaType="java.lang.String"></result>
+	</resultMap>
+	<!-- 根据档案类型和归档id查询司法档案数量 -->
+	<select id="selectGdidSfdaCount" parameterType="java.util.Map"
+		statementType="CALLABLE">
+   <![CDATA[  
+        {call pkg_zhyw_sfda.select_gdid_sfda_count(
+          #{p_gdid,mode=IN,jdbcType=VARCHAR},
+          #{p_dalx,mode=IN,jdbcType=VARCHAR},	
+          #{p_count,mode=OUT,jdbcType=INTEGER}
+          )}  
+        ]]>
+	</select>
+	<!-- 插入司法档案 -->
+	<insert id="insert" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[  
+        {call pkg_zhyw_sfda.add_sfda(
+          #{lb,mode=IN,jdbcType=VARCHAR},
+          #{ms,mode=IN,jdbcType=VARCHAR},	
+          #{cjr,mode=IN,jdbcType=VARCHAR},	
+          sysdate,	
+          #{dalx,mode=IN,jdbcType=CHAR},	
+          #{gdId,mode=IN,jdbcType=VARCHAR},		  
+          #{Y,mode=OUT,jdbcType=VARCHAR},
+          #{id,mode=OUT,jdbcType=VARCHAR}
+          )}  
+        ]]>
+	</insert>
+	<!-- 更新司法档案 -->
+	<update id="update" parameterType="java.util.Map" statementType="CALLABLE">
+		{call pkg_zhyw_sfda.update_sfda(
+		#{id,mode=IN,jdbcType=VARCHAR},
+		#{lb,mode=IN,jdbcType=VARCHAR},
+		#{ms,mode=IN,jdbcType=VARCHAR},
+		#{cjr,mode=IN,jdbcType=VARCHAR},
+		sysdate,
+		#{dalx,mode=IN,jdbcType=CHAR},
+		#{gdId,mode=IN,jdbcType=VARCHAR},
+		#{Y,mode=OUT,jdbcType=VARCHAR}
+		)}
+	</update>
+	<!-- 查询司法档案数据 -->
+	<select id="getSfjnList" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		{call pkg_zhyw_sfda.selectlist_sfda(
+		#{dalx,mode=IN,jdbcType=CHAR},
+		#{gdid,mode=IN,jdbcType=CHAR},
+		#{Y,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sfdaMap},
+		#{sum,mode=OUT,jdbcType=DOUBLE},
+		#{top,mode=IN,jdbcType=DOUBLE},
+		#{bottom,mode=IN,jdbcType=DOUBLE}
+		)}
+	</select>
+	<!-- 删除司法档案 -->
+	<delete id="delete" parameterType="java.util.Map" statementType="CALLABLE">
+		{call pkg_zhyw_sfda.delete_sfda(
+			#{id,mode=IN,jdbcType=VARCHAR},
+			#{Y,mode=OUT,jdbcType=VARCHAR}
+		)}
+	</delete>
+	
+	<!-- 根据归档id查询不同档案类型司法档案数量 -->
+	<select id="countSfda" parameterType="java.util.Map" statementType="CALLABLE">
+		{call pkg_zhyw_sfda.select_count(
+			#{count,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sfdaTjMap},
+			#{gdid,mode=IN,jdbcType=CHAR}
+		)}
+	</select>
+	
+	<!-- 定义司法档案数量的结果集 -->
+	<resultMap id = "sfdaCountMap" type = "java.util.HashMap"> 
+		<result property="countDa" column="countDa"></result>
+		<result property="ryjnCount" column="ryjn_count"></result>
+		<result property="sfzrCount" column="sfzr_count"></result>
+		<result property="whcdCount" column="whcd_count"></result>
+		<result property="whcd" column="whcd"></result>
+		<result property="year" column="year"></result>
+		<result property="dwbm" column="dwbm"></result>
+		<result property="fdwbm" column="fdwbm"></result>
+		<result property="dwmc" column="dwmc"></result>
+		<result property="dwjc" column="dwjc"></result>
+		<result property="dwjb" column="dwjb"></result>
+		<result property="bmbm" column="bmbm"></result>
+		<result property="bmmc" column="bmmc"></result>
+		<result property="bmjc" column="bmjc"></result>
+		<result property="ywbm" column="ywbm"></result>
+		<result property="ywmc" column="ywmc"></result>
+		<result property="ywjc" column="ywjc"></result>
+		<result property="bmys" column="bmys"></result>
+	</resultMap>
+	
+	<!-- 查询某单位某年的档案数量（首页柱状图的显示数据） -->
+	<select id="getSfdaCountByDwOrBm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_zhyw_sfda.pro_get_sfdaCountByDwOrBm( 
+  		    #{p_ldStr,mode=IN,jdbcType=VARCHAR},
+  		    #{p_year,mode=IN,jdbcType=VARCHAR},
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_bmys,mode=IN,jdbcType=VARCHAR},
+  		    #{p_gh,mode=IN,jdbcType=VARCHAR},
+  		    #{p_bmysSql,mode=IN,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sfdaCountMap}
+  		)} 
+  		]]>
+	</select>
+	
+	<!-- 查询某单位某年的档案数量（柱状图的显示数据） -->
+	<select id="getRyjnSfzrCount" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_zhyw_sfda.pro_get_ryjn_sfzr_count( 
+  		    #{p_ldStr,mode=IN,jdbcType=VARCHAR},
+  		    #{p_year,mode=IN,jdbcType=VARCHAR},
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_bmys,mode=IN,jdbcType=VARCHAR},
+  		    #{p_gh,mode=IN,jdbcType=VARCHAR},
+  		    #{p_bmysSql,mode=IN,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sfdaCountMap}
+  		)} 
+  		]]>
+	</select>
+	
+	<!-- 定义某人的信息 (包括角色部门等)-->
+	<resultMap id = "sfdaRyBmJsMap" type = "java.util.HashMap"> 
+		<result property="dwmc" column="dwmc"></result>
+		<result property="dwbm" column="dwbm"></result>
+		<result property="dwjc" column="dwjc"></result>
+		<result property="dwjb" column="dwjb"></result>
+		<result property="fdwbm" column="fdwbm"></result>
+		<result property="bmys" column="bmys"></result>
+		<result property="bmbm" column="bmbm"></result>
+		<result property="bmmc" column="bmmc"></result>
+		<result property="bmjc" column="bmjc"></result>
+		<result property="jsbm" column="jsbm"></result>
+		<result property="jsmc" column="jsmc"></result>
+		<result property="gh" column="gh"></result>
+		<result property="mc" column="mc"></result>
+	</resultMap>
+	
+	<!-- 查询某人的信息（包括角色部门等） -->
+	<select id="getRyxxBydwAndGh" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_zhyw_sfda.pro_get_ryxxBydwAndGh( 
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_gh,mode=IN,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sfdaRyBmJsMap}
+  		)} 
+  		]]>
+	</select>
+	
+	<!-- 定义某人的文化程度展示信息-->
+	<resultMap id = "sfdaRyWhcdMap" type = "java.util.HashMap"> 
+		<result property="dwmc" column="dwmc"></result>
+		<result property="dwjc" column="dwjc"></result>
+		<result property="dwbm" column="dwbm"></result>
+		<result property="dwjb" column="dwjb"></result>
+		<result property="fdwbm" column="fdwbm"></result>
+		<result property="whcd" column="whcd"></result>
+		<result property="year" column="year"></result>
+	</resultMap>
+	
+	<!-- 查询某人文化程度的信息 -->
+	<select id="getRyWhcdByDwGh" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_zhyw_sfda.pro_get_ryWhcdBydwAndGh( 
+  		    #{p_ldStr,mode=IN,jdbcType=VARCHAR},
+  		    #{p_year,mode=IN,jdbcType=VARCHAR},
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_bmys,mode=IN,jdbcType=VARCHAR}, 
+  		    #{p_gh,mode=IN,jdbcType=VARCHAR},
+  		    #{p_bmysSql,mode=IN,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sfdaCountMap}
+  		)} 
+  		]]>
+	</select>
+	
+	<!--  -->
+	<select id="selectOldData" parameterType="com.swx.ibms.business.archives.bean.XtSfdaDaQuery" resultType="java.util.HashMap">
+	  select da.ID ,
+	  	     da.LB, 
+	  	     da.MS, 
+	  	     da.CJR,
+	  	     to_char(da.CJSJ, ' yyyy"年"mm"月"dd"日" ') CJSJ,
+	  	     da.DALX,
+	  	     da.GDID,
+	  		 nvl((select COUNT(*) from YX_FJ t WHERE wbid=da.id),0) fjzs
+	  from yx_sfda_da da 
+	  where da.DALX=#{dalx}
+	  		and da.GDID=#{gdid}
+	</select>
+	
+</mapper>

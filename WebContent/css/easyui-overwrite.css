@@ -1,0 +1,198 @@
+
+.datagrid-header-row {
+    height: 36px;
+}
+
+.datagrid-row {
+    height: 34px;
+}
+
+.datagrid-row-alt {
+    background: #FBFBFB;
+}
+
+.datagrid-header, .datagrid-toolbar, .datagrid-pager, .datagrid-footer-inner {
+    border-color: #F5F5FA;
+}
+
+.datagrid-header, .datagrid-td-rownumber {
+    /*background-color: #DBEFF9;*/
+    /*background: -webkit-linear-gradient(top, #DBEFF9 0, #DBEFF9 100%);*/
+    /*background: -moz-linear-gradient(top, #DBEFF9 0, #DBEFF9 100%);*/
+    /*background: -o-linear-gradient(top, #DBEFF9 0, #DBEFF9 100%);*/
+    /*background: linear-gradient(to bottom, #DBEFF9 0, #DBEFF9 100%);*/
+    /*background-repeat: repeat-x;*/
+    /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#DBEFF9, endColorstr=#DBEFF9, GradientType=0);*/
+}
+
+.datagrid-header span {
+    font-size: 12px;
+    color: #165881;
+    font-family: "Microsoft YaHei UI";
+}
+
+.datagrid-row-over {
+    background: #FFFFFB;
+}
+
+.datagrid-header td {
+    border-width: 0px;
+    margin: 0;
+    padding: 0 5px;
+}
+
+.datagrid-header td.datagrid-header-over {
+    background-color: rgba(94, 139, 192, 0.5);
+}
+
+.datagrid-body td {
+    border-width: 0px;
+    margin: 0;
+    padding: 0 5px;
+}
+.datagrid-header td, .datagrid-body td, .datagrid-footer td {
+    border-width: 0 0px 1px 0;
+    border-style: dotted;
+    margin: 0;
+    padding: 0;
+}
+.datagrid-row-selected {
+    background: rgb(94, 139, 192);
+    /*color: #fff;*/
+}
+
+.panel-header, .panel-body {
+    border-color: #E2E2E2;
+}
+
+.panel-header {
+    background-color: rgba(229, 229, 229, 0.35);
+}
+
+.panel-title {
+    font-size: 14px;
+    font-weight: 600;
+    height: 23px;
+    line-height: 23px;
+}
+
+.panel-body {
+    background-color: #FFFFFF;
+    color: #404040;
+    font-size: 12px;
+}
+
+.calendar-header {
+    position: relative;
+    height: 30px;
+}
+
+.calendar-text {
+    position: relative;
+    display: inline-block;
+    top: 2px;
+    padding: 0 3px;
+    height: 18px;
+    line-height: 18px;
+    font-size: 14px;
+    cursor: pointer;
+    -moz-border-radius: 0px 0px 0px 0px;
+    -webkit-border-radius: 0px 0px 0px 0px;
+    border-radius: 0px 0px 0px 0px;
+}
+
+.tree-node {
+    padding-top: 4px;
+}
+
+.tree-title {
+    font-size: 13px;
+    display: inline-block;
+    text-decoration: none;
+    vertical-align: top;
+    white-space: nowrap;
+    padding: 0 2px;
+    height: 18px;
+    line-height: 18px;
+    margin-left: 3px;
+    font-family: "Microsoft YaHei UI";
+}
+
+/*.tabs li a.tabs-inner {*/
+    /*display: inline-block;*/
+    /*text-decoration: none;*/
+    /*margin: 0;*/
+    /*padding: 0 10px;*/
+    /*height: 25px;*/
+    /*line-height: 25px;*/
+    /*text-align: center;*/
+    /*white-space: nowrap;*/
+    /*border-width: 0px;*/
+    /*border-style: solid;*/
+    /*-moz-border-radius: 0px 0px 0 0;*/
+    /*-webkit-border-radius: 0px 0px 0 0;*/
+    /*border-radius: 0px 0px 0 0;*/
+/*}*/
+
+/*.tabs {*/
+    /*list-style-type: none;*/
+    /*height: 26px;*/
+    /*margin: 0px;*/
+    /*padding: 3px;*/
+    /*padding-left: 0px;*/
+    /*width: 50000px;*/
+    /*border-style: solid;*/
+    /*border-width: 0 0 1px 0;*/
+/*}*/
+/*.tabs-icon {*/
+    /*position: absolute;*/
+    /*width: 16px;*/
+    /*height: 16px;*/
+    /*left: 1px;*/
+    /*top: 50%;*/
+    /*margin-top: -8px;*/
+/*}*/
+/*.tabs-header {*/
+    /*border-color: transparent;*/
+/*}*/
+
+/*.tabs-header, .tabs-tool {*/
+    /*background-color: transparent;*/
+/*}*/
+/*.tabs li {*/
+    /*float: left;*/
+    /*display: inline-block;*/
+    /*margin: 0px 5px -1px 4px;*/
+    /*padding: 2px;*/
+    /*position: relative;*/
+    /*border: 0;*/
+/*}*/
+/*.tabs li.tabs-selected a.tabs-inner {*/
+    /*!*border-bottom: 2px solid #2387C5;*!*/
+    /*border-right: 2px solid #2387C5;*/
+/*}*/
+
+/*.tabs li.tabs-selected a.tabs-inner {*/
+    /*background-color: #ffffff;*/
+    /*color: #2387C5;*/
+    /*background: -webkit-linear-gradient(top, #ffffff 0, #ffffff 100%);*/
+    /*background: -moz-linear-gradient(top, #ffffff 0, #ffffff 100%);*/
+    /*background: -o-linear-gradient(top, #ffffff 0, #ffffff 100%);*/
+    /*background: linear-gradient(to bottom, #ffffff 0, #ffffff 100%);*/
+    /*background-repeat: repeat-x;*/
+    /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#ffffff, GradientType=0);*/
+/*}*/
+
+/*.tabs li a.tabs-inner {*/
+    /*border-color: transparent;*/
+    /*background: transparent;*/
+    /*filter: none;*/
+    /*color: #666;*/
+/*}*/
+/*.tabs-title {*/
+    /*font-size: 14px;*/
+    /*padding: 7px;*/
+/*}*/
+.window-proxy-mask, .window-mask {
+    background-color: rgba(0, 0, 0, 1);
+}

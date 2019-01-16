@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:对应的mapper文件包名 -->
+<mapper namespace="com.swx.ibms.business.performance.mapper.GrjxZbpzMapper">
+
+<!-- 个人绩效指标配置mapper，对个人绩效指标配置实现CRUD-->
+
+	<!-- 
+		个人绩效指标评配置的结果集  id：结果集名称   type:实体类名称  
+		property:实体类属性名      column：数据库对应列的字段名
+		javaType:数据库列的字段所对应的java中的数据类型
+		
+		zbpzId: 指标配置ID
+		ywlb:  业务类别      
+		dwjb:  单位级别，1,：省院  2:市院  3：区院           
+		zbpzNr: 指标配置内容，对应个人绩效表体内容                 
+		operator: 操作人      
+		operateTime:操作时间，默认可设置为当前系统时间    
+		status: 配置状态：0，已作废     1，正在使用
+	-->
+	<resultMap id="GrjxZbpzMap" type="com.swx.ibms.business.performance.bean.GrjxZbpz">
+		<result property="zbpzId" column="zbpz_id" javaType="java.lang.String"></result>
+	    <result property="ywlb" column="ywlb" javaType="java.lang.String"></result>
+	    <result property="dwjb" column="dwjb" javaType="java.lang.Integer"></result>
+	    <result property="zbpzNr" column="zbpz_nr" javaType="java.lang.String"></result>
+	    <result property="operator" column="operator" javaType="java.lang.String"></result>
+	    <result property="operateTime" column="operate_time" javaType="java.lang.String"></result>
+	    <result property="status" column="status" javaType="java.lang.Integer"></result>
+	    <result property="tabletopid" column="table_top_id" javaType="java.lang.String"></result>
+	    <result property="pzzbpznr" column="pzzbpz_nr" javaType="java.lang.String"></result>
+	    <result property="type" column="type" javaType="java.lang.String"></result>
+	    <result property="ssrq" column="ssrq" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<!-- 查询全部个人绩效考核指标并分页 -->
+	<!-- id：mapper类对应的方法名   parameterType:方法参数类型   statementType:CALLABLE 标示调用存储过程 -->
+	<select id="selectList" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_ZBPZ.p_selectList( 
+ 			#{p_start,mode=IN,jdbcType=INTEGER},
+ 			#{p_end,mode=IN,jdbcType=INTEGER},
+ 			#{p_dwjb,mode=IN,jdbcType=INTEGER},
+ 			#{p_total,mode=OUT,jdbcType=INTEGER},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=GrjxZbpzMap}
+  		)} 
+  		]]>
+	</select> 
+	
+	
+	
+	<!-- 查询单条记录 -->
+	<select id="selectById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_ZBPZ.pro_selectById( 
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=GrjxZbpzMap}, 
+          	#{p_zbpz_id,mode=IN,jdbcType=VARCHAR}
+  		)} 
+  		]]>
+	</select>
+	
+	<!-- 新增单条记录 -->
+	<insert id="insertData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_ZBPZ.pro_insertData(
+          		#{p_zbpz_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_ywlb,mode=IN,jdbcType=INTEGER},
+          		#{p_dwjb,mode=IN,jdbcType=INTEGER},
+          		#{p_zbpz_nr,mode=IN,jdbcType=CLOB},	  
+          		#{p_operator,mode=IN,jdbcType=VARCHAR},
+          		#{p_operate_time,mode=IN,jdbcType=DATE},
+          		#{p_status,mode=IN,jdbcType=INTEGER},
+          		#{p_msg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</insert>
+	
+	<!-- 修改单条记录 -->
+	<update id="updateData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_ZBPZ.pro_updateData(
+          		#{p_zbpz_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_ywlb,mode=IN,jdbcType=INTEGER},
+          		#{p_dwjb,mode=IN,jdbcType=INTEGER},
+          		#{p_zbpz_nr,mode=IN,jdbcType=CLOB},	  
+          		#{p_operator,mode=IN,jdbcType=VARCHAR},
+          		#{p_operate_time,mode=IN,jdbcType=DATE},
+          		#{p_status,mode=IN,jdbcType=INTEGER},
+          		#{p_msg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+	
+	<!-- 假删除单条记录:修改状态为0表示已作废  -->
+	<update id="deleteData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_ZBPZ.pro_deleteData(
+          		#{p_zbpz_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_status,mode=IN,jdbcType=INTEGER},
+          		#{p_msg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+	
+	<insert id="savedata" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+			{call PKG_ZBPZ.savedata(
+				#{ywlb,mode=IN,jdbcType=VARCHAR},
+				#{dwjb,mode=IN,jdbcType=INTEGER},
+				#{khnrdata,mode=IN,jdbcType=VARCHAR},
+				#{pznrdata,mode=IN,jdbcType=VARCHAR},
+				#{topid,mode=IN,jdbcType=VARCHAR},
+				#{dlbm,mode=IN,jdbcType=VARCHAR},
+				#{pjf,mode=IN,jdbcType=VARCHAR},
+				#{rylb,mode=IN,jdbcType=VARCHAR},
+				#{ssYear,mode=IN,jdbcType=VARCHAR},
+				#{id,mode=OUT,jdbcType=VARCHAR}
+			)}
+		]]>
+	</insert>
+	
+	
+	<update id="updateStatus">
+		update XT_GRJX_ZBPZ set status=0 where zbpz_id=#{zbpzId}
+	</update>
+	
+	<!-- 根据业务类别和单位级别判断是否已经存在配置记录 -->
+	<select id="isExist" resultType="java.lang.Integer">
+		select NVL(count(*),0)
+		from XT_GRJX_ZBPZ
+		where dwjb = #{dwjb}
+		  and ywlb = #{ywlb}
+		  and type = #{rylb}
+		  and ssrq = #{ssrq}
+		  and status = '1'
+	</select>
+	
+	<!-- 业务编码列表结果集 -->
+	<resultMap id="xtYwbmMap" type="java.util.Map">
+		<result property="ywbm" column="ywbm"></result>
+		<result property="ywmc" column="ywmc"></result>
+		<result property="ywjc" column="ywjc"></result>
+		<result property="bz" column="bz"></result>
+		<result property="sfsc" column="sfsc"></result>
+		<result property="xh" column="xh"></result>
+	</resultMap>
+	
+	<!-- 查询统一业务同步表（xt_dm_ywbm_tyyw）中的业务类型信息 -->
+	<select id="getYwlxList" parameterType="java.util.Map" statementType="CALLABLE">
+		{call pkg_zbpz.pro_getYwlxList(
+		 	#{p_ywbm,mode=IN,jdbcType=VARCHAR},
+		 	#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=xtYwbmMap}
+		)}
+	</select>
+
+	<select id="getInfoOfZbpz" resultType="java.util.Map">
+		select zbpz.table_top_id zbpzbtid,
+			   zbpz.zbpz_id zbpzid,
+			   zbpz.dwjb,
+			   zbpz.ywlb bmlb,
+			   zbpz.type rylb,
+			   zbpz.ssrq,
+			   zbpz.zbpz_nr khnr,
+			   zbpz.pzzbpz_nr pznr,
+			   zbpz.pjf,
+			   zbpzbt.pzbtsj pzbt,
+			   zbpzbt.btsj khbt
+
+		from XT_GRJX_ZBPZ zbpz
+		inner join XT_GRJX_ZBPZBT zbpzbt on zbpz.table_top_id = zbpzbt.id
+		where zbpz.dwjb = #{dwjb}
+		  and zbpz.ywlb = #{bmlb}
+		  and zbpz.type = #{rylb}
+		  and zbpz.ssrq = #{ssnf}
+		  and zbpz.status = '1'
+	</select>
+	
+</mapper>

@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" name="" content="IE=edge,chrome=1"/>
+    <title>司法档案-办案业绩页面</title>
+
+    <style type="text/css">
+        .button-newly {
+            width: 76px;
+            height: 26px;
+            float: right;
+            background: url("../../image/xz__normal.png") no-repeat;
+            cursor: pointer;
+            border: none;
+        }
+
+        a {
+            color: blue;
+            text-decoration: none;
+        }
+
+        .button-newly:hover {
+            background: url("../../image/xz_hover.png") no-repeat;
+        }
+
+        .btn_fj {
+            height: 30px;
+            border: 1px solid #c1c1c1;
+            font-size: 12px;
+            background-color: #fff;
+            color: #2B9DD7;
+            border-radius: 3px;
+            width: 60px;
+            float: left;
+            cursor: pointer;
+        }
+
+        .archives_2_ul {
+            float: right;
+            background: #E0711B;
+            width: 76px;
+            height: 26px;
+            border: 1px solid #E0711B;
+            color: #fff;
+            margin-right: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .archives_search {
+            background: #0674D3;
+            width: 76px;
+            height: 26px;
+            border: 1px solid #0674D3;
+            color: #fff;
+            margin-right: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        /*table{*/
+        /*border: 1px solid #ccc;*/
+        /*border-bottom:none;*/
+        /*border-right: none;*/
+        /*background: rgba(255,255,255,.5);*/
+        /*} */
+
+        /*table th{*/
+        /*height: 34px;*/
+        /*border-bottom: 1px solid #ccc;*/
+        /*border-top: 1px solid #ccc;*/
+        /*border-left: 1px solid #ccc;*/
+        /*border-right: 1px solid #ccc;*/
+        /*}*/
+
+        /*table td{*/
+        /*text-align: center;*/
+        /*height: 34px;*/
+        /*border-bottom: 1px solid #ccc;*/
+        /*border-right: 1px solid #ccc;*/
+        /*border-left: 1px solid #ccc;*/
+        /*}*/
+
+        .win_agb_form_table table{
+            width: 100%;
+            border-bottom: 1px solid #C3E3FC;
+            border-right: 1px solid #C3E3FC;
+        }
+        .win_agb_form_table table td{
+            border: 1px solid #C3E3FC;
+            border-bottom: none;
+            border-right: none;
+            padding-left: 4px;
+            font-size: 14px;
+            height: 30px;
+        }
+        .win_agb_form_table table td:nth-of-type(odd){
+            background-color:#fafbfd;
+            /*width: 130px;*/
+            text-align: right;
+            padding-right: 10px;
+        }
+
+        .win_agb_form_table table td>input + span{
+            width: 178px!important;
+            border: none;
+        }
+        .win_agb_form_table table td>input + span>input{
+            width: 170px!important;
+        }
+        .win_agb_form_table table td>input + span a.combo-arrow{
+            background-color: #fff;
+        }
+        .win_agb_form_table table td>input + span a.combo-arrow:hover{
+            background-color: #fff;
+        }
+        #ag_did_add + span{
+            height: 0!important;
+        }
+        .win_agb_form_table table td>input#lcjk_jknr_add + span{
+            width: 481px!important;
+        }
+
+        .win_agb_form_table table td>input#fag_cbryj + span,.win_agb_form_table table td>input#fag_bjqk + span,.win_agb_form_table table td>input#fag_aqzy + span,.win_agb_form_table table td>input#fag_fz + span{
+            width: 457px!important;
+        }
+        .win_agb_form_table table td>input#lcjk_jknr_add + span>textarea{
+            width: 473px!important;
+        }
+        .win_agb_form_table table td>input#fag_cbryj + span>textarea,.win_agb_form_table table td>input#fag_bjqk + span>textarea,.win_agb_form_table table td>input#fag_aqzy + span>textarea,.win_agb_form_table table td>input#fag_fz + span>textarea{
+            width: 448px!important;
+        }
+        .xzxz_button{
+            height: 27px;
+            border: 1px solid #2B9CD8;
+            border-radius: 3px;
+            background: #fff;
+        }
+        .table_czan_ys{
+            width: 50px;
+            height: 18px;
+            display: inline-block;
+            line-height: 18px;
+            border: 1px solid #4B97D8;
+            border-radius: 3px;
+            color: #4B97D8;
+        }
+        .table_czan_ys:hover{
+            background: #4B97D8;
+            color: #fff;
+        }
+        #fjwjbutton{
+            height: 30px;
+            outline: none;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+            border: 1px solid #4B97D8;
+            margin-left: -2px;
+            position: relative;
+            width: 65px;
+            background: #E8F0F7;
+            color: #4B97D8;
+        }
+        #fjwjbutton:hover{
+            background: #4B97D8;
+            color: #fff;
+        }
+        #fjUpFile + span{
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        #fjxzwj span.textbox a.l-btn{
+            border: none;
+            border-left: 1px solid #4B97D8;
+            background: #E8F0F7;
+            color: #4B97D8;
+        }
+        #fjxzwj span.textbox a.l-btn:hover{
+            background: #4B97D8;
+            color: #fff;
+        }
+        #fjxzwj span.textbox{
+            border: 1px solid #4B97D8;
+        }
+        #fjxzwj span.textbox-invalid{
+            border-color: #4B97D8;
+        }
+    </style>
+    <link href="../../css/bounced.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../css/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/SFGL_YSDA.css"/>
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/bootstrap/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../../css/bounced.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/paging.css"/>
+    <link rel="stylesheet" href="../../css/zTreeStyle/ztreedemo.css" type="text/css"/>
+    <link rel="stylesheet" href="../../css/zTreeStyle/zTreeStyle.css" type="text/css"/>
+
+    <script type="text/javascript" src="../../js/plugin/echarts-all.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/zhyw/macarons.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/history.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/paging.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/swx_component.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/contentstree.js"></script>
+    <script type="text/javascript" src="../../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/base64.js"></script>
+</head>
+
+<body>
+<div class="top_url">
+    <span class="dagztitle" style="float: left; color:#666; line-height: 50px;font-size:18px;margin-left:21%;font-family:微软雅黑;"></span>
+</div>
+<div class="content">
+    <!--左侧树形导航-->
+    <div class="contents_tree">
+        <ul class="tree_ul"></ul>
+    </div>
+    <!--右侧内容体-->
+    <div class="contents_details" style="height: 2100px">
+        <div style="width: 98%; margin: 15px 1% 0;">
+            <div class="contents_tit">
+                <span id="title1" style="color: #0674D3;line-height: 40px;display: inline-block;">办案业绩</span>
+                <!--<div id="sfgs" class="contents_ygs">-->
+                <!-- 						<div id="gsxx"style="display: none; line-height: initial; color: #666;"class="contents_ygs_home"> -->
+                <!-- 						    <div style="width:100%;height:10px;"></div> -->
+                <!-- 						    <div style="overflow: hidden; width: 100%;margin-left: 10px;"> -->
+                <!--                                  <span id="gsjzsj" id="span_gsxx" style="float:left;font-weight: bold;">公示截止日期:</span> -->
+                <!-- 						         <div id="gsjzsjspan" style="float:left;font-weight: bold;"></div> -->
+                <!-- 							</div> -->
+                <!-- 							<div style="font-size: 14px; text-align: left;overflow: auto; width: 278px; height: 95px;"> -->
+                <!-- 							   <span style="float: left;margin:5px 0 0 10px;" id="span_gsxx">公示理由:</span> -->
+                <!-- 							   <div id="gsxxspan" style="margin-left: 25px;float: left;width: 236px;"></div> -->
+                <!-- 							</div> -->
+                <!-- 						</div> -->
+                <!--</div>-->
+                <div id="gszt" class="tit_btn" style="display:none;"></div>
+                <div id="dazt" class="tit_btn" style="display:none;"></div>
+                <div id="ryzt" class="tit_btn" style="display:none;width:120px;"></div>
+                <div id="qxgszt" class="tit_btn" style="display:none;width:120px;"></div>
+                <div id="fczt" class="tit_btn" style="display:none;width:92px;"></div>
+                <div id="dabghhczt" class="tit_btn" style="display:none;width:95px;"></div>
+                <img id="infoimg" src="../../image/icon_gt.png"
+                     style="display: none; float: right; margin: 7px 10px 0 0;">
+                <!-- 							<div id="divconnection" class="contents_jxzf"> -->
+                <!-- 								<span style="color: #333333; font-size: 16px;"> 个人绩效总分 </span> <span -->
+                <!-- 									style="color: #ff5400; font-size: 22px;" id="grjx"></span> -->
+                <!-- 							</div> -->
+            </div>
+
+            <!--   办理案件情况  -->
+            <div class="jbxx_one" id="div_blaj" rigth-name="blaj">
+                <div class="jbxx_right">
+                    <!--<div class="archives_title">-->
+                    <!--<div class="archives_title_left" style="width: calc(50% - 108px);"></div>-->
+                    <!--<div class="archives_title_top" style="width: 175px;">-->
+                    <!--<img src="images/archives/ico.png"> <span>办理案件情况</span> <img-->
+                    <!--class="img_jt" src="images/archives/jt.png">-->
+                    <!--</div>-->
+                    <!--<div class="archives_title_right" style="width: calc(50% - 108px);"></div>-->
+                    <!--</div>-->
+                    <div style="margin-bottom: 20px;">
+                        <div class="examine_table_xxnr">
+                            <div id="xz_title" style="width: 100%;height: 40px;border-bottom: 1px solid #B1D4EA;margin-bottom: 10px;">
+                                <span  style="color: #0674D3;line-height: 40px;display: inline-block;">新增列表</span>
+                            </div>
+
+                            <div id="bayj_show" style="min-height: 40px;height:auto;">
+                                <label style="font-size: 14px;padding: 10px;color: #0674D3;line-height: 40px;display: inline-block;">案件状态：</label>
+                                <input type="text" id="aj_status" class="combo" name="aj_status" style="height:30px;">
+                                <button id="searchAj" class="archives_search" style="margin-left: 10px;height:30px;">查询</button>
+                                <button id="btn_ajbl_add" class="button-newly" style="margin-top: 15px;margin-right: 10px;"></button>
+                                <button id = "btn_sfda_bayj_sp" class="archives_2_ul" style="margin-top:15px;display:block;">发起审批</button>
+                                <button id = "btn_sfda_bayj_sp_recall" class="archives_2_ul" style="margin-top:15px;display:block;">撤回审批</button>
+                            </div>
+                            <!-- 非案管：新增 -->
+                            <span id="fagaj_xz_span">
+								<table id="fagaj_xz_table"></table>
+							</span>
+                            <!-- 案管：新增 -->
+                            <span id="agaj_xz_span">
+								<table id="agaj_xz_table"></table>
+							</span>
+                        </div>
+                        <br>
+
+                        <div class="examine_table_xxnr">
+                            <div style="width: 100%;height: 40px;border-bottom: 1px solid #B1D4EA;margin-bottom: 10px;">
+                                <span  style="color: #0674D3;line-height: 40px;display: inline-block;">统计列表</span>
+                                <!--<label style="margin-left: 100px;color: #0674D3;line-height: 40px;display: inline-block;">选择部门：</label>-->
+                            </div>
+                        </div>
+
+                        <div class="archives_titlenrone" id="ajbl" style="position: relative;padding-right: 10px;margin-top: 6px;">
+                            <div class="table_ssan_gdtys1">
+                                <div id="bayi_count_query" style="min-height: 40px;height:auto;padding:10px;">
+                                    <input type="text" id="departList" class="combo" style="width: 100px;margin-left:10px;">
+                                    <label style="font-size: 14px;color: #0674D3;display: inline-block;">选择时间：</label>
+                                    <!--<input type="text" id="wcOrBjsj" name="wcOrBjsj" class="combo" style="height: 30px;width: 120px;margin-left:10px;">-->
+                                    <input type="text" id="ajkssj" name="ajkssj" class="textbo" style="height: 30px;"> -
+                                    <input type="text" id="ajjssj" name="ajjkssj" class="textbo" style="height: 30px;">
+                                    <button id="searchAjOfTjlb" class="archives_search" style="height:30px;margin-right:64%;float: right">查询</button>
+                                </div>
+                                <!-- 非案管案件办理：统计列表的表格datagrid展示 -->
+                                <span id="ajblSpan">
+									<table id="rebuild_table"></table>
+								</span>
+
+                                <!-- 案管案件办理：统计列表的表格datagrid展示 -->
+                                <span id="agbSpan">
+									<table id="rebuildAgb_table"></table>
+								</span>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div id="level_xqlb_id" class="level" style="position: relative;">
+                            <div class="examine_table_xxnr" id="xqlb" style="width: 100%;height: 40px;border-bottom: 1px solid #B1D4EA;margin-bottom: 10px;">
+                                <span style="color: #0674D3;line-height: 40px;display: inline-block;">详情列表</span>
+                            </div>
+
+                            <div id="exportToExcel-toolbar" style="min-height: 30px;height:auto;padding:10px;">
+                                <button id="exportToExcel" class="archives_search" onclick="exportCaseDetailsToExcel();"
+                                        style="height:30px;margin-left:5px; float: left">导出为excel</button>
+                            </div>
+                            <div class="table_ssan_gdtys2">
+
+                                <!-- 非案管人员办案详情列表的表格datagrid展示 -->
+                                <span id="xqlbSpan">
+									<table id="xqlb_table"></table>
+								</span>
+
+                                <!-- 案管人员办案详情列表：案件受理 -->
+                                <!-- 详情列表的表格datagrid展示 -->
+                                <span id="agblevel0">
+									<table id="agbXqlb_table0"></table>
+								</span>
+
+                                <!-- 案管人员办案详情列表：流程监控 -->
+                                <!-- 详情列表的表格datagrid展示 -->
+                                <span id="agblevel1">
+									<table id="agbXqlb_table1"></table>
+								</span>
+
+                                <!-- 案管人员办案详情列表：质量评查 -->
+                                <!-- 详情列表的表格datagrid展示 -->
+                                <span id="agblevel2">
+									<table id="agbXqlb_table2"></table>
+								</span>
+                            </div>
+                        </div>
+                        <!-- 分页行 -->
+                        <div id="div_ajbl_pager" class="traatdo_body_fy"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ********************************非案管：案件办理新增窗口*********************************** -->
+<div id="win_ajbl_sdlr" class="win_ajbl_sdlr win_agb_form_table" style="display:none">
+    <div style="padding: 0 10px;">
+        <div style="margin-top: 14px;">
+            <form id="form_ajbl_sdlr">
+                <table cellpadding="0" cellspacing="0" style='width: 100%;' class='table_tbys'>
+                    <!--<input type="hidden" id="fag_did" name="fag_did">--><!-- 档案Id -->
+
+                    <!--<input type="hidden" id="fag_dwmc" name="fag_dwmc">--><!-- 单位名称 -->
+
+                    <!--<tr style="height:30px;display:none;">
+                        <td align="center">单位编码</td>
+                        <td><input type="text" id="fag_dwbm" name="fag_dwbm" class="textbo"></td>
+                    </tr>-->
+
+                    <tr style="height: 30px;">
+                        <td align="center">案件名称&nbsp;<span style='color : red'>*</span></td>
+                        <td style="position: relative"><input type="text" id="fag_ajmc" name="fag_ajmc" class="textbo" data-options="required:true">
+                        <td align="center">案件类别&nbsp;<span style='color : red'>*</span></td>
+                        <td><input type="text" id="fag_ajlbmc" name="fag_ajlbmc" class="combo" > <!-- data-options="valueField:'AJLBBM',textField:'AJLBMC'" -->
+                    </tr>
+
+                    <!--<tr style="height:30px;display:none;">
+                        <td align="center">案件类别编码</td>
+                        <td><input type="text" id="fag_ajlbbm" name="fag_ajlbbm" class="combo"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>-->
+
+                    <!--<tr style="height:30px;display:none;">
+                        <td align="center">承办人姓名</td>
+                        <td><input type="text" id="fag_cbrxm" name="fag_cbrxm" class="textbo"></td>
+                    </tr>-->
+
+                    <!--<tr style="height:30px;display:none;">
+                        <td align="center">工号</td>
+                        <td><input type="text" id="fag_gh" name="fag_gh" class="textbo"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>-->
+
+                    <tr style="height: 30px;">
+                        <!--<td align="center">办理方式&nbsp;</td>-->
+                        <!--<td><input type="text" id="fag_blxs" name="fag_blxs" class="combo"></td>-->
+                        <td align="center">受理日期&nbsp;<span style='color : red'>*</span></td>
+                        <td><input type="text" id="fag_slrq" name="fag_slrq" class="textbo"></td>
+                        <td align="center">到期日期&nbsp;</td>
+                        <td><input type="text" id="fag_dqrq" name="fag_dqrq" class="textbo"></td>
+                    </tr>
+
+                    <!--<tr style="height: 30px;display: none;">
+                        <td align="center">办理开始日期&nbsp;</td>
+                        <td><input type="text" id="fag_blksrq" name="fag_blksrq" class="textbo"></td>
+                    </tr>-->
+
+                    <tr style="height: 30px;">
+                        <!--<td align="center">办理开始日期&nbsp;</td>
+                        <td><input type="text" id="fag_blksrq" name="fag_blksrq" class="textbo"></td>-->
+
+                        <td align="center">办结日期&nbsp;<span style='color : red'>*</span></td>
+                        <td><input type="text" id="fag_bjrq" name="fag_bjrq" class="textbo"></td>
+                        <td align="center">完成日期&nbsp;</td>
+                        <td><input type="text" id="fag_wcrq" name="fag_wcrq" class="textbo"></td>
+                    </tr>
+
+
+
+                    <tr style="height: 30px;display: none">
+                        <td align="center">承办小组&nbsp;</td>
+                        <td><input type="text" id="fag_cbxz" name="fag_cbxz" class="combo"></td>
+                        <td align="center" colspan="2">
+                            <button type="button" class="white_button xzxz_button"
+                                    style="width: 75px;" id="ajbl_sdlr_addGroup">新增小组</button>
+                        </td>
+                    </tr>
+
+                    <tr style="height:30px;display:none;">
+                        <td align="center">承办小组编码</td>
+                        <td><input type="text" id="fag_cbxzbm" name="fag_cbxzbm"></td>
+                    </tr>
+
+                    <tr style="height:30px;display:none;">
+                        <td align="center">办理方式编码</td>
+                        <td><input type="text" id="fag_blfsbm" name="fag_blfsbm"></td>
+                    </tr>
+
+                    <tr style="height: 30px;">
+                        <td align="center">承办人意见&nbsp;<span style='color : red'>*</span></td>
+                        <td colspan="3"><input type="text" id="fag_cbryj" name="fag_cbryj"
+                                               style="height: 70px;width: 500px"></td>
+                    </tr>
+
+                    <tr style="height: 30px;">
+                        <td align="center">办结情况&nbsp;<span style='color : red'>*</span></td>
+                        <td colspan="3"><input type="text" id="fag_bjqk" name="fag_bjqk"
+                                               style="height: 70px;width: 500px"></td>
+                    </tr>
+
+                    <tr style="height: 30px;">
+                        <td align="center">案情摘要&nbsp;<span style='color : red'>*</span></td>
+                        <td colspan="3"><input type="text" id="fag_aqzy" name="fag_aqzy"
+                                               style="height: 70px;width: 500px"></td>
+                    </tr>
+
+                    <tr style="height: 30px;">
+                        <td align="center">附注</td>
+                        <td colspan="3"><input type="text" id="fag_fz" name="fag_fz"
+                                               style="height: 70px;width: 500px"></td>
+                    </tr>
+
+                    <!--<tr style="height: 30px;display:none;">
+                        <td align="center">表名</td>
+                        <td><input type="text" id="fag_tablename" name="fag_tablename" class='textbo'></td>
+                        <td></td>
+                        <td></td>
+                    </tr>-->
+
+                    <!--<tr style="height: 30px;display:none;">
+                        <td align="center">列名</td>
+                        <td><input type="text" id="fag_field" name="fag_field" class='textbo'></td>
+                        <td></td>
+                        <td></td>
+                    </tr>-->
+
+                    <!--<tr style="height: 30px;display:none;">
+                        <td align="center">部门编码</td>
+                        <td><input type="text" id="fag_bmbm" name="fag_bmbm" class='textbo'></td>
+                        <td></td>
+                        <td></td>
+                    </tr>-->
+
+                    <!--<tr style="height: 30px;display:none;">
+                        <td align="center">部门名称</td>
+                        <td><input type="text" id="fag_bmmc" name="fag_bmmc" class='textbo'></td>
+                        <td></td>
+                        <td></td>
+                    </tr>-->
+
+                </table>
+            </form>
+        </div>
+
+        <!--<div style="text-align: center; margin-top: 20px;">-->
+        <!--<button class="action_button" id="btn_ajblsdlr_sure">保存</button>-->
+        <!--<button class="white_button" id="btn_ajblsdlr_cancel">取消</button>-->
+        <!--</div>-->
+        <div class="bounced_save" style="text-align: center; margin-top: 20px;">
+            <button class="white_button" id="btn_ajblsdlr_cancel" style="cursor: pointer; background: #fff; color: #777;margin-left: 50px;">取消</button>
+            <button class="action_button" id="btn_ajblsdlr_sure" >保存</button>
+        </div>
+    </div>
+</div>
+
+<!-- ****************************案管************************************************ -->
+
+<!-- ***************点击案管办 案件受理 案件名称显示详情窗口 *************** -->
+<div  >
+    <form id="form_ajblAgb_XQ" class="zktccys win_agb_form_table" style="padding: 20px;">
+        <table cellpadding="0" cellspacing="0" style='width: 100%;' class='table_tbys'>
+            <tr>
+                <td align="center" style="font-size: 14px;">案件名称</td>
+                <td><input type="text" id="ajmc" name="ajmc"
+                           style="width: 190px;height: 28px;"></td>
+                <td align="center" style="font-size: 14px;">业务类别</td>
+                <td><input type="text" id="ywlb" name="ywlb"
+                           style="width: 190px;height: 28px;">
+            </tr>
+
+            <tr>
+                <td align="center" style="font-size: 14px;">受理日期</td>
+                <td><input type="text" id="slsj" name="slsj"
+                           style="width: 190px;height: 28px;"></td>
+                <td align="center" style="font-size: 14px;">分类时间</td>
+                <td><input type="text" id="flsj" name="flsj"
+                           style="width: 190px;height: 28px;"></td>
+            </tr>
+            <tr>
+                <td align="center" style="font-size: 14px;">录入人员</td>
+                <td><input type="text" id="lrry" name="lrry"
+                           style="width: 190px;height: 28px;"></td>
+                <td align="center" style="font-size: 14px;">审核人员</td>
+                <td><input type="text" id="shry" name="shry"
+                           style="width: 190px;height: 28px;"></td>
+            </tr>
+            <tr>
+                <td align="center" style="font-size: 14px;">卷宗册数</td>
+                <td><input type="text" id="jzcs" name="jzcs"
+                           style="width: 190px;height: 28px;"></td>
+                <td align="center" style="font-size: 14px;">光盘</td>
+                <td><input type="text" id="gp" name="gp"
+                           style="width: 190px;height: 28px;"></td>
+            </tr>
+            <tr>
+                <td align="center" style="font-size: 14px;">涉案财物</td>
+                <td><input type="text" id="sacw" name="sacw"
+                           style="width: 190px"></td>
+                <td align="center" style="font-size: 14px;">办理形式</td>
+                <td><input type="text" id="blxs" name="blxs"
+                           style="width: 190px;height: 28px;"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<!-- ***************点击案管办 流程监控 案件名称显示详情窗口 *************** -->
+<div >
+    <form id="form_ajblAgblcjk_XQ" class="zktccys win_agb_form_table" style="padding: 20px;">
+        <table cellpadding="0" cellspacing="0" style='width: 100%;' class='table_tbys'>
+            <tr>
+                <td align="center">案件名称</td>
+                <td><input type="text" id="ajmc" name="ajmc"
+                           style="width: 190px"></td>
+                <td align="center">业务类别</td>
+                <td><input type="text" id="ywlb" name="ywlb"
+                           style="width: 190px">
+            </tr>
+            <tr >
+                <td align="center">监控日期</td>
+                <td><input type="text" id="jkrq" name="jkrq"
+                           style="width: 190px"></td>
+                <td align="center">监控人</td>
+                <td><input type="text" id="jkr" name="jkr"
+                           style="width: 190px"></td>
+            </tr>
+
+            <tr >
+                <td align="center">问题个数</td>
+                <td>
+                    <!--<input type="text" id="wtgs" name="wtgs"-->
+                    <!--style="width: 190px">-->
+                    <input type="text" id="wtgs" name="wtgs" class="easyui-numberbox" data-options="min:0,precision:0" style="width: 190px">
+
+                </td>
+                <td align="center" style="border-bottom: 1px solid #C3E3FC;">监控方式</td>
+                <td style="border-bottom: 1px solid #C3E3FC;"><input type="text" id="jkfs" name="jkfs"
+                                                                     style="width: 190px"></td>
+            </tr>
+            <tr >
+                <td align="center">办理形式</td>
+                <td style="border-right: 1px solid #C3E3FC;"><input type="text" id="blxs" name="blxs"
+                                                                    style="width: 190px;"></td>
+            </tr>
+            <tr >
+                <td align="center">监控内容</td>
+                <td colspan="3"><input type="text" id="jknr" name="jknr"
+                                       style="height: 70px; width: 550px"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<!-- ***************点击案管办 质量评查 案件名称显示详情窗口 *************** -->
+<div >
+    <form id="form_ajblAgbzlpc_XQ" class="zktccys win_agb_form_table" style="padding: 20px;">
+        <table cellpadding="0" cellspacing="0" style='width: 100%;' class='table_tbys'>
+            <tr >
+                <td align="center">案件名称</td>
+                <td><input type="text" id="ajmc" name="ajmc"
+                           style="width: 190px"></td>
+                <td align="center">业务类别</td>
+                <td><input type="text" id="ywlb" name="ywlb"
+                           style="width: 190px"></td>
+            </tr>
+            <tr >
+                <td align="center">评查种类</td>
+                <td><input type="text" id="pczl" name="pczl"
+                           style="width: 190px"></td>
+                <td align="center">办理形式</td>
+                <td><input type="text" id="blxs" name="blxs"
+                           style="width: 190px"></td>
+            </tr>
+            <tr >
+                <td align="center">评查开始时间</td>
+                <td><input type="text" id="pckssj" name="pckssj"
+                           style="width: 190px"></td>
+                <td align="center">评查结束时间</td>
+                <td><input type="text" id="pcjssj" name="pcjssj"
+                           style="width: 190px"></td>
+            </tr>
+            <tr >
+                <td align="center">评查问题个数</td>
+                <td>
+                    <!--<input type="text" id="pcwtgs" name="pcwtgs"-->
+                    <!--style="width: 190px">-->
+                    <input type="text" id="pcwtgs" name="pcwtgs" class="easyui-numberbox" data-options="min:0,precision:0" style="width: 190px">
+
+                </td>
+                <td align="center" style="border-bottom: 1px solid #C3E3FC;">评查结果形式</td>
+                <td style="border-bottom: 1px solid #C3E3FC;"><input type="text" id="pcjgxs" name="pcjgxs"
+                                                                     style="width: 190px"></td>
+            </tr>
+            <tr>
+                <td align="center">整改情况</td>
+                <td style="border-right: 1px solid #C3E3FC;"><input type="text" id="zgqk" name="zgqk"
+                                                                    style="width: 190px"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<!-- ***********************************案管新增**************************************************** -->
+<!-- ************************************案管办：案件办理新增窗口 ********************************-->
+<div id="win_agb_add" class="win_agb_add win_agb_form_table" style="display: none;">
+    <div style="padding: 0 10px;">
+        <div style="margin-top: 10px;">
+            <form id="form_agb_common">
+                <!-- 					档案Id -->
+                <input type="hidden" id="ag_did_add" name="ag_did_add" style="height: 0;">
+                <input type="hidden" id="ag_id_add" name="ag_id_add" style="height: 0;">
+                <table cellpadding="0" cellspacing="0" style='width: 100%;border-bottom: none;' class='table_tbys'>
+                    <tr style="height: 30px;">
+                        <td id="agxz_cktcys" style="width: 100px;padding-right: 15px;" align="right">案件名称</td>
+                        <td style="position: relative;"><input type="text" id="ag_ajmc_add" name="ag_ajmc_add" class="textbo"><span id="agb_add_cue" style="display: none; margin: 3px 0 0 6px; position: absolute;"><a title="存在相同或相似的数据" href="javascript:void(0)"><!-- <img src="images/archives/tb-h.png"/> --></a></span></td>
+                        <td style="width: 100px;padding-right: 15px;" align="right">业务类别</td>
+                        <td id="ywlbtd"><input type="text" id="ag_ywlb_add" name="ag_ywlb_add" class="combo"></td>
+                    </tr>
+
+                    <tr style="height:30px;display:none;">
+                        <td align="center">承办小组编码</td>
+                        <td><input type="text" id="ag_cbxzbm_add" name="ag_cbxzbm_add" class="textbo"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div id="agb2501" style="display:none">
+            <form id="form_agb_2501">
+                <table cellpadding="0" cellspacing="0" style='width: 100%;' class='table_tbys'>
+                    <tr style="height: 30px;">
+                        <td style="width: 100px;padding-right: 15px;" align="right">受理时间</td>
+                        <td><input type="text" id="ajsl_slsj_add" name="ajsl_slsj_add" class="textbo"></td>
+                        <td style="width: 100px;padding-right: 15px;" align="right">分类时间</td>
+                        <td><input type="text" id="ajsl_flsj_add" name="ajsl_flsj_add" class="textbo"></td>
+                    </tr>
+
+                    <tr style="height:30px;">
+                        <td style="width: 100px;padding-right: 15px;" align="right">录入人员</td>
+                        <td><input type="text" id="ajsl_lrry_add" name="ajsl_lrry_add" class="textbo" validtype="digits"  ></td>
+                        <td style="width: 100px;padding-right: 15px;" align="right">审核人员</td>
+                        <td><input type="text" id="ajsl_shry_add" name="ajsl_shry_add" class="textbo"></td>
+                    </tr>
+
+                    <tr style="height:30px;">
+                        <td style="width: 100px;padding-right: 15px;" align="right">卷宗册数</td>
+                        <td><input type="text" id="ajsl_jzcs_add" name="ajsl_jzcs_add" class="easyui-numberbox" data-options="min:0,precision:0"></td>
+                        <td style="width: 100px;padding-right: 15px;" align="right">光盘</td>
+                        <td><input type="text" id="ajsl_gp_add" name="ajsl_gp_add" class="easyui-numberbox" data-options="min:0,precision:0"></td>
+                    </tr>
+
+                    <tr style="height:30px;">
+                        <td style="width: 100px;padding-right: 15px;" align="right">涉案财物</td>
+                        <td><input type="text" id="ajsl_sacw_add" name="ajsl_sacw_add" class="textbo"></td>
+                        <td style="width: 100px;padding-right: 15px;" align="right">办理形式</td>
+                        <td><input type="text" id="ajsl_blxs_add" name="ajsl_blxs_add" class="combo"></td>
+                    </tr>
+
+                    <tr style="height: 30px;">
+                        <td style="width: 100px;padding-right: 15px;" align="right">承办小组</td>
+                        <td><input type="text" id="ajsl_cbxz_add" name="ajsl_cbxz_add" class="combo"></td>
+                        <td align="right"  colspan="2">
+                            <button type="button" class="white_button xzxz_button" style="width: 75px;" id="agbajsl_add_addGroup">新增小组</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div id="agb2502" style="display:none">
+            <form id="form_agb_2502">
+                <table cellpadding="0" cellspacing="0" style='width: 100%;' class='table_tbys'>
+                    <tr style="height: 30px;">
+                        <td style="width: 100px;padding-right: 15px;" align="right">监控日期</td>
+                        <td><input type="text" id="lcjk_jkrq_add" name="lcjk_jkrq_add" class="textbo"></td>
+                        <td style="width: 100px;padding-right: 15px;" align="right">监控人</td>
+                        <td><input type="text" id="lcjk_jkr_add" name="lcjk_jkr_add" class="textbo"></td>
+                    </tr>
+
+                    <tr style="height:30px;">
+                        <td style="width: 100px;padding-right: 15px;" align="right">监控方式</td>
+                        <td><input type="text" id="lcjk_jkfs_add" name="lcjk_jkfs_add" class="combo"></td>
+                        <td style="width: 100px;padding-right: 15px;" align="right">办理形式</td>
+                        <td><input type="text" id="lcjk_blxs_add" name="lcjk_blxs_add" class="combo"></td>
+                    </tr>
+
+                    <tr style="height:30px;">
+                        <td style="width: 100px;padding-right: 15px;" align="right">问题个数</td>
+                        <td colspan="3">
+                            <!--<input type="text" id="lcjk_wtgs_add" name="lcjk_wtgs_add" class="textbo" >-->
+                            <input type="text" id="lcjk_wtgs_add" name="lcjk_wtgs_add" class="easyui-numberbox" data-options="min:0,precision:0" style="height: 28px;">
+
+                        </td>
+                    </tr>
+
+                    <tr style="height: 30px;">
+                        <td style="width: 100px;padding-right: 15px;" align="right">承办小组</td>
+                        <td><input type="text" id="lcjk_cbxz_add" name="lcjk_cbxz_add" class="combo"></td>
+                        <td align="right" colspan="2">
+                            <button type="button" class="white_button xzxz_button" style="width: 75px;" id="agblcjk_add_addGroup">新增小组</button>
+                        </td>
+                    </tr>
+
+                    <tr style="height:30px;">
+                        <td style="width: 100px;padding-right: 15px;" align="right">监控内容</td>
+                        <td colspan="3">
+                            <input type="text" id="lcjk_jknr_add" name="lcjk_jknr_add" class="textbo" >
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div id="agb2503" style="display:none">
+            <form id="form_agb_2503">
+                <table cellpadding="0" cellspacing="0" style='width: 100%;' class='table_tbys'>
+                    <tr style="height: 30px;">
+                        <td style="width: 100px;padding-right: 15px;" align="right">评查种类</td>
+                        <td><input type="text" id="zlpc_pczl_add" name="zlpc_pczl_add" class="combo"></td>
+                        <td style="width: 100px;padding-right: 15px;" align="right">办理形式</td>
+                        <td><input type="text" id="zlpc_blxs_add" name="zlpc_blxs_add" class="combo"></td>
+                    </tr>
+
+                    <tr style="height:30px;">
+                        <td style="width: 100px;padding-right: 15px;" align="right">评查开始时间</td>
+                        <td><input type="text" id="zlpc_pckssj_add" name="zlpc_pckssj_add" class="textbo"></td>
+                        <td style="width: 100px;padding-right: 15px;" align="right">评查结束时间</td>
+                        <td><input type="text" id="zlpc_pcjssj_add" name="zlpc_pcjssj_add" class="textbo" ></td>
+                    </tr>
+
+                    <tr style="height:30px;">
+                        <td style="width: 100px;padding-right: 15px;" align="right">评查问题个数</td>
+                        <td>
+                            <input type="text" id="zlpc_pcwtgs_add" name="zlpc_pcwtgs_add" class="easyui-numberbox" data-options="min:0,precision:0" style="height: 28px;">
+                        </td>
+                        <td style="width: 100px;padding-right: 15px;" align="right">评查结果形式</td>
+                        <td><input type="text" id="zlpc_pcjgxs_add" name="zlpc_pcjgxs_add" class="combo"></td>
+                    </tr>
+
+                    <tr style="height: 30px;">
+                        <td style="width: 100px;padding-right: 15px;" align="right">整改情况</td>
+                        <td colspan="3"><input type="text" id="zlpc_zgqk_add" name="zlpc_zgqk_add" class="combo"></td>
+                    </tr>
+
+                    <tr style="height: 30px;">
+                        <td style="width: 100px;padding-right: 15px;" align="right">承办小组</td>
+                        <td><input type="text" id="zlpc_cbxz_add" name="zlpc_cbxz_add" class="combo"
+                                   style="width: 190px"></td>
+                        <td align="right"  colspan="2">
+                            <button type="button" class="white_button xzxz_button" style="width: 75px;" id="agbzlpc_add_addGroup">新增小组</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+        <div class="bounced_save" style="text-align: center; margin-top: 20px;">
+            <button class="white_button" id="btn_agb_cancel" style="cursor: pointer; background: #fff; color: #777;margin-left: 50px;">取消</button>
+            <button class="action_button" id="btn_agb_sure" >保存</button>
+        </div>
+    </div>
+</div>
+
+<!--承办小组显示窗口-->
+<div id="win_group" class="win_group" style="display: none">
+    <form id="addGroupForm">
+        <table cellpadding="0" cellspacing="0" style='width: 100%;' class='table_tbys'>
+            <!-- <input type="hidden" id="cbxz_dwbm" name="cbxz_dwbm" style="height: 0;">
+            <input type="hidden" id="cbxz_gh" name="cbxz_gh" style="height: 0;">
+            <input type="hidden" id="cbxz_blfsbm" name="cbxz_blfsbm" style="height: 0;">
+            <input type="hidden" id="cbxz_daid" name="cbxz_daid" style="height: 0;"> -->
+            <tr style="height: 30px;">
+                <td style="width: 100px;padding-right: 15px;border: 1px solid #C3E3FC;padding-left: 4px;font-size: 14px;height: 30px;" align="right">承办小组名称<span style='color : red'>*</span></td>
+                <td><input type="text" id="cbxz_mc" name="cbxz_mc" class="combo" style="width: 280px;padding-right: 15px;border: 1px solid #C3E3FC;padding-left: 4px;font-size: 14px;height: 30px;"></td>
+            </tr>
+            <tr style="height: 30px;">
+                <td style="width: 100px;padding-right: 15px;border: 1px solid #C3E3FC;padding-left: 4px;font-size: 14px;height: 30px;" align="center">办理方式&nbsp;<span style='color : red'>*</span></td>
+                <td><input type="text" id="cbxz_blxs" name="cbxz_blxs" class="combo" style="width: 300px;border: 1px solid #C3E3FC;padding-right: 15px;padding-left: 4px;font-size: 14px;height: 30px;"></td>
+            </tr>
+        </table>
+    </form>
+
+    <div class="bounced_save" style="text-align: center; float: right;margin-top:-50px;margin-right:50px;">
+        <button class="action_button" id="cbxz_add_sure" >保存</button>
+    </div>
+
+    <div>
+        <table  id="addGroup"></table>
+    </div>
+
+    <div class="bounced_save" style="text-align: center; margin-top: 20px;">
+        <button class="white_button" id="btn_group_cancel" style="cursor: pointer; background: #fff; color: #777;margin-left: 50px;">取消</button>
+    </div>
+</div>
+
+
+<!-- =============================datagrid展示附件上传、查看======================================= -->
+<div id="fjDetail" class="fjDetail" style="display:none">
+    <!-- <div class="bounced_all_fj"> -->
+    <div style="margin: 20px 0;">
+        <form id="fjForm" method="post" enctype="multipart/form-data" style="float: left; width: 401px; margin-left: 10px;">
+            <div id="fjxzwj" style=' margin-left: 100px;'>
+                <input  buttonText="选择文件" id="fjUpFile" style='width:300px;height:30px;' name="file" placeholder='未选择文件' class="easyui-filebox" data-options="required:true"/>
+            </div>
+        </form>
+
+        <!--<div class="bounced_save"  style='margin-top: -60px;width: 50px;float: left;margin-left: 480px'>-->
+        <button id="fjwjbutton" onclick="xgUpLoadFile()" style='margin-right: 10px;cursor: pointer;'>点击上传</button>
+        <!--</div>-->
+    </div>
+    <table id="fjDatagridTable" style="display: none;"></table>
+    <!-- </div> -->
+</div>
+
+<div id="sfda_bayj_sp_div" class="bounced" style="display: none">
+    <div class="bounced_all" style="height:250px;margin-top:60px;">
+        <div class="bounced_tot">
+            <span id="sfjntitle">司法档案-办案业绩审批</span>
+            <div class="tot_img" onclick="closeSfdaBayjSpDiv();"></div>
+        </div>
+        <div class="bounced_select" style="margin: 0 auto; margin-top: 20px; width: 444px; height: 55px; position: relative;">
+            <div>
+                <span style="margin-right: 6px; float: left; margin-left: 8px; line-height: 32px;">选择审批人:</span>
+                <div>
+                    <form id="sfda_bayj_sp_form" method='post'> <!-- 表单字段名称和后台接收一致 -->
+                        <!-- <input type="hidden" name="spr_dwbm"/>
+                        <input type="hidden" name="spr_gh"/>
+                        <input type="hidden" name="spr_bmbm"/>
+                        <input type="hidden" name="sp_wbid"/>  -->
+                        <input type="hidden" name="bayjSpLx" value="12"/> <!-- 档案的审批类型为2 -->
+                        <!--  sfda_xzspr -->
+                        <input id="bayjSpr" name="bayjSpr" style="height: 32px; width: 348px; border: 1px solid #c1c1c1; border-radius: 4px; float: left;"/>
+                    </form>
+                    <!-- <input type="text" id="xzdaspr" data-options="lines:true" name="lbSelect"
+                           style="width: 320px; height: 32px; line-height: 32px; border: none; margin-left: 5px; outline: none;"
+                           disabled="disabled"/>
+                    <a id="menuDaBtn" href="#" onclick="showDaMenu(); return false;" class="a_style"
+                       style="background: url('../../js/plugin/easyui/themes/bootstrap/images/combo_arrow.png') no-repeat center center; background-color: #F2F2F2"></a> -->
+                </div>
+            </div>
+            <!-- <div id="menuDaContent" class="menuContent"
+                 style="display: none; position: absolute; top: 33px; left: 92px;">
+                <ul id="treeDaDemo" class="ztree"
+                    style="margin-top: 0; width: 338px; background-color: #fff"></ul>
+            </div> -->
+        </div>
+        <div class="bounced_save" style="margin-top: 30px">
+            <button id="bcDaButton1" onclick="closeSfdaBayjSpDiv();" style="cursor: pointer; background: #fff; color: #777;margin-right: 85px;">取消</button>
+            <button id="bcDaButton2" onclick="startSfdaBayjSp();" style="cursor: pointer; margin-right: 15px">确定</button>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="../../js/zhyw/sfda/sfda_base.js"></script>
+<script type="text/javascript" src="../../js/zhyw/sfda/sfda_bayj.js"></script>
+<script type="text/javascript">
+    //resizeParentIframe();
+    $('#spyj').textbox({
+        width: 350,
+        height: 32
+    });
+    resizeParentIframe();
+    $('body').on('click', '.tree_ul a', function () {
+        resizeParentIframe();
+    });
+    // $(function () {
+    //     $extend($.fn.validatebox.defaults.rules,{
+    //         CHS:{
+    //             validator:function (value) {
+    //                 return /^[\u0391-\uFFE5]+$/.test(value)
+    //             },
+    //             message:"汉字"
+    //         }
+    //     })
+    // })
+
+</script>
+</body>
+</html>

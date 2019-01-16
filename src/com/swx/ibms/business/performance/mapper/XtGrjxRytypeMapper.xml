@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swx.ibms.business.performance.mapper.XtGrjxRytypeMapper" >
+
+    <resultMap id="BaseResultMap" type="com.swx.ibms.business.performance.bean.XtGrjxRytype" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="NAME" property="name" jdbcType="VARCHAR" />
+        <result column="CREATEBY" property="createby" jdbcType="VARCHAR" />
+        <result column="CREATEDATE" property="createdate" jdbcType="TIMESTAMP" />
+        <result column="UPDATEBY" property="updateby" jdbcType="VARCHAR" />
+        <result column="UPDATEDATE" property="updatedate" jdbcType="TIMESTAMP" />
+        <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+        <result column="XH" property="xh" javaType="INTEGER" />
+        <result column="DELFLAG" property="delflag" jdbcType="CHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, NAME, CREATEBY, CREATEDATE, UPDATEBY, UPDATEDATE, REMARKS, XH, DELFLAG
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from XT_GRJX_RYTYPE
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from XT_GRJX_RYTYPE
+        where ID = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.swx.ibms.business.performance.bean.XtGrjxRytype" >
+        insert into XT_GRJX_RYTYPE (ID, NAME, CREATEBY,
+            CREATEDATE, UPDATEBY, UPDATEDATE, 
+            REMARKS, XH, DELFLAG
+            )
+        values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{createby,jdbcType=VARCHAR}, 
+            #{createdate,jdbcType=TIMESTAMP}, #{updateby,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, 
+            #{remarks,jdbcType=VARCHAR}, #{xh,javaType=INTEGER}, #{delflag,jdbcType=CHAR}
+            )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.swx.ibms.business.performance.bean.XtGrjxRytype" >
+        insert into XT_GRJX_RYTYPE
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="name != null" >
+                NAME,
+            </if>
+            <if test="createby != null" >
+                CREATEBY,
+            </if>
+            <if test="createdate != null" >
+                CREATEDATE,
+            </if>
+            <if test="updateby != null" >
+                UPDATEBY,
+            </if>
+            <if test="updatedate != null" >
+                UPDATEDATE,
+            </if>
+            <if test="remarks != null" >
+                REMARKS,
+            </if>
+            <if test="xh != null" >
+                XH,
+            </if>
+            <if test="delflag != null" >
+                DELFLAG,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="createby != null" >
+                #{createby,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null" >
+                #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateby != null" >
+                #{updateby,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedate != null" >
+                #{updatedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="xh != null" >
+                #{xh,javaType=INTEGER},
+            </if>
+            <if test="delflag != null" >
+                #{delflag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.swx.ibms.business.performance.bean.XtGrjxRytype" >
+        update XT_GRJX_RYTYPE
+        <set >
+            <if test="name != null and name !='' " >
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="createby != null and createby !='' " >
+                CREATEBY = #{createby,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null and createdate !='' " >
+                CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateby != null and updateby !='' " >
+                UPDATEBY = #{updateby,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedate != null and updatedate !='' " >
+                UPDATEDATE = #{updatedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null and remarks !='' " >
+                REMARKS = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="xh != null and xh !='' " >
+                XH = #{xh,javaType=INTEGER},
+            </if>
+            <if test="delflag != null and delflag !='' " >
+                DELFLAG = #{delflag,jdbcType=CHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.swx.ibms.business.performance.bean.XtGrjxRytype" >
+        update XT_GRJX_RYTYPE
+        set NAME = #{name,jdbcType=VARCHAR},
+            CREATEBY = #{createby,jdbcType=VARCHAR},
+            CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+            UPDATEBY = #{updateby,jdbcType=VARCHAR},
+            UPDATEDATE = #{updatedate,jdbcType=TIMESTAMP},
+            REMARKS = #{remarks,jdbcType=VARCHAR},
+            XH = #{xh,javaType=INTEGER},
+            DELFLAG = #{delflag,jdbcType=CHAR}
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+
+    <select id="getGrjxKhryTypePzList" resultType="com.swx.ibms.business.performance.bean.XtGrjxRytype">
+        select
+        <include refid="Base_Column_List" />
+        from xt_grjx_rytype ORDER BY xh,CREATEDATE,UPDATEDATE
+    </select>
+
+    <select id="getListKhryTypeByKhzb" resultType="com.swx.ibms.business.performance.bean.XtGrjxRytype">
+        SELECT
+            t.id,t.name,t.createdate,t.createby,t.updateby,t.updatedate,t.remarks,t.xh,t.delflag
+        FROM xt_grjx_rytype t
+          RIGHT JOIN  xt_grjx_zbpz z ON z.status='1' AND t.id = z.type
+        WHERE t.delflag = 'N'
+        GROUP BY id,name,createdate,createby,updateby,updatedate,remarks,xh,delflag
+        ORDER BY UPDATEDATE,CREATEDATE
+    </select>
+
+</mapper>

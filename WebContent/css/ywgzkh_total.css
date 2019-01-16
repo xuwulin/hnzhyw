@@ -1,0 +1,326 @@
+.judicialfilesmanage {
+	margin: 0 1%;
+}
+
+.judicialfilesmanage_tilte {
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	font-size: 12px;
+	color: #666666;
+	float: left
+}
+
+.judicialfilesmanage_one {
+	width: 100%;
+	border-radius: 4px;
+	background: white;
+	float: left;
+	border: 1px solid #efefef;
+	box-shadow: 0 0 0.5px 0 #ccc
+}
+
+.judicialfilesmanage_two span {
+	font-size: 14px;
+	color: #333333;
+	float: left;
+	width: 60px;
+	line-height: 32px
+}
+
+.judicialfilesmanage_two input {
+	float: left;
+	padding: 0 0 0 6px;
+	height: 28px;
+	margin-left: 8px
+}
+
+.judicialfilesmanage .r_table thead {
+	background: #d8ecff;
+	height: 31px;
+	line-height: 31px;
+	text-align: left;
+	color: #134671
+}
+
+.judicialfilesmanage .r_table tbody tr {
+	cursor: pointer;
+	text-align: left;
+	height: 31px;
+	line-height: 31px;
+}
+
+.judicialfilesmanage .r_table tbody tr td {
+	border-top: 1px solid #c2e3fd
+}
+/*         .judicail_table::-webkit-scrollbar-thumb,#xsbl div.xsbl_left_autosy > ul::-webkit-scrollbar-thumb,#xsbl div.xsbl_left_-bottomsy > div.xsbl_digxsys::-webkit-scrollbar-thumb,#xsbl div.xsbl_left_-bottomsy > div.xsbl_digxsys::-webkit-scrollbar-thumb { */
+/*             background-color: #cee2f3; */
+/*             height: 40px; */
+/*             outline-offset: -2px; */
+/*             outline: 2px solid #fff; */
+/*             border: 1px solid #fff; */
+/*             -webkit-border-radius: 6px; */
+/*         } */
+.judicialfilesmanage_two select {
+	float: left;
+	padding: 5px;
+	height: 32px;
+	margin-left: 8px
+}
+/*!*---滚动条大小--*!*/
+/*         .judicail_table::-webkit-scrollbar,#xsbl div.xsbl_left_autosy > ul::-webkit-scrollbar,#xsbl div.xsbl_left_-bottomsy > div.xsbl_digxsys::-webkit-scrollbar,#xsbl div.xsbl_left_-bottomsy > div.xsbl_digxsys::-webkit-scrollbar { */
+/*             width: 10px; */
+/*             height: 10px; */
+/*         } */
+
+/*IE滚动条样式*/
+
+/*         #xsbl div.xsbl_left_topsy,#xsbl div.xsbl_left_autosy > ul,#xsbl div.xsbl_left_-bottomsy > div.xsbl_digxsys,#xsbl div.xsbl_left_-bottomsy > div.xsbl_digxsys{ */
+/*             scrollbar-arrow-color: #cee2f3; */
+/*             scrollbar-face-color: #cee2f3; */
+/*             scrollbar-shadow-color: #cee2f3; */
+/*         } */
+.judicail_table table {
+	font-size: 14px;
+}
+
+.ju_btn {
+	display: inline-block;
+	width: 80px;
+	height: 32px;
+	background: #176ea5;
+	border-radius: 4px;
+	text-align: center;
+	line-height: 32px;
+	color: white;
+	font-size: 13px;
+	border: 1px solid #ccc;
+	cursor: pointer;
+}
+
+.ju_btn_white {
+	display: inline-block;
+	width: 80px;
+	height: 32px;
+	background: #fff;
+	border-radius: 4px;
+	text-align: center;
+	line-height: 32px;
+	color: #000;
+	font-size: 13px;
+	border: 1px solid #ccc;
+	cursor: pointer;
+}
+
+.ju_btn_white:hover {
+	background: #ccc;
+}
+
+.ju_btn:hover {
+	background: #0587d9;
+}
+
+.judicia_one {
+	width: 100%;
+	height: 600px;
+	margin-top: 10px;
+	float: left;
+}
+
+.judicia_left {
+	width: 20%;
+	height: 600px;
+	border-radius: 4px;
+	background: white;
+	float: left;
+	border: 1px solid #efefef;
+	box-shadow: 0 0 0.5px 0 #ccc
+}
+
+.judicia_right {
+	width: 79%;
+	margin-left: calc(1% - 4px);
+	height: 600px;
+	border-radius: 4px;
+	background: white;
+	float: left;
+	border: 1px solid #efefef;
+	box-shadow: 0 0 0.5px 0 #ccc
+}
+
+.judicia_left ul {
+	margin: 0 auto;
+	padding: 8px 0 0 0;
+}
+
+.judicia_left ul li {
+	list-style-type: none;
+	margin-left: 20px;
+	padding-bottom: 8px;
+}
+
+.judicia_left_tree {
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	padding-left: 20px;
+	padding-top: 20px;
+	font-size: 14px;
+	color: #333333;
+}
+
+.judicia_left_tree span {
+	margin-left: 4px;
+}
+
+@media screen and (max-width: 1024px) {
+	.judicia_right_left {
+		width: 35%;
+		height: 100%;
+		background: #d8ecff;
+		float: left;
+	}
+	.judicia_right_right {
+		width: calc(100% - 30px - 35%);
+		height: 100%;
+		float: left;
+		margin-left: 30px;
+	}
+	.judicia_right_com1 {
+		width: 100%;
+		float: left;
+		height: 45px;
+		margin-top: 5px;
+		font-size: 14px;
+	}
+}
+
+.judicia_right_left {
+	width: 30%;
+	height: 100%;
+	background: #d8ecff;
+	float: left;
+}
+
+.judicia_right_right {
+	width: 65%;
+	height: 100%;
+	float: left;
+	margin-left: 30px;
+}
+
+.judicia_right_com1 {
+	width: 100%;
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	margin-top: 5px;
+	font-size: 14px;
+}
+
+@media screen and (min-width: 1025px) {
+	.judicia_right_left {
+		width: 30%;
+		height: 100%;
+		background: #d8ecff;
+		float: left;
+	}
+	.judicia_right_right {
+		width: calc(100% - 30px - 30%);
+		height: 100%;
+		float: left;
+		margin-left: 30px;
+	}
+	.judicia_right_com1 {
+		width: 100%;
+		float: left;
+		height: 40px;
+		line-height: 40px;
+		margin-top: 5px;
+		font-size: 14px;
+	}
+}
+.ju_table {
+	font-size: 14px;
+	width: 100%;
+}
+
+.ju_table tr {
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+}
+.judicia_right_com {
+	width: 100%;
+	height: 30px;
+	border-bottom: 1px solid #b2d4ea;
+	float: left;
+	margin-top: 20px;
+}
+
+.judicia_right_com img {
+	float: left;
+}
+
+.judicia_right_com span {
+	font-size: 16px;
+	color: #0574d3;
+	float: left;
+	margin-left: 8px;
+	line-height: 22px;
+}
+
+.judicia_right_com2 {
+	width: 100%;
+	float: left;
+	height: 100px;
+	margin-top: 5px;
+}
+
+.judicia_right_com3 {
+	width: 100%;
+	float: left;
+	height: 100px;
+	margin-top: 15px;
+}
+
+.judicia_right_com1 span {
+	float: left;
+	margin-right: 30px;
+}
+
+.judicia_right_com3 ul li {
+	width: 54px;
+	float: left;
+	list-style-type: none;
+	margin-left: 30px;
+	text-align: center;
+}
+
+.judicia_right_com3 ul {
+	float: left;
+	margin: 0 auto;
+	padding: 0;
+}
+
+.judicia_right_com3 ul li img {
+	float: left;
+	margin-left: 5px;
+}
+
+.judicia_right_calc {
+	height: 96%;
+}
+
+.judicialfilesmanage_two_input2 {
+	width: 57%;
+}
+
+.judicia_right_left_div {
+	width: 95%;
+}
+
+.judicia_right_left_div1 {
+	width: 95%;
+}
+

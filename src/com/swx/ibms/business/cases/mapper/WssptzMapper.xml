@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.cases.mapper.WssptzMapper">
+	
+	<!-- 根据单位编码，工号，开始日期，结束日期到ajjbxx表中去查部门受案号和统一受案号(集合) -->
+	<select id="getBmsah" resultType="java.lang.String">
+		select a.bmsah
+      	  from YX_WS_Sl_TYYW a
+      	  where a.sfsc = 'N' 
+             and a.dwbm = #{dwbm}
+             and a.sprgh = #{gh}
+             <!--and a.wcrq between to_date(#{ksrq},'yyyy-MM') and to_date(#{jsrq},'yyyy-MM')-->
+	</select>
+	
+	<select id="getTysah" resultType="java.lang.String">
+		select a.tysah
+      	  from YX_WS_Sl_TYYW a
+      	  where a.sfsc = 'N' 
+             and a.dwbm = #{dwbm}
+             and a.sprgh = #{gh}
+             <!--and a.wcrq between to_date(#{ksrq},'yyyy-MM') and to_date(#{jsrq},'yyyy-MM')-->
+	</select>
+	
+	<!-- 展示文书审批台账-->
+	<select id="selectALLWssptz" resultType="java.util.HashMap">
+		<!--select count(*) SL,t.bmsah,t.tysah
+      	  from TYYW_YX_WS_SP_TYYW t 
+          where t.sfsc = 'N' 
+          	 <if test='bmsah != null and bmsah.size() > 0'>
+             and t.bmsah in
+             <foreach item='item_1' index='index' collection='bmsah' open='(' separator=',' close=')'>
+				#{item_1}
+			 </foreach>
+			 </if>
+			 
+			 <if test='tysah != null and tysah.size() > 0'>
+             and t.tysah in
+             <foreach item='item_2' index='index' collection='tysah' open='(' separator=',' close=')'>
+				#{item_2}
+			 </foreach>
+			 </if>
+			 group by t.bmsah,t.tysah-->
+		SELECT count(*) SL, a.bmsah, a.tysah
+		FROM YX_WS_Sl_TYYW a
+		where a.sfsc = 'N'
+			and a.dwbm = #{dwbm}
+			and a.sprgh = #{gh}
+			and a.wsmc not like '%审批表%'
+		group by a.bmsah, a.tysah
+	</select>
+
+	<!--获取审批的案件的部门受案号-->
+	<select id="selectSpajBmsahs" resultType="java.lang.String">
+		select t.bmsah
+		from TYYW_YX_WS_SP_TYYW t
+		where t.dwbm = #{dwbm}
+		  and t.sprgh = #{gh}
+		  and t.sfsc = 'N'
+		  and t.sprq between to_date(#{startDate},'yyyy-MM-dd') and to_date(#{endDate},'yyyy-MM-dd')
+		group by t.bmsah
+	</select>
+
+	<!--根据部门受案号查询案件-->
+	<select id="selectAjByBmsahs" resultType="java.util.HashMap">
+		select t.bmsah,
+			   t.tysah,
+			   t.cbdw_bm,
+			   t.cbdw_mc,
+			   t.ajmc,
+			   t.ajlb_bm,
+			   t.ajlb_mc,
+			   t.cbr,
+			   t.cbrgh,
+			   t.cbbm_bm,
+			   t.cbbm_mc,
+			   to_char(t.slrq,'yyyy-MM-dd HH24:mm:ss') slrq,
+			   to_char(t.wcrq,'yyyy-MM-dd HH24:mm:ss') wcrq,
+			   to_char(t.bjrq,'yyyy-MM-dd HH24:mm:ss') bjrq
+		from TYYW_GG_AJJBXX_TYYW t
+		where t.sfsc = 'N'
+		  <if test="bmsahs != null and bmsahs.size() > 0">
+			  and
+			  <foreach item='item' collection='bmsahs' open='(' separator='or' close=')'>
+				  t.bmsah in
+				  <foreach item='item2' collection='item' open='('
+						   separator=',' close=')'>
+					  #{item2}
+				  </foreach>
+			  </foreach>
+		  </if>
+		order by t.cbrgh
+	</select>
+
+	<!-- 查看文书审批详情 -->
+	<select id="selectWsDetail" resultType="java.util.HashMap">
+		select t.bmsah,
+			   t.tysah,
+			   t.ssrgh,
+			   t.ssrxm,
+			   t.sprxm,
+			   t.wsbh,
+			   t.spyj,
+			   to_char(t.ssrq,'yyyy-MM-dd HH24:mm:ss') ssrq,
+			   to_char(t.sprq,'yyyy-MM-dd HH24:mm:ss') sprq,
+		       s.wsmc
+		from TYYW_YX_WS_SP_TYYW t
+		inner join yx_ws_sl_tyyw s on s.bmsah = t.bmsah and s.tysah = t.tysah and s.wsbh = t.wsbh
+		where t.dwbm = #{dwbm}
+		  and t.sprgh = #{gh}
+		  and t.sfsc = 'N'
+		  and t.sprq between to_date(#{startDate},'yyyy-MM-dd') and to_date(#{endDate},'yyyy-MM-dd')
+		  <if test="bmsah != null and bmsah != ''">
+			  and t.bmsah = #{bmsah}
+		  </if>
+		  <if test="tysah != null and tysah != ''">
+			  and t.tysah = #{tysah}
+		  </if>
+		order by ssrgh
+	</select>
+	
+	<select id="getAjmcByBmsahAndTysah" resultType="java.lang.String">
+		select t.ajmc
+		from TYYW_GG_AJJBXX_TYYW t
+		where t.bmsah = #{bmsah}
+		  and t.tysah = #{tysah}
+	</select>
+	
+</mapper>

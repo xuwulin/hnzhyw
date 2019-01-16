@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>综合业务-待办详情页面</title>
+    <style>
+        .ju_btn_white{
+            display: inline-block;
+            width: 80px;
+            height: 32px;
+            background: #fff;
+            border-radius: 4px;
+            text-align: center;
+            line-height: 32px;
+            color: #000;
+            font-size: 13px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        .ju_btn_white:hover{
+            background: #ccc;
+        }
+        .ju_btn{
+            display: inline-block;
+            width: 80px;
+            height: 32px;
+            background: #176ea5;
+            border-radius: 4px;
+            text-align: center;
+            line-height: 32px;
+            color: white;
+            font-size: 13px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        .ju_btn:hover{
+            background: #0587d9;
+        }
+        .entertain{margin: 0 20px;}
+        .entertain_tilte{width: 100%;height: 40px;line-height: 40px;font-size: 12px;color: #666666;float: left}
+        .entertain_center{
+            width: 100%;
+            height: 72px;
+            border-radius: 4px;
+            background: white;
+            float: left;
+            border: 1px solid #efefef;
+            box-shadow: 0 0 0.5px 0 #ccc
+        }
+
+        @media screen and (max-width: 1024px){
+            .entertain_center span{
+                font-size: 14px;
+                color: #333333;
+                float: left;
+                line-height: 72px;
+                width: 8%;
+            }
+            .entertain_center select{
+                float: left;
+                padding: 0 0 0 6px;
+                height: 32px;
+                margin: 20px 0 0 8px;
+                width: 20%;
+            }
+            .entertain_center input{
+                float: left;
+                padding: 0 0 0 6px;
+                height: 28px;
+                margin: 20px 0 0 8px;
+                width: 21%;
+            }
+        }
+        .entertain_center span{
+            font-size: 14px;
+            color: #333333;
+            float: left;
+            line-height: 72px;
+            width: 6%;
+        }
+        .entertain_center select{
+            float: left;
+            padding: 5px;
+            height: 32px;
+            margin: 20px 0 0 8px;
+            width: 22%;
+        }
+        .entertain_center input{
+            float: left;
+            padding: 0 0 0 6px;
+            height: 28px;
+            margin: 20px 0 0 8px;
+            width: 23%;
+        }
+        @media screen and (min-width: 1025px){
+            .entertain_center span{
+                font-size: 14px;
+                color: #333333;
+                float: left;
+                line-height: 72px;
+                width: 6%;
+            }
+            .entertain_center select{
+                float: left;
+                padding: 2px 0 0 6px;
+                height: 32px;
+                margin: 20px 0 0 8px;
+                width: 22%;
+            }
+            .entertain_center input{
+                float: left;
+                padding: 0 0 0 6px;
+                height: 28px;
+                margin: 20px 0 0 8px;
+                width: 23%;
+            }
+        }
+        .entertain_foot{
+            width: 100%;
+            height: 610px;
+            border-radius: 4px;
+            background: white;
+            float: left;
+            border: 1px solid #efefef;
+            box-shadow: 0 0 0.5px 0 #ccc;
+            margin-top: 10px;
+        }
+        .entertain_div2{
+            width: 100%;
+            height: 80px;
+            background: #ebf6fb;
+            font-size: 14px;
+            cursor:pointer;
+        }
+        .entertain_div1{
+            width: 100%;
+            height: 80px;
+            background: white;
+            font-size: 14px;
+            cursor:pointer;
+        }
+        .entertain_div_left{
+            width: 8%;
+            height: 100%;
+            float: left;
+        }
+        .entertain_div_left span{
+            float: right;
+            margin-top: 15px;
+        }
+        .entertain_div_center{
+            width: 70%;
+            height: 100%;
+            float: left;
+        }
+        .entertain_div_center_tilte{
+            display: inline-block;
+            float: left;
+            margin-top: 15px;
+            width: 100%;
+            height: 30px;
+        }
+        .entertain_div_center_span{
+            color: #305270;
+            margin-right: 20px;
+        }
+        .entertain_div_foot{
+            width: 22%;
+            height: 100%;
+            float: left;
+        }
+        .entertain_div_foot span{
+            float: right;
+            margin: 45px 10px 0 0;
+        }
+        .entertain_foot_foot{
+    width: 249px;
+    margin: 0 auto;
+    clear: both;
+    height: 41px;
+    /* float: left; */
+    margin-top: 9px;
+        }
+        .en_btn{
+            float: left;
+            margin-left: 5px;
+            width: 57px;
+        }
+        .r_page{
+            float: left;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="../js/plugin/easyui/themes/bootstrap/easyui.css">
+
+    <script src="../js/plugin/easyui/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body style="background: #efeef4;margin: 0 auto;padding: 0;font-family: 微软雅黑">
+
+<div class="entertain">
+    <div class="entertain_tilte">
+<!--         <span>当前位置:检察官司法档案管理/检察官档案创建</span> -->
+    </div>
+    <div class="entertain_center">
+        <div style="margin: 0 20px">
+<!--             <span style="">办理状态</span> -->
+<!--             <select style=""> -->
+<!--                 <option>待办/已办</option> -->
+<!--                 <option>2</option> -->
+<!--             </select> -->
+<!--             <span style="margin-left: 20px">任务类型</span> -->
+<!--             <select id="splxid" style=""> -->
+<!--                 <option>档案审批/公示审批/业务审批</option> -->
+<!--                 <option>档案</option> -->
+<!--                 <option>公示</option> -->
+<!--             </select> -->
+<!--             <span style="margin-left: 20px;" >标题信息</span> -->
+<!--             <input type="text" id="btxxid" style="line-height: 26px"> -->
+<!--             <a id="qdid" class="ju_btn" style="margin-top: 19px;float: right;width: 6%">确定</a> -->
+        </div>
+    </div>
+    <div class="entertain_foot" >
+        <div id="entertain_footid"></div>
+<!--         <div class="entertain_div"> -->
+<!--             <div class="entertain_div_left"> -->
+<!--                 <span>1、</span> -->
+<!--             </div> -->
+<!--             <div class="entertain_div_center"> -->
+<!--                 <span class="entertain_div_center_tilte">张XX：工作考核</span> -->
+<!--                 <span class="entertain_div_center_span">流水号码：AAA123456</span> -->
+<!--                 <span class="entertain_div_center_span">事项名称：工作考核</span> -->
+<!--             </div> -->
+<!--             <div class="entertain_div_foot"> -->
+<!--                 <span>2016-10-24 10:00:00</span> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--         <div class="entertain_div1"> -->
+<!--             <div class="entertain_div_left"> -->
+<!--                 <span>2、</span> -->
+<!--             </div> -->
+<!--             <div class="entertain_div_center"> -->
+<!--                 <span class="entertain_div_center_tilte">张XX：工作考核</span> -->
+<!--                 <span class="entertain_div_center_span">流水号码：AAA123456</span> -->
+<!--                 <span class="entertain_div_center_span">事项名称：工作考核</span> -->
+<!--             </div> -->
+<!--             <div class="entertain_div_foot"> -->
+<!--                 <span>2016-10-24 10:00:00</span> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--         <div class="entertain_div2"> -->
+<!--             <div class="entertain_div_left"> -->
+<!--                 <span>3、</span> -->
+<!--             </div> -->
+<!--             <div class="entertain_div_center"> -->
+<!--                 <span class="entertain_div_center_tilte">张XX：工作考核</span> -->
+<!--                 <span class="entertain_div_center_span">流水号码：AAA123456</span> -->
+<!--                 <span class="entertain_div_center_span">事项名称：工作考核</span> -->
+<!--             </div> -->
+<!--             <div class="entertain_div_foot"> -->
+<!--                 <span>2016-10-24 10:00:00</span> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--         <div class="entertain_div1"> -->
+<!--             <div class="entertain_div_left"> -->
+<!--                 <span>4、</span> -->
+<!--             </div> -->
+<!--             <div class="entertain_div_center"> -->
+<!--                 <span class="entertain_div_center_tilte">张XX：工作考核</span> -->
+<!--                 <span class="entertain_div_center_span">流水号码：AAA123456</span> -->
+<!--                 <span class="entertain_div_center_span">事项名称：工作考核</span> -->
+<!--             </div> -->
+<!--             <div class="entertain_div_foot"> -->
+<!--                 <span>2016-10-24 10:00:00</span> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--         <div class="entertain_div2"> -->
+<!--             <div class="entertain_div_left"> -->
+<!--                 <span>5、</span> -->
+<!--             </div> -->
+<!--             <div class="entertain_div_center"> -->
+<!--                 <span class="entertain_div_center_tilte">张XX：工作考核</span> -->
+<!--                 <span class="entertain_div_center_span">流水号码：AAA123456</span> -->
+<!--                 <span class="entertain_div_center_span">事项名称：工作考核</span> -->
+<!--             </div> -->
+<!--             <div class="entertain_div_foot"> -->
+<!--                 <span>2016-10-24 10:00:00</span> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--         <div class="entertain_div1"> -->
+<!--             <div class="entertain_div_left"> -->
+<!--                 <span>6、</span> -->
+<!--             </div> -->
+<!--             <div class="entertain_div_center"> -->
+<!--                 <span class="entertain_div_center_tilte">张XX：工作考核</span> -->
+<!--                 <span class="entertain_div_center_span">流水号码：AAA123456</span> -->
+<!--                 <span class="entertain_div_center_span">事项名称：工作考核</span> -->
+<!--             </div> -->
+<!--             <div class="entertain_div_foot"> -->
+<!--                 <span>2016-10-24 10:00:00</span> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--         <div class="entertain_div2"> -->
+<!--             <div class="entertain_div_left"> -->
+<!--                 <span>7、</span> -->
+<!--             </div> -->
+<!--             <div class="entertain_div_center"> -->
+<!--                 <span class="entertain_div_center_tilte">张XX：工作考核</span> -->
+<!--                 <span class="entertain_div_center_span">流水号码：AAA123456</span> -->
+<!--                 <span class="entertain_div_center_span">事项名称：工作考核</span> -->
+<!--             </div> -->
+<!--             <div class="entertain_div_foot"> -->
+<!--                 <span>2016-10-24 10:00:00</span> -->
+<!--             </div> -->
+<!--         </div> -->
+        <div class="entertain_foot_foot">
+            <div class="r_page">
+                <a id="syid" class="ju_btn_white en_btn" style="width: 45px">首页</a>
+                <a id="shangyyid" class="ju_btn_white en_btn">上一页</a>
+<!--                 <a class="ju_btn en_btn">1</a> -->
+<!--                 <a class="ju_btn_white en_btn">2</a> -->
+<!--                 <a class="ju_btn_white en_btn">3</a> -->
+<!--                 <span style="float: left;margin: 0 5px">...</span> -->
+<!--                 <a class="ju_btn_white en_btn">10</a> -->
+                <a id="xiayiid" class="ju_btn_white en_btn">下一页</a>
+                <a id="zhyid" class="ju_btn_white en_btn" style="width: 50px">最后页</a>
+            </div>
+        </div>
+    </div>
+</div>
+   <script type="text/javascript">
+       //全局变量用来存储查询总条数
+       var count;
+       //全局变量用于存储当前页数
+       var mrpage=1;
+       $(function() {
+//     	   //全局变量用于查看查询状态
+//     	   var querystate=1;//1为没有条件查询 2为有查询条件
+    	   //加载页面加载列表
+    	   $.ajax({
+    		   url : rootPath + "/service/dbyw/fycx",
+			   type : 'post',
+			   async : false,
+			   data : {page:"1"},
+			   dataType : 'json',
+			   success : function(returnMap) {
+				   var status=returnMap.status;
+				   if(status==1){
+					   var list=returnMap.list;
+					   //展示页数
+					   count=returnMap.count;
+                       for (var i = 0; i < list.length; i++) {
+                    	  if(list[i].lx==1||list[i].lx==2||list[i].lx==4||list[i].lx==12){//1.为公示档案 2.为档案 4.案件问题反馈 12办案业绩
+                    		  xrdbyw(list,i);
+                    		  var $div=$("#entertain_footid").children().eq(i);
+                    		  var data=list[i];
+	                          $div.attr("data", data.wbid
+	  				 		  + "&nf="+data.nf+"&ssr="+data.ssr+"&ssrdwbm="+data.ssrdwbm
+	  				 		  +"&clnr="+encodeURI(data.clnr)+"&status="+1
+	  				 		  +"&spzt="+data.spzt+"&splx="+data.lx+"&jdlx="
+				 				+data.jdlx+"&cljs="+data.cljs+"&lcid="+data.lcid);
+	                          $div.bind("click", function(e) {
+	                        	 location.href = encodeURI("view/sfda/sfda_sp.html?wbid="+ $(e.currentTarget).attr("data"));
+	  						  });
+                    	  }else if(list[i].lx==3){// 3.绩效
+                    		  xrdbyw(list,i);
+                    	  
+                    		  var $div=$("#entertain_footid").children().eq(i);
+                    		  $div.attr("data","spstid="+list[i].wbid+"&ssrdwbm="+list[i].ssrdwbm
+  					        		+"&ssrgh="+list[i].ssr+"&ssryear="+list[i].nf+"&ssrseason="
+  					        		+list[i].jd+"&clnr="+encodeURI(list[i].clnr)+"&jdlx="+list[i].jdlx
+  					        		+"&cljs="+list[i].cljs+"&spzt="+list[i].spzt+"&splx="+list[i].lx+"&lcid="+list[i].lcid);
+                    		  $div.bind("click",function(){
+  					        	location.href = "jxkhsp.html?"+$(this).attr("data");
+  					          });
+                    	  }else if(list[i].lx==5){//5为案件问题反馈
+                    		  xrdbyw(list,i);
+                    		  var $div=$("#entertain_footid").children().eq(i);
+                    		  $div.css({"color":"red"});
+                    		  $div.children().eq(2).css({"color":"red"});
+                    		  $div.attr("data","id="+list[i].wbid+"&dwbm="+list[i].ssrdwbm+
+					        		"&gh="+list[i].ssr+"&status=1");
+                    		  $div.bind("click",function(){
+//   					        	 location.href = "AJXX.html?"+$(this).attr("data");
+									$("#iframe", top.document).attr("src", "AJXX.html?"+$(this).attr("data"));
+  					          })
+                    	  }
+                    	  if((i%2)==0){
+                    		  //周期显示
+                    		  $("#entertain_footid").children().eq(i).attr("class","entertain_div1");
+                    	  }else{
+                    		  $("#entertain_footid").children().eq(i).attr("class","entertain_div2");
+                    	  }
+				       }
+				   }
+// 				   var main = $(window.parent.document).find("#iframe");
+// 				   var thisheight = $(document).height();
+// 				   main.height(thisheight);
+				   resizeParentIframe();
+			   },
+			   error : function() {
+				   alert("错误");
+			   }
+    	   });
+    	   
+    	   //给按钮绑定单击事件实现分页查询
+    	   //首页
+    	   $("#syid").bind("click",function(){
+    		   $("#entertain_footid").html("");
+    		   mrpage=1;
+    		   dyfyajax(1);
+    	   });
+    	   //最后一页
+    	   $("#zhyid").bind("click",function(){
+    		   $("#entertain_footid").html("");
+    		   mrpage=(count%8==0?count/8:Math.ceil(count/8));
+    		   dyfyajax(mrpage);
+    	   });
+    	   //上一页
+    	   $("#shangyyid").bind("click",function(){
+    		   --mrpage;
+    		   if(mrpage<=1){
+    			   mrpage=1;
+    			   return;
+    		   }
+    		   $("#entertain_footid").html("");
+    		   dyfyajax(mrpage);
+    	   });
+    	   //下一页
+    	   $("#xiayiid").bind("click",function(){
+    		   ++mrpage;
+    		   if(mrpage>Math.ceil(count/8)){
+    			   mrpage=(count%8==0?count/8:Math.ceil(count/8));
+    			   return;
+    		   }
+    		   $("#entertain_footid").html("");
+    		   dyfyajax(mrpage);
+    	   });
+//      	  //条件查询
+//      	  $("#qdid").bind("click",function(){
+//      		  var splx=$("#splxid").val();
+//      		  var btxx=$("#btxxid").val();
+//      		  dyfyajax(1,splx,btxx);
+//      	  });
+	   });
+       //点击调用此方法实现分页查询
+       function dyfyajax(mypage) {
+    	   $.ajax({
+    		   url : rootPath + "/service/dbyw/fycx",
+			   type : 'post',
+			   async : false,
+			   data : {"page":mypage},
+			   dataType : 'json',
+			   success : function(returnMap) {
+				   var status=returnMap.status;
+				   count=returnMap.count;
+				   if(status==1){
+					   var list=returnMap.list;
+                       for (var i = 0; i < list.length; i++) {
+                    	   if(list[i].lx==1||list[i].lx==2||list[i].lx==4||list[i].lx==12){ //12办案业绩
+                     		  xrdbyw(list,i);
+                     		  var $div=$("#entertain_footid").children().eq(i);
+                     		  var data=list[i];
+ 	                          $div.attr("data", data.wbid
+ 	  				 		  + "&nf="+data.nf+"&ssr="+data.ssr+"&ssrdwbm="+data.ssrdwbm+"&clnr="
+ 	  				 		  +data.clnr+"&status="+1+"&spzt="+data.spzt+"&splx="+data.lx+"&jdlx="
+				 			  +data.jdlx+"&cljs="+data.cljs+"&lcid="+data.lcid);
+ 	                          $div.bind("click", function(e) {
+ 	                        	 location.href = encodeURI("view/sfda/sfda_sp.html?wbid="+ $(e.currentTarget).attr("data"));
+ 	  						  });
+                     	  }else if(list[i].lx==3){
+                     		  xrdbyw(list,i);
+                     		  var $div=$("#entertain_footid").children().eq(i);
+                     		  $div.attr("data","spstid="+list[i].wbid+"&ssrdwbm="+list[i].ssrdwbm
+   					        		+"&ssrgh="+list[i].ssr+"&ssryear="+list[i].nf+"&ssrseason="
+   					        		+list[i].jd+"&clnr="+encodeURI(list[i].clnr)+"&jdlx="+list[i].jdlx
+   					        		+"&cljs="+list[i].cljs+"&spzt="+list[i].spzt+"&splx="+list[i].lx+"&lcid="+list[i].lcid);
+                     		  $div.bind("click",function(){
+   					        	location.href = "jxkhsp.html?"+$(this).attr("data");
+   					          });
+                     	  }else if(list[i].lx==5){
+                     		  xrdbyw(list,i);
+                     		  var $div=$("#entertain_footid").children().eq(i);
+                     		  $div.css({"color":"red"});
+                     		  $div.attr("data","id="+list[i].wbid+"&dwbm="+list[i].ssrdwbm+
+ 					        		"&gh="+list[i].ssr+"&status=1");
+                     		  $div.bind("click",function(){
+   					        	 location.href = "AJXX.html?"+$(this).attr("data");
+   					          })
+                     	  }
+                     	  if((i%2)==0){
+                     		  //周期显示
+                     		  $("#entertain_footid").children().eq(i).attr("class","entertain_div1");
+                     	  }else{
+                     		  $("#entertain_footid").children().eq(i).attr("class","entertain_div2");
+                     	  }
+				       }
+                       
+                       resizeParentIframe();
+				   }
+			   },
+			   error : function() {
+				   top.msgAlertWarning("错误");
+				   //alert("错误");
+				   //$.messager.alert("提示", "错误", "warning");
+			   }
+    	   });
+	   }
+       //把待办事务写入dom树
+	   function xrdbyw(list,i) {
+		    var tzlxmc;
+			switch (list[i].lx) {
+			case '1':
+				tzlxmc='公示';
+				break;
+			case '2':
+				tzlxmc='档案';
+				break;
+			case '3':
+				tzlxmc='个人绩效';
+				break;
+			case '4':
+				tzlxmc='荣誉技能';
+				break;
+			case '5':
+				tzlxmc='案件问题反馈';
+				break;
+			case '12':
+				tzlxmc='办案业绩';
+				break;
+			}
+		   var div='<div>'+
+           '<div class="entertain_div_left">'+
+           '<span>'+(i+1)+'、</span>'+
+           '</div>'+
+           '<div class="entertain_div_center">'+
+           '<span class="entertain_div_center_tilte">'+list[i].clnr+'</span>'+
+           '<span class="entertain_div_center_span">事项名称：'+tzlxmc+'</span>'+
+           '</div>'+
+           '<div class="entertain_div_foot">'+
+	           '<span class="entertain_div_center_tilte">来源:'+(list[i].bspdwmc?list[i].bspdwmc:'')+'</span>'+
+	           '<span class="entertain_div_center_tilte">'+(list[i].bspbmmc?list[i].bspbmmc:'')+'</span>'+
+	           '<span>'+list[i].rq+'</span>'+
+           '</div></div>';
+           var $div=$(div);
+           $("#entertain_footid").append($div);
+	   }
+       
+	   resizeParentIframe();
+   </script>
+</body>
+</html>

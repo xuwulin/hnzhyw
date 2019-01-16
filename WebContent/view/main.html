@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>平台首页-iframe加载的内容页面</title>
+    <link rel="stylesheet" type="text/css" href="../css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="../js/plugin/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../js/plugin/easyui/themes/icon.css">
+
+    <script type="text/javascript" src="../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../js/plugin/echarts-all.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/plugin/echarts.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/zhyw/macarons.js" charset="utf-8"></script>
+    <!--<script type="text/javascript" src="../js/plugin/chart/pie.js" charset="utf-8"></script>-->
+
+    <style type="text/css">
+        .xiadivbt {
+            width: 95%;
+            height: 50px;
+        }
+
+        .xiadivbt input {
+            width: 60px;
+            height: 32px;
+            border: 1px solid #2B9DD7;
+            background-color: #2B9DD7;
+            color: #fff;
+            border-radius: 3px;
+            float: right;
+        }
+
+        .divright{
+            position: absolute;
+            color: #fd4a02;
+            z-index: 0;
+            font-size: 1em;
+            background-color: #f0f5f9;
+            width: 1.2em;
+            height: 1.1em;
+            top: 2px;
+            -webkit-border-radius: 2.75em;
+        }
+        .rightTopNum{
+            float: left;
+            margin-top: -8px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="sidebar">
+    <div class="register">
+        <div class="personnel">
+            <div style="width: 30%; height: 60px; float: left;">
+                <img src="../image/rx.png"/>
+            </div>
+            <p class="personnel_p" id="grxxid" style="line-height: 40px;"></p>
+            <p class="personnel_a" id="bmmcid"></p>
+        </div>
+        <div class="personnel_bas"></div>
+    </div>
+
+    <div class="notice" id="noticeid">
+        <div class="icon_tzgg">
+            通知公示
+            <span id="noticemoreid" style="float: right;"> <!-- 				 + 更多  -->
+            </span>
+        </div>
+        <div style="overflow:hidden;height:400px;line-height:400px;">
+            <ul id="gongsiid"></ul>
+        </div>
+    </div>
+
+    <!-- 	快捷功能 -->
+    <div class="kjgn">
+        <div class="kjgn_top">
+            <img src="../image/icon_kjcp.png" style="margin: 11px 0 0 9px;float:left;">
+            <span style="color: #fff; margin: 10px 0 0 13px; display: inline-block;">快捷功能</span>
+        </div>
+        <ul class="kjgn_ul">
+            <li id="dbywli" style="cursor: pointer;">
+                <img alt="" src="../image/icon_db.png">
+                <p>待办业务</p>
+            </li>
+            <li id="xxtz" style="cursor: pointer;">
+                <img alt="" src="../image/icon_xiaoxi.png">
+                <p>消息通知</p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!--内容-->
+<div class="content">
+    <div class="contents_dayw" id="contents_dayw_div" style="display: none">
+        <div class="icon_dbyw">
+            待办业务
+            <span id="gdmore_span"
+                  style="color: #2F526F; font-size: 14px; float: right; margin-right: 10px; cursor: pointer;">+
+					更多
+				</span>
+        </div>
+        <ul id="dbywul">
+        </ul>
+    </div>
+    <div style="border-radius: 5px; overflow: hidden; background-color: #fff;border-top:3px solid #0574D3; padding-bottom: 20px;">
+        <!--<span style="margin-bottom: -1px;width: 130px; border-bottom: 2px solid;line-height: 40px; height: 40px;    display: inline-block;  color: #0574d3; font-size: 16px;">-->
+        <!--<img alt="" src="../image/jxkh.png" style="margin: 5px 10px 0px 10px;  float: left;">-->
+        <!--绩效考核-->
+        <!--</span>-->
+        <!--<span id="dqcxsjid" style="color: #0574d3;" ></span>-->
+        <!--    原柱状图（注释）       -->
+        <div style="border-top: 1px solid #c1c1c1;overflow: hidden;display: none;" >
+            <div id="main1" style="height: 500px; width: 50%; float: left"></div>
+            <div id="main2" style="height: 500px; width: 50%; float: left"></div>
+            <div id="main3" style="height: 450px; width: 100%; float: left;"></div>
+        </div>
+        <!--   司法档案   -->
+        <div class="contents_sfda" style='height: 370px;'>
+            <ul class="icon_sfyw">
+                <li class="sfda_xz" style="background-image: url(../image/sfda.png);">司法档案</li>
+                <!-- <li class="sfda_wxz" style="background-image: url(image/ywkh.png);">业务考核</li> -->
+                <span class="gd_span_ys" id="gd_span_ys" style="display:none">+
+					更多
+				</span>
+                <div id="sfdaDate" style="font-size: 14px;float: right; color: #666;line-height: 45px;margin-right: 20px;"></div>
+            </ul>
+
+            <div class="home_sfda">
+                <div class="home_sfda_right">
+                    <ul id="sfda_nr">
+                        <li title=''>
+                            <div>
+                                <div class="SFDA_img">
+                                    <img src="../image/change_image/1_81.png">
+                                </div>
+                                <div class="home_sfda__left_jdsl">
+                                    <span>办案业绩</span>
+                                    <span style="color: #fd4a02;margin-top: 5px;"><span id="basl"
+                                                                                        class="span_zsyys"></span></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li title=''>
+                            <div>
+                                <div class="SFDA_img">
+                                    <img src="../image/change_image/1_66.png">
+                                </div>
+                                <div class="home_sfda__left_jdsl">
+                                    <span>荣誉奖励</span>
+                                    <span style="color: #fd4a02;margin-top: 5px;"><span id="ryjlsl"
+                                                                                        class="span_zsyys"></span></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li title=''>
+                            <div>
+                                <div class="SFDA_img">
+                                    <img src="../image/change_image/1_74.png">
+                                </div>
+                                <div class="home_sfda__left_jdsl">
+                                    <span>责任追究</span>
+                                    <span style="color: #fd4a02;margin-top: 5px;"><span id="zrzjsl"
+                                                                                        class="span_zsyys"></span></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li title=''>
+                            <div>
+                                <div class="SFDA_img">
+                                    <img src="../image/change_image/1_75.png">
+                                </div>
+                                <div class="home_sfda__left_jdsl">
+                                    <span>接受监督</span>
+                                    <span style="color: #fd4a02;margin-top: 5px;"><span id="jsjdsl" class="span_zsyys"></span></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li title=''>
+                            <div>
+                                <div class="SFDA_img">
+                                    <img src="../image/change_image/1_69.png">
+                                </div>
+                                <div class="home_sfda__left_jdsl">
+                                    <span>业务研修</span>
+                                    <span style="color: #fd4a02;margin-top: 5px;"><span id="ywyxsl" class="span_zsyys"></span></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li title=''>
+                            <div>
+                                <div class="SFDA_img">
+                                    <img src="../image/change_image/1_70.png">
+                                </div>
+                                <div class="home_sfda__left_jdsl">
+                                    <span>其他</span>
+                                    <span style="color: #fd4a02;margin-top: 5px;"><span id="qtqksl" class="span_zsyys"></span></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div content="home_sfda_bm">
+                <!-- 当前登录人所属部门名称,可能存在于多个部门 -->
+                <div class="home_left_dbrw3">
+                    <div id="gsrsys" class="gsrs">
+                        <!-- <span class="bxzys">侦查监督局</span>
+                        <span>公诉一处</span> -->
+                    </div>
+                </div>
+                <div class="szgdys2" style="height: 255px;">
+                    <div class="anguan_sjlr2" style="width: 100%;margin-top: 15px;height: 230px;">
+                        <!--暂无数据-->
+                        <div id='zwsjys1' style="display: none">暂无数据</div>
+                        <!--加载中-->
+                        <!--<div id='loading' class="loading"><img src="../image/change_image/lod2.gif"></div>-->
+                        <div id='personList' style='width: 100%;height: 100%;position: relative'>
+                            <div class="sjlr_left">
+                                <div class="sjlr_left_img" id="qh_left"></div>
+                                <div class="qh_left_hide"></div>
+                            </div>
+                            <div class="sjlr_top">
+                                <ul id="agxxlr2">
+                                    <li class="gsqhys">
+                                        <div class="agxxlr_nr2">
+                                            <div class="agxxlr_nr_tou2">
+                                                <span class="agxxlr_nr_tou_name2"></span>
+                                                <span class="agxxlr_nr_tou_span2">检察官</span>
+                                            </div>
+                                            <div class="agxxlr_nrxsbf2">
+                                                <div class="agxxlr_div2">办理案件数:<span style="margin-left: 10px;color: #FD8F4B;">0</span></div>
+                                                <div class="agxxlr_div2">荣誉奖励:<span style="margin-left: 10px;color: #FD8F4B;">0</span></div>
+                                                <div class="agxxlr_div2">业务研修:<span style="margin-left: 10px;color: #FD8F4B;">0</span></div>
+                                                <div class="agxxlr_div2">责任追究:<span style="margin-left: 10px;color: #FD8F4B;">0</span></div>
+                                                <div class="agxxlr_div2">接受监督:<span style="margin-left: 10px;color: #FD8F4B;">0</span></div>
+                                                <div class="agxxlr_div2">其他:<span style="margin-left: 10px;color: #FD8F4B;">0</span></div>
+                                            </div>
+                                            <div class="ycckys"></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="sjlr_right">
+                                <div class="sjlr_right_img" id="qh_right"></div>
+                                <div class="qh_right_hide"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!--   个人绩效   -->
+    <div style="border-radius: 5px; overflow: hidden; background-color: #fff;margin-top: 20px;border-top:3px solid #0574D3;">
+        <div class="contents_sfda" style='height: 300px;'>
+
+            <ul class="icon_sfyw">
+                <li class="sfda_xz" style="background-image: url(../image/change_image/gryj.png);">个人绩效</li>
+            </ul>
+            <div class="szgdys1" style="height: 250px">
+
+                <div class="anguan_sjtu">
+                    <div>
+                        <span class="gryjqwm_name_span">个人业绩前五名</span>
+                        <span style="margin-left: 5px;">数据来源:<span id="grjx_sjly" style="margin-left: 5px;"></span>
+                        </span>
+                    </div>
+                    <div id="chart_cases_top5"></div>
+                </div>
+                <div class="anguan_sjlr">
+                    <!--暂无数据-->
+                    <div id='zwsjys' style="display: none">暂无数据</div>
+                    <div id='ajbltop5' style='width: 100%;height: 220px;'>
+                        <div class="sjlr_left">
+                            <div class="sjlr_left_img" id="sjlrqh_left"></div>
+                            <div class="sjlrqh_left_hide"></div>
+                        </div>
+                        <div class="sjlr_top">
+                            <ul id="agxxlr">
+                                <!-- 这里保留一份最原始的li标签结构，以便以后改进 -->
+
+                                <li>
+                                    <ol>
+                                        <li>
+                                            <img class="agxxlr_nr_tou_img" src="../image/change_image/touxiang.png">
+                                            <span class="agxxlr_nr_tou_name">检察官</span>
+                                            <span class="agxxlr_nr_tou_span">分数:<span>0</span></span>
+                                        </li>
+                                    </ol>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sjlr_right">
+                            <div class="sjlr_right_img" id="sjlrqh_right"></div>
+                            <div class="sjlrqh_right_hide"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!--   业务考核   -->
+    <div style="border-radius: 5px; overflow: hidden; background-color: #fff;margin-top: 20px;border-top:3px solid #0574D3;">
+        <div id="ywkh_content" class="contents_sfda" style='height: 270px;'>
+
+            <ul class="icon_sfyw">
+                <li class="sfda_xz" style="background-image: url(../image/change_image/rwkh.png);">业务考核</li>
+            </ul>
+
+            <div id="ywkh_detail_all">
+                <div class="szgdys1" style="padding:0 20px 0 15px">
+                    <div class="ywkh_title">
+	                    <span class="ywkh_title_name">
+	                        <span id="ywkh_title_sj">xxxx年xx月-xxxx年xx月的业务考核情况</span>
+	                        <span id="ywkh_title_bmmc">考核类型</span>
+	                        <span style="margin-right: 5px;">基础分:</span>
+	                        <span id="ywkh_title_jcf" style="color: #E9410E;font-size: 20px;">0</span>
+	                        <span style="margin-right: 5px;">评价分:</span>
+	                        <span id="ywkh_title_pjf" style="color: #E9410E;font-size: 20px;">0</span>
+	                    </span>
+                    </div>
+                    <div id="ywkh_option"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="xjtjnfDetail" class="bounced" style="display: none">
+        <div class="bounced_all" style="margin: 55% auto;">
+            <div class="bounced_tot" style='line-height: 40px;'>
+                <span style="padding-left: 10px;">新建我的档案</span>
+                <div class="tot_img" onclick="closeDetail()"></div>
+            </div>
+            <div style='margin: 0 auto; margin-top: 27px; width: 450px;'>
+                <span style="margin-left: 42px;">选择起始年月</span>
+                <input class="easyui-datebox xjStartDate" id="xjStartDate" name="xjStartDate"
+                       style="width: 100px;height:28px;">
+                <span>-</span>
+                <input class="easyui-datebox xjEndDate" id="xjEndDate"  name="xjEndDate"
+                       style="width: 100px;height:28px;">
+            </div>
+            <div class='xiadivbt' style='margin-top: 20px; width: 458px;'>
+                <input type="button" onclick="closeDetail();" value="取消"
+                       style='cursor: pointer; background: #fff; color: #777'/> <input
+                    type="button" onclick="jx();"
+                    style='cursor: pointer; margin-right: 10px;' value="确定"/>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="../js/zhyw/service/UserService.js"></script>
+<script type="text/javascript" src="../js/zhyw/main.js"></script>
+</html>

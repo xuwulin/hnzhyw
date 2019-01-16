@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:对应的mapper文件包名 -->
+<mapper namespace="com.swx.ibms.business.system.mapper.DataDictMapper">
+    <resultMap id="dataDictMap" type="com.swx.ibms.business.system.bean.DataDict">
+        <result property="dictId" column="dict_id" javaType="java.lang.String"></result>
+        <result property="dictName" column="dict_name" javaType="java.lang.String"></result>
+        <result property="dictType" column="dict_type" javaType="java.lang.String"></result>
+        <result property="dictTypeValue" column="dict_type_value" javaType="java.lang.String"></result>
+        <result property="dictFid" column="dict_fid" javaType="java.lang.String"></result>
+        <result property="dictOperateDwbm" column="dict_operate_dwbm" javaType="java.lang.String"></result>
+        <result property="dictOperator" column="dict_operator" javaType="java.lang.String"></result>
+        <result property="dictExplain" column="dict_explain" javaType="java.lang.String"></result>
+        <result property="dictStatus" column="dict_status" javaType="java.lang.String"></result>
+        <result property="createTime" column="create_time" javaType="java.util.Date"></result>
+        <result property="modifyTime" column="modify_time" javaType="java.util.Date"></result>
+    </resultMap>
+
+    <resultMap id="dictPageMap" type="java.util.Map">
+        <result property="dictId" column="dict_id" javaType="java.lang.String"></result>
+        <result property="dictFid" column="dict_fid" javaType="java.lang.String"></result>
+        <result property="dictName" column="dict_name" javaType="java.lang.String"></result>
+        <result property="dictType" column="dict_type" javaType="java.lang.String"></result>
+        <result property="dictTypeValue" column="dict_type_value" javaType="java.lang.String"></result>
+        <result property="dictOperateDwbm" column="dict_operate_dwbm" javaType="java.lang.String"></result>
+        <result property="dwmc" column="dwmc" javaType="java.lang.String"></result>
+        <result property="dwjc" column="dwjc" javaType="java.lang.String"></result>
+        <result property="dwjb" column="dwjb" javaType="java.lang.String"></result>
+        <result property="dictOperator" column="dict_operator" javaType="java.lang.String"></result>
+        <result property="dictExplain" column="dict_explain" javaType="java.lang.String"></result>
+        <result property="dictStatus" column="dict_status" javaType="java.lang.String"></result>
+        <result property="createTime" column="create_time" javaType="java.util.Date"></result>
+        <result property="modifyTime" column="modify_time" javaType="java.util.Date"></result>
+        <result property="dictIdentifying" column="dict_identifying" javaType="java.lang.String"></result>
+    </resultMap>
+
+    <!--根据父id查询数据字典-->
+    <select id="getDictByPid" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[
+ 		{call PKG_DATA_DICT.pro_getDictByPid(
+ 			#{p_pid,mode=IN,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=dataDictMap}
+  		)}
+  		]]>
+    </select>
+
+    <!--查询数据字典并分页-->
+    <select id="getPageListDict" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[
+ 		{call PKG_DATA_DICT.pro_getPageList_dict(
+ 			#{p_pid,mode=IN,jdbcType=VARCHAR},
+ 			#{p_start,mode=IN,jdbcType=INTEGER},
+ 			#{p_end,mode=IN,jdbcType=INTEGER},
+ 			#{p_total,mode=OUT,jdbcType=INTEGER},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=dictPageMap}
+  		)}
+  		]]>
+    </select>
+
+    <!--添加字典信息-->
+    <insert id="addDict" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[
+ 		{call PKG_DATA_DICT.pro_add_dict(
+ 			#{p_id,mode=IN,jdbcType=VARCHAR},
+ 			#{p_fid,mode=IN,jdbcType=VARCHAR},
+ 			#{p_name,mode=IN,jdbcType=VARCHAR},
+ 			#{p_ident,mode=IN,jdbcType=VARCHAR},
+ 			#{p_type,mode=IN,jdbcType=VARCHAR},
+ 			#{p_type_value,mode=IN,jdbcType=VARCHAR},
+ 			#{p_explain,mode=IN,jdbcType=VARCHAR},
+ 			#{p_status,mode=IN,jdbcType=VARCHAR},
+ 			#{p_createTime,mode=IN,jdbcType=DATE},
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+ 			#{p_mc,mode=IN,jdbcType=VARCHAR},
+  		    #{p_errMsg,mode=OUT,jdbcType=VARCHAR}
+  		)}
+  		]]>
+    </insert>
+
+    <!--根据字典id修改字典信息-->
+    <update id="modifyDict" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[
+ 		{call PKG_DATA_DICT.pro_modify_dict(
+ 			#{p_id,mode=IN,jdbcType=VARCHAR},
+ 			#{p_fid,mode=IN,jdbcType=VARCHAR},
+ 			#{p_name,mode=IN,jdbcType=VARCHAR},
+ 			#{p_ident,mode=IN,jdbcType=VARCHAR},
+ 			#{p_type,mode=IN,jdbcType=VARCHAR},
+ 			#{p_type_value,mode=IN,jdbcType=VARCHAR},
+ 			#{p_explain,mode=IN,jdbcType=VARCHAR},
+ 			#{p_status,mode=IN,jdbcType=VARCHAR},
+ 			#{p_modifyTime,mode=IN,jdbcType=DATE},
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+ 			#{p_mc,mode=IN,jdbcType=VARCHAR},
+  		    #{p_errMsg,mode=OUT,jdbcType=VARCHAR}
+  		)}
+  		]]>
+    </update>
+
+    <!--根据字典id删除字典信息-->
+    <delete id="delDict" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[
+ 		{call PKG_DATA_DICT.pro_del_dict(
+ 			#{p_id,mode=IN,jdbcType=VARCHAR},
+  		    #{p_errMsg,mode=OUT,jdbcType=VARCHAR}
+  		)}
+  		]]>
+    </delete>
+    
+     <!-- 查询ip是否重复 -->
+   <select  id="selectidcount"   parameterType="java.util.Map"    statementType="CALLABLE">
+	<![CDATA[
+	{call PKG_DATA_DICT.PROC_GET_CXID(
+				#{P_ID,mode=IN,jdbcType=VARCHAR},
+	            #{P_COUNT,mode=OUT,jdbcType=VARCHAR},
+                #{P_ERRMSG,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]> 
+   </select>
+   
+     <!-- 考核类型查询权重值 -->
+   <select  id="selectqz"   parameterType="java.util.Map"    statementType="CALLABLE">
+	<![CDATA[
+	{call PKG_DATA_DICT.PROC_GET_QZCX(
+				#{P_KHLX,mode=IN,jdbcType=VARCHAR},
+				#{P_DICIDEN,mode=IN,jdbcType=VARCHAR},
+	            #{P_VALUE,mode=OUT,jdbcType=VARCHAR},
+                #{P_ERRMSG,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]> 
+   </select>
+   
+     <!-- 公示与未公示取值 -->
+   <select  id="selectisgs" parameterType="java.util.Map" statementType="CALLABLE">
+	<![CDATA[
+	{call PKG_DATA_DICT.PRO_GET_ISGS(			
+				#{P_DICIDEN,mode=IN,jdbcType=VARCHAR},
+	            #{P_CURSOR,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=dataDictMap},
+                #{P_ERRMSG,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]> 
+   </select>
+   
+   <!-- 根据类型与标示获取数据字典信息 -->
+   <select id="getDataDictBylxSign" parameterType="java.util.Map" statementType="CALLABLE">
+	<![CDATA[
+		{call PKG_DATA_DICT.pro_get_dataDict(			
+			 #{p_type,mode=IN,jdbcType=VARCHAR},
+			 #{p_sign,mode=IN,jdbcType=VARCHAR},
+		     #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=dataDictMap}
+	    )}
+   	]]> 
+   </select>
+   
+</mapper>

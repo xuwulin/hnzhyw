@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:对应的mapper文件包名 -->
+<mapper namespace="com.swx.ibms.business.archives.mapper.SfdaGrxxPldrMapper">
+	
+	<resultMap id="grjbxxPlMap" type="com.swx.ibms.business.archives.bean.SfdaGrjbxxInputExcel">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="bmbm" column="bmbm" javaType="java.lang.String"></result>
+		<result property="gh" column="gh" javaType="java.lang.String"></result>
+		<result property="mc" column="mc" javaType="java.lang.String"></result>
+		<result property="gender" column="gender" javaType="java.lang.String"></result>
+		<result property="birthday" column="birthday" javaType="java.lang.String"></result>
+		<result property="whcd" column="whcd" javaType="java.lang.String"></result>
+		<result property="xw" column="xw" javaType="java.lang.String"></result>
+		<result property="sflb" column="sflb" javaType="java.lang.String"></result>
+		<result property="grade" column="grade" javaType="java.lang.String"></result>
+		<result property="postInfo" column="postInfo" javaType="java.lang.String"></result>
+		<result property="reDate" column="reDate" javaType="java.lang.String"></result>
+		<result property="adminRank" column="adminRank" javaType="java.lang.String"></result>
+		<result property="zzmm" column="zzmm" javaType="java.lang.String"></result>
+		<result property="zp" column="zp" javaType="java.lang.String"></result>
+		<result property="year" column="year" javaType="java.lang.String"></result>
+		<result property="cjsj" column="cjsj" javaType="java.lang.String"></result>
+		<result property="xgsj" column="xgsj" javaType="java.lang.String"></result>
+		<result property="status" column="status" javaType="java.lang.String"></result>
+		<result property="xh" column="xh" javaType="java.lang.Integer"></result>
+	</resultMap>
+	
+	<resultMap id="grjlPlMap" type="com.swx.ibms.business.archives.bean.SfdaGrjlInputExcel">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="gh" column="gh" javaType="java.lang.String"></result>
+		<result property="gzkssj" column="gzkssj" javaType="java.lang.String"></result>
+		<result property="gzjssj" column="gzjssj" javaType="java.lang.String"></result>
+		<result property="gzbm" column="gzbm" javaType="java.lang.String"></result>
+		<result property="gzdd" column="gzdd" javaType="java.lang.String"></result>
+		<result property="gwzz" column="gwzz" javaType="java.lang.String"></result>
+		<result property="jykssj" column="jykssj" javaType="java.lang.String"></result>
+		<result property="jyjssj" column="jyjssj" javaType="java.lang.String"></result>
+		<result property="xxmc" column="xxmc" javaType="java.lang.String"></result>
+		<result property="xxdz" column="xxdz" javaType="java.lang.String"></result>
+		<result property="drzz" column="drzz" javaType="java.lang.String"></result>
+		<result property="cjsj" column="cjsj" javaType="java.lang.String"></result>
+		<result property="xgsj" column="xgsj" javaType="java.lang.String"></result>
+		<result property="status" column="status" javaType="java.lang.String"></result>
+		<result property="xh" column="xh" javaType="java.lang.Integer"></result>
+	</resultMap>
+	
+	<!-- 批量导入个人基本信息 -->
+	<insert id="insertAllGrjbxx" parameterType="java.util.Map">
+		insert into YX_SFDA_GRJBXX_PLDR(id,
+										dwbm,
+										bmmc,
+										gh,
+										mc,
+										gender,
+										birthday,
+										whcd,
+										xw,
+										sflb,
+										sflbbs,
+										grade,
+										postInfo,
+										reDate,
+										adminRank,
+										zzmm
+										)
+								values( #{id},
+										#{dwbm},
+										#{bmmc},
+										#{gh},
+										#{mc},
+										#{gender},
+										#{birthday},
+										#{whcd},
+										#{xw},
+										#{sflb},
+										#{sflbBs},
+										#{grade},
+										#{postInfo},
+										#{reDate},
+										#{adminRank},
+										#{zzmm}
+										)
+	</insert>
+	
+	<!-- 批量导入个人经历 -->
+	<insert id="insertAllGrjl" parameterType="java.util.Map">
+		insert into YX_SFDA_GRJL_PLDR(id,
+									  dwbm,
+									  gh,
+									  gzkssj,
+									  gzjssj,
+									  gzbm,
+									  gzdd,
+									  gwzz,
+									  jykssj,
+									  jyjssj,
+									  xxmc,
+									  xxdz,
+									  drzz
+									  )
+								values(#{id},
+									   #{dwbm},
+									   #{gh},
+									   #{gzkssj},
+									   #{gzjssj},
+									   #{gzbm},
+									   #{gzdd},
+									   #{gwzz},
+									   #{jykssj},
+									   #{jyjssj},
+									   #{xxmc},
+									   #{xxdz},
+									   #{drzz}
+									  )
+	</insert>
+	
+	<!-- 查询导入的个人基本信息 -->
+	<select id="selectALLGrjbxx" resultType="java.util.HashMap">
+		select * from YX_SFDA_GRJBXX_PLDR
+		where dwbm = #{dwbm}
+	</select>
+	
+	<!-- 查询导入个人经历 -->
+	<select id="selectALLGrjl" resultType="java.util.HashMap">
+		select * from YX_SFDA_GRJL_PLDR
+		where dwbm = #{dwbm}
+	</select>
+	
+	<!-- 删除个人基本信息 -->
+	<delete id="deleteGrjbxxById" parameterType="java.util.Map">
+		delete from YX_SFDA_GRJBXX_PLDR
+		where id = #{id}
+	</delete>
+	
+	<!-- 删除个人经历 -->
+	<delete id="deleteGrjlById" parameterType="java.util.Map">
+		delete from YX_SFDA_GRJL_PLDR
+		where id = #{id}
+	</delete>
+	
+	<!-- 根据单位编码，工号查找个人基本信息,如果导入了多条，按时间排序，只去一条 -->
+	<select id="selectGrjbxxBydg" resultType="java.util.HashMap">
+		select a.* from(
+			select * from YX_SFDA_GRJBXX_PLDR
+			where dwbm = #{dwbm}
+				and gh = #{gh}
+				order by cjsj desc
+				) a
+	    where rownum = 1
+	</select>
+	
+	<!-- 根据单位编码，工号查找个人经历 -->
+	<select id="selectGrjlBydg" resultType="java.util.HashMap">
+		select * from YX_SFDA_GRJL_PLDR
+		where dwbm = #{dwbm}
+			and gh = #{gh}
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,99 @@
+.bounceds{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right:0;
+    background: rgba(0,0,0,0.6);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#50030303,endColorstr=#50030303);
+
+}
+.bounced_alls{
+    width: 500px;
+    height: 530px;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    background-color: #fff;
+    margin: 8% auto;
+
+}
+.bounced_tot{
+    height: 40px;
+    width: 100%;
+    border-bottom: 1px solid #D7D7D7;
+}
+.bounced_tot>span{
+    display: inline-block;
+    width: 130px;
+    height: 100%;
+    text-indent: 20px;
+    line-height: 40px;
+    font-weight: bold;
+    color: #787878;
+}
+.tot_img{
+    width: 24px;
+    height: 24px;
+    background: url("../image/close.png") no-repeat;
+    float: right;
+    margin: 10px 10px;
+}
+.bounced_one{
+    width: 92%;
+    height: 55px;
+
+
+}
+.bounced_one>input{
+    width: 350px;
+    height: 28px;
+    float: right;
+    line-height: 28px;
+}
+.bounced_one>span{
+    float: right;
+    margin-right: 15px;
+    line-height: 30px;
+}
+
+.bounced_one>button{
+    width: 100px;
+    height: 36px;
+    border: 1px solid #CDCDCD;
+    float: right;
+    background-color: #fff;
+    color: #0A4792;
+    font-size: 16px;
+}
+.bounced_save{
+    width: 92%;
+    height: 50px;
+}
+.bounced_save>button{
+    width: 90px;
+    height: 35px;
+    border: 1px solid #2B9CD8;
+    border-radius: 4px;
+    background-color: #2B9CD8;
+    color: white;
+    font-size: 16px;
+    float: right;
+
+}
+.bounced_two{
+    width: 111px;
+    height: 34px;
+    background: url("image/scfj_normal.png") no-repeat;
+    float: right;
+}
+
+.bounced_two:hover{
+    background: url("image/scfj_hover.png") no-repeat;
+}
+/*涓嬫媺妗嗘牱寮�*/
+.select_x{
+    width: 354px;
+    height: 38px;
+    float: right;
+    padding: 7px;
+}

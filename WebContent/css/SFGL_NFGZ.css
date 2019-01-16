@@ -1,0 +1,130 @@
+body {
+	height: 100%;
+	margin: 0;
+	padding: 10px;
+	box-sizing: border-box;
+	background: #efeef4;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Microsoft YaHei UI';
+}
+
+.content {
+	min-width: 1200px;
+	height: 100%;
+}
+
+.contents_tree {
+	width: 20%;
+	height: 100%;
+	padding-top: 10px;
+	box-sizing: border-box;
+	background: #fff;
+	float: left;
+}
+
+.contents_details {
+	width: 79%;
+	min-width: 860px;
+	height: 100%;
+	padding: 20px 14px;
+	padding-right: 35px;
+	box-sizing: border-box;
+	background: #fff;
+	float: right;
+}
+
+.tree_ul {
+	width: 100%;
+	height: 100%;
+	overflow-y: auto;
+	list-style: none;
+}
+
+.tree_ul li {
+	width: 100%;
+	height: 35px;
+	line-height: 35px;
+	box-sizing: border-box;
+	padding-left: 82px;
+	color: #333333;
+	font-size: 14px;
+	background: url(../image/0_03.png) no-repeat 60px 50%;
+	/*				border-bottom: 1px solid #666666;*/
+}
+
+.contents_tit {
+	height: 55px;
+	border-bottom: 1px dashed #c1c1c1;
+	color: #333333;
+	font-size: 16px;
+	line-height: 55px;
+	padding-left: 60px;
+	box-sizing: border-box;
+	background: url(../image/da.png) no-repeat 7px 0px;
+}
+
+.cartogram {
+	height: 300px;
+}
+
+.cartogram_style {
+	width: 300px;
+	height: 60px;
+	font-size: 14px;
+	line-height: 60px;
+	padding-left: 60px;
+	box-sizing: border-box;
+	float: left;
+}
+
+.cartogram_zbaj {
+	background: url(../image/zbaj.png) no-repeat 10px 50%;
+}
+
+.cartogram_cbaj {
+	background: url(../image/zbaj.png) no-repeat 10px 50%;
+}
+
+.cartogram_column {
+	height: 260px;
+	clear: both;
+	border: 1px solid #B2D4EA;
+	box-sizing: border-box;
+	margin-bottom: 20px;
+	line-height: 260px;
+	text-align: center;
+	font-size: 40px;
+	color: #C1C1C1;
+}
+
+.cartogram>ul {
+	width: 100%;
+	height: auto;
+	list-style: none;
+}
+
+.cartogram>ul>li {
+	height: 50px;
+	/*border-bottom: 1px solid #B2D4EA;*/
+	background: no-repeat 10px 50%;
+	padding-left: 60px;
+	font-size: 14px;
+	color: #333333;
+	line-height: 50px;
+	box-sizing: border-box;
+}
+
+.cartogram>ul>li span {
+	color: #ff5a25;
+}
+
+
+
+
+
+
+

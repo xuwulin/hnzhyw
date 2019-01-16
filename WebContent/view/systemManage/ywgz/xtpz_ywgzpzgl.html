@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>系统管理-业务考核-考核指标管理</title>
+	<link href="../../../css/bounced.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../../css/xtpz.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/xtpz_ywkhzbgl.css" />
+	<!--<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/default/easyui.css">-->
+	<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/bootstrap/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/icon.css">
+	<script type="text/javascript" src="../../../js/plugin/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../js/plugin/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../js/zhyw/utils/common.js"></script>
+	<script type="text/javascript" src="../../../js/zhyw/utils/constant.js"></script>
+	<script type="text/javascript" src="../../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+	<style type="text/css">
+	/*.left_ul li:nth-of-type(11) a{
+		background-color:#0876D5;
+		color:#fff;
+		border: 1px solid #0876D5;
+		cursor:pointer;
+	}*/
+	
+	.lxxx_btn{
+		cursor: pointer;
+		background: #E7F0F7;
+	    font-size: 14px;
+	    width: 65px;
+	    float: right;
+	    height: 22px;
+	    border: 1px solid #4C97D8;
+	    border-radius: 5px;
+	    margin-top:13px;
+	}
+	
+	#file_upload_ywkhzb_btn{
+        height: 30px;
+        outline: none;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        border: 1px solid #4B97D8;
+        border-radius:4px;
+        margin-left: -2px;
+        position: relative;
+        width: 65px;
+        background: #E8F0F7;
+        color: #4B97D8;
+    }
+    #file_div_ywkhzb span.textbox a.l-btn{
+        border: none;
+        border-left: 1px solid #4B97D8;
+        background: #E8F0F7;
+        color: #4B97D8;
+    }
+    #file_div_ywkhzb span.textbox a.l-btn:hover{
+        background: #4B97D8;
+        color: #fff;
+    }
+    #file_div_ywkhzb span.textbox{
+        border: 1px solid #4B97D8;
+    }
+    #file_div_ywkhzb span.textbox-invalid{
+        border-color: #4B97D8;
+    }
+</style>
+</head>
+	<body>
+		<div class="xtpz">
+			<!--<div class="xtpz_top">当前位置 : 系统配置</div>-->
+			<!--<div class="xtpz_content">-->
+				<!--<div class="content_left">-->
+					<!--<div class="left_tree"></div>-->
+				<!--</div>-->
+
+				<div id="ywkhZbpzContent" >
+					<!--<div class="right_top">-->
+						<!--<img src="../../../image/icon_sd.png"-->
+							<!--style="float: left; margin: 17px 12px 0px 12px;">考核指标管理-->
+					<!--</div>-->
+
+					<div class="right_table">
+						<div>
+							<a class="lxxx_btn" id="download_templet_ywkhzb" style="display: block;">
+								<img src="../../../image/xz.png" style="float: left; margin: 3px 5px 0 8px;width: 15px;height: 14px;">
+								<span style="line-height: 22px;color: #4C97D8; display: inline-block;">下载</span>
+							</a>
+							<div class="lxxx_btn" id="upload_ywkhzb" href="javascript:void(0);" style="display: block; margin-right: 20px;">
+								<img src="../../../image/sz.png" style="float: left; margin: 3px 5px 0 8px;width: 15px;height: 14px;">
+								<span style="line-height: 22px; color: #4C97D8; display: inline-block;">上传</span>
+							</div>
+							<button id="syxz" class="btn_xz" onclick="addbutton();" style="display:none;float:right; margin-right: 20px;">新增</button>
+							<!-- <a id="upload_ywkhzb" href="javascript:void(0);">导入excel</a> -->
+						</div>
+
+						<ul class="right_ul" >
+							<li id="right_li1"  class="" onclick="selecttable(3)">分市院</li>
+							<li id="right_li2"  class="" onclick="selecttable(4)">县区院</li>
+
+						</ul>
+
+						<div style="float: left;width: 100%;margin-top: 10px;" class="right_com">
+							<div style="width: 100%; height: 0px">
+								<input id="ywkh_khlx_select_input" type="hidden"/>
+							</div>
+							<table id="dg" style="width: 100%;"></table>
+						</div>
+					</div>
+				</div>
+			<!--</div>-->
+		</div>
+
+		<div id="fileFrom_ywkhzb" class="" style="display:none">
+		     <div style="margin: 20px 0;">
+			    <form id="file_form_ywkhzb" method="post" enctype="multipart/form-data" style="float: left; width: 320px; margin-left: 50px;">
+					<div id="file_div_ywkhzb" style="margin-left: 20px;">
+						<input buttonText="选择文件" id="file_upload" style='width:300px;height:30px;' name="file" placeholder='未选择文件' class="easyui-filebox" data-options="required:true"/>
+					</div>
+				 </form>
+		     	 <button id="file_upload_ywkhzb_btn" style="cursor:pointer;">导入</button>
+		     </div>
+  		</div>
+
+	</body>
+	<script type="text/javascript" src="../../../js/zhyw/xtgl/ywgzzbpz.js"></script>
+	<script type="text/javascript">
+		// $(".left_tree").load("../left_menu.html");
+	</script>
+</html>

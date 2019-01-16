@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" name="" content="IE=edge,chrome=1"/>
+    <title>司法档案-档案页面</title>
+    <link rel="stylesheet" type="text/css" href="../../css/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/bootstrap/easyui.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/default/easyui.css"/>-->
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/icon.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/zTreeStyle/zTreeStyle.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/card.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/bounced.css"/>
+	
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/contentstree.js"></script>
+	<script type="text/javascript" src="../../js/zhyw/utils/base64.js"></script>
+	
+	<style type="text/css">
+		.archives_2_1 ul li.sftitle {
+			border-bottom: 3px solid #3A81BC;
+			color: #1E6CB2;
+		}
+		
+		.bounced_one{
+		height: 26px;margin: 0 auto;margin-top: 10px;
+		}
+		
+		.bounced_select{
+			width:92%;
+			padding-left: 9px;
+			margin: 0 auto;
+			margin-top: 10px;
+		}
+		
+		.entertain_foot_foot{
+			width: 500px;
+			margin: 0 auto;
+			clear: both;
+			height: 41px;
+			margin-top: 9px;
+		}
+		
+		.r_page{
+		    float: left;
+		}
+		
+		.ju_btn_white{
+		   display: inline-block;
+		   width: 80px;
+		   height: 32px;
+		   background: #fff;
+		   border-radius: 4px;
+		   text-align: center;
+		   line-height: 32px;
+		   color: #000;
+		   font-size: 13px;
+		   margin-left:10px;
+		   border: 1px solid #ccc;
+		   cursor: pointer;
+		}
+		
+		.ju_btn_white:hover{
+		   background: #ccc;
+		}
+		
+		#sfjnrymc + span,#sfjnhjdj + span,#sfjnbjdw + span,#zrzjzrzl + span,#zrzjcljg + span,#jdqkjdzl + span,#jdqkjdcl + span,#jdqkzgqk + span{
+			width: 225px!important;
+		}
+		
+		/*             */
+		#jdqkjdsj + span{
+			float: left;
+		}
+		
+		/*                  */
+		#zycsxmmc + span,#zycsxmlx + span{
+			width: 182px!important;
+		}
+		
+		/*          */
+		#zrzjclsy + span,#zrzjclnr + span,#zrzjzrqtqk + span,#jdqkjdsy + span,#jdqkjdqtqk + span,#sfjnhjsy + span,#sfjnhjqtqk + span{
+			width: 525px!important;
+			margin-right: 9px;
+		}
+		
+		/*                */
+		#zycszysh + span,#zycsyjcg + span,#zycsywdd + span,#zycszynr + span,#zycsywqtqk + span{
+			width: 484px!important;
+			margin-right: 20px;
+		}
+		
+		/*              */
+		#zrzjclsy + span>textarea,#zrzjclnr + span>textarea,#zrzjzrqtqk + span>textarea,#jdqkjdsy + span>textarea,#jdqkjdqtqk + span>textarea,#sfjnhjsy + span>textarea,#sfjnhjqtqk + span>textarea{
+			width: 516px!important;
+		}
+		
+		/*                */
+		#zycszysh + span>textarea,#zycsyjcg + span>textarea,#zycszynr + span>textarea,#zycsywqtqk + span>textarea{
+			width: 476px!important;
+		}
+		
+		.table_czan_ys{
+            width: 28px;
+            height: 18px;
+            display: inline-block;
+            line-height: 18px;
+            border: 1px solid #4B97D8;
+            border-radius: 3px;
+            color: #4B97D8;
+            margin-right: 0.1px;
+    		padding: 0 0.2px
+        }
+        .table_czan_ys:hover{
+            background: #4B97D8;
+            color: #fff;
+        }
+        
+        a{
+        	text-decoration: none;
+        }
+		
+		#fjwjbutton{
+            height: 30px;
+            outline: none;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+            border: 1px solid #4B97D8;
+            border-left: 0px solid #4B97D8;
+            margin-left: -2px;
+            position: relative;
+            width: 65px;
+            background: #E8F0F7;
+            color: #4B97D8;
+        }
+        #fjwjbutton:hover{
+            background: #4B97D8;
+            color: #fff;
+        }
+        #fjUpFile + span{
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        #fjxzwj span.textbox a.l-btn{
+            border: none;
+            border-left: 1px solid #4B97D8;
+            background: #E8F0F7;
+            color: #4B97D8;
+        }
+        #fjxzwj span.textbox a.l-btn:hover{
+            background: #4B97D8;
+            color: #fff;
+        }
+        #fjxzwj span.textbox{
+            border: 1px solid #4B97D8;
+        }
+        #fjxzwj span.textbox-invalid{
+            border-color: #4B97D8;
+        }
+
+		.archives_search {
+			background: #0674D3;
+			width: 76px;
+			height: 26px;
+			border: 1px solid #0674D3;
+			color: #fff;
+			margin-right: 10px;
+			border-radius: 5px;
+			cursor: pointer;
+			outline: none;
+		}
+
+	</style>
+</head>
+
+<body>
+    <div class="top_url">
+		<span class="dagztitle" style="float: left; color:#666; line-height: 50px;font-size:18px;margin-left:21%;font-family:微软雅黑;"></span>
+	</div>
+	
+   <div class="archives">
+       <!--左侧树形导航-->
+       <div class="contents_tree">
+           <ul class="tree_ul"></ul>
+       </div>
+       <!--右侧内容体-->
+       <div class="archives_all">
+           <div class="archives_1">
+               <div class="archives_1_1">
+               </div>
+               <div class="archives_1_2">
+                   <ul>
+                       <li>
+                           <span>荣誉奖励总数</span>
+                           <p id = "sfjnzs">0个</p>
+                       </li>
+                       <li>
+                           <span>责任追究总数</span> <!-- 责任追究 -->
+                           <p id = "sfzrzs">0个</p>
+                       </li>
+                       
+                       <li>
+                           <span>接受监督总数</span> <!-- 被监督的情况 -->
+                           <p id = "jdqkzs">0个</p>
+                       </li>
+                       
+                       <li>
+                           <span>业务研修总数</span>
+                           <p id = "zycszs">0个</p>
+                       </li>
+                       <li>
+                           <span>其他情况总数</span>
+                           <p id = "qtzs">0个</p>
+                       </li>
+                   </ul>
+               </div>
+           </div>
+           
+           <div class="archives_2" style="overflow: auto;">
+               <div class="archives_2_1">
+                   <ul>
+                       <li id="sfjn" style="display:none" onclick="sfjn(this);">荣誉奖励情况</li>
+                       <li id="sfzr" style="display:none" onclick="sfzr(this);">责任追究情况</li> 
+                       <li id="jdqk" style="display:none" onclick="jdqk(this);">接受监督情况</li> 
+                       <li id="zycs" style="display:none" onclick="zycs(this);">业务研修情况</li>
+                       <li id="qt" style="display:none" onclick="qt(this);">其他情况</li>
+
+					   <label id="dataTitle" style="font-size: 14px; color: #333; line-height: 28px; float: left;margin-left: 100px;">选择时间：</label>
+					   <input type="text" id="startDate" class="textbo" name="startDate"></input> -
+					   <input type="text" id="endDate" class="textbo" name="endDate"></input>
+					   <button id="search" class="archives_search" onclick="searchRecords()" style="height:30px;margin-left:10px;">查询</button>
+
+                       <button id="xz" class="button-newly" onclick="addSubmit()" style="display:none;"></button> <!-- 新增按钮 -->
+                  	   <button id = "button_ryjn" class="archives_2_ul" style="display:none;">发起审批</button>
+                  	   <button id = "button_recall" class="archives_2_ul" style="display:none;">撤回申请</button>
+                  	   <!-- 责任追究【原司法责任】审批按钮 -->
+                  	   <button id="sfzr_xz" class="button-newly" onclick="sfzrAddSubmit()" style="display:none;"></button>
+                  	   <button id = "button_sfzr" class="archives_2_ul" style="display:none;">发起异议</button>
+                  	   <button id = "button_sfzr_recall" class="archives_2_ul" style="display:none;">撤回异议</button>
+                  	   <!-- 接受监督审批按钮 -->
+                  	   <button id="jsjd_xz" class="button-newly" onclick="jsjdAddSubmit()" style="display:none;"></button>
+                  	   <button id = "button_jsjd" class="archives_2_ul" style="display:none;">发起异议</button>
+                  	   <button id = "button_jsjd_recall" class="archives_2_ul" style="display:none;">撤回异议</button>
+                  	   <!-- 业务研修【原职业操守】审批按钮 -->
+                  	   <button id="ywyx_xz" class="button-newly" onclick="ywyxAddSubmit()" style="display:none;"></button>
+                  	   <button id = "button_ywyx" class="archives_2_ul" style="display:none;">发起审批</button>
+                  	   <button id = "button_ywyx_recall" class="archives_2_ul" style="display:none;">撤回申请</button>
+                  	   <!-- 其他审批按钮 -->
+                  	   <button id="qt_xz" class="button-newly" onclick="qtAddSubmit()" style="display:none;"></button>
+                  	   <button id = "button_qtqk" class="archives_2_ul" style="display:none;">发起审批</button>
+                  	   <button id = "button_qtqk_recall" class="archives_2_ul" style="display:none;">撤回申请</button>
+                   </ul>
+               </div>
+               
+               <div class="archives_2_2">
+                   <!--li标签展示-->
+                   <!--<ul class="ul_all" id="dalbUL">
+                       <li class="ul_fost">
+                           <ul>
+                               <li id="lb1">荣誉名称</li>
+                               <li id="lb2">获奖等级</li>
+                               <li id="lb3">获奖时间</li>
+                               <li id="lb4">颁奖单位</li>
+                               <li id="lb5">附件数量</li>
+                               <li id="lb6" style="display: none">获奖事由</li>  
+                               <li id="lb7" style="display: none">其他情况</li>  
+                               <li id="lb8">操作</li>
+                           </ul>
+                       </li>
+                   </ul>
+                   <div id="dalb_div"></div>-->
+
+                   <!--改用datagrid展示-->
+                   <table id="archives_datagrid"></table>
+               </div>
+
+               <div id="archives_div_border" style="width: 96%;height: 60px;border-bottom: 1px dashed #ccc;margin: auto;clear: left;"></div>
+               <div id="archives_div_oldData" style="top:20px;left:0px;right:0px;margin-left:auto;margin-right:auto;width: 96%;height: 100%;background-color: #fff;border: 1px solid #EDEDF1;border-radius: 3px;margin-top: 20px;">
+			       <p style="color: #1E6CB2;font-size:16px;font-family: '微软雅黑';"><b>试运行数据</b></p>
+			       <table id="archives_datagrid_oldData"></table>
+		       </div>
+           </div>
+       </div>
+   </div>
+   
+   <!-- ====================荣誉技能============================ -->
+   <div id="sfjnDetail" class="bounced" style="display:none">
+    <div class="bounced_all" style="width: 650px;">
+	     <form id="sfjnform" method='post'> 
+	        <div class="bounced_tot">
+	            <span id="sfjntitle">新增荣誉技能档案</span>
+	            <div class="tot_img" onclick="closeDetail()"></div>
+	        </div>
+
+			 <div  class="bounced_one" style='padding-left: 0px;width: 605px;height: 30px;'>
+				 <div style="width: 50%;float: left;">
+					 <span>荣誉名称</span>
+	            <input id="sfjnrymc" name="rymc" class='textbo' type="text" data-options="required:true" >
+
+	            </div>
+				 <div style="width: 50%;float: left;">
+					 <span>获奖等级</span>
+					 <input id="sfjnhjdj" name="hjdj" class='combo' type="text"/>
+
+				 </div>
+	        </div>
+			 <div  class="bounced_one" style='padding-left: 0px;width: 605px;height: 30px;'>
+				 <div style="width: 50%;float: left;">
+					 <span>获奖时间</span>
+					 <input id="sfjnhjsj" name="hjsj" class='textbo'  type="text" style="width: 225px;height: 28px;" >
+
+				 </div>
+				 <div style="width: 50%;float: left;">
+					 <span>颁奖单位</span>
+					 <input id="sfjnbjdw" name="bjdw" class='textbo'  type="text" data-options="required:true">
+
+				 </div>
+			 </div>
+	        <div class="bounced_one" style='padding-left: 0px;width: 605px;height: 60px;' >
+				<span style="float: left; margin-right: 5px;">获奖事由</span>
+	            <input id="sfjnhjsy" name="hjsy" class='textbo' type="text">
+
+	        </div>
+	        
+	        <div class="bounced_one" style='padding-left: 0px;width: 605px;height: 60px;' >
+				<span style="float: left; margin-right: 5px;">获奖<br>其他情况</span>
+	            <input id="sfjnhjqtqk" name="hjqtqk" class='textbo' type="text">
+
+	        </div>
+	        
+	            <input id="id" name="id" type="hidden">     
+	            <input id="dalx1" name="dalx" type="hidden" value="1">
+	    </form>
+    	
+        <div class="bounced_save" style='margin: 0 auto;margin-top: 27px;width: 430px;'>
+        	<button id="qxButton" onclick="closeDetail()" style='margin-right: 10px;margin-top: 9px;cursor: pointer;' >取消</button>
+            <button id="bcButton1"  onclick="SubmitForm();" style='margin-right: 10px;margin-top: 9px;cursor: pointer;' >保存</button>
+        </div>
+    </div> 
+</div>
+
+    <!-- ====================责任追究============================ -->
+    <div id="sfzrDetail" class="bounced" style="display:none">
+     <div class="bounced_all" style="width: 650px;">
+	      <form id="sfzrform" method='post'>
+	         <div class="bounced_tot">
+	             <span id="sfzrtitle">新增责任追究档案</span>
+	             <div class="tot_img" onclick="closeDetail()"></div>
+	         </div>
+	         <div>
+				 <div  class="bounced_one" style='padding-left: 0px;width: 605px;height: 30px;'>
+
+					 <div style="width: 50%;float: left;">
+						 <span>责任种类</span>
+						 <input id="zrzjzrzl" name="zrzl" class='combo' type="text" />
+					 </div>
+					 <div style="width: 50%;float: left;">
+						 <span>处理部门</span>
+						 <input id="zrzjclbm" name="clbm" class='combo' type="text" style="width:225px;height: 28px;"data-options="required:true"/>
+					 </div>
+				 </div>
+
+				 <!--<div  class="bounced_one"  style='padding-left: 0px;width: 215px;float: left;'>-->
+					<!---->
+				 <!--</div>-->
+
+				 <div class="bounced_one"  style='padding-left: 0px;width: 605px;height: 35px;'>
+					 <div style="width: 50%;float: left;">
+						 <span style="float: left;margin-right: 4px;margin-top: -6px;">处理结果<br>落实情况</span>
+						 <input id="zrzjcljg" name="cljg" class='combo' type="text"  />
+
+					 </div>
+					 <div style="width: 50%;float: left;">
+						 <span>处理时间</span>
+						 <input id="zrzjclsj" name="clsj" class='textbo'  type="text" style="width: 225px;height: 28px;"/>
+
+					 </div>
+
+				 </div>
+
+				 <!--<div  class="bounced_one" style='padding-left: 0px;width: 430px;'>-->
+					<!---->
+				 <!--</div>-->
+
+				 <div class="bounced_one" style='padding-left: 0px;width: 605px;height: 60px;' >
+					 <span style="float: left; margin-right: 5px;">处理事由</span>
+					 <input id="zrzjclsy" name="clsy" class='textbo' type="text" style="width: 522px">
+
+				 </div>
+
+				 <div class="bounced_one" style='padding-left: 0px;width: 605px;height: 60px;' >
+					 <span style="float: left; margin-right: 5px;">处理内容</span>
+					 <input id="zrzjclnr" name="clnr" class='textbo' type="text" style="width: 522px">
+
+				 </div>
+
+				 <div class="bounced_one" style='padding-left: 0px;width: 605px;height: 60px;' >
+					 <span style="float: left; margin-right: 5px;margin-top: -6px;">责任追究<br>其他情况</span>
+					 <input id="zrzjzrqtqk" name="zrqtqk" class='textbo' type="text" style="width: 522px">
+
+				 </div>
+			 </div>
+
+	             <input name="id" type="hidden">
+	             <input id="dalx3" name="dalx" type="hidden"  value="2">
+	     </form>
+     
+         <div class="bounced_save"  style='margin: 0 auto;margin-top: 27px;width: 430px;'>
+        	 <button id="qxButton2" onclick="closeDetail()" style='margin-right: 10px;margin-top: 9px;cursor: pointer;' >取消</button>
+             <button id="bcButton2"  onclick="SubmitForm();"  style='margin-right: 10px;margin-top: 9px;cursor: pointer;'>保存</button>
+         </div>
+     </div>
+   </div>
+   
+   <!-- ====================被监督的情况============================ -->
+    <div id="jdqkDetail" class="bounced" style="display:none">
+     <div class="bounced_all" style="width: 650px;">
+	      <form id="jdqkform" method='post'>
+	         <div class="bounced_tot">
+	             <span id="jdqktitle">新增被监督情况</span>
+	             <div class="tot_img" onclick="closeDetail()"></div>
+	         </div>
+
+			  <div  class="bounced_one" style='padding-left: 0px;width: 605px;height: 30px;'>
+
+				  <div style="width: 50%;float: left;">
+					  <span style="float: left; margin-right: 5px;">监督种类</span>
+			      <input id="jdqkjdzl" name="jdzl" class='combo' type="text"/>
+	              </div>
+				  <div style="width: 50%;float: left;">
+					  <span style="float: left; margin-right: 5px;">监督部门</span>
+					  <input id="jdqkjdbm" name="jdbm" class='combo' type="text" style="width: 225px;height: 28px;"data-options="required:true">
+				  </div>
+	         </div>
+			  <div  class="bounced_one" style='padding-left: 0px;width: 605px;height: 30px;'>
+
+				  <div style="width: 50%;float: left;">
+					  <span style="float: left; margin-right: 5px;">接受监督<br>处理</span>
+					  <input id="jdqkjdcl" name="jdcl" class='combo' type="text"/>
+
+				  </div>
+				  <div style="width: 50%;float: left;">
+					  <span style="float: left; margin-right: 5px;">整改落实<br>情况</span>
+					  <input id="jdqkzgqk" name="zgqk" class='combo' type="text"/>
+				  </div>
+			  </div>
+	         
+	         <div class="bounced_one"  style='padding-left: 0px;width: 605px;height: 30px;'>
+				 <span style="float: left; margin-right: 5px;">监督时间</span>
+	              <input id="jdqkjdsj" name="jdsj" class='textbo'  type="text" style="width: 225px;height: 28px;"/>
+	          </div>
+
+	          <div class="bounced_one"  style='padding-left: 0px;width: 605px;height: 60px;'>
+				  <span style="float: left; margin-right: 5px;">监督事由</span>
+	             <input id="jdqkjdsy" name="jdsy" class='textbo' type="text" >
+	         </div>
+	         
+	         <div class="bounced_one"  style='padding-left: 0px;width: 605px;height: 60px;'>
+				 <span style="float: left; margin-right: 5px;margin-top: -6px;">接受监督<br>其他情况</span>
+	             <input id="jdqkjdqtqk" name="jdqtqk" class='textbo' type="text" >
+	         </div>
+	         
+	         <input name="id" type="hidden">
+	         <input id="dalx6" name="dalx" type="hidden"  value="5">
+	     </form>
+     
+         <div class="bounced_save"  style='margin: 0 auto;margin-top: 27px;width: 430px;'>
+         	 <button id="qxButton5" onclick="closeDetail()" style='margin-right: 10px;margin-top: 9px;cursor: pointer;' >取消</button>
+             <button id="bcButton5"  onclick="SubmitForm();"  style='margin-right: 10px;margin-top: 9px;cursor: pointer;'>保存</button>
+         </div>
+     </div>
+   </div>
+
+	<!-- ====================职业操守============================ -->
+    <div id="zycsDetail" class="bounced" style="display:none">
+     <div class="bounced_all" style="width: 650px;">
+	      <form id="zycsform" method='post'>
+	         <div class="bounced_tot">
+	             <span id="zycstitle">新增职业操守档案</span>
+	             <div class="tot_img" onclick="closeDetail()"></div>
+	         </div>
+			  <div  class="bounced_one" style='padding-left: 0px;width: 605px;height: 30px;'>
+				  <div style="width: 50%;float: left;">
+					<span style="margin-right: 30px;">研修名称</span>
+	              <input id="zycsxmmc" name="xmmc" class='textbo' type="text" data-options="required:true">
+	              </div>
+				  <div style="width: 50%;float: left;">
+					  <span>业务研修类型</span>
+					  <input id="zycsxmlx" name="xmlx" class='combo' type="text"/>
+				  </div>
+	          </div>
+			  <div  class="bounced_one" style='padding-left: 0px;width: 605px;height: 30px;'>
+				  <div style="width: 50%;float: left;">
+					  <span>业务开始时间</span>
+					  <input id="zycskssj" name="kssj" class='textbo' type="text" style="width: 182px;height: 28px;">
+				  </div>
+				  <div style="width: 50%;float: left;">
+					  <span>业务结束时间</span>
+					  <input id="zycsjssj" name="jssj" class='textbo' type="text" style="width: 182px;height: 28px;">
+				  </div>
+			  </div>
+			  <div  class="bounced_one" style='padding-left: 0px;width: 605px;height: 30px;'>
+				  <div style="width: 50%;float: left;">
+					  <span style="margin-right: 30px;">组织部门</span>
+					  <input id="zycszzbm" name="zzbm" class='combo' type="text" style="width: 182px;height: 28px;"data-options="required:true"/>
+				  </div>
+				  <div style="width: 50%;float: left;">
+					  <span style="margin-right: 30px;">审批部门</span>
+					  <input id="zycsspbm" name="spbm" class='combo' type="text" style="width: 182px;height: 28px;"data-options="required:true"/>
+				  </div>
+			  </div>
+	          
+	          <div  class="bounced_one" style='padding-left: 0px;width: 605px;height: 60px;'>
+				  <span style="float: left; margin-right: 5px;">主要收获</span>
+	              <input id="zycszysh" name="zysh" class='textbo' type="text"/>
+	          </div>
+	          
+	          <div  class="bounced_one" style='padding-left: 0px;width: 605px;height: 60px;'>
+				  <span style="float: left; margin-right: 5px;">研修成果</span>
+	              <input id="zycsyjcg" name="yjcg" class='textbo' type="text"/>
+	          </div>
+	          
+	          <div  class="bounced_one" style='padding-left: 0px;width: 605px;height: 40px;'>
+				  <span style="float: left; margin-right: 0px;">业务研修地点</span>
+	              <input id="zycsywdd" name="ywdd" class='textbo' type="text"/>
+	          </div>
+	          
+	          <div  class="bounced_one" style='padding-left: 0px;width: 605px;height: 60px;'>
+				  <span style="float: left; margin-right: 5px;">主要内容</span>
+	              <input id="zycszynr" name="zynr" class='textbo' type="text"/>
+	          </div>
+	          
+	          <div  class="bounced_one" style='padding-left: 0px;width: 605px;height: 60px;'>
+				  <span style="float: left; margin-right: 5px;">其他情况</span>
+	              <input id="zycsywqtqk" name="ywqtqk" class='textbo' type="text"/>
+	          </div>
+	         
+	             <input name="id" type="hidden">
+	             <input id="dalx4" name="dalx" type="hidden" value="3" >
+	      </form>
+	      
+         <div class="bounced_save" style='margin: 3px auto;'>
+         	 <button id="qxButton3" onclick="closeDetail()" style='margin-right: 10px;margin-top: 9px;cursor: pointer;' >取消</button>
+             <button id="bcButton3"  onclick="SubmitForm();" style='margin-right: 10px;margin-top: 9px;cursor: pointer;' >保存</button>
+         </div>
+     </div>
+ </div>
+
+  <!-- ====================其他情况============================ -->
+  <div id="qtDetail" class="bounced" style="display:none">
+     <div class="bounced_all">
+	      <form id="qtform" method='post'>
+	          <div class="bounced_tot">
+	              <span id="qttitle">新增其他档案</span>
+	              <div class="tot_img" onclick="closeDetail()"></div>
+	          </div>
+	         
+	          <div class="bounced_one" style='padding-left: 0px;width: 430px;'>
+			      <input id="qtlrbm" name="lrbm" class='combo' type="text" style="width:330px" data-options="required:true"/>
+			      <span>录入部门</span>
+	          </div>
+	          
+	          <div class="bounced_one"  style='padding-left: 0px;width: 430px;'>
+	              <input id="qtlrr" name="lrr" class='textbo' type="text" data-options="required:true">
+	              <span>录入人</span>
+	          </div>
+	          
+	          <div class="bounced_one"  style='padding-left: 0px;width: 430px;'>
+	              <input id="qtlrsj" name="lrsj" class='textbo' type="text" style="width: 330px" >
+	              <span>录入时间</span>
+	          </div>
+	         
+	          <div class="bounced_one"  style='padding-left: 0px;width: 430px;'>
+	              <input id="qtlrnr" name="lrnr" class='textbo' type="text">
+	              <span>录入内容</span>
+	          </div>
+	         
+	             <input name="id" type="hidden">
+	             <input id="dalx5" name="dalx" type="hidden" value="4">
+	     </form>
+         
+		 <div class="bounced_save"  style='margin: 0 auto;margin-top: 30px;width: 430px;'>
+		 	 <button id="qxButton4" onclick="closeDetail()" style='margin-right: 10px;margin-top: 9px;cursor: pointer;' >取消</button>
+             <button id="bcButton4"  onclick="SubmitForm();"  style='margin-right: 10px;margin-top: 9px;cursor: pointer;' >保存</button>
+         </div>
+     </div>
+ </div>
+ 
+ <!-- =============================datagrid展示附件上传、查看======================================= -->
+ <div id="fjDetail" class="bounced" style="display:none">
+ 	<div class="bounced_all_fj">
+ 		
+	 	<div class="bounced_tot">
+	        <span id="fjtitle">附件信息</span>
+	        <div id="tot_img" class="tot_img" onclick="closeDetail()"></div>
+	    </div>
+	    
+	    <form id="fjForm" method="post" enctype="multipart/form-data" style="float: left; width: 500px; margin-left: 10px;">
+			<div id="fjxzwj" style='margin-top: 5px; margin-left: 100px;'>
+				<input  buttonText="选择文件" id="fjUpFile" style='width:300px;height:30px;' name="file" placeholder='未选择文件' class="easyui-filebox" data-options="required:true"/>
+			</div>
+		 </form>
+		 
+		 <div class="bounced_save"  style='margin-top: -60px;width: 50px;float: left;margin-left: 520px'>
+         	 <button id="fjwjbutton" onclick="xgUpLoadFile()" style='margin-right: 95px;margin-top: 30px;cursor: pointer;font-size: 12px;'>点击上传</button>
+         </div>
+         
+	     <table id="fjDatagridTable" style="display: none;"></table>
+ 	</div>
+ </div>
+ 
+<div id="ryjn_sp_div" class="bounced" style="display:none">
+ 	<div class="bounced_all" style="height: 245px; margin: 8% auto;">
+        <div class="bounced_tot">
+            <span style="" id="sfda_type_title"></span>
+            <div class="tot_img" onclick="closeRyjnSpDiv();"></div>
+        </div>
+        <div class="bounced_one">
+			<span id="sfda_type_span_name" style="margin: 20px 0 0 8px; font-family: '微软雅黑'; float: left; font-size: 16px;" ></span>
+			<div style='margin-top:20px;width: 335px;height: 30px;margin-left:4px;float: left;'>
+						<input id="sfda_type_spr" type="text" name="sfda_type_spr" style="width: 335px;height: 30px; "/>
+			</div>
+        </div>
+        <div class="bounced_save" style="margin-top: 40px; float: left;">
+            <input type="button" onclick="closeRyjnSpDiv();" value="取消" style="width: 60px; height: 32px; border: 1px solid #2B9DD7; background: #fff; color: #777; border-radius: 3px; float: right; cursor: pointer;margin-right:50px;"/>
+            <input type="button" onclick="startRyjnSp();" value="确定" style="margin-right: 10px; width: 60px; height: 32px; border: 1px solid #2B9DD7; background-color: #2B9DD7; color: #fff; border-radius: 3px; float: right; cursor: pointer;"/>
+        </div>
+    </div>
+</div>
+ 
+  
+</body>
+<script type="text/javascript" src="../../js/zhyw/sfda/sfda_da.js"></script>
+<script type="text/javascript" src="../../js/zhyw/sfda/sfda_base.js"></script>
+
+</html>

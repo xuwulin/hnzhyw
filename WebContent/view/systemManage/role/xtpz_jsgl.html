@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>系统管理-角色配置页面</title>
+
+<!-- <link href="css/bounced.css" rel="stylesheet"> -->
+<link rel="stylesheet" type="text/css" href="../../../css/xtpz_jsgl.css" />
+<link rel="stylesheet" type="text/css"href="../../../js/plugin/easyui/themes/bootstrap/easyui.css" />
+<link rel="stylesheet" type="text/css"href="../../../js/plugin/easyui/themes/icon.css" />
+<script type="text/javascript" src="../../../js/plugin/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="../../../js/plugin/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript"src="../../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../../../js/zhyw/utils/common.js"></script>
+<script type="text/javascript" src="../../../js/zhyw/utils/constant.js"></script>
+<style type="text/css">
+.cza{
+	color: blue;
+}
+.left_ul li:nth-of-type(3) a{
+	background-color:#0876D5;
+	color:#fff;
+	border: 1px solid #0876D5;
+	cursor:pointer;
+}
+</style>
+</head>
+<body>
+	<div class="xtpz">
+		<div class="xtpz_top">当前位置 : 系统配置</div>
+		<div class="xtpz_content">
+			<div class="content_left">
+				<!-- <ul class="left_ul">
+					<li><a href="../system/xtpz_fgld.html">分管领导配置管理</a></li>
+					<li><a href="../department/xtpz.html">部门管理</a></li>
+					<li><a href="../role/xtpz_jsgl.html" class="xtpzli">角色管理</a></li>
+					<li><a href="../person/xtpz_rygl.html">人员管理</a></li>
+					<li><a href="../system/xtpz_filepath.html">系统配置管理</a></li>
+					<li><a href="../quartz/xt_quartz_pz.html" >同步任务配置管理</a></li>
+					<li><a href="../ywlx/ywlxfp.html">业务类型/业务类型分配管理</a></li>
+					<li><a href="../jxkh/xtpz_ywkhzbgl.html">个人绩效-考核指标配置</a></li>
+					<li><a href="../jchc/xtpz_hcpz.html">个人绩效-交叉核查配置</a></li>
+					<li><a href="../bmzdpz/xtpz_bmzdpz.html">部门审批人配置</a></li>
+					<li><a href="../ywkh/ywkh_khdwpz.html">业务考核-考核单位配置</a></li>
+				    <li><a href="../ywkh/ywkh_khlxpz.html" >业务考核-考核类型配置</a></li>
+					<li><a href="../zbrs/zbrs.html">业务考核-在编人数配置</a></li>
+					<li><a href="../ywgz/xtpz_ywgzpzgl.html">业务考核-考核指标管理</a></li>
+					<li><a href="../dataDict/data_dict.html">数据字典管理</a></li>
+					<li><a href="../logging/xtgl_logging.html">日志管理</a></li>
+				</ul> -->
+				<div class="left_tree"></div>
+
+			</div>
+			<div class="content_right">
+				<div class="right_top">
+					<img src="../../../image/icon_sd.png"
+						style="float: left; margin: 17px 12px 0px 12px;">角色管理
+				</div>
+				<ul class="right_ul">
+					<li class="right_li">角色列表</li>
+					<li style="display: none;">新增角色</li>
+				</ul>
+				<div class="right_com">
+					<div style="width: 100%; height: 20px"></div>
+					<table id="roleTable"></table>
+				</div>
+				
+				<div id="updateRoleDiv" class="bounced" style="display: none">
+					<div class="bounced_all">
+						<div class="bounced_tot">
+							<span style="display: inline-block;margin: 10px 0 0 15px;">修改角色信息</span>
+							<input type="hidden" id="bmbm" name="bmbm"/>
+						</div>
+						<div class="bounced_one" style="margin-top:20px;">
+							<input type="text" readonly='readonly' name="roleDwmc" id="roleDwmc" style="border:0px;font-size:14px;padding-left:10px;"/>
+							<span style="color:black;font-family:'微软雅黑';font-size:16px;">单位名称：</span>
+						</div>
+						<div class="bounced_one">
+							<input type="text" readonly='readonly' name="roleDepartName" id="roleDepartName" style="border:0px;font-size:14px;padding-left:10px;"/>
+							<span style="color:black;font-family:'微软雅黑';font-size:16px;">部门名称：</span>
+						</div>
+						<div class="bounced_one">
+							<input type="text" readonly='readonly' name="jsbm" id="jsbm" style="border:0px;font-size:14px;padding-left:10px;"/>
+							<span style="color:black;font-family:'微软雅黑';font-size:16px;">角色编码：</span>
+						</div>
+						<div class="bounced_one">
+							<input type="text" name="roleName" id="roleName" style="border: 1px solid #c1c1c1;border-radius: 5px;text-align:center;font-size:16px;font-family:'微软雅黑';" class="easyui-validatebox" required="required" missingMessage="请输入角色名称！"/>
+							<span style="color:black;font-family:'微软雅黑';font-size:16px;">角色名称：</span>
+						</div>
+						<div class="bounced_save" style="margin-top:20px;">
+							<input type="button" onclick="closeRoleDiv();" value="取消" style="width: 60px;height: 32px;border: 1px solid #2B9DD7;background-color: #2B9DD7;color: #fff;border-radius: 3px;float: right;cursor: pointer;"/>
+							<input type="button" onclick="updateRoleInfo();" value="确定" style="margin-right:10px;width: 60px;height: 32px;border: 1px solid #2B9DD7;background-color: #2B9DD7;color: #fff;border-radius: 3px;float: right;cursor: pointer;"/>
+						</div>
+					</div>
+				</div>
+				
+				<div id="delRoleDiv" class="bounced" style="display: none">
+					<div class="bounced_all" style="height: 200px">
+						<div class="bounced_tot">
+							<span>温馨提示</span>
+							<input type="hidden" name="roleNo" id="roleNo"/><!-- 角色编码 -->
+							<input type="hidden" name="roleDwNo" id="roleDwNo"/><!-- 单位编码 -->
+							<input type="hidden" name="roleDepartNo" id="roleDepartNo"/><!-- 部门编码 -->
+							<input type="hidden" name="roleSfDel" id="roleSfDel" value="Y"/><!-- 是否删除的标示  -->
+						</div>
+						<div class="bounced_one">
+							<span style="color:red;font-family:'微软雅黑';font-size:16px;">提示：删除数据不可恢复，继续请点击确定！</span>
+						</div>
+						<div class="bounced_save" style="margin-top:40px;">
+							<input type="button" onclick="closeDelDiv();" value="取消" style="width: 60px;height: 32px;border: 1px solid #2B9DD7;background-color: #2B9DD7;color: #fff;border-radius: 3px;float: right;cursor: pointer;"/>
+							<input type="button" onclick="delRoleInfo();" value="确定" style="margin-right:10px;width: 60px;height: 32px;border: 1px solid #2B9DD7;background-color: #2B9DD7;color: #fff;border-radius: 3px;float: right;cursor: pointer;"/>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(".left_tree").load("../left_menu.html");
+	var dwjb = top.currentUserInfo.dwjb;
+	if(dwjb!=2){
+		$("#xtpzgl").css("display","none");
+	}
+	//开启操作成功的DIV
+	
+	
+	$(".left_ul li a").click(function() {
+		$('.xtpzli').removeClass('xtpzli');
+		$(this).addClass('xtpzli');
+	});
+	$(".right_ul li:last").click(function() {
+		$('.right_li').removeClass('right_li');
+		$(this).addClass('right_li');
+		$('.right_com').css('display', ' none')
+		$('.right_coml').css('display', ' block')
+	})
+	$(".right_ul li:first").click(function() {
+		$('.right_li').removeClass('right_li');
+		$(this).addClass('right_li');
+		$('.right_coml').css('display', ' none')
+		$('.right_com').css('display', ' block')
+	})
+	
+</script>
+
+<script type="text/javascript" src="../../../js/zhyw/xtgl/roleManage.js"></script>
+</html>

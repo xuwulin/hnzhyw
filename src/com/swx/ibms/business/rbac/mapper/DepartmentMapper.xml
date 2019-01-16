@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:对应的mapper文件包名 -->
+<mapper namespace="com.swx.ibms.business.rbac.mapper.DepartmentMapper">
+	<!-- 部门配置mapper，对部门配置实现CRUD -->
+
+	<!-- 角色配置的结果集 id：结果集名称 type:实体类对应的路径 property:实体类属性名 column：数据库对应列的字段名 javaType:数据库列的字段所对应的java中的数据类型 
+		重要字段名:dwbm: 单位编码 bmbm: 部门编码 fbmbm: 父部门编码 bmmc: 部门名称 bmjc: 部门简称 bmwhjc:部门文号简称 
+		bmahjc:部门案号简称 sflsjg：是否临时机构 sfcbbm：是否承办部门 bmxh：部门序号 bz：备注 sfsc：是否删除 bmys：部门映射 
+		xtDepartmentMap：部门管理结果集名称 dwmc:单位名称 dwjc:单位简称 type:各个数据库查询出的数据类型，1：统一业务 2：综合业务 
+		fdwbm：父单位编码 dwjb：单位级别 dwsx：实体类写的单位标示，具体是不是不确定，暂时未用到 -->
+
+	<resultMap id="xtDepartmentMap" type="com.swx.ibms.business.rbac.bean.BMBM">
+		<result property="bmxh" column="bmxh" javaType="java.lang.Integer"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="bmbm" column="bmbm" javaType="java.lang.String"></result>
+		<result property="fbmbm" column="fbmbm" javaType="java.lang.String"></result>
+		<result property="dwmc" column="dwmc" javaType="java.lang.String"></result>
+		<result property="dwjc" column="dwjc" javaType="java.lang.String"></result>
+		<result property="bmmc" column="bmmc" javaType="java.lang.String"></result>
+		<result property="bmjc" column="bmjc" javaType="java.lang.String"></result>
+		<result property="bmwhjc" column="bmwhjc" javaType="java.lang.String"></result>
+		<result property="bmahjc" column="bmahjc" javaType="java.lang.String"></result>
+		<result property="sflsjg" column="sflsjg" javaType="java.lang.String"></result>
+		<result property="sfcbbm" column="sfcbbm" javaType="java.lang.String"></result>
+		<result property="bz" column="bz" javaType="java.lang.String"></result>
+		<result property="sfsc" column="sfsc" javaType="java.lang.String"></result>
+		<result property="bmys" column="bmys" javaType="java.lang.String"></result>
+		<result property="type" column="type" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<resultMap id="xtUnitMap" type="com.swx.ibms.business.rbac.bean.DWBM">
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="dwmc" column="dwmc" javaType="java.lang.String"></result>
+		<result property="dwjc" column="dwjc" javaType="java.lang.String"></result>
+		<result property="fdwbm" column="fdwbm" javaType="java.lang.String"></result>
+		<result property="dwjb" column="dwjb" javaType="java.lang.String"></result>
+		<result property="dwsx" column="dwsx" javaType="java.lang.String"></result>
+		<result property="sfsc" column="sfsc" javaType="java.lang.String"></result>
+	</resultMap>
+
+
+
+	<!-- 根据单位编码查询综合业务-统一业务中此单位下的所有部门信息 parameterType：参数类型 statementType="CALLABLE"：调用存储过程的标示 -->
+	<select id="selectAllBmInfo" parameterType="java.util.Map" statementType="CALLABLE"> 
+		<![CDATA[ {
+			call PKG_DEPARTMENT.pro_selectList( 
+				#{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+				#{p_sfsc,mode=IN,jdbcType=VARCHAR}, 
+				#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=xtDepartmentMap} 
+		)} ]]> 
+	</select>
+
+
+	<!-- 根据单位编码查询综合业务中此单位下的所有部门信息 parameterType：参数类型 statementType="CALLABLE"：调用存储过程的标示 -->
+	<select id="selectZhywList" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_DEPARTMENT.pro_selectZhywList( 
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_sfsc,mode=IN,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=xtDepartmentMap}
+  		)} 
+  		]]>
+	</select>
+
+	<!-- 根据单位编码查询综合业务中此单位下的所有部门信息并分页 parameterType：参数类型 statementType="CALLABLE"：调用存储过程的标示 -->
+	<select id="selectPageList" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_DEPARTMENT.pro_selectPageList( 
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_sfsc,mode=IN,jdbcType=VARCHAR},
+  		    #{p_start,mode=IN,jdbcType=INTEGER},
+  		    #{p_end,mode=IN,jdbcType=INTEGER},
+  		    #{p_total,mode=OUT,jdbcType=INTEGER},  
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=xtDepartmentMap}
+  		)} 
+  		]]>
+	</select>
+
+
+
+	<!-- 添加某单位下的部门信息 -->
+	<insert id="insertData" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_DEPARTMENT.pro_insertData(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmxh,mode=IN,jdbcType=VARCHAR},
+          		#{p_fbmbm,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_bmmc,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmjc,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmwhjc,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmahjc,mode=IN,jdbcType=VARCHAR},
+          		#{p_sflsjg,mode=IN,jdbcType=VARCHAR},
+          		#{p_sfcbbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bz,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmys,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_sfsc,mode=IN,jdbcType=INTEGER},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          	)} 
+    	]]>
+	</insert>
+
+
+
+	<!-- 修改某单位下的部门记录 -->
+	<delete id="updateData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_DEPARTMENT.pro_updateData(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmxh,mode=IN,jdbcType=VARCHAR},
+          		#{p_fbmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmmc,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmjc,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmwhjc,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmahjc,mode=IN,jdbcType=VARCHAR},
+          		#{p_sflsjg,mode=IN,jdbcType=VARCHAR},
+          		#{p_sfcbbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bz,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmys,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</delete>
+
+
+	<!-- 删除某单位下的部门记录 -->
+	<delete id="deleteData" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_DEPARTMENT.pro_deleteData(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_sfsc,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</delete>
+
+
+	<!-- 根据单位编码、是否删除的标示查询所有单位信息 -->
+	<select id="selectDwbm" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_DEPARTMENT.pro_selectDwbm( 
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_sfsc,mode=IN,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=xtUnitMap}
+  		)} 
+  		]]>
+	</select>
+	<select id="selectbmbm" resultType="String">
+		select t.bmbm from XT_ZZJG_BMBM t where t.dwbm = #{dwbm} and t.bmmc =
+		#{bmmc} and t.sfsc='N'
+	</select>
+
+	<insert id="addbmjs">
+		insert into XT_ZZJG_JSBM(
+		dwbm,
+		jsmc,
+		jsbm,
+		bmbm,
+		jsxh,
+		spjsbm,
+		description,
+		sfsc) values(
+		#{dwbm},
+		#{jsmc},
+		#{jsbm},
+		#{bmbm},
+		#{jsxh},
+		#{spjsbm},
+		#{description},
+		'N'
+		)
+	</insert>
+
+
+	<select id="getJs" resultType="JSBM">
+		select * from XT_ZZJG_JSBM t where
+		t.dwbm = #{dwbm} and t.bmbm = #{bmbm} and t.sfsc='N'
+	</select>
+	
+	<!-- 查询某一部门下的角色分配信息 -->
+	<select id="getJsfpxx" resultType="RYJSFP">
+		select dwbm,bmbm,jsbm,gh,zjldgh,ryxh from xt_zzjg_ryjsfp where dwbm=#{dwbm} and bmbm=#{bmbm}
+	</select>
+	<!-- 查询是否任职于其他部门，如果任职于其他部门则返回人员角色分配信息 -->
+	<select id="rzyQtBm" resultType="RYJSFP">
+		select dwbm,bmbm,jsbm,gh,zjldgh,ryxh from xt_zzjg_ryjsfp where dwbm=#{dwbm} and bmbm!=#{bmbm} and gh=#{gh}
+	</select>
+	<!-- 删除部门时，删除部门下的人员 -->
+	<delete id="deleteRy">
+		delete from xt_zzjg_rybm t where t.dwbm = #{dwbm} and t.gh = #{gh}
+	</delete>
+	<!-- 删除部门时，删除部门下的角色 -->
+	<delete id="deletebmjs">
+		delete from XT_ZZJG_JSBM t where t.dwbm = #{dwbm} and t.bmbm = #{bmbm}
+	</delete>
+	<!-- 删除部门 -->
+	<delete id="deletebm">
+		delete from XT_ZZJG_BMBM t where t.dwbm = #{dwbm} and t.bmbm = #{bmbm}
+	</delete>
+	<!-- 删除部门时，删除部门下的人员角色分配信息 -->
+	<delete id="deleteRyjsfp">
+		delete from xt_zzjg_ryjsfp t where t.dwbm = #{dwbm} and t.bmbm = #{bmbm}
+	</delete>
+	
+	<!-- 根据单位编码、部门编码获取部门信息 -->
+	<select id="getBmInfoByDwBm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[ {
+			call PKG_DEPARTMENT.pro_get_bmInfoByDwBm( 
+				#{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+				#{p_bmbm,mode=IN,jdbcType=VARCHAR}, 
+				#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=xtDepartmentMap} 
+		)} ]]> 
+	</select>
+	
+	<!-- 因未有实体类对应下列查询的结果集，因此用Map来替代结果集【oracle数据库取出来的字段为大写】 -->
+	<resultMap type="java.util.Map" id="bmRyDwCommonMap"/>
+	<!-- 根据单位编码、工号查询此人的部门 -->
+	<select id="getRyBmByDwGh" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[ {
+			call PKG_DEPARTMENT.pro_get_ryBmByDwGh( 
+				#{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+				#{p_gh,mode=IN,jdbcType=VARCHAR}, 
+				#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=bmRyDwCommonMap} 
+		)} ]]> 
+	</select>
+	
+	<!-- 根据单位编码、部门编码查询角色【只查询出角色有人的】 -->
+	<select id="getRyJsByDwBm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[ {
+			call PKG_DEPARTMENT.pro_get_ryJsByDwBm( 
+				#{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+				#{p_bmbm,mode=IN,jdbcType=VARCHAR}, 
+				#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=bmRyDwCommonMap} 
+		)} ]]> 
+	</select>
+	
+	<!-- 根据单位编码、部门编码、角色编码查询人员 -->
+	<select id="getRyByDwBmJs" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[ {
+			call PKG_DEPARTMENT.pro_get_ryByDwBmJs( 
+				#{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+				#{p_bmbm,mode=IN,jdbcType=VARCHAR}, 
+				#{p_jsbm,mode=IN,jdbcType=VARCHAR}, 
+				#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=bmRyDwCommonMap} 
+		)} ]]> 
+	</select>
+	
+</mapper>

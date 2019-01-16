@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>同步任务配置界面</title>
+	<link rel="stylesheet" type="text/css" href="../../../css/xtpz.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/xtpz_rygl.css" />
+	<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/bootstrap/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/icon.css">
+	<!--<link type="text/css" rel="stylesheet" href="../../../js/plugin/easyui/themes/default/easyui.css" />-->
+	<style>
+
+	.left_ul li:nth-of-type(4) a{
+		background-color:#0876D5;
+		color:#fff;
+		border: 1px solid #0876D5;
+		cursor:pointer;
+	}
+		.quartz_pz_form_input{
+			width: calc(100% - 120px);
+			border-radius: 3px;
+			border: 1px solid #ddd;
+			height: 25px;
+		}
+		.quartz_an_ys{
+			margin-right: 10px;
+			width: 70px;
+			height: 32px;
+			border: 1px solid #2B9DD7;
+			background-color: #2B9DD7;
+			color: #fff;
+			border-radius: 3px;
+			float: right;
+			cursor: pointer;
+			margin-bottom: 10px;
+		}
+		.quartz_tbrwsj span.textbox{
+			width: calc(100% - 120px)!important;
+		}
+	</style>
+	
+	<script type="text/javascript" src="../../../js/plugin/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../js/plugin/easyui/jquery.easyui.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../../../js/zhyw/utils/constant.js"></script>
+	<script type="text/javascript" src="../../../js/zhyw/utils/common.js"></script>
+</head>
+<body>
+	<div class="xtpz">
+               <div class="xtpz_top">当前位置 : 系统配置</div> 
+               <div class="xtpz_content">
+                        <div class="content_left">
+                               <!--  <ul class="left_ul">
+									<li><a href="../system/xtpz_fgld.html">分管领导配置管理</a></li>
+									<li><a href="../department/xtpz.html">部门管理</a></li>
+									<li><a href="../role/xtpz_jsgl.html">角色管理</a></li>
+									<li><a href="../person/xtpz_rygl.html">人员管理</a></li>
+									<li id="xtpzgl"><a href="../system/xtpz_filepath.html">系统配置管理</a></li>
+									<li><a href="xt_quartz_pz.html"  class="xtpzli">同步任务配置管理</a></li>
+									<li><a href="../ywlx/ywlxfp.html">业务类型/业务类型分配管理</a></li>
+									<li><a href="../jxkh/xtpz_ywkhzbgl.html">个人绩效-考核指标配置</a></li>
+									<li><a href="../jchc/xtpz_hcpz.html">个人绩效-交叉核查配置</a></li>
+									<li><a href="../bmzdpz/xtpz_bmzdpz.html">部门审批人配置</a></li>
+									<li><a href="../ywkh/ywkh_khdwpz.html">业务考核-考核单位配置</a></li>
+									<li><a href="../ywkh/ywkh_khlxpz.html" >业务考核-考核类型配置</a></li>
+									<li><a href="../zbrs/zbrs.html">业务考核-在编人数配置</a></li>
+									<li><a href="../ywgz/xtpz_ywgzpzgl.html">业务考核-考核指标管理</a></li>
+									<li><a href="../dataDict/data_dict.html">数据字典管理</a></li>
+									<li><a href="../logging/xtgl_logging.html">日志管理</a></li>
+                                </ul> -->
+                                <div class="left_tree"></div>
+
+                        </div>
+                <div class="content_right">
+                  <div class="right_top">
+                       <img src="../../../image/icon_sd.png" style="float: left;margin: 17px 12px 0px 12px; ">同步任务配置管理
+                  </div>
+                        <!--  -->
+                  <div class="right_btnk" style="width:97%">
+					<ul class="right_ul">
+						<li class="right_li" id="tb_job_list_li" style="width:105px;">同步任务列表</li>
+					</ul>
+					<div class="right_com">
+						<div id="add_quartz_pz_toolbar" style="height: 30px">
+							<a id = "add_quartz_pz" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="margin-left: 10px;">添加同步任务</a>
+							<a id = "reflush_quartz_pz" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" style="margin-left: 10px;">重新加载</a>
+						</div> 
+						<table id="quartz_pz_table" style="width: 100%;"></table>
+					</div>
+		      	 </div>
+               </div>
+   			</div>
+   	</div>
+   	
+   	<div id="quartz_pz_add_window" style="height: auto;display:none;">
+   		<div>
+			<div style="width: calc(100% - 20px);height: 255px;overflow: auto;padding-left: 20px;margin-top: 20px;">
+   			<form id="quartz_pz_form" method="post">
+	   			<div style="width: 50%;float: left;height: 40px;">
+	   				<input type = "hidden" name="id" id="xt_quartz_id"/>
+	   				<lable style="width: 90px;display: inline-block;font-size: 14px;">任务类:</lable>
+	   				<input class="quartz_pz_form_input" type = "text" name="clazz" id="clazz"/>
+	   			</div>
+	   			<div style="width: 50%;float: left;height: 40px;">
+	   				<lable style="width: 90px;display: inline-block; font-size: 14px;">任务名称:</lable>
+	   				<input class="quartz_pz_form_input" type = "text" name="jobName" id="jobName"/>
+	   			</div>
+	   			<div style="width: 50%;float: left;height: 40px;">
+	   				<lable style="width: 90px;display: inline-block; font-size: 14px;">任务组名:</lable>
+	   				<input class="quartz_pz_form_input" type = "text" name="jobGroupName" id="jobGroupName"/>
+	   			</div>
+	   			<div style="width: 50%;float: left;height: 40px;">
+	   				<lable style="width: 90px;display: inline-block; font-size: 14px;">触发器名称:</lable>
+	   				<input class="quartz_pz_form_input" type = "text" name="triggerName" id="triggerName"/>
+	   			</div>
+	   			<div style="width: 50%;float: left;height: 40px;">
+	   				<lable style="width: 90px;display: inline-block;font-size: 14px;">触发器组名:</lable>
+	   				<input class="quartz_pz_form_input" type = "text" name="triggerGroupName" id="triggerGroupName"/>
+	   			</div>
+	   			<div class="quartz_tbrwsj" style="width: 50%;float: left;height: 40px;">
+	   				<lable style="width: 90px;display: inline-block; font-size: 14px;">同步任务时间:</lable>
+	   				<input class="quartz_pz_form_input" type = "text" name="cron" id="cron"/>
+	   			</div>
+	   			<div style="clear: left;">
+	   				<lable style="width: 94px;display: inline-block;font-size: 14px;float: left;">说明:</lable>
+	   				<textarea name="state" id="state" class="quartz_pz_form_input" style="resize: none;height: 100px;"></textarea>
+	   			</div>
+   			</form>
+			</div>
+   			<div>
+   				<!--<a id="quartz_pz_edit" href="javascript:void(0);"></a>-->
+   				<!--<a id="quartz_pz_cancel" href="javascript:void(0);"></a>-->
+				<button id="quartz_pz_cancel" class="quartz_an_ys">取消</button>
+				<button id="quartz_pz_edit" class="quartz_an_ys">保存</button>
+   			</div>
+   		</div>
+   	</div>
+   	
+</body>
+<script type="text/javascript">
+	$(".left_tree").load("../left_menu.html");
+	
+	$(".right_ul li:last").click(function() {
+		$('.right_li').removeClass('right_li');
+		$(this).addClass('right_li');
+		$('.right_com').css('display', ' none');
+		$('.right_coml').css('display', ' block');
+	});
+	
+	$(".right_ul li:first").click(function() {
+		$('.right_li').removeClass('right_li');
+		$(this).addClass('right_li');
+		$('.right_coml').css('display', ' none');
+		$('.right_com').css('display', ' block');
+	});
+	
+</script>
+<script type="text/javascript" src="../../../js/zhyw/xtgl/quartz/xt_quartz_pz.js" charset="utf-8"></script>
+</html>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.system.mapper.BmzdpzMapper">
+	<resultMap id="BmzdpzMap" type="Bmzdpz">
+		<result property="id" column="id" javaType="java.lang.String"/>
+		<result property="name" column="name" javaType="java.lang.String"/>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"/>
+		<result property="dwmc" column="dwmc" javaType="java.lang.String"/>
+		<result property="bmbm" column="bmbm" javaType="java.lang.String"/>
+		<result property="gh" column="gh" javaType="java.lang.String"/>
+		<result property="dlbm" column="dlbm" javaType="java.lang.String"/>
+		<result property="bmmc" column="bmmc" javaType="java.lang.String"/>
+		<result property="bmys" column="bmys" javaType="java.lang.String"/>
+		<result property="splx" column="splx" javaType="java.lang.String"/>
+		<result property="createtime" column="createtime" javaType="java.sql.Date"/>
+		<result property="updatetime" column="updatetime" javaType="java.sql.Date"/>
+	</resultMap>
+
+	<!-- 通过部门映射、审批类型、单位编码获取配置信息 --> 
+	<select id="getPzByDwbm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_bmzdpz.proc_getpzbydwbm( 
+ 			#{p_bmys,mode=IN,jdbcType=VARCHAR}, 
+			#{p_splx,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_errmsg,mode=OUT,jdbcType=VARCHAR}, 
+ 			#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=BmzdpzMap} 
+ 		)} 
+ 		]]> 
+	</select>
+
+	<!-- 判断是否存在指定人配置信息 --> 
+	<select id="isExistByDwbm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_bmzdpz.proc_isexistbydwbm( 
+ 			#{p_bmys,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_splx,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_errmsg,mode=OUT,jdbcType=VARCHAR}, 
+ 			#{p_isexist,mode=OUT,jdbcType=INTEGER} 
+ 		)} 
+ 		]]> 
+	</select>
+	
+	<!-- 添加配置信息 --> 
+	<insert id="addBmspr" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_bmzdpz.proc_addBmspr( 
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_bmbm,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_bmmc,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_splx,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_spr,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_gh,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_name,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_bmys,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_id,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_errmsg,mode=OUT,jdbcType=VARCHAR} 
+ 		)} 
+ 		]]>
+	</insert>
+
+	<!-- 删除配置信息 --> 
+	<delete id="deleteBmsprById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_bmzdpz.proc_deleteById( 
+ 			#{p_id,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_errmsg,mode=OUT,jdbcType=VARCHAR} 
+ 		)} 
+ 		]]> 
+	</delete>
+
+ 	<!-- 更新配置信息 -->
+	<update id="updateBmsprById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_bmzdpz.proc_updateBmsprById( 
+ 			#{p_id,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_bmbm,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_bmmc,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_splx,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_spr,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_gh,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_name,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_bmys,mode=IN,jdbcType=VARCHAR}, 
+ 			#{p_errmsg,mode=OUT,jdbcType=VARCHAR} 
+		)} 
+ 		]]> 
+	</update>
+	
+	<!-- 获取某个流程中的部门映射 -->
+	<select id="getBmysBySplx" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_bmzdpz.proc_getbmysbysplx( 
+ 			#{p_splx,mode=IN,jdbcType=VARCHAR},
+ 			#{p_bmyslist,mode=OUT,jdbcType=VARCHAR}, 
+ 			#{p_errmsg,mode=OUT,jdbcType=VARCHAR} 
+		)} 
+ 		]]> 
+	</select>
+	
+	<!-- 获取部门映射的信息 -->
+	<select id="getInfoOfBmys" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_bmzdpz.proc_getinfoofbmys( 
+ 			#{p_bmys,mode=IN,jdbcType=VARCHAR},
+ 			#{p_bmbm,mode=OUT,jdbcType=VARCHAR},
+ 			#{p_bmmc,mode=OUT,jdbcType=VARCHAR},
+ 			#{p_errmsg,mode=OUT,jdbcType=VARCHAR} 
+		)} 
+ 		]]> 
+	</select>
+	
+	<!-- 通过部门映射，审批类型，单位编码获取指定人信息 -->
+	<select id="getZdrInfo" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_bmzdpz.proc_getzdrinfo( 
+ 			#{p_bmys,mode=IN,jdbcType=VARCHAR},
+ 			#{p_splx,mode=IN,jdbcType=VARCHAR},
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+ 			#{p_gh,mode=IN,jdbcType=VARCHAR},
+ 			#{p_isexist,mode=OUT,jdbcType=INTEGER},
+ 			#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=BmzdpzMap},
+ 			#{p_errmsg,mode=OUT,jdbcType=VARCHAR} 
+		)} 
+ 		]]> 
+	</select>
+
+	<!-- 获取部门列表 -->
+	<select id="getdepartlist" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+		{call pkg_bmzdpz.proc_getdepartlist( 
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+ 			#{p_bmys,mode=IN,jdbcType=VARCHAR},
+ 			#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=BmbmMap},
+ 			#{p_errmsg,mode=OUT,jdbcType=VARCHAR} 
+		)} 
+		]]>
+	</select>
+	
+	<!-- 获取人员列表 -->
+	<select id="getpersonofdepart" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+		{call pkg_bmzdpz.proc_getpersonofdepart( 
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+ 			#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+ 			#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=RybmMap},
+ 			#{p_errmsg,mode=OUT,jdbcType=VARCHAR} 
+		)} 
+		]]>
+	</select>
+	
+	<!-- 获取部门审批人列表 -->
+	<!-- <resultMap id="bmsprPageListMap" type="java.util.Map"></resultMap> -->
+	<select id="getBmsprPageList" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+		{call pkg_bmzdpz.proc_getBmsprPageList( 
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+ 			#{p_start,mode=IN,jdbcType=INTEGER},
+ 			#{p_end,mode=IN,jdbcType=INTEGER},
+ 			#{p_total,mode=OUT,jdbcType=INTEGER},
+ 			#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=BmzdpzMap}
+		)} 
+		]]>
+	</select>
+	
+	<!-- 根据id获取部门审批人 -->
+	<select id="getBmsprById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+		{call pkg_bmzdpz.proc_getBmsprById( 
+ 			#{p_id,mode=IN,jdbcType=VARCHAR},
+ 			#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=BmzdpzMap}
+		)} 
+		]]>
+	</select>
+	
+	<!-- 根据单位编码获取部门列表 -->
+	<select id="getBmListByDwbm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+		{call pkg_bmzdpz.proc_getBmListByDwbm( 
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+ 			#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=BmbmMap}
+		)} 
+		]]>
+	</select>
+	
+	<!-- 查询某单位下某部门的人员 -->
+	<select id="getRyListByBm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+		{call pkg_bmzdpz.proc_getRyListByBm( 
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+ 			#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+ 			#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=RybmMap}
+		)} 
+		]]>
+	</select>
+	
+</mapper>

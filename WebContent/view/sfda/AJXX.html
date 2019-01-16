@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>司法档案-检察官案件详页面</title>
+<link rel="stylesheet" type="text/css" href="../../css/AJXX.css" >
+<link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/bootstrap/easyui.css">
+<script type="text/javascript" src="../../js/plugin/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/plugin/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../../js/zhyw/utils/history.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../js/zhyw/utils/common.js"></script>
+<script type="text/javascript" src="../../js/zhyw/utils/constant.js"></script>
+</head>
+<body>
+	<div class="thenewfile">
+		<div class="title_url">
+			<p>当前位置:检察官司法档案管理/检察官档案创建</p>
+			<button id="sendtop" onclick="fsgcbjcg()">
+				<span style="display: inline-block; color: #fff; line-height: 30px;    cursor: pointer;" >发送给承办检察官</span>
+			</button>
+			<button id="goback"
+				style="cursor: pointer; color: #666; display: inline-block; font-size: 15px; float: right; line-height: 20px; margin-top: 10px; margin-right: 10px;
+				border:1px solid #999;background-color:#fff;">
+				<img alt="" src="../../image/fh.png" style="margin-right: 10px">返回
+			</button>
+		</div>
+		<div class="conditions">
+			<div class="conditions_one">
+				<div class="conditions_two">
+					<span>
+						<p>办案效果</p>
+					</span> <input type="text" id="baxg" name="baxg">
+				</div>
+				<div class="conditions_three">
+					<span>
+						<p>违法行使职权情况</p>
+					</span> <input type="text" id="wfxszqqk" name="wfxszqqk">
+				</div>
+				<div class="conditions_two">
+					<span>
+						<p>办案安全</p>
+					</span> <input type="text" id="baaq" name="baaq">
+				</div>
+			</div>
+			<div class="conditions_one">
+				<div class="conditions_two">
+					<span>
+						<p>司法瑕疵</p>
+					</span> <input type="text" id="sfxc" name="sfxc">
+				</div>
+				<div class="conditions_three">
+					<span>
+						<p>案件质量评查结果</p>
+					</span> <input type="text" id="ajzlpcjg" name="ajzlpcjg">
+				</div>
+				<div class="conditions_two" id="yidu" style="display:none">
+					<!-- <button onclick="submitform()">保存</button> -->
+					<button id="yidubutton" onclick="yidu()">已读</button>
+				</div>
+			</div>
+		</div>
+		<div class="ajxx_con">
+			<div class="content1">
+				<div class="content1_tit">
+					<div
+						style="background: url('../../image/ajxx.png') no-repeat; width: 22px; height: 22px; float: left; margin: 10px 5px 0 5px;"></div>
+					<span style="color: #0360a9; line-height: 43px;">案件信息</span>
+					<form id="fileUpLoad" method="post" enctype="multipart/form-data">
+						<div style="width: 563px; float: right; margin-top: 15px;"  id="uploadfilediv">
+							<div class="bounced_one"style='text-align: right; padding-left: 0px; width: 430px; float: left; margin-right: 18px;'>
+								<!-- <font style='margin-right: 12px;'>选择文件</font> -->
+								<input id="upfile1" class="filebo" name="file">
+							</div>
+							<div onclick="wjsc()"
+								style="float: left; width: 100px; height: 25px; border: 1px solid #2286D7; border-radius: 3px; color: #2286D7; cursor: pointer;">
+								<img src="../../image/scfj.png" style="margin: 7px 9px; float: left;"><font
+									style="font-size: 10px;line-height: 30px;">上传附件</font>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="" style="width: 98%;    margin: 50px auto 0;" id="addfile">
+					<ul class="content_tt">
+						<li >附件名称</li>
+						<!-- <li>添加人</li> -->
+						<li id="caozuo">操作</li>
+					</ul>
+				</div>
+
+			</div>
+
+		</div>
+		<div class="content">
+			<div class="content1">
+				<div class="content1_tit">
+					<div
+						style="background: url('../../image/ajxx.png') no-repeat; width: 22px; height: 22px; float: left; margin: 10px 5px 0 5px;"></div>
+					<span style="color: #0360a9; line-height: 43px;">案件信息</span>
+				</div>
+				<div class="content1_con">
+					<ul class="content_ul1">
+						<li>案件名称 :&nbsp; <span id="ajmc"></span></li>
+						<li>案件类别 :&nbsp;<span id="ajlb"></span></li>
+						<li>承办单位 :&nbsp; <span id="cbdw"></span></li>
+						<li>承办部门 :&nbsp; <span id="cbbm"></span></li>
+					</ul>
+					<ul class="content_ul1">
+						<li>承办人 :&nbsp; <span id="cbr"></span></li>
+						<li>案件状态 :&nbsp; <span id="ajzt"></span></li>
+						<li>部门受案号 :&nbsp; <span id="bmsah"></span></li>
+						<li>受理日期 :&nbsp; <span id="slrq"></span></li>
+					</ul>
+					<ul class="content_ul1">
+						<span style="float: left;">案情摘要 :&nbsp;</span>
+						<p id="aqzy" style="display: inline-block; float: left"></p>
+					</ul>
+				</div>
+			</div>
+			<div class="content2">
+				<div class="content1_tit">
+					<div
+						style="background: url('../../image/xyr.png') no-repeat; width: 22px; height: 22px; float: left; margin: 0 5px 0 5px;"></div>
+					<span style="color: #0360a9">嫌疑人信息</span>
+				</div>
+				<div class="content2_tab">
+					<div id="xyrlist" class="content_tab1">
+						<li>姓名</li>
+						<li>姓别</li>
+						<li>职务</li>
+						<li>级别</li>
+						<li>出生日期</li>
+						<li>证件号码</li>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+<script type="text/javascript" src="../../js/zhyw/sfda/AJXX.js"></script>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>系统配置-个人绩效-考核人员/类型配置界面</title>
+</head>
+<body>
+<div>
+    <div>
+        <div id="query_param_div_grjx_bmlb">
+            <a id="add_btn_bmlb" class="add_btn" href="javascript:void(0)" style="margin:5px;">添加考核部门类别</a>
+        </div>
+        <div id="query_param_div_grjx_rytype">
+            <a id="add_btn_khry_type" class="add_btn" href="javascript:void(0)" style="margin:5px;">添加考核人员类型</a>
+        </div>
+        <div id="query_param_div_grjx_ry">
+            <a id="add_btn_khry" class="add_btn" href="javascript:void(0)" style="margin:5px;">添加考核人员</a>
+        </div>
+
+        <div>
+            <div>
+                <table id="xt_grjx_bmlb_talbe"></table>
+            </div>
+            <div style="margin-top: 30px;">
+                <table id="xt_grjx_rytype_talbe"></table>
+            </div>
+            <div style="margin-top: 30px; display: none">
+                <table id="xt_grjx_khry_talbe"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="grjx_bmlb_edit_div" style="display: none;">
+    <form id="grjx_bmlb_form" method="post">
+        <div>
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px;">部门类别名称：</span>
+                <input id="grjx_bmlb_id" name="id" type="hidden">
+                <input id="grjx_bmlb_mc" name="bmlbmc" type="hidden">
+                <input id="grjx_bmlbmc" style="width: 250px;height: 32px; "/>
+            </div>
+
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px;margin-left: 22px">备注/说明：</span>
+                <input name="remarks" id="grjx_ms" style="width: 250px !important; height: 70px !important;"/>
+            </div>
+
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px; margin-left: 55px">序号：</span>
+                <input name="xh" id="grjx_bmlb_xh" style="width: 250px !important; height: 32px !important;"/>
+            </div>
+
+            <!--<div style="margin-left: 200px;margin-top: 10px">
+                <a id="save_btn_bmlb" href="javascript:void(0)" style="margin:15px;">保存</a>
+                <a id="cancel_btn_bmlb" href="javascript:void(0)" style="margin:15px;">取消</a>
+            </div>-->
+
+            <div class="xiadivbt">
+                <input type="button" id="cancel_btn_bmlb" value="取消" style="background: #fff; border: 1px solid #c1c1c1; color: #666;"/>
+                <input type="button" id="save_btn_bmlb" value="保存" style="margin-right: 10px;" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="grjx_khry_edit_div" style="display: none;">
+    <form id="grjx_khry_form" method="post">
+        <div>
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px;margin-left: 5px">部门类别：</span>
+                <input id="grjx_khry_bmlbbm" name="bmlbbm" type="hidden">
+                <input id="grjx_khry_bmlbmc" name="bmlbmc" style="width: 250px !important; height: 32px !important;"/>
+            </div>
+
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px;margin-left: 5px">人员类型：</span><input id="grjx_khry_id" name="id" type="hidden">
+                <input id="grjx_khry_khryType" name="typeid" style="width: 250px !important; height: 32px !important;"/>
+            </div>
+
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px;margin-left: 5px">考核人员：</span><input id="grjx_khry_dwbm" type="hidden" name="rydwbm"/>
+                <input id="grjx_khry_rygh" name="grjx_khry_rygh" style="width: 250px !important; height: 32px !important;"/>
+                <input id="grjxkh_rygh" name="rygh" type="hidden"/>
+            </div>
+
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px;">备注/说明：</span>
+                <input name="remarks" id="grjx_khry_remarks" style="width: 250px;height: 70px;"/>
+            </div>
+
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px;margin-left: 33px">序号：</span>
+                <input name="xh" id="grjx_khry_xh" style="width: 250px;height: 32px;"/>
+            </div>
+
+            <!--<div style="margin-left: 200px;margin-top: 10px">
+                <a id="save_btn_khry" href="javascript:void(0)" style="margin:15px;">保存</a>
+                <a id="cancel_btn_khry" href="javascript:void(0)" style="margin:15px;">取消</a>
+            </div>-->
+
+            <div class="xiadivbt">
+                <input type="button" id="cancel_btn_khry" value="取消" style="background: #fff; border: 1px solid #c1c1c1; color: #666;"/>
+                <input type="button" id="save_btn_khry" value="保存" style="margin-right: 10px;" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="grjx_khry_type_edit_div" style="display: none;">
+    <form id="grjx_khry_type_form" method="post">
+        <div>
+            <div style="margin-left: 20px;margin-top: 10px">
+                <span style="font-size: 14px;">类型名称：</span>
+                <input id="grjx_khry_type_id" name="id" type="hidden"/>
+                <input id="grjx_khry_type_name" name="name" style="width: 250px;height: 32px;"/>
+            </div>
+
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px;margin-left: 4px">备注/说明：</span>
+                <input name="remarks" id="grjx_khry_type_remarks" style="width: 250px;height: 70px;"/>
+            </div>
+
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px; margin-left: 37px">序号：</span>
+                <input name="xh" id="grjx_khry_type_xh" style="width: 250px;height: 32px;"/>
+            </div>
+
+            <!--<div style="margin-left: 200px;margin-top: 10px">
+                <a id="save_btn_khry_type" href="javascript:void(0)" style="margin:15px;">保存</a>
+                <a id="cancel_btn_khry_type" href="javascript:void(0)" style="margin:15px;">取消</a>
+            </div>-->
+
+            <div class="xiadivbt">
+                <input type="button" id="cancel_btn_khry_type" value="取消" style="background: #fff; border: 1px solid #c1c1c1; color: #666;"/>
+                <input type="button" id="save_btn_khry_type" value="保存" style="margin-right: 10px;" />
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+<script src="../../../js/zhyw/xtgl/xtpz_grjx_khry.js" charset="utf-8"></script>
+</html>

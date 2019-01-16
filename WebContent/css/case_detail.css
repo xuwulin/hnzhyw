@@ -1,0 +1,69 @@
+.thenewfile_body{
+    width: 100%;
+    height: 100%;
+    padding-bottom: 0;
+    margin: 0;
+    position: absolute;
+    min-width: 1024px;
+}
+.thenewfile{
+    width: calc(100% - 32px);
+    height: calc(100% - 32px);
+    padding: 16px;
+}
+.thenewfile_fhan{
+    width: 110px;
+    height: 34px;
+    outline: none;
+    border-radius: 3px;
+    position: relative;
+    color: #0CB0C4;
+    cursor: pointer;
+    background: #EBF9F7;
+    border: 1px solid #0bafc5;
+}
+.thenewfile_fhan:hover{
+    background: #2cc6db;
+    color: #fff;
+    border: 1px solid #2cc6db;
+}
+.ajxq table{
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+.ajxq table tr td{
+    width: 35%;
+    border: 1px solid #ccc;
+    height: 35px;
+    border-bottom: none;
+    border-right: none;
+    padding-left: 20px;
+}
+.ajxq table tr td:nth-of-type(odd){
+    background: #EBF9F7;
+    width: 15%;
+}
+.content1_tit>div{
+    margin-bottom: 20px;
+    width: 100%;
+    height: 50px;
+    /* background-color: #08B2C2; */
+    border-bottom: 1px solid rgb(191, 216, 216);
+    color: #fff;
+}
+.content1_tit>div>span{
+    float: left;
+    font-size: 16px;
+    color: #13B5C4;
+    display: inline-block;
+    height: calc(100% - 1px);
+    line-height: 50px;
+    border-bottom: 2px solid #13B5C4;
+    padding: 0 15px;
+}
+.content .datagrid-header .datagrid-cell span{
+	font-size: 16px;
+}
+.content .datagrid-cell, .content .datagrid-cell-group, .content .datagrid-header-rownumber, .content .datagrid-cell-rownumber{
+	font-size: 16px;
+}

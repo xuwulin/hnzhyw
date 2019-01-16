@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="sfdaAudit" name="检察官司法档案审批" isExecutable="true">
+    <documentation>司法档案的检察官档案审批流程</documentation>
+    <startEvent id="startevent" name="start">
+      <documentation>司法档案审批流程开始</documentation>
+    </startEvent>
+    <serviceTask id="sendMsg" name="发送消息给上一位发起人" activiti:class="com.swx.zhyw.service.impl.MessageNoticeServiceImpl"></serviceTask>
+    <endEvent id="endevent" name="End">
+      <documentation>司法档案审批流程结束</documentation>
+    </endEvent>
+    <sequenceFlow id="flow5" sourceRef="sendMsg" targetRef="endevent"></sequenceFlow>
+    <userTask id="deptLevelAudit" name="部门领导审批" activiti:assignee="${SPR_DWBM_GH}"></userTask>
+    <sequenceFlow id="flow4" sourceRef="deptLevelAudit" targetRef="sendMsg">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${AGREE==1}]]></conditionExpression>
+    </sequenceFlow>
+    <userTask id="sfdaAuditStart" name="发起审批" activiti:assignee="${FQR_DWBM_GH}"></userTask>
+    <sequenceFlow id="flow1" sourceRef="startevent" targetRef="sfdaAuditStart"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="sfdaAuditStart" targetRef="deptLevelAudit"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_sfdaAudit">
+    <bpmndi:BPMNPlane bpmnElement="sfdaAudit" id="BPMNPlane_sfdaAudit">
+      <bpmndi:BPMNShape bpmnElement="startevent" id="BPMNShape_startevent">
+        <omgdc:Bounds height="35.0" width="35.0" x="80.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendMsg" id="BPMNShape_sendMsg">
+        <omgdc:Bounds height="55.0" width="201.0" x="600.0" y="150.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent" id="BPMNShape_endevent">
+        <omgdc:Bounds height="35.0" width="35.0" x="900.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="deptLevelAudit" id="BPMNShape_deptLevelAudit">
+        <omgdc:Bounds height="55.0" width="105.0" x="370.0" y="150.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sfdaAuditStart" id="BPMNShape_sfdaAuditStart">
+        <omgdc:Bounds height="55.0" width="105.0" x="160.0" y="150.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="801.0" y="177.0"></omgdi:waypoint>
+        <omgdi:waypoint x="900.0" y="177.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="475.0" y="177.0"></omgdi:waypoint>
+        <omgdi:waypoint x="600.0" y="177.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="115.0" y="177.0"></omgdi:waypoint>
+        <omgdi:waypoint x="160.0" y="177.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="265.0" y="177.0"></omgdi:waypoint>
+        <omgdi:waypoint x="370.0" y="177.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

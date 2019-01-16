@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <description>spring-quartz定时任务配置</description>
+
+    <!-- quartz定时任务开始 -->
+
+    <!-- 创建定时任务类，指定到要执行的任务类 -->
+    <bean id="taskListener" class="com.swx.ibms.business.etl.utils.TaskListener"/>
+    <bean id="synchroDataListener" class="com.swx.ibms.business.etl.utils.SynchroDataListener"/>
+
+    <!--创建任务调度bean 将创建的任务类添加到任务调度中指定类名和要执行的方法 -->
+    <bean id="syncPartyPageVisitJobHandler" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 指定的类名 -->
+        <property name="targetObject" ref="taskListener" />
+        <!-- 指定要执行的任务方法 -->
+        <property name="targetMethod" value="doTask" />
+    </bean>
+
+
+    <bean id="synchroDataHandler" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 引用定时任务的类名 -->
+        <property name="targetObject" ref="synchroDataListener" />
+        <!-- 指定要执行的任务方法,value值为定时任务类中的定时任务方法名 -->
+        <property name="targetMethod" value="doTask" />
+    </bean>
+
+
+    <!-- 配置解除司法档案-公示定时调度任务 -->
+    <!-- 创建任务触发器bean添加置顶的任务调度bean和执行任务的时间 -->
+    <bean id="syncPartyPageVisitJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 执行的任务调度的bean -->
+        <property name="jobDetail" ref="syncPartyPageVisitJobHandler" />
+        <!-- 执行的时间   设置格式在下面 3 4 行有说明-->
+        <property name="cronExpression" value="0 0 3 * * ?" />
+    </bean>
+
+    <!-- 配置抽取统一业务数据库组织机构表以及司法档案-办案业绩关联表的数据定时调度任务 -->
+    <bean id="synchroDataTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 执行的任务调度的bean -->
+        <property name="jobDetail" ref="synchroDataHandler" />
+        <!-- 执行的时间   设置格式在下面 3 4 行有说明-->
+        <property name="cronExpression" value="0 0 17 13 6 ?" /> <!-- 每年的6月13日17点进行同步 -->
+    </bean>
+
+    <!-- 定时启动配置 -->
+    <bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <!-- 增加任务工程，添加定时任务 -->
+                <ref bean="syncPartyPageVisitJobTrigger" />
+                <ref bean="synchroDataTrigger" />
+            </list>
+        </property>
+    </bean>
+
+    <!--   参数代表的意思依次是：秒 分 时 日 月 周 年【选填】 ?代表未知	 -->
+    <!-- 				      每隔5秒执行一次：*/5 * * * * ? -->
+    <!--                  每隔1分钟执行一次：0 */1 * * * ? -->
+    <!--                  每天23点执行一次：0 0 23 * * ? -->
+    <!--                  每天凌晨1点执行一次：0 0 1 * * ? -->
+    <!--                  每天凌晨3点执行一次：0 0 3 * * ? -->
+    <!--                  每天凌晨4点执行一次：0 0 4 * * ? -->
+    <!--                  每月1号凌晨1点执行一次：0 0 1 1 * ? -->
+    <!--                  每月最后一天23点执行一次：0 0 23 L * ? -->
+    <!--                  每周星期天凌晨1点实行一次：0 0 1 ? * L -->
+    <!--                  在26分、29分、33分执行一次：0 26,29,33 * * * ? -->
+    <!--                  每天的0点、13点、18点、21点都执行一次：0 0 0,13,18,21 * * ? -->
+
+    <!-- quartz结束 -->
+
+
+</beans>

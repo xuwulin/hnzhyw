@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.etl.mapper.SynchroDataMapper">
+	<!-- 清空表中的数据 -->
+	<delete id="deleteData" parameterType="java.lang.String">
+		delete from ${tableName}
+	</delete>
+
+</mapper>

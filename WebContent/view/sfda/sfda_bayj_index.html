@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" name="" content="IE=edge,chrome=1"/>
+    <title>司法档案-办案业绩首页</title>
+    <link rel="stylesheet" type="text/css" href="../../css/SFGL_YSDA_INDEX.css"/>
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/bounced.css"/>
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/icon.css"/>
+    <link rel="stylesheet" href="../../css/zTreeStyle/ztreedemo.css" type="text/css"/>
+    <link rel="stylesheet" href="../../css/zTreeStyle/zTreeStyle.css" type="text/css"/>
+
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/echarts-all.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/zhyw/macarons.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/history.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/contentstree.js"></script>
+    <script type="text/javascript" src="../../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+</head>
+<body>
+<div class="top_url">
+    <span class="dagztitle"
+          style="float: left; color:#666; line-height: 50px;font-size:18px;margin-left:21%;font-family:微软雅黑;"></span>
+</div>
+<div class="content">
+    <!--左侧树形导航-->
+    <div class="contents_tree" style="height: 630px;">
+        <ul class="tree_ul">
+        </ul>
+    </div>
+    <!--右侧内容体-->
+    <div class="contents_details">
+        <div style="width: 98%; margin: 15px 1% 0;">
+            <div class="contents_tit">
+                <span id="title"></span>
+                <div id="sfgs" class="contents_ygs">
+                    <div id="gsxx" style="display: none; line-height: initial; color: #666;" class="contents_ygs_home">
+                        <div style="width:100%;height:10px;"></div>
+                        <div style="overflow: hidden; width: 100%;margin-left: 10px;">
+                            <span id="gsjzsj" id="span_gsxx" style="float:left;font-weight: bold;">公示截止日期:</span>
+                            <div id="gsjzsjspan" style="float:left;font-weight: bold;"></div>
+                        </div>
+                        <div style="font-size: 14px; text-align: left;overflow: auto; width: 278px; height: 95px;">
+                            <span style="float: left;margin:5px 0 0 10px;" id="span_gsxx">公示理由:</span>
+                            <div id="gsxxspan" style="margin-left: 25px;float: left;width: 236px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="gszt" onclick="showDetail('1');" class="tit_btn" style="display:none;cursor:pointer;"></div>
+                <div id="dazt" onclick="showDetail('2');" class="tit_btn" style="display:none;cursor:pointer;"></div>
+                <div id="ryzt" onclick="showDetail('4');" class="tit_btn"
+                     style="display:none;width:120px;cursor:pointer;"></div>
+                <div id="qxgszt" onclick="showDetail('6');" class="tit_btn"
+                     style="display:none;width:120px;cursor:pointer;"></div>
+                <div id="fczt" onclick="showDetail('7');" class="tit_btn"
+                     style="display:none;width:92px;cursor:pointer;"></div>
+                <div id="dabghhczt" onclick="showDetail('8');" class="tit_btn"
+                     style="display:none;width:95px;cursor:pointer;"></div>
+                <img id="infoimg" src="../../image/icon_gt.png"
+                     style="display:none;float: right; margin: 7px 10px 0 0;">
+            </div>
+            <div class="cartogram">
+                <div style="width: 100%; overflow: hidden;">
+                    <div class="cartogram_zbaj cartogram_style">
+                        主办案件 : <span style="color: #ff5a25;" id="zbajsl"></span>
+                    </div>
+                    <div class="cartogram_cbaj cartogram_style">
+                        参办案件 : <span style="color: #ff5a25;" id="cbajsl"></span>
+                    </div>
+                </div>
+                <div id="main" style="height: 260px"></div>
+                <ul>
+                    <li style="background-image: url(../../image/xiao.png);">平均案件办理时长：<span id="pjajblsc"></span>、 全院案件平均案件办理时长： <span id="qyajpjajblsc"></span></li>
+                    <!-- 								<li style="background-image: url(image/fen.png);">个人绩效得分<span -->
+                    <!-- 									id="grjxdf"></span></li> -->
+                    <li style="background-image: url(../../image/yu.png);">共获得荣誉奖励：<span id="ghdryjl"></span></li>
+                    <li style="background-image: url(../../image/ze.png);">被追究司法责任：<span id="bzjsfzr"></span>、接受监督：<span id="jsjdCount"></span></li>
+                    <li style="background-image: url(../../image/ye.png);">共进行业务研修：<span id="zycssum"></span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="shDetail" class="bounced" style="display: none">
+    <div class="bounced_all">
+        <form id="sfjnform" method='post'>
+            <div class="bounced_tot">
+                <span id="sfjntitle">司法档案审批</span>
+                <div class="tot_img" onclick="closeDetail()"></div>
+            </div>
+            <!-- 				<div class="bounced_one" style="margin: 0 auto;margin-top: 20px; width: 461px;height: 55px;">					  -->
+            <!-- 					<input id="spyj">  -->
+            <!-- 					<span style="margin-right: 6px;">审批人意见</span> -->
+            <!-- 				</div> -->
+            <div class="bounced_select" style="margin: 0 auto; margin-top: 20px; width: 444px; height: 55px; position: relative;">
+                <div>
+					<span style="margin-right: 6px; float: left; margin-left: 8px; line-height: 32px;">选择审批人</span>
+                    <div style="height: 32px; position: relative; width: 348px; border: 1px solid #c1c1c1; border-radius: 4px; float: left;">
+                        <input type="text" id="xzspr" data-options="lines:true" name="lbSelect" style="width: 320px; height: 32px; line-height: 32px; border: none; margin-left: 5px; outline: none;"/>
+                        <a id="menuBtn" href="#" onclick="showMenu(); return false;" class="a_style" style="background: url('../../js/plugin/easyui/themes/bootstrap/images/combo_arrow.png') no-repeat center center; background-color: #F2F2F2"></a>
+                    </div>
+                </div>
+                <div id="menuContent" class="menuContent" style="display: none; position: absolute; top: 33px; left: 92px;">
+                    <ul id="treeDemo" class="ztree" style="margin-top: 0; width: 338px; background-color: #fff"></ul>
+                </div>
+            </div>
+        </form>
+        <div class="bounced_save" style="margin-top: 50px">
+            <button id="bcButton1" onclick="closeDetail();" style="cursor: pointer; background: #fff; color: #777">取消</button>
+            <button id="bcButton2" onclick="addspyj(1)" style="cursor: pointer; margin-right: 15px">确定</button>
+        </div>
+    </div>
+</div>
+
+<!-- 遮罩层 -->
+<div id="xjtjnfDetail" class="bounced" onclick="closeDetail();" style="display: none">
+    <div class="bounced_all" style="width:800px;">
+        <table class="r_table" style="width: 98%;border: 1px solid #cae3fd;margin:30px auto;" cellpadding="0"
+               cellspacing="0">
+            <tbody id='splc'>
+            <tr id="splctr1" style="background: #d8ecff;height: 31px;line-height: 31px;text-align: left;color: #134671">
+                <td style="width:2%"></td>
+                <td style="width:18%">单位名称</td>
+                <td style="width:10%">部门名称</td>
+                <td style="width:10%">处理人</td>
+                <td style="width:40%">处理意见</td>
+                <td style="width:10%">处理时间</td>
+                <td style="width:10%">处理结果</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- 遮罩层 -->
+</body>
+<script type="text/javascript" src="../../js/zhyw/sfda/sfda_bayj_index.js"></script>
+<script type="text/javascript">
+    // parent.min_width2();
+    $('#spyj').textbox({
+        width: 350,
+        height: 32
+    });
+    resizeParentIframe();
+</script>
+</html>

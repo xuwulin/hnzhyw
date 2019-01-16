@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.system.mapper.XtfjpathMapper">
+	<!-- 自定义返回结果集 -->
+	<resultMap id="XtfjpathMap" type="XTFJPATH">
+        <result property="id" column="id"  javaType="java.lang.String"></result>
+		<result property="path" column="path"  javaType="java.lang.String"></result>
+		<result property="czr" column="czr" javaType="java.lang.String"></result>
+		<result property="czsj" column="czsj" javaType="java.sql.Date"></result>
+   </resultMap>
+
+	<insert id="insert" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[  
+        {call pkg_xtgl.c_xt_fj_path(
+          #{p_path,mode=IN,jdbcType=VARCHAR},
+          #{p_czr,mode=IN,jdbcType=VARCHAR},	
+          sysdate,
+          #{Y,mode=OUT,jdbcType=VARCHAR}
+          )}  
+        ]]>
+	</insert>
+	
+	<select id="select" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        {call pkg_xtgl.s_xt_fj_path(
+          #{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=XtfjpathMap}
+          )}
+        ]]>
+	</select>
+	
+</mapper>
+

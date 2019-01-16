@@ -1,0 +1,146 @@
+*{
+	margin:0;
+	padding:0;
+}
+
+.notice{
+	height:800px;
+	width:80%;
+	margin:0 auto;
+/* 	font-family:'Microsoft YaHei UI'; */
+}
+.title_logo {
+    width: 1016px;
+    height: 46px;
+    margin:50px auto 20px;
+}
+.top_xz{
+	width:100%;
+	height:70px;
+	background-color:#fff;
+	border-radius: 5px;
+	border: 1px solid #efefef;
+}
+.content{
+	width:100%;
+/* 	height:500px; */
+	background-color:#fff;
+	border-radius: 5px;
+	border: 1px solid #efefef;
+	margin-top:20px;
+}
+.content_ul>li{
+	width: 97%;
+	margin-top:20px;
+	border-bottom: 1px dashed #cce6ff;
+	color:#666;
+	margin-left: 2%;
+}
+.entertain_foot_foot {
+    width: 290px;
+    margin: 0 auto;
+    clear: both;
+    height: 41px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.r_page {
+    float: left;
+}
+.en_btn {
+    float: left;
+    margin-left: 5px;
+    width: 57px;
+}
+.ju_btn_white {
+    display: inline-block;
+    width: 80px;
+    height: 32px;
+    background: #fff;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 32px;
+    color: #000;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+.a_bnt_yd{
+	color: #fff;
+    background-color: #0575d2;
+    border-radius: 3px;
+    width: 65px;
+    border: 1px solid #0575d2;
+    float: right;
+    margin-right:28px;
+    cursor: pointer;
+    height: 26px;
+    text-align: center;
+    line-height: 26px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.cases.mapper.AjwtfkMapper">
+	<!-- author李佳 -->
+	<resultMap id="ajwtfkMap" type="Ajwtfk">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="gh" column="gh" javaType="java.lang.String"></result>
+		<result property="tzmc" column="tzmc" javaType="java.lang.String"></result>
+		<result property="tzlx" column="tzlx" javaType="java.lang.String"></result>
+		<result property="wbid" column="wbid" javaType="java.lang.String"></result>
+		<result property="isRead" column="isRead" javaType="java.lang.String"></result>
+		<result property="cjsj" column="cjsj" javaType="java.lang.String"></result>
+	    <result property="bmsah" column="bmsah" javaType="java.lang.String"></result>
+		<result property="tysah" column="tysah" javaType="java.lang.String"></result>
+	</resultMap>
+	<!-- 查询案件问题反馈信息 -->
+	<select id="getGhByBmsah" parameterType="java.util.Map"
+		statementType="CALLABLE" >
+		{call PKG_WTFK.select_getghbybmsah(
+		#{wbid,mode=IN,jdbcType=VARCHAR},
+		#{gh,mode=OUT,jdbcType=VARCHAR}
+		)}
+	</select>
+	<!-- 新增案件问题反馈信息 -->
+	<insert id="insert" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[  
+        {call PKG_WTFK.add_ajwtfk(
+          #{dwbm,mode=IN,jdbcType=VARCHAR},
+          #{gh,mode=IN,jdbcType=VARCHAR},	
+          #{tzmc,mode=IN,jdbcType=VARCHAR},	
+          #{tzlx,mode=IN,jdbcType=VARCHAR},	
+          #{wbid,mode=IN,jdbcType=VARCHAR},	
+          #{isRead,mode=IN,jdbcType=VARCHAR},	
+          sysdate,	
+          #{Y,mode=OUT,jdbcType=VARCHAR}
+          )}  
+        ]]>
+	</insert>
+	<!-- 删除案件问题反馈信息 -->
+	<delete id="delete" parameterType="java.util.Map" statementType="CALLABLE">
+		{call PKG_WTFK.delete_ajwtfk(
+		#{id,mode=IN,jdbcType=VARCHAR},
+		#{Y,mode=OUT,jdbcType=VARCHAR}
+		)}
+	</delete>
+	<!-- 更新案件问题反馈信息 -->
+	<update id="update" parameterType="java.util.Map" statementType="CALLABLE">
+		{call PKG_WTFK.update_ajwtfk(
+		#{id,mode=IN,jdbcType=VARCHAR},
+		#{dwbm,mode=IN,jdbcType=VARCHAR},
+		#{gh,mode=IN,jdbcType=VARCHAR},
+		#{tzmc,mode=IN,jdbcType=VARCHAR},
+		#{tzlx,mode=IN,jdbcType=VARCHAR},
+		#{wbid,mode=IN,jdbcType=VARCHAR},
+		#{isRead,mode=IN,jdbcType=VARCHAR},
+		sysdate,
+		#{Y,mode=OUT,jdbcType=VARCHAR}
+		)}
+	</update>
+	<!-- 查询案件问题反馈信息 -->
+	<select id="getAjwtfk" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		{call PKG_WTFK.select_ajwtfk(
+		#{id,mode=IN,jdbcType=VARCHAR},
+		#{cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ajwtfkMap}
+		)}
+	</select>
+	<!-- 通过id查询统一受案号和部门受案号 -->
+	<select id="getBmsahById" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		{call PKG_WTFK.select_getbasahbyid(
+		#{id,mode=IN,jdbcType=VARCHAR},
+		#{cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ajwtfkMap}
+		)}
+	</select>
+</mapper>

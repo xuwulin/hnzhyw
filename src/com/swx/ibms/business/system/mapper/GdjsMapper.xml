@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.system.mapper.GdjsMapper">
+<select id="getjs" resultType="Gdjs">
+select * from XT_ZZJG_GDJS
+</select>
+
+<select id="getgdjs" resultType="JSBM">
+	select * from XT_ZZJG_GDJS t where t.jsbm = #{jsbm}
+</select>
+</mapper>

@@ -1,0 +1,1014 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swx.ibms.business.cases.mapper.AgbAjslMapper">
+
+    <resultMap id="agbAjslResult" type="com.swx.ibms.business.cases.bean.AgbAjsl">
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+        <result column="AJMC" property="ajmc" jdbcType="VARCHAR"/>
+        <result column="YWLB" property="ywlb" jdbcType="VARCHAR"/>
+        <result column="SLSJ" property="slsj" jdbcType="VARCHAR"/>
+        <result column="FLSJ" property="flsj" jdbcType="VARCHAR"/>
+        <result column="LRRY" property="lrry" jdbcType="VARCHAR"/>
+        <result column="SHRY" property="shry" jdbcType="VARCHAR"/>
+        <result column="JZCS" property="jzcs" jdbcType="INTEGER"/>
+        <result column="GP" property="gp" jdbcType="INTEGER"/>
+        <result column="SACW" property="sacw" jdbcType="VARCHAR"/>
+        <result column="BLXS" property="blxs" jdbcType="VARCHAR"/>
+        <result column="DID" property="did" jdbcType="VARCHAR"/>
+        <result column="ZHGXBM" property="zhgxbm" jdbcType="CHAR"/>
+        <result column="ZHGXR" property="zhgxr" jdbcType="CHAR"/>
+        <result column="ZHGXSJ" property="zhgxsj" jdbcType="VARCHAR"/>
+        <result column="SPR" property="spr" jdbcType="VARCHAR"/>
+    </resultMap>
+	
+    <sql id="field_list">
+  	ID,DID,AJMC,YWLB,SLSJ,FLSJ,LRRY,SHRY,JZCS,GP,SACW,BLXS,ZHGXBM,ZHGXR,ZHGXSJ,SPR, CBXZ, CBXZBM
+    </sql>
+
+	<!-- 根据办理形式获取对应的记录 -->
+    <select id="getAllAjslByBlxs" resultMap="agbAjslResult">
+        select
+        <include refid="field_list"/>
+        from YX_SFDA_AGBAJSL
+        where SFSC = 'N'
+        and did = #{did,jdbcType=VARCHAR}
+        <choose>
+            <when test="blxs != 'all'">  <!-- 办理形式为空则获取全部记录 -->
+                and blxs = #{blxs,jdbcType=VARCHAR}
+            </when>
+            <otherwise>
+                and 1 = 1
+            </otherwise>
+        </choose>
+    </select>
+
+	<!-- 通过案件受理id获取对应记录 -->
+    <select id="getAjslById" resultMap="agbAjslResult">
+        select
+        ID,DID,AJMC,YWLB,SLSJ,FLSJ,LRRY,SHRY,JZCS,GP,SACW,BLXS,ZHGXBM,ZHGXR,ZHGXSJ,SPR
+        from YX_SFDA_AGBAJSL
+        where sfsc = 'N'
+        and id = #{id}
+        and (cbxzbm is null or cbxzbm ='')
+
+     	union
+
+		select 
+		ID,DID,AJMC,YWLB,SLSJ,FLSJ,LRRY,SHRY,JZCS,GP,SACW,b.blfsbm,ZHGXBM,ZHGXR,ZHGXSJ,SPR
+		from yx_sfda_agbajsl a 
+		inner join yx_sfda_cbxz b 
+		on a.cbxzbm=b.cbxzbm
+		where a.id = #{id} 
+		and b.dwbm=#{dwbm} 
+		and b.gh=#{gh}
+    </select>
+
+	<!-- 获取包含统一业务的案件信息和案管办案件受理的信息 -->
+    <select id="getAjslAndTyywAjjbxx" resultMap="agbAjslResult">
+        select ID,DID,AJMC,YWLB,SLSJ,FLSJ,LRRY,SHRY,JZCS,GP,SACW,BLXS,ZHGXBM,ZHGXR,ZHGXSJ,SPR
+	  	from YX_SFDA_AGBAJSL
+	  	where SFSC = 'N'
+        and status = '1'
+	  	and did = #{did}
+		<!-- and (cbxzbm is null or cbxzbm ='') -->
+	  	<choose>
+	  		<when test="blxs != 'all'">  <!-- 办理形式为空则获取全部记录 -->
+	  			and BLXS = #{blxs}
+	  		</when>
+	  		<otherwise>
+	  			and 1 = 1
+	  		</otherwise>
+	  	</choose>
+	
+		  <!--union ALL
+	
+		  select ID,DID,AJMC,YWLB,SLSJ,FLSJ,LRRY,SHRY,JZCS,GP,SACW,b.BLFSBM BLXS,ZHGXBM,ZHGXR,ZHGXSJ,SPR
+		  from YX_SFDA_AGBAJSL a 
+		  inner join yx_sfda_cbxz b 
+		  on a.cbxzbm=b.cbxzbm
+		  where b.gh=#{gh} 
+		  and b.dwbm=#{dwbm}
+		  <choose>
+			  <when test="blxs != 'all'">  &lt;!&ndash; 办理形式为空则获取全部记录 &ndash;&gt;
+				  and b.blfsbm = #{blxs}
+			  </when>
+			  <otherwise>
+				  and 1 = 1
+			  </otherwise>
+		  </choose>-->
+    </select>
+
+    <sql id="blfs_sql"> 
+		tyyw_gg_ajjbxx_tyyw jb
+		left join tyyw_xt_qx_badyryfp_tyyw fp
+		on jb.badybm = fp.badybm
+		left join xt_zzjg_rybm_tyyw ry
+		on fp.dwbm = ry.dwbm and fp.gh = ry.gh
+		where jb.badybm is not null
+			and (jb.cbxzbm is null or jb.cbxzbm='')
+			and ry.sfsc = 'N'
+			and jb.sfsc = 'N'
+			and jb.ajlb_bm = '1401'
+			and ry.dwbm = #{dwbm}
+			and ry.gh = #{gh}
+	</sql>
+
+    <sql id="ajsl_sql"> 
+		select xz.blfsbm 
+		from YX_SFDA_AGBAJSL sl
+		inner join yx_sfda_cbxz xz 
+		on sl.cbxzbm=xz.cbxzbm 
+		where sl.sfsc='N' 
+			and xz.gh=#{gh} 
+			and xz.dwbm=#{dwbm}
+	</sql>
+
+    <sql id="ajsl_sql2">
+		from YX_SFDA_AGBAJSL sl
+		inner join yx_sfda_cbxz xz 
+		on sl.cbxzbm=xz.cbxzbm 
+		where sl.sfsc='N' 
+			  and xz.gh=#{gh} 
+			  and xz.dwbm=#{dwbm}
+	</sql>
+
+    <!-- 父部门下所有档案id -->
+    <sql id="didsql">
+ 	select distinct y.did 
+ 	from xt_zzjg_bmbm_tyyw b 
+	left join xt_qx_ryjsfp_tyyw x
+	on b.bmbm = x.bmbm
+	left join xt_zzjg_rybm_tyyw r
+	on x.gh = r.gh
+	left join yx_sfda_da_tyyw y
+	on r.gh = y.gh
+	where r.sfsc = 'N'
+	and b.dwbm = #{dwbm,jdbcType=CHAR}
+	and r.dwbm = #{dwbm,jdbcType=CHAR}
+	and x.dwbm = #{dwbm,jdbcType=CHAR}
+	and y.dwbm = #{dwbm,jdbcType=CHAR}
+	and (b.bmbm = #{fbmbm,jdbcType=CHAR} or b.fbmbm = #{fbmbm,jdbcType=CHAR})
+ </sql>
+ 
+    <!--  统计案官办办案数包含两部分
+     1.统一业务
+     2.案件受理
+     统一业务当badybm == null时，就根据cbrgh统计否则根据badybm统计 -->
+    <sql id="comm_sql">
+        select sum(num) num,did 
+        from
+        (
+        select count(*) num ,da.did
+        from tyyw_gg_ajjbxx_tyyw jb
+        left join tyyw_xt_qx_badyryfp_tyyw fp
+        on jb.badybm = fp.badybm
+        left join xt_zzjg_rybm_tyyw ry
+        on fp.dwbm = ry.dwbm
+        and fp.gh = ry.gh
+        left join yx_sfda_da_tyyw da
+        on ry.gh = da.gh
+        where jb.badybm is not null
+        and ry.sfsc = 'N'
+        and jb.sfsc = 'N'
+        and jb.ajlb_bm = #{ajlbbm,jdbcType=CHAR}<!-- 1401 -->
+        and ry.dwbm = #{dwbm,jdbcType=CHAR}
+        and da.did in (<include refid="didsql"/>)
+        group by da.did
+        union all
+        select count(*) num,da.did 
+        from tyyw_gg_ajjbxx_tyyw jb
+        left join yx_sfda_da_tyyw da
+        on jb.cbrgh = da.gh
+        where jb.badybm is null
+        and jb.sfsc = 'N'
+        and jb.ajlb_bm = #{ajlbbm,jdbcType=CHAR}
+        and jb.cbdw_bm = #{dwbm,jdbcType=CHAR}
+        and da.did in (<include refid="didsql"/>)
+        group by da.did
+        union all
+        select count(*) num,ag.did 
+        from yx_sfda_agbajsl ag
+        where ag.did in (<include refid="didsql"/>)
+        group by ag.did)
+        group by did
+    </sql>
+    
+    <!-- 根据档案id获取办理形式的数量 -->
+    <select id="getCountByBlxs" resultType="java.util.HashMap">
+        <!-- select count(*) amount, blxs 
+        from(
+        	 select blxs
+        	 from YX_SFDA_AGBAJSL
+        	 where did = #{did}
+	        	 and sfsc = 'N'
+	        	 and (cbxzbm is null or cbxzbm='')
+
+        	 union all
+
+        	 select blfsbm
+        	 from YX_SFDA_AGBAJSL a 
+        	 inner join yx_sfda_cbxz b on a.cbxzbm=b.cbxzbm
+        	 where b.gh=#{gh} 
+        	 	and b.dwbm=#{dwbm}
+        	 	and blfsbm !='11001'
+        	 	and blfsbm !='11002'
+        	 	and blfsbm !='11003'
+        	 	and blfsbm !='11004'
+        	 	and blfsbm !='11005'
+        	 	and sfsc = 'N'
+
+        	 union all
+
+        	 (
+        	  select '11001' blxs from
+        	  <include refid="blfs_sql"/>
+        	  AND (fp.BADYLX = '2' AND fp.BADYJSBH = '1')
+
+        	  union all
+
+        	  <include refid="ajsl_sql"/>
+        	  and blfsbm='11001'
+        	 )
+
+        	 union all
+
+        	 (
+        	  select '11002' blxs from
+        	  <include refid="blfs_sql"/>
+        	  AND (fp.BADYLX = '2' AND fp.BADYJSBH = '2')
+
+        	  union all
+
+        	  <include refid="ajsl_sql"/>
+        	  and blfsbm='11002'
+        	 )
+
+        	 union all
+
+        	 (
+        	  select '11003' blxs from
+        	  <include refid="blfs_sql"/>
+        	  AND (fp.BADYLX = '1' AND fp.BADYJSBH = '2')
+
+        	  union all
+
+        	  <include refid="ajsl_sql"/>
+        	  and blfsbm='11003'
+        	 )
+
+        	 union all
+
+	        (
+	         select '11004' blxs 
+	         from tyyw_yx_ws_sp_tyyw sp
+	         left join tyyw_gg_ajjbxx_tyyw aj on sp.bmsah = aj.bmsah
+	         where sp.dwbm = #{dwbm}
+	        	and sp.sfsc = 'N'
+	        	and aj.cbdw_bm = #{dwbm}
+	        	and aj.sfsc = 'N'
+	        	and sp.sprgh = #{gh}
+	        	and aj.ajlb_bm = '1401'
+	        	and (aj.cbxzbm is null or aj.cbxzbm = '')
+	
+	         union all
+	
+	         <include refid="ajsl_sql"/>
+	         and blfsbm='11004'
+	        )
+
+            union all
+
+	        (
+	         select '11005' blxs from
+	         <include refid="blfs_sql"/>
+	         AND ((fp.BADYLX = '1' AND (fp.BADYJSBH = '3' or fp.BADYJSBH = '4'))
+	         OR (fp.BADYLX = '2' AND (fp.BADYJSBH = '3' or fp.BADYJSBH = '4')))
+	
+	         union all
+	 
+	         <include refid="ajsl_sql"/>
+	         and blfsbm='11005'
+	        )
+
+        	union all
+
+	        select '11008' blxs 
+	        from tyyw_gg_ajjbxx_tyyw
+	        where cbrgh=#{gh} 
+	        	and cbdw_bm=#{dwbm} 
+	        	and badybm is null 
+	        	and ajlb_bm='1401'
+	        	and sfsc='N'
+
+        ) group by blxs -->
+        
+    select count(*) amount, blxs 
+ 	from(
+	select blxs 
+	from YX_SFDA_AGBAJSL
+  	where did = #{did}
+  	and sfsc = 'N'
+    and status = '1'
+	<!-- and (cbxzbm is null or cbxzbm ='') -->
+
+ 	)
+ 	group by blxs    
+
+    </select>
+    
+    <!-- 获取本部门办案平均数 -->
+    <select id="getCaseAvg" resultType="java.util.HashMap">
+        <!-- select avg(num) avg from (<include refid="comm_sql"/>) -->
+         <!-- select nvl(avg(num),0) avg 
+		 from (
+		       select sum(num) num,id 
+                  from
+                      (
+                        select count(*) num ,da.id
+                        from tyyw_gg_ajjbxx_tyyw jb
+                          left join tyyw_xt_qx_badyryfp_tyyw fp on jb.badybm = fp.badybm
+                          left join xt_zzjg_rybm_TYYW ry on fp.dwbm = ry.dwbm and fp.gh = ry.gh
+                          left join yx_sfda_dagz da on ry.gh = da.ssr
+                        where jb.badybm is not null
+                          and ry.sfsc = 'N'
+                          and jb.sfsc = 'N'
+                          and jb.ajlb_bm = #{ajlbbm}
+                          and ry.dwbm = #{dwbm}
+                          and da.id in (
+                                      select distinct y.id 
+                                      from xt_zzjg_bmbm_tyyw b 
+                                        left join xt_qx_ryjsfp_tyyw x on b.bmbm = x.bmbm
+                                        left join xt_zzjg_rybm_tyyw r on x.gh = r.gh
+                                        left join yx_sfda_dagz y on r.gh = y.ssr
+                                      where r.sfsc = 'N'
+                                        and b.dwbm = #{dwbm}
+                                        and r.dwbm = #{dwbm}
+                                        and x.dwbm = #{dwbm}
+                                        and y.ssrdwbm = #{dwbm}
+                                        and (b.bmbm = #{bmbm} or b.fbmbm = #{bmbm})
+                                     ) group by da.id
+                                         
+                        union all
+                            
+                        select count(*) num,da.id 
+                        from tyyw_gg_ajjbxx_tyyw jb
+                          left join yx_sfda_dagz da on jb.cbrgh = da.ssr
+                        where jb.badybm is null
+                          and jb.sfsc = 'N'
+                          and jb.ajlb_bm = #{ajlbbm}
+                          and jb.cbdw_bm = #{dwbm}
+                          and da.id in (
+                                        select distinct y.id 
+                                        from xt_zzjg_bmbm_tyyw b 
+                                          left join xt_qx_ryjsfp_tyyw x on b.bmbm = x.bmbm
+                                          left join xt_zzjg_rybm_tyyw r on x.gh = r.gh
+                                          left join yx_sfda_dagz y on r.gh = y.ssr
+                                        where r.sfsc = 'N'
+                                          and b.dwbm = #{dwbm}
+                                          and r.dwbm = #{dwbm}
+                                          and x.dwbm = #{dwbm}
+                                          and y.ssrdwbm = #{dwbm}
+                                          and (b.bmbm = #{bmbm} or b.fbmbm = #{bmbm})
+                                      ) group by da.id
+                                          
+                        union all
+                        
+                        select count(*) num,ag.did 
+                        from yx_sfda_agbajsl ag
+                        where ag.did in (
+                                        select distinct y.id 
+                                        from xt_zzjg_bmbm_tyyw b 
+                                          left join xt_qx_ryjsfp_tyyw x on b.bmbm = x.bmbm
+                                          left join xt_zzjg_rybm_tyyw r on x.gh = r.gh
+                                          left join yx_sfda_dagz y on r.gh = y.ssr
+                                        where r.sfsc = 'N'
+                                          and b.dwbm = #{dwbm}
+                                          and r.dwbm = #{dwbm}
+                                          and x.dwbm = #{dwbm}
+                                          and y.ssrdwbm = #{dwbm}
+                                          and (b.bmbm = #{bmbm} or b.fbmbm = #{bmbm})
+                                       ) group by ag.did
+                      ) group by id
+		       ) -->
+select avg(num) avg 
+   from (
+         select count(*) num,ag.did 
+ 	     from yx_sfda_agbajsl ag
+	     where ag.sfsc = 'N'
+               and ag.status = '1'
+	     	   and ag.did in (
+               select distinct y.id 
+               from xt_zzjg_bmbm_tyyw b 
+	               left join xt_qx_ryjsfp_tyyw x on b.bmbm = x.bmbm
+	               left join xt_zzjg_rybm_tyyw r on x.gh = r.gh
+	               left join yx_sfda_dagz y on r.gh = y.ssr
+               where r.sfsc = 'N'
+	               and b.dwbm = #{dwbm}
+	               and r.dwbm = #{dwbm}
+	               and x.dwbm = #{dwbm}
+	               and y.ssrdwbm = #{dwbm}
+	               and (b.bmbm = #{bmbm} or b.fbmbm = #{bmbm})
+	               and y.kssj = #{kssj}
+                   and y.jssj = #{jssj}
+	       	   group by y.id
+         ) group by ag.did
+   )
+    </select>
+
+    <!-- 获取本部门最多和最少办案数 -->
+    <select id="getCaseMaxAndMin" resultType="java.util.HashMap">
+        <!-- select nvl(max(num),0) maxNum,nvl(min(num),0) minNum 
+        from (
+              select sum(num) num,id 
+              from
+                  (
+                    select count(*) num ,da.id
+                    from tyyw_gg_ajjbxx_tyyw jb
+                      left join tyyw_xt_qx_badyryfp_tyyw fp on jb.badybm = fp.badybm
+                      left join xt_zzjg_rybm_TYYW ry on fp.dwbm = ry.dwbm and fp.gh = ry.gh
+                      left join yx_sfda_dagz da on ry.gh = da.ssr
+                    where jb.badybm is not null
+                      and ry.sfsc = 'N'
+                      and jb.sfsc = 'N'
+                      and jb.ajlb_bm = #{ajlbbm}
+                      and ry.dwbm = #{dwbm}
+                      and da.id in (
+                                  select distinct y.id 
+                                  from xt_zzjg_bmbm_tyyw b 
+                                    left join xt_qx_ryjsfp_tyyw x on b.bmbm = x.bmbm
+                                    left join xt_zzjg_rybm_tyyw r on x.gh = r.gh
+                                    left join yx_sfda_dagz y on r.gh = y.ssr
+                                  where r.sfsc = 'N'
+                                    and b.dwbm = #{dwbm}
+                                    and r.dwbm = #{dwbm}
+                                    and x.dwbm = #{dwbm}
+                                    and y.ssrdwbm = #{dwbm}
+                                    and (b.bmbm = #{bmbm} or b.fbmbm = #{bmbm})
+                                 ) group by da.id
+                                     
+                    union all
+                        
+                    select count(*) num,da.id 
+                    from tyyw_gg_ajjbxx_tyyw jb
+                      left join yx_sfda_dagz da on jb.cbrgh = da.ssr
+                    where jb.badybm is null
+                      and jb.sfsc = 'N'
+                      and jb.ajlb_bm = #{ajlbbm}
+                      and jb.cbdw_bm = #{dwbm}
+                      and da.id in (
+                                    select distinct y.id 
+                                    from xt_zzjg_bmbm_tyyw b 
+                                      left join xt_qx_ryjsfp_tyyw x on b.bmbm = x.bmbm
+                                      left join xt_zzjg_rybm_tyyw r on x.gh = r.gh
+                                      left join yx_sfda_dagz y on r.gh = y.ssr
+                                    where r.sfsc = 'N'
+                                      and b.dwbm = #{dwbm}
+                                      and r.dwbm = #{dwbm}
+                                      and x.dwbm = #{dwbm}
+                                      and y.ssrdwbm = #{dwbm}
+                                      and (b.bmbm = #{bmbm} or b.fbmbm = #{bmbm})
+                                  ) group by da.id
+                                      
+                    union all
+                    
+                    select count(*) num,ag.did 
+                    from yx_sfda_agbajsl ag
+                    where ag.did in (
+                                    select distinct y.id 
+                                    from xt_zzjg_bmbm_tyyw b 
+                                      left join xt_qx_ryjsfp_tyyw x on b.bmbm = x.bmbm
+                                      left join xt_zzjg_rybm_tyyw r on x.gh = r.gh
+                                      left join yx_sfda_dagz y on r.gh = y.ssr
+                                    where r.sfsc = 'N'
+                                      and b.dwbm = #{dwbm}
+                                      and r.dwbm = #{dwbm}
+                                      and x.dwbm = #{dwbm}
+                                      and y.ssrdwbm = #{dwbm}
+                                      and (b.bmbm = #{bmbm} or b.fbmbm = #{bmbm})
+                                   ) group by ag.did
+                  ) group by id
+           ) -->
+    select max(num) maxNum,min(num) minNum 
+ 	from (
+ 		  select count(*) num,ag.did 
+ 	      from yx_sfda_agbajsl ag
+	      where ag.sfsc = 'N'
+                and ag.status = '1'
+	     	    and ag.did in (
+                select distinct y.id 
+                from xt_zzjg_bmbm_tyyw b 
+	                left join xt_qx_ryjsfp_tyyw x on b.bmbm = x.bmbm
+	                left join xt_zzjg_rybm_tyyw r on x.gh = r.gh
+	                left join yx_sfda_dagz y on r.gh = y.ssr
+                where r.sfsc = 'N'
+	                and b.dwbm = #{dwbm}
+	                and r.dwbm = #{dwbm}
+	                and x.dwbm = #{dwbm}
+	                and y.ssrdwbm = #{dwbm}
+	                and (b.bmbm = #{bmbm} or b.fbmbm = #{bmbm})
+	                and y.kssj = #{kssj}
+                    and y.jssj = #{jssj}
+	       		group by y.id
+         ) group by ag.did
+ 	)
+    </select>
+
+    <!-- 获取在本部门办案数的名次 -->
+    <select id="getRank" resultType="java.util.HashMap">
+        <!-- select  rank
+        from (
+             select id,num,rank() over(order by num desc) rank
+             from (
+                  select sum(num) num,id 
+                  from
+                      (
+                        select count(*) num ,da.id
+                        from tyyw_gg_ajjbxx_tyyw jb
+                          left join tyyw_xt_qx_badyryfp_tyyw fp on jb.badybm = fp.badybm
+                          left join xt_zzjg_rybm_TYYW ry on fp.dwbm = ry.dwbm and fp.gh = ry.gh
+                          left join yx_sfda_dagz da on ry.gh = da.ssr
+                        where jb.badybm is not null
+                          and ry.sfsc = 'N'
+                          and jb.sfsc = 'N'
+                          and jb.ajlb_bm = #{ajlbbm}
+                          and ry.dwbm = #{dwbm}
+                          and da.id in (
+                                      select distinct y.id 
+                                      from xt_zzjg_bmbm_tyyw b 
+                                        left join xt_qx_ryjsfp_tyyw x on b.bmbm = x.bmbm
+                                        left join xt_zzjg_rybm_tyyw r on x.gh = r.gh
+                                        left join yx_sfda_dagz y on r.gh = y.ssr
+                                      where r.sfsc = 'N'
+                                        and b.dwbm = #{dwbm}
+                                        and r.dwbm = #{dwbm}
+                                        and x.dwbm = #{dwbm}
+                                        and y.ssrdwbm = #{dwbm}
+                                        and (b.bmbm = #{bmbm} or b.fbmbm = #{bmbm})
+                                     ) group by da.id
+                                         
+                        union all
+                            
+                        select count(*) num,da.id 
+                        from tyyw_gg_ajjbxx_tyyw jb
+                          left join yx_sfda_dagz da on jb.cbrgh = da.ssr
+                        where jb.badybm is null
+                          and jb.sfsc = 'N'
+                          and jb.ajlb_bm = #{ajlbbm}
+                          and jb.cbdw_bm = #{dwbm}
+                          and da.id in (
+                                        select distinct y.id 
+                                        from xt_zzjg_bmbm_tyyw b 
+                                          left join xt_qx_ryjsfp_tyyw x on b.bmbm = x.bmbm
+                                          left join xt_zzjg_rybm_tyyw r on x.gh = r.gh
+                                          left join yx_sfda_dagz y on r.gh = y.ssr
+                                        where r.sfsc = 'N'
+                                          and b.dwbm = #{dwbm}
+                                          and r.dwbm = #{dwbm}
+                                          and x.dwbm = #{dwbm}
+                                          and y.ssrdwbm = #{dwbm}
+                                          and (b.bmbm = #{bmbm} or b.fbmbm = #{bmbm})
+                                      ) group by da.id
+                                          
+                        union all
+                        
+                        select count(*) num,ag.did 
+                        from yx_sfda_agbajsl ag
+                        where ag.did in (
+                                        select distinct y.id 
+                                        from xt_zzjg_bmbm_tyyw b 
+                                          left join xt_qx_ryjsfp_tyyw x on b.bmbm = x.bmbm
+                                          left join xt_zzjg_rybm_tyyw r on x.gh = r.gh
+                                          left join yx_sfda_dagz y on r.gh = y.ssr
+                                        where r.sfsc = 'N'
+                                          and b.dwbm = #{dwbm}
+                                          and r.dwbm = #{dwbm}
+                                          and x.dwbm = #{dwbm}
+                                          and y.ssrdwbm = #{dwbm}
+                                          and (b.bmbm = #{bmbm} or b.fbmbm = #{bmbm})
+                                       ) group by ag.did
+                      ) group by id
+                  )
+                ) t
+                where t.id = #{did} -->
+    select rank from (
+ 		select num,did,rank() over(order by num desc) rank 
+ 		from (
+	 		  select count(*) num,ag.did 
+	 	      from yx_sfda_agbajsl ag
+		      where ag.sfsc = 'N'
+                  and ag.status = '1'
+	     	      and ag.did in (
+	              select distinct y.id 
+	              from xt_zzjg_bmbm_tyyw b 
+	              left join xt_qx_ryjsfp_tyyw x on b.bmbm = x.bmbm
+	              left join xt_zzjg_rybm_tyyw r on x.gh = r.gh
+	              left join yx_sfda_dagz y on r.gh = y.ssr
+	              where r.sfsc = 'N'
+		              and b.dwbm = #{dwbm}
+		              and r.dwbm = #{dwbm}
+		              and x.dwbm = #{dwbm}
+		              and y.ssrdwbm = #{dwbm}
+		              and (b.bmbm = #{bmbm} or b.fbmbm = #{bmbm})
+		              and y.kssj = #{kssj}
+                      and y.jssj = #{jssj}
+		       	  group by y.id
+	         	)group by ag.did
+ 	         )
+ 	) t
+ 	where t.did = #{did}
+        
+    </select>
+
+    <sql id="sql2">
+        tyyw_gg_ajjbxx_tyyw jb
+        left join tyyw_xt_qx_badyryfp_tyyw fp
+        on jb.badybm = fp.badybm
+        left join xt_zzjg_rybm_tyyw ry
+        on fp.dwbm = ry.dwbm and fp.gh = ry.gh
+        where jb.badybm is not null
+        	and (jb.cbxzbm is null or jb.cbxzbm='')
+        	and ry.sfsc = 'N'
+        	and jb.sfsc = 'N'
+        	and jb.ajlb_bm = '1401'
+        	and ry.dwbm = #{dwbm}
+        	and ry.gh = #{gh}
+    </sql>
+
+    <sql id="sql3">
+        from YX_SFDA_AGBAJSL sl
+        inner join yx_sfda_cbxz xz 
+        on sl.cbxzbm=xz.cbxzbm 
+        where sl.sfsc='N' 
+        	and xz.gh=#{gh} 
+        	and xz.dwbm=#{dwbm}
+        <if test="zhgxr != null and zhgxr != ''">
+            and sl.zhgxr =#{zhgxr}
+        </if>
+    </sql>
+
+    <sql id="sql4">
+        from yx_sfda_agblcjk sl
+        inner join yx_sfda_cbxz xz 
+        on sl.cbxzbm=xz.cbxzbm 
+        where sl.sfsc='N' 
+        	and xz.gh=#{gh} 
+        	and xz.dwbm=#{dwbm}
+        <if test="zhgxr != null and zhgxr != ''">
+            and sl.zhgxr =#{zhgxr}
+        </if>
+    </sql>
+
+    <sql id="sql5">
+        tyyw_gg_ajjbxx_tyyw jb
+        left join tyyw_xt_qx_badyryfp_tyyw fp
+        on jb.badybm = fp.badybm
+        left join xt_zzjg_rybm_tyyw ry
+        on fp.dwbm = ry.dwbm and fp.gh = ry.gh
+        where jb.badybm is not null
+        and (jb.cbxzbm is null or jb.cbxzbm='')
+        and ry.sfsc = 'N'
+        and jb.sfsc = 'N'
+        and jb.ajlb_bm = '1402'
+        and ry.dwbm = #{dwbm}
+        and ry.gh = #{gh}
+    </sql>
+
+    <!-- 根据档案id获取案件受理，流程监控，质量评查更正信息 -->
+    <select id="getCorrectByDid" resultType="java.util.HashMap">
+        select id ,did,ajmc, ywlb,blxs,cbxz,cbxzbm
+        from YX_SFDA_AGBAJSL
+        where SFSC = 'N'
+        and did = #{did,jdbcType=VARCHAR}
+        and (cbxzbm is null or cbxzbm='')
+
+        <!-- 主任检察官 -->
+        union all
+        select jb.bmsah,'',jb.ajmc,'2501','11001', '',''
+        from
+        <include refid="sql2"/>
+        AND (fp.BADYLX = '2' AND fp.BADYJSBH = '1')
+        union all
+        select sl.id, sl.did, sl.ajmc,'2501','11001', sl.cbxz, sl.cbxzbm
+        <include refid="sql3"/>
+        and xz.blfsbm='11001'
+        <!-- 检察官 -->
+        union all
+        select jb.bmsah,'',jb.ajmc,'2501','11002','',''
+        from
+        <include refid="sql2"/>
+        AND (fp.BADYLX = '2' AND fp.BADYJSBH = '2')
+        union all
+        select sl.id, sl.did, sl.ajmc,'2501','11002',sl.cbxz, sl.cbxzbm
+        <include refid="sql3"/>
+        and xz.blfsbm='11002'
+        <!-- 独任检察官 -->
+        union all
+        select jb.bmsah,'',jb.ajmc,'2501','11003', '', ''
+        from
+        <include refid="sql2"/>
+        AND (fp.BADYLX = '1' AND fp.BADYJSBH = '2')
+        union all
+        select sl.id, sl.did, sl.ajmc,'2501','11003',sl.cbxz, sl.cbxzbm
+        <include refid="sql3"/>
+        and xz.blfsbm='11003'
+        <!-- 审批审核 -->
+        union all
+        select aj.bmsah,'',aj.ajmc,'2501','11004', '', ''
+        from tyyw_yx_ws_sp_tyyw sp
+        left join tyyw_gg_ajjbxx_tyyw aj
+        on sp.bmsah = aj.bmsah
+        where sp.dwbm = #{dwbm}
+        and sp.sfsc = 'N'
+        and aj.cbdw_bm = #{dwbm}
+        and aj.sfsc = 'N'
+        and sp.sprgh = #{gh}
+        and aj.ajlb_bm = '1402'
+        and (aj.cbxzbm is null or aj.cbxzbm = '')
+        union all
+        select sl.id, sl.did, sl.ajmc,'2501','11004',sl.cbxz, sl.cbxzbm
+        <include refid="sql3"/>
+        and xz.blfsbm='11004'
+        <!-- 参与协助 -->
+        union all
+        select jb.bmsah,'',jb.ajmc,'2501','11005','',''
+        from
+        <include refid="sql2"/>
+        AND ((fp.BADYLX = '1' AND (fp.BADYJSBH = '3' or fp.BADYJSBH = '4'))
+        OR (fp.BADYLX = '2' AND (fp.BADYJSBH = '3' or fp.BADYJSBH = '4')))
+        union all
+        select sl.id, sl.did, sl.ajmc,'2501','11005',sl.cbxz, sl.cbxzbm
+        <include refid="sql3"/>
+        and xz.blfsbm='11005'
+        <!-- 直接办理-->
+        union all
+        select jb.bmsah,'',jb.ajmc,'2501','11008','',''
+        from tyyw_gg_ajjbxx_tyyw jb
+        where cbrgh=#{gh} 
+        and cbdw_bm=#{dwbm} 
+        and badybm is null 
+        and ajlb_bm='1401' 
+        and jb.sfsc='N'
+        union all
+
+        select a.id,a.did,a.ajmc,'2501',b.blfsbm,a.cbxz, a.cbxzbm
+        from YX_SFDA_AGBAJSL a 
+        inner join yx_sfda_cbxz b
+        on a.cbxzbm=b.cbxzbm
+        where b.gh=#{gh} 
+        and b.dwbm=#{dwbm}
+        and blfsbm !='11001'
+        and blfsbm !='11002'
+        and blfsbm !='11003'
+        and blfsbm !='11004'
+        and blfsbm !='11005'
+        and a.sfsc = 'N'
+
+        union all
+
+        select id ,did,ajmc, ywlb,blxs,cbxz,cbxzbm
+        from YX_SFDA_AGBLCJK
+        where SFSC = 'N'
+        and did = #{did,jdbcType=VARCHAR}
+        and (cbxzbm is null or cbxzbm='')
+
+        <!-- 主任检察官 -->
+        union all
+        select jb.bmsah,'',jb.ajmc,'2502','11001','',''
+        from
+        <include refid="sql5"/>
+        AND (fp.BADYLX = '2' AND fp.BADYJSBH = '1')
+        union all
+        select sl.id, sl.did, sl.ajmc,'2502','11001',sl.cbxz, sl.cbxzbm
+        <include refid="sql4"/>
+        and xz.blfsbm='11001'
+        <!-- 检察官 -->
+        union all
+        select jb.bmsah,'',jb.ajmc,'2502','11002','',''
+        from
+        <include refid="sql5"/>
+        AND (fp.BADYLX = '2' AND fp.BADYJSBH = '2')
+        union all
+        select sl.id, sl.did, sl.ajmc,'2502','11002',sl.cbxz, sl.cbxzbm
+        <include refid="sql4"/>
+        and xz.blfsbm='11002'
+        <!-- 独任检察官 -->
+        union all
+        select jb.bmsah,'',jb.ajmc,'2502','11003','',''
+        from
+        <include refid="sql5"/>
+        AND (fp.BADYLX = '1' AND fp.BADYJSBH = '2')
+        union all
+        select sl.id, sl.did, sl.ajmc,'2502','11003',sl.cbxz, sl.cbxzbm
+        <include refid="sql4"/>
+        and xz.blfsbm='11003'
+        <!-- 审批审核 -->
+        union all
+        select aj.bmsah,'',aj.ajmc,'2502','11004','',''
+        from tyyw_yx_ws_sp_tyyw sp
+        left join tyyw_gg_ajjbxx_tyyw aj
+        on sp.bmsah = aj.bmsah
+        where sp.dwbm = #{dwbm}
+        and sp.sfsc = 'N'
+        and aj.cbdw_bm = #{dwbm}
+        and aj.sfsc = 'N'
+        and sp.sprgh = #{gh}
+        and aj.ajlb_bm = '1402'
+        and (aj.cbxzbm is null or aj.cbxzbm = '')
+        union all
+        select sl.id, sl.did, sl.ajmc,'2502','11004',sl.cbxz, sl.cbxzbm
+        <include refid="sql4"/>
+        and xz.blfsbm='11004'
+        <!-- 参与协助 -->
+        union all
+        select jb.bmsah,'',jb.ajmc,'2502','11005','',''
+        from
+        <include refid="sql5"/>
+        AND ((fp.BADYLX = '1' AND (fp.BADYJSBH = '3' or fp.BADYJSBH = '4'))
+        OR (fp.BADYLX = '2' AND (fp.BADYJSBH = '3' or fp.BADYJSBH = '4')))
+        union all
+        select sl.id, sl.did, sl.ajmc,'2502','11005',sl.cbxz, sl.cbxzbm
+        <include refid="sql4"/>
+        and xz.blfsbm='11005'
+        <!-- 直接办理-->
+        union all
+        select jb.bmsah,'',jb.ajmc,'2502','11008','',''
+        from tyyw_gg_ajjbxx_tyyw jb
+        where cbrgh=#{gh} 
+        and cbdw_bm=#{dwbm} 
+        and badybm is null 
+        and ajlb_bm='1402' 
+        and jb.sfsc='N'
+        union all
+
+        select a.id, a.did, a.ajmc, '2502',b.blfsbm,a.cbxz, a.cbxzbm
+        from yx_sfda_agblcjk a inner join yx_sfda_cbxz b
+        on a.cbxzbm=b.cbxzbm
+        where b.gh=#{gh} 
+        and b.dwbm=#{dwbm}
+        and blfsbm !='11001'
+        and blfsbm !='11002'
+        and blfsbm !='11003'
+        and blfsbm !='11004'
+        and blfsbm !='11005'
+        and a.sfsc = 'N'
+
+
+        union all
+        select id,did,ajmc,ywlb,blfs,cbxz,cbxzbm
+
+        from YX_SFDA_AGBZLPC
+        where SFSC = 'N'
+        and did = #{did,jdbcType=VARCHAR}
+        and (cbxzbm is null or cbxzbm ='')
+        <if test="zhgxr != null and zhgxr != ''">
+            and zhgxr =#{zhgxr}
+        </if>
+
+        union ALL
+
+        select id,did,ajmc,ywlb,b.blfsbm blxs,a.cbxz, a.cbxzbm
+        from YX_SFDA_AGBZLPC a 
+        inner join yx_sfda_cbxz b 
+        on a.cbxzbm=b.cbxzbm
+        where b.gh=#{gh,jdbcType=VARCHAR} 
+        and b.dwbm=#{dwbm,jdbcType=VARCHAR}
+        <if test="zhgxr != null and zhgxr != ''">
+            and a.zhgxr =#{zhgxr}
+        </if>
+    </select>
+
+    <!--  逻辑删除 -->
+    <update id="updateSFSCById" parameterType="java.util.List">
+        UPDATE YX_SFDA_AGBAJSL
+        SET SFSC = 'Y'
+        where id
+        in
+        <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
+            #{id,jdbcType=VARCHAR}
+        </foreach>
+    </update>
+    
+    <!-- 根据档案id,是否删除,展示所有（案件受理，流程监控，质量评查）新增列表中的数据-->
+    <select id="selectALLNewAgbajByDid"  resultMap="agbAjslResult">
+	    select a.id,a.ajmc,a.ywlb,a.blxs,a.cbxz,a.zhgxsj
+	    from(
+	    	select aj.id,aj.ajmc,aj.ywlb,aj.blxs,aj.cbxz,aj.zhgxsj
+	        from YX_SFDA_AGBAJSL aj
+	        where aj.did = #{did} and aj.sfsc = 'N' and aj.status = '2'
+	        
+	        union
+	        
+	        select lc.id,lc.ajmc,lc.ywlb,lc.blxs,lc.cbxz,lc.zhgxsj 
+	    	from YX_SFDA_AGBLCJK lc 
+	    	where lc.did = #{did} and lc.sfsc = 'N' and lc.status = '2'
+	    	
+	    	union
+	    	
+	    	select zl.id,zl.ajmc,zl.ywlb,zl.blxs,zl.cbxz,zl.zhgxsj
+	    	from YX_SFDA_AGBZLPC zl 
+	    	where zl.did = #{did} and zl.sfsc = 'N' and zl.status = '2'
+	    	) a
+	    	order by a.zhgxsj desc
+    </select>
+    
+    <!-- 新增案管办案件受理 -->
+    <insert id="addAgbAjsl" parameterType="java.util.Map">
+        insert into YX_SFDA_AGBAJSL(ID,
+        							AJMC,
+        							YWLB,
+        							SLSJ,
+        							FLSJ,
+        							LRRY,
+        							SHRY,
+        							JZCS,
+        							GP,
+        							SACW,
+        							BLXS,
+        							SFSC,
+        							DID,
+        							ZHGXBM,
+        							ZHGXR,
+        							ZHGXSJ,
+        							SPR, 
+        							CBXZBM,
+        							CBXZ,
+        							STATUS
+        						   )
+        					 values(
+        					 	    #{id,jdbcType=VARCHAR},
+						            #{ajmc,jdbcType=VARCHAR},
+						            #{ywlb,jdbcType=VARCHAR},
+						            #{slsj,jdbcType=VARCHAR},
+						            #{flsj,jdbcType=VARCHAR},
+						            #{lrry,jdbcType=VARCHAR},
+						            #{shry,jdbcType=VARCHAR},
+						            #{jzcs,jdbcType=INTEGER},
+						            #{gp,jdbcType=INTEGER},
+						            #{sacw,jdbcType=VARCHAR},
+						            #{blxs,jdbcType=VARCHAR},
+						            #{sfsc,jdbcType=CHAR},
+						            #{did,jdbcType=VARCHAR},
+						            #{zhgxbm,jdbcType=CHAR},
+						            #{zhgxr,jdbcType=CHAR},
+						            #{zhgxsj,jdbcType=VARCHAR},
+						            #{spr,jdbcType=VARCHAR},
+						            #{cbxzbm,jdbcType=VARCHAR},
+						            #{cbxz,jdbcType=VARCHAR},
+						            #{status,jdbcType=VARCHAR}
+        						   )
+    </insert>
+    
+    <!-- 根据id和业务类别删除安管办新增列表中的案件受理 并删除附件 -->
+    <delete id="deleteAgbAjsl" parameterType="java.util.Map">
+    	delete from YX_SFDA_AGBAJSL where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    
+    <delete id="deleteAgbAjslFj" parameterType="java.util.Map">
+    	delete from YX_FJ where wbid = #{id,jdbcType=VARCHAR}
+    </delete>
+    
+    <!-- 根据案件受理id更新对应记录  -->
+    <update id="updateAgbAjslById" parameterType="java.util.Map">
+        update YX_SFDA_AGBAJSL
+        	<set>
+                AJMC = #{ajmc,jdbcType=VARCHAR},
+                YWLB = #{ywlb,jdbcType=VARCHAR},
+                SLSJ = #{slsj,jdbcType=VARCHAR},
+                FLSJ = #{flsj,jdbcType=VARCHAR},
+                LRRY = #{lrry,jdbcType=VARCHAR},
+                SHRY = #{shry,jdbcType=VARCHAR},
+                JZCS = #{jzcs,jdbcType=INTEGER},
+                GP = #{gp,jdbcType=INTEGER},
+                SACW = #{sacw,jdbcType=VARCHAR},
+                BLXS = #{blxs,jdbcType=VARCHAR},
+                ZHGXBM = #{zhgxbm,jdbcType=CHAR},
+                ZHGXR = #{zhgxr,jdbcType=CHAR},
+                ZHGXSJ = #{zhgxsj,jdbcType=VARCHAR},
+                SPR = #{spr,jdbcType=VARCHAR},
+                CBXZ = #{cbxz,jdbcType=VARCHAR},
+                CBXZBM = #{cbxzbm,jdbcType=VARCHAR},
+           </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    
+    <!-- 根据id查询案件受理用于表单回显 -->
+    <!-- 通过案件受理id获取对应记录 -->
+    <select id="getAjsl" resultMap="agbAjslResult">
+        select
+        ID,DID,AJMC,YWLB,SLSJ,FLSJ,LRRY,SHRY,JZCS,GP,SACW,BLXS,ZHGXBM,ZHGXR,ZHGXSJ,SPR, CBXZ, CBXZBM
+        from YX_SFDA_AGBAJSL
+        where id = #{id}
+	</select>
+
+    <select id="getCounts" resultType="java.util.HashMap">
+        select sum(sl) total
+        from(
+              select count(*) sl from YX_SFDA_AGBAJSL a where a.did = #{daId} and a.status = '1'
+              union all
+              select count(*) sl from YX_SFDA_AGBLCJK b where b.did = #{daId} and b.status = '1'
+              union all
+              select count(*) sl from YX_SFDA_AGBZLPC c where c.did = #{daId} and c.status = '1'
+          )
+
+    </select>
+</mapper>

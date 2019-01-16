@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.performance.mapper.GrjxMapper">
+	<!-- 自定义结果集 -->
+
+	<!-- 个人绩效结果集 -->
+	<resultMap id="GrjxMap" type="com.swx.ibms.business.performance.bean.GRJX">
+		<result property="daid" column="daid" javaType="java.lang.String"></result>
+		<result property="ywlx" column="ywlx" javaType="java.lang.String"></result>
+		<result property="ywzf" column="ywzf" javaType="java.lang.Double"></result>
+		<result property="zbkpgl" column="zbkpgl" javaType="java.lang.String"></result>
+	</resultMap>
+	<!-- 个人绩效最高基础分数据 -->
+	<resultMap id="GrjxZgjcfMap" type="com.swx.ibms.business.performance.bean.GrjxZgjcf">
+		<result property="year" column="year" javaType="java.lang.Integer"></result>
+		<result property="jd" column="jd" javaType="java.lang.Integer"></result>
+		<result property="ywlx" column="ywlx" javaType="java.lang.String"></result>
+		<result property="dwjb" column="dwjb" javaType="java.lang.String"></result>
+		<result property="xmbm" column="xmbm" javaType="java.lang.String"></result>
+		<result property="zgjcf" column="zgjcf" javaType="java.lang.Double"></result>
+	</resultMap>
+	<!-- 根据月度考核年份，季度，业务类别，单位级别，单位编码前两位，找出所有审批通过的人的月度考核id -->
+	<resultMap id="ydkhqbtgMap" type="com.swx.ibms.business.performance.bean.ydkhqbtg">
+	    <result property="ydkhid" column="id" javaType="java.lang.String"></result>
+		<result property="year" column="year" javaType="java.lang.Integer"></result>
+		<result property="jd" column="jd" javaType="java.lang.Integer"></result>
+		<result property="ywlx" column="ywlx" javaType="java.lang.String"></result>
+		<result property="dwjb" column="dwjb" javaType="java.lang.String"></result>
+	</resultMap>
+	<!-- 部门案号列表结果集 -->
+	<resultMap id="BmsanListMap" type="java.lang.String">
+		<result property="bmsah" column="bmsah"></result>
+	</resultMap>
+
+	<!-- 插入或更新个人绩效嘴个基础分 -->
+	<update id="inOrUpGrjxZgjcf" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_GRJX.proc_grjx_zgjcf(
+          		#{p_year,mode=IN,jdbcType=INTEGER},
+          		#{p_jd,mode=IN,jdbcType=INTEGER},
+          		#{p_ywlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwjb,mode=IN,jdbcType=VARCHAR},
+          		#{p_xmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_zgjcf,mode=IN,jdbcType=DOUBLE},
+          		#{Y,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+	<!-- 个人绩效是否该业务类型所有人都通过审批 -->
+	<select id="grjxSfSsxt" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_GRJX.proc_grjx_sfssxt(
+          		#{p_year,mode=IN,jdbcType=INTEGER},
+          		#{p_jd,mode=IN,jdbcType=INTEGER},
+          		#{p_ywlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwjb,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwbmtwo,mode=IN,jdbcType=VARCHAR},
+          		#{Y,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</select>
+	<!-- 根据年份、季度、业务类型、单位级别查询个人绩效最高基础分数据 -->
+	<select id="showGrjxZgjcfList" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_GRJX.proc_show_grjx_zgjcf_list(
+          		#{p_year,mode=IN,jdbcType=INTEGER},
+          		#{p_jd,mode=IN,jdbcType=INTEGER},
+          		#{p_ywlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwjb,mode=IN,jdbcType=VARCHAR},
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=GrjxZgjcfMap}
+          		)} 
+    	]]>
+	</select>
+    <!-- 通过业务类别和单位级别查找指标配置 -->
+	<select id="selectgrjxZbpzNr" parameterType="java.util.Map" statementType="CALLABLE">
+	<![CDATA[  
+        	{call PKG_GRJX.proc_select_grjx_zbpz_nr(
+          		#{p_ywlb,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwjb,mode=IN,jdbcType=VARCHAR},
+          		#{p_zbpz_nr,mode=OUT,jdbcType=CLOB},
+          		#{p_pjf,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</select>
+	<!-- 根据月度考核id和业务类型查找业务考核分值的zbkpdf -->
+	<select id="selectgrjxZbkpdf" parameterType="java.util.Map" statementType="CALLABLE">
+	<![CDATA[  
+        	{call PKG_GRJX.proc_select_grjx_ywkhfz_zbkpdf(
+          		#{p_ydkhid,mode=IN,jdbcType=CHAR},
+          		#{p_ywlx,mode=IN,jdbcType=CHAR},
+          		#{p_zbkpgl,mode=OUT,jdbcType=CLOB},
+          		#{p_zbkpdf,mode=OUT,jdbcType=CLOB}
+          		)} 
+    	]]>
+	</select>
+	<!-- 根据月度考核id和业务类型更新zbkpgl和zbkpdf并将计算出的评价级别名称更新-->
+	<update id="updateGrjxYwkhfzLf" parameterType="java.util.Map" statementType="CALLABLE">
+	<![CDATA[  
+	        {call PKG_GRJX.proc_update_grjx_ywkhfz_lf(
+          		#{p_ydkhid,mode=IN,jdbcType=CHAR},
+          		#{p_ywlx,mode=IN,jdbcType=CHAR},
+          		#{p_zbkpgl,mode=IN,jdbcType=CLOB},
+          		#{p_zbkpdf,mode=IN,jdbcType=CLOB},
+                #{p_zpjdf,mode=IN,jdbcType=INTEGER},
+                #{p_pdjb,mode=IN,jdbcType=VARCHAR},
+                #{p_pdjbmc,mode=IN,jdbcType=VARCHAR},
+          		#{Y,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+	    	]]>
+	</update>
+	<!-- 根据月度考核年份，季度，业务类别，单位级别，单位编码前两位，找出所有审批通过的人的月度考核id-->
+	<select id="selectGrjxYdkhlist" parameterType="java.util.Map" statementType="CALLABLE">
+	<![CDATA[  
+	        {call PKG_GRJX.proc_grjx_ydkhlist(
+          		#{p_year,mode=IN,jdbcType=INTEGER},
+          		#{p_jd,mode=IN,jdbcType=INTEGER},
+          		#{p_ywlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwjb,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwbmtwo,mode=IN,jdbcType=VARCHAR},
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ydkhqbtgMap}
+          		)} 
+	    	]]>
+	</select>
+	<!-- 通过档案ID获取个人绩效信息 -->
+	<select id="getGrjxByDaid" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_GRJX.proc_getgrjxbydaid(
+          		#{p_daid,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=GrjxMap},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</select>
+
+	<!-- 添加个人绩效信息 -->
+	<insert id="addGrjx" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_GRJX.proc_addgrjx(
+          		#{p_daid,mode=IN,jdbcType=VARCHAR},
+          		#{p_ywlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_ywzf,mode=IN,jdbcType=DOUBLE},
+          		#{p_zbkpgl,mode=IN,jdbcType=CLOB},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</insert>
+
+	<!-- 更新个人绩效信息 -->
+	<update id="updateGrjx" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_GRJX.proc_updategrjx(
+          		#{p_daid,mode=IN,jdbcType=VARCHAR},
+          		#{p_ywlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_ywzf,mode=IN,jdbcType=DOUBLE},
+          		#{p_zbkpgl,mode=IN,jdbcType=CLOB},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+
+	<!-- 删除个人绩效信息 -->
+	<delete id="deleteGrjx" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_GRJX.proc_deletegrjx(
+          		#{p_daid,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</delete>
+
+	<!-- 根据档案ID获取人员所在单位编码和工号 -->
+	<select id="getRyGhByDaid" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_GRJX.proc_getryghbydaid(
+          		#{p_daid,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwbm,mode=OUT,jdbcType=VARCHAR},
+          		#{p_gh,mode=OUT,jdbcType=VARCHAR},
+          		#{p_tjnf,mode=OUT,jdbcType=VARCHAR},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</select>
+
+	<!-- 根据单位编码和工号获取部门受案号 -->
+	<select id="getBmsahByGh" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_GRJX.proc_getbmsahbygh(
+        		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},
+          		#{p_wcrq,mode=IN,jdbcType=VARCHAR},
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=BmsanListMap},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</select>
+
+	<!-- 调用考核指标包 -->
+	<!-- 公用 -->
+	<select id="checkws" parameterType="java.util.Map"
+		statementType="CALLABLE">
+			<![CDATA[  
+        	{call PKG_KHZB.proc_check_ws(
+        		#{p_bmsah,mode=IN,jdbcType=VARCHAR},
+        		#{p_pclbbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxmc,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxzf,mode=IN,jdbcType=VARCHAR},
+          		#{p_mxkf,mode=IN,jdbcType=VARCHAR},
+          		#{p_char1,mode=IN,jdbcType=VARCHAR},
+          		#{p_char2,mode=IN,jdbcType=VARCHAR},
+          		#{p_char3,mode=IN,jdbcType=VARCHAR},
+          		#{p_char4,mode=IN,jdbcType=VARCHAR},
+          		#{p_char5,mode=IN,jdbcType=VARCHAR},
+          		#{p_pcxfz,mode=OUT,jdbcType=DOUBLE},
+          		#{p_result,mode=OUT,jdbcType=VARCHAR},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    		]]>
+	</select>
+	<!-- 讯问犯罪嫌疑人 -->
+	<select id="check013" parameterType="java.util.Map"
+		statementType="CALLABLE">
+			<![CDATA[  
+        	{call PKG_KHZB.proc_zj_check013(
+        		#{p_bmsah,mode=IN,jdbcType=VARCHAR},
+        		#{p_pclbbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxmc,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxzf,mode=IN,jdbcType=VARCHAR},
+          		#{p_mxkf,mode=IN,jdbcType=VARCHAR},
+          		#{p_char1,mode=IN,jdbcType=VARCHAR},
+          		#{p_char2,mode=IN,jdbcType=VARCHAR},
+          		#{p_char3,mode=IN,jdbcType=VARCHAR},
+          		#{p_char4,mode=IN,jdbcType=VARCHAR},
+          		#{p_char5,mode=IN,jdbcType=VARCHAR},
+          		#{p_pcxfz,mode=OUT,jdbcType=DOUBLE},
+          		#{p_result,mode=OUT,jdbcType=VARCHAR},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    		]]>
+	</select>
+	<!-- 对于应当听取辩护律师的意见 -->
+	<select id="check016" parameterType="java.util.Map"
+		statementType="CALLABLE">
+			<![CDATA[  
+        	{call PKG_KHZB.proc_zj_check016(
+        		#{p_bmsah,mode=IN,jdbcType=VARCHAR},
+        		#{p_pclbbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxmc,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxzf,mode=IN,jdbcType=VARCHAR},
+          		#{p_mxkf,mode=IN,jdbcType=VARCHAR},
+          		#{p_char1,mode=IN,jdbcType=VARCHAR},
+          		#{p_char2,mode=IN,jdbcType=VARCHAR},
+          		#{p_char3,mode=IN,jdbcType=VARCHAR},
+          		#{p_char4,mode=IN,jdbcType=VARCHAR},
+          		#{p_char5,mode=IN,jdbcType=VARCHAR},
+          		#{p_pcxfz,mode=OUT,jdbcType=DOUBLE},
+          		#{p_result,mode=OUT,jdbcType=VARCHAR},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    		]]>
+	</select>
+	<!-- 案件审查完毕 -->
+	<select id="check017" parameterType="java.util.Map"
+		statementType="CALLABLE">
+			<![CDATA[  
+        	{call PKG_KHZB.proc_zj_check017(
+        		#{p_bmsah,mode=IN,jdbcType=VARCHAR},
+        		#{p_pclbbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxmc,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxzf,mode=IN,jdbcType=VARCHAR},
+          		#{p_mxkf,mode=IN,jdbcType=VARCHAR},
+          		#{p_char1,mode=IN,jdbcType=VARCHAR},
+          		#{p_char2,mode=IN,jdbcType=VARCHAR},
+          		#{p_char3,mode=IN,jdbcType=VARCHAR},
+          		#{p_char4,mode=IN,jdbcType=VARCHAR},
+          		#{p_char5,mode=IN,jdbcType=VARCHAR},
+          		#{p_pcxfz,mode=OUT,jdbcType=DOUBLE},
+          		#{p_result,mode=OUT,jdbcType=VARCHAR},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    		]]>
+	</select>
+	<!-- 审查终结未制作《批准逮捕决定书》 -->
+	<select id="check021" parameterType="java.util.Map"
+		statementType="CALLABLE">
+			<![CDATA[  
+        	{call PKG_KHZB.proc_zj_check021(
+        		#{p_bmsah,mode=IN,jdbcType=VARCHAR},
+        		#{p_pclbbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxmc,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxzf,mode=IN,jdbcType=VARCHAR},
+          		#{p_mxkf,mode=IN,jdbcType=VARCHAR},
+          		#{p_char1,mode=IN,jdbcType=VARCHAR},
+          		#{p_char2,mode=IN,jdbcType=VARCHAR},
+          		#{p_char3,mode=IN,jdbcType=VARCHAR},
+          		#{p_char4,mode=IN,jdbcType=VARCHAR},
+          		#{p_char5,mode=IN,jdbcType=VARCHAR},
+          		#{p_pcxfz,mode=OUT,jdbcType=DOUBLE},
+          		#{p_result,mode=OUT,jdbcType=VARCHAR},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    		]]>
+	</select>
+	<!-- 批准（不批准）逮捕案件 -->
+	<select id="check023" parameterType="java.util.Map"
+		statementType="CALLABLE">
+			<![CDATA[  
+        	{call PKG_KHZB.proc_zj_check023(
+        		#{p_bmsah,mode=IN,jdbcType=VARCHAR},
+        		#{p_pclbbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxmc,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxzf,mode=IN,jdbcType=VARCHAR},
+          		#{p_mxkf,mode=IN,jdbcType=VARCHAR},
+          		#{p_char1,mode=IN,jdbcType=VARCHAR},
+          		#{p_char2,mode=IN,jdbcType=VARCHAR},
+          		#{p_char3,mode=IN,jdbcType=VARCHAR},
+          		#{p_char4,mode=IN,jdbcType=VARCHAR},
+          		#{p_char5,mode=IN,jdbcType=VARCHAR},
+          		#{p_pcxfz,mode=OUT,jdbcType=DOUBLE},
+          		#{p_result,mode=OUT,jdbcType=VARCHAR},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    		]]>
+	</select>
+	<!-- 应当立案而未立案的 -->
+	<select id="check024" parameterType="java.util.Map"
+		statementType="CALLABLE">
+			<![CDATA[  
+        	{call PKG_KHZB.proc_zj_check024(
+        		#{p_bmsah,mode=IN,jdbcType=VARCHAR},
+        		#{p_pclbbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxmc,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxzf,mode=IN,jdbcType=VARCHAR},
+          		#{p_mxkf,mode=IN,jdbcType=VARCHAR},
+          		#{p_char1,mode=IN,jdbcType=VARCHAR},
+          		#{p_char2,mode=IN,jdbcType=VARCHAR},
+          		#{p_char3,mode=IN,jdbcType=VARCHAR},
+          		#{p_char4,mode=IN,jdbcType=VARCHAR},
+          		#{p_char5,mode=IN,jdbcType=VARCHAR},
+          		#{p_pcxfz,mode=OUT,jdbcType=DOUBLE},
+          		#{p_result,mode=OUT,jdbcType=VARCHAR},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    		]]>
+	</select>
+	<!-- 不应当立案而立案的 -->
+	<select id="check025" parameterType="java.util.Map"
+		statementType="CALLABLE">
+			<![CDATA[  
+        	{call PKG_KHZB.proc_zj_check025(
+        		#{p_bmsah,mode=IN,jdbcType=VARCHAR},
+        		#{p_pclbbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxmc,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxzf,mode=IN,jdbcType=VARCHAR},
+          		#{p_mxkf,mode=IN,jdbcType=VARCHAR},
+          		#{p_char1,mode=IN,jdbcType=VARCHAR},
+          		#{p_char2,mode=IN,jdbcType=VARCHAR},
+          		#{p_char3,mode=IN,jdbcType=VARCHAR},
+          		#{p_char4,mode=IN,jdbcType=VARCHAR},
+          		#{p_char5,mode=IN,jdbcType=VARCHAR},
+          		#{p_pcxfz,mode=OUT,jdbcType=DOUBLE},
+          		#{p_result,mode=OUT,jdbcType=VARCHAR},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    		]]>
+	</select>
+
+	<!-- 对于不批准逮捕案件 -->
+	<select id="check028" parameterType="java.util.Map"
+		statementType="CALLABLE">
+			<![CDATA[  
+        	{call PKG_KHZB.proc_zj_check028(
+        		#{p_bmsah,mode=IN,jdbcType=VARCHAR},
+        		#{p_pclbbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxmc,mode=IN,jdbcType=VARCHAR},
+        		#{p_pcxzf,mode=IN,jdbcType=VARCHAR},
+          		#{p_mxkf,mode=IN,jdbcType=VARCHAR},
+          		#{p_char1,mode=IN,jdbcType=VARCHAR},
+          		#{p_char2,mode=IN,jdbcType=VARCHAR},
+          		#{p_char3,mode=IN,jdbcType=VARCHAR},
+          		#{p_char4,mode=IN,jdbcType=VARCHAR},
+          		#{p_char5,mode=IN,jdbcType=VARCHAR},
+          		#{p_pcxfz,mode=OUT,jdbcType=DOUBLE},
+          		#{p_result,mode=OUT,jdbcType=VARCHAR},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    		]]>
+	</select>
+</mapper>

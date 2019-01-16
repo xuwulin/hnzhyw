@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>待办</title>
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/bootstrap/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/dwywzg.css">
+    <script src="../../js/plugin/easyui/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/constant.js"></script>
+</head>
+<style>
+.textbox{
+   margin: 20px 10px 0 20px;
+}
+.textbox-text{
+   padding:0px !important;
+   text-indent: 10px;
+}
+
+</style>
+<body style="background: #efeef4;margin: 0 auto;padding: 0;font-family: 微软雅黑 ">
+
+<div class="entertain">
+	<div class="title_logo">
+		<div style="border: 0.5px solid #c1c1c1; margin-top: 22px; width: 390px; float: left"></div>
+		<div style="float: left;">
+        <div style="width: 46px; height: 46px; margin-left: 34px; background: url('../../image/cx.png') no-repeat; float: left">
+           <img src="../../image/cx.png">
+        </div>
+        <div style="font-size: 24px; color: #333; margin-left: 22px; line-height: 46px;; float: left;">业务处理</div>
+		</div>
+		<div style="border: 0.5px solid #c1c1c1; margin-top: 22px; width: 390px; float: left; margin-left: 34px"></div>
+	</div>
+    <div class="entertain_center">  
+		<div class="">
+			<select id="dbselect"  style="width:200px;height:32px;padding:0;margin: 20px 10px 0 20px;">
+			    <option value="1">待办业务</option>   
+			    <option value="0">已办业务</option>    
+			</select>
+		   <span>
+		       <p style="line-height: 39px">业务名称</p>
+		   </span>
+			<input id="dbywclnr" type="text">
+			<button onclick="search();" style="color: #fff;
+			background: #0575d2;
+			height: 32px;
+			width: 80px;
+			margin: 20px;
+			border-radius: 5px;
+			border: 1px solid #0575d2;" class="btn_r">查询</button>
+		</div>
+    </div>
+    <div class="entertain_foot" >
+        <div id="entertain_footid"></div>
+        <div class="entertain_foot_foot">
+            <div class="r_page">
+                <a id="syid" class="ju_btn_white" style="width: 45px">首页</a>
+                <a id="shangyyid" class="ju_btn_white ">上一页</a>
+                <a id="xiayiid" class="ju_btn_white ">下一页</a>
+                <a id="zhyid" class="ju_btn_white" style="width: 50px">最后页</a>
+            </div>
+            <div>
+            	<span id ="pagemsg" style="line-height:30px;margin-left:10px;"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/zhyw/dwywzg.js"></script>
+</body>
+</html>

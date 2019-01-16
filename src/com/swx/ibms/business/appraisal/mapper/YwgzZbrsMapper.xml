@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:对应的mapper文件包名 -->
+<mapper namespace="com.swx.ibms.business.appraisal.mapper.YwgzZbrsMapper">
+	<!-- 在编人数配置mapper，对在编人数实现CRUD -->
+	<!-- 
+		在编人数的结果集  id：结果集名称   type:实体类名称  
+		property:实体类属性名      column：数据库对应列的字段名
+		javaType:数据库列的字段所对应的java中的数据类型
+	-->
+	<resultMap id="ywgzZbrsMap" type="com.swx.ibms.business.appraisal.bean.YwgzZbrs">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="bmbm" column="bmbm" javaType="java.lang.String"></result>
+		<result property="zbrs" column="zbrs" javaType="java.lang.String"></result>
+		<result property="year" column="year" javaType="java.lang.String"></result>
+		<result property="createTime" column="createtime" javaType="java.util.Date"></result>
+		<result property="dwmc" column="dwmc" javaType="java.lang.String"></result>
+	</resultMap>
+                  
+	<!-- 分页查询全部在编人数信息 -->
+	<select id="zbrsSelectPageList" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_YWGZ_ZBRS.pro_zbrsSelectPageList( 
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_start,mode=IN,jdbcType=VARCHAR},
+  		    #{p_end,mode=IN,jdbcType=VARCHAR},
+  		    #{p_total,mode=OUT,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ywgzZbrsMap}
+  		)} 
+  		]]>
+	</select>
+	
+	<!-- 通过在编人数id查询在编人数信息 -->
+	<select id="zbrsSelectById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_YWGZ_ZBRS.pro_zbrsSelectById( 
+  		    #{p_id,mode=IN,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ywgzZbrsMap}
+  		)} 
+  		]]>
+	</select>
+	
+	<!-- 新增在编人数信息 -->
+	<insert id="zbrsInsertData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWGZ_ZBRS.pro_zbrsInsertData(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_zbrs,mode=IN,jdbcType=VARCHAR},
+          		#{p_year,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</insert>
+	
+	<!-- 根据在编人数id修改在编人数的状态 -->
+	<update id="zbrsUpdateData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWGZ_ZBRS.pro_zbrsUpdateData(
+          		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_zbrs,mode=IN,jdbcType=VARCHAR},
+          		#{p_year,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+	
+	
+	<!-- 根据在编人数id删除在编人数信息 -->
+	<delete id="zbrsDeleteData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWGZ_ZBRS.pro_zbrsDeleteData(
+          		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</delete>
+	
+</mapper>

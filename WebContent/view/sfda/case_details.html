@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>司法档案-案件详情页面</title>
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/bootstrap/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/case_detail.css "/>
+    <!--EasyUI样式重写-->
+    <link rel="stylesheet" type="text/css" href="../../css/easyui-overwrite.css">
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.easyui.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/common.js"></script>
+	<script type="text/javascript" src="../../js/zhyw/utils/constant.js"></script>
+    <style>
+        .datagrid-row-selected{
+            background: #EBF9F7;
+            color: #333;
+        }
+    </style>
+    
+</head>
+<body class="thenewfile_body">
+<div class="thenewfile">
+    <div class="title_url">
+    <span class="dagztitle" style="float: left; color:#666; line-height: 50px;font-size:18px;font-family:微软雅黑;"></span>
+        <button class="thenewfile_fhan" id = "closeWindow">
+            返回
+        </button>
+    </div>
+    <div class="content">
+        <div class="content1">
+            <div class="content1_tit">
+                <div >
+                	<span>案件信息</span>
+                </div>
+            </div>
+             <div class="ajxq">
+                <table cellpadding="0" cellspacing="0" style='width: 100%;border-top: none;'>
+                    <tr>
+                        <td>案件名称</td>
+                        <td id="ajmc"></td>
+                        <td>案件类别</td>
+                        <td id="ajlb"></td>
+                    </tr>
+                    <tr>
+                        <td>承办单位</td>
+                        <td id="cbdw"></td>
+                        <td style="border-bottom: 1px solid #ccc">受理日期</td>
+                        <td id="slrq" style="border-bottom: 1px solid #ccc"></td>
+                    </tr>
+                    <tr>
+                        <!--<td>办理开始日期</td>
+                        <td id="blksrq"></td>-->
+                        <td>完成/办结日期</td>
+                        <td id="bjrq" style="border-right: 1px solid #ccc"></td>
+                    </tr>
+                    <tr>
+                        <td>办结情况</td>
+                        <td id="bjqk" colspan="3"></td>
+                    </tr>
+                    <tr style="display: none">
+                        <td>承办人意见</td>
+                        <td id="cbryj" colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>案情摘要</td>
+                        <td id="aqzy" colspan="3"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="content2">
+            <div class="content1_tit">
+                <div >
+                    <span>办案人员信息</span>
+                </div>
+            </div>
+            <div class="baryxq">
+				<table id = "dg_baryxq">
+				</table>				                
+            </div>
+        </div>
+        <div class="content2">
+            <div class="content1_tit">
+                <div >
+                    <span>嫌疑人信息</span>
+                </div>
+            </div>
+            <div class="xyrxq">
+				<table id = "dg_xyrxq">
+				</table>				                
+            </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" src="../../js/zhyw/sfda/case_details.js"></script>
+</body>
+</html>

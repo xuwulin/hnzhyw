@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:对应的mapper文件包名 -->
+<mapper namespace="com.swx.ibms.business.rbac.mapper.RoleMapper">
+	<!-- 角色配置mapper，对角色配置实现CRUD -->
+	
+	<!-- 
+		角色配置的结果集  id：结果集名称   type:实体类名称  
+		property:实体类属性名      column：数据库对应列的字段名
+		javaType:数据库列的字段所对应的java中的数据类型
+		
+		重要字段名:jsbm: 角色编码         
+				bmbm: 部门编码 
+				dwbm: 单位编码 
+				jsmc: 角色名称               
+				jsxh: 角色序号    
+				spjsbm:统一业务对应角色编码表的字段，审批角色编码
+				description: 角色描述
+				xtRoleMap：系统角色map
+	-->
+	
+	<resultMap id="xtRoleMap" type="com.swx.ibms.business.rbac.bean.JSBM">
+		<result property="jsbm" column="jsbm" javaType="java.lang.String"></result>
+		<result property="bmbm" column="bmbm" javaType="java.lang.String"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="jsmc" column="jsmc" javaType="java.lang.String"></result>
+		<result property="jsxh" column="jsxh" javaType="java.lang.Integer"></result>
+		<result property="spjsbm" column="spjsbm" javaType="java.lang.String"></result>
+		<result property="bmmc" column="bmmc" javaType="java.lang.String"></result>
+		<result property="description" column="description" javaType="java.lang.String"></result>
+		<result property="type" column="type" javaType="java.lang.String"></result>
+		<result property="sfsc" column="sfsc" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<!-- 根据统一业务-综合业务联合查询此单位编码查询此单位下的所有角色信息  -->
+	<!-- <select id="selectList" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_ROlE.pro_selectList( 
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=xtRoleMap}
+  		)} 
+  		]]>
+	</select> --> 
+	
+	
+	<!-- 查询综合业务中此单位下的所有角色信息 -->
+	<select id="selectPageList" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_ROlE.pro_selectPageList( 
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_sfsc,mode=IN,jdbcType=VARCHAR},
+  		    #{p_start,mode=IN,jdbcType=INTEGER},
+  		    #{p_end,mode=IN,jdbcType=INTEGER},
+  		    #{p_total,mode=OUT,jdbcType=INTEGER},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=xtRoleMap}
+  		)} 
+  		]]>
+	</select>
+	
+	<!-- 查询综合业务中此单位下部门中的所有角色信息 -->
+	<select id="selectZhywRoleList" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_ROlE.pro_selectZhywRoleList( 
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_bmbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_sfsc,mode=IN,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=xtRoleMap}
+  		)} 
+  		]]>
+	</select>
+	
+	
+	<!-- 新增某单位下的角色记录 -->
+	<insert id="insertData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_ROlE.pro_insertData(
+          		#{p_jsbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_jsmc,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_jsxh,mode=IN,jdbcType=INTEGER},
+          		#{p_spjsbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_description,mode=IN,jdbcType=VARCHAR},
+          		#{p_sfsc,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</insert>
+	
+	
+	<!-- 修改某单位下的角色记录 -->
+	<update id="updateData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_ROlE.pro_updateData(
+          		#{p_jsbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_jsmc,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_jsxh,mode=IN,jdbcType=INTEGER},
+          		#{p_spjsbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_description,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+	
+	<!-- 删除某单位下的角色记录 -->
+	<delete id="deleteData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_ROlE.pro_deleteData(
+          		#{p_jsbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_sfsc,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</delete>
+	
+</mapper>

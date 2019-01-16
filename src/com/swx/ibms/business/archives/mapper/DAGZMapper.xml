@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.archives.mapper.DAGZMapper">
+
+	<!-- 自定义返回结果集 -->
+	<resultMap id="DAGZMap" type="DAGZ">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="ssr" column="ssr" javaType="java.lang.String"></result>
+		<result property="tjnf" column="tjnf" javaType="java.lang.String"></result>
+		<result property="cjr" column="cjr" javaType="java.lang.String"></result>
+		<result property="cjsj" column="cjsj" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<resultMap id="DASSRMap" type="DASSR">
+		<result property="dwmc" column="dwmc" javaType="java.lang.String"></result>
+		<result property="bmmc" column="bmmc" javaType="java.lang.String"></result>
+		<result property="mc" column="mc" javaType="java.lang.String"></result>
+		<result property="jsmc" column="jsmc" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<!--通过归档id判断splcsl里面是否有待审批-->
+	<select id="sfyDsp" parameterType="java.util.Map" statementType="CALLABLE">
+	<![CDATA[  
+        {call pkg_zhyw_sfda.sfy_dsp(#{p_spstid,mode=IN,jdbcType=VARCHAR}, 
+        #{y,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]>
+	</select>
+
+	<!--通过审批实体id和审批类型查出yx_sfda_splcsl数据-->
+	<select id="showSplcsl" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+	        {call pkg_zhyw_sfda.show_splcsl(
+		        #{p_spstid,mode=IN,jdbcType=VARCHAR},
+		        #{p_splx,mode=IN,jdbcType=VARCHAR},
+		        #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=SplcslMap}
+	         )}
+	        ]]>
+	</select>
+
+	<select id="ssrDagzCount" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+			{call pkg_zhyw_sfda.ssr_dagz_count(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+			#{p_gh,mode=IN,jdbcType=VARCHAR},
+			#{p_sffc,mode=IN,jdbcType=VARCHAR},
+			#{p_count,mode=OUT,jdbcType=INTEGER}
+			 )}
+			]]>
+	</select>
+
+    <delete id="deleteDagz" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+			{call pkg_zhyw_sfda.delete_dagz(#{p_id,mode=IN,jdbcType=VARCHAR}
+			 )}
+			]]>
+	</delete>
+
+	 <delete id="deleteDaDalx" parameterType="java.util.Map" statementType="CALLABLE">
+	<![CDATA[  
+        {call pkg_zhyw_sfda.delete_da_dalx(#{p_gdid,mode=IN,jdbcType=VARCHAR}
+         )}
+        ]]>
+	</delete>
+
+	<select id="sfBazlCount" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+			{call pkg_zhyw_sfda.sf_bazl_count(#{p_bmsah,mode=IN,jdbcType=VARCHAR},
+								 #{p_count,mode=OUT,jdbcType=INTEGER}
+			 )}
+			]]>
+	</select>
+
+	<select id="sfDaCount" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+			{call pkg_zhyw_sfda.sf_da_count(#{p_gdid,mode=IN,jdbcType=VARCHAR},
+								 #{p_dalx,mode=IN,jdbcType=VARCHAR},
+								 #{p_count,mode=OUT,jdbcType=INTEGER}
+			 )}
+			]]>
+	</select>
+
+	<select id="spstidCount" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+			{call pkg_sp.spstid_count(#{p_spstid,mode=IN,jdbcType=VARCHAR},
+								 #{p_splx,mode=IN,jdbcType=VARCHAR},
+								 #{p_count,mode=OUT,jdbcType=INTEGER}
+			 )}
+			]]>
+	</select>
+
+	<insert id="insertDAGZData" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[  
+        {call pkg_zhyw_sfda.insertDAGZData(#{ssr,mode=IN,jdbcType=VARCHAR}, 
+                             #{ssrdwbm,mode=IN,jdbcType=VARCHAR}, 
+                             #{tjnf,mode=IN,jdbcType=VARCHAR},
+                             #{kssj,mode=IN,jdbcType=VARCHAR},
+                             #{jssj,mode=IN,jdbcType=VARCHAR},
+                             #{cjr ,mode=IN,jdbcType=VARCHAR},
+                             #{cjrdwbm,mode=IN,jdbcType=VARCHAR},
+                             #{Y ,mode=OUT,jdbcType=VARCHAR}             
+         )}
+        ]]>
+	</insert>
+
+	<select id="sFYZJ" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+			{call pkg_select.select_dasl_by_gh_dwbm(#{dwbm,mode=IN,jdbcType=CHAR},
+								 #{gh,mode=IN,jdbcType=CHAR},
+								 #{Y ,mode=OUT,jdbcType=VARCHAR}
+			 )}
+			]]>
+	</select>
+
+	<select id="sFYZJNF" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+			{call pkg_select.select_dasl_by_gh_dwbm_tjnf(
+								 #{dwbm,mode=IN,jdbcType=CHAR},
+								 #{gh,mode=IN,jdbcType=CHAR},
+								 #{kssj,mode=IN,jdbcType=VARCHAR},
+								 #{jssj,mode=IN,jdbcType=VARCHAR},
+								 #{Y ,mode=OUT,jdbcType=VARCHAR}
+			 )}
+			]]>
+	</select>
+
+</mapper>

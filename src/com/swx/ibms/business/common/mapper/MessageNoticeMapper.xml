@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:对应的mapper文件包名 -->
+<mapper namespace="com.swx.ibms.business.common.mapper.MessageNoticeMapper">
+	<!-- 消息配置mapper，对消息实现CRUD -->
+	<!-- 
+		消息的结果集  id：结果集名称   type:实体类名称  
+		property:实体类属性名      column：数据库对应列的字段名
+		javaType:数据库列的字段所对应的java中的数据类型
+		
+		重要字段名:java ==== database
+				id === id === 消息通知id
+				dwbm === dwbm === 单位编码
+				bmbm === bmbm === 部门编码 
+				gh === gh === 工号
+				name === name === 消息名称
+				content === content === 消息内容
+				type === type === 消息类型（保留字段以防后面要用）
+				operator === operator ===  操作人
+				operatorTime === operatorTime === 操作时间
+				status === status === 操作状态:1 未查看 2 已查看 3 其他
+	-->
+	<resultMap id="msgNoticeMap" type="com.swx.ibms.business.common.bean.MessageNotice">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="bmbm" column="bmbm" javaType="java.lang.String"></result>
+		<result property="gh" column="gh" javaType="java.lang.String"></result>
+		<result property="name" column="name" javaType="java.lang.String"></result>
+		<result property="content" column="content" javaType="java.lang.String"></result>
+		<result property="type" column="type" javaType="java.lang.String"></result>
+		<result property="operator" column="operator" javaType="java.lang.String"></result>
+		<result property="operateTime" column="operate_time" javaType="java.util.Date"></result>
+		<result property="status" column="status" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<!-- 根据消息内容或者状态，查询全部通知消息并分页 -->
+	<select id="selectListPage" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_XX_NOTICE.pro_selectListPage( 
+  		    #{p_content,mode=IN,jdbcType=VARCHAR},
+  		    #{p_ststus,mode=IN,jdbcType=VARCHAR},
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_gh,mode=IN,jdbcType=VARCHAR},
+  		    #{p_start,mode=IN,jdbcType=INTEGER},
+  		    #{p_end,mode=IN,jdbcType=INTEGER},
+  		    #{p_total,mode=OUT,jdbcType=INTEGER},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=msgNoticeMap}
+  		)} 
+  		]]>
+	</select>
+	
+	
+	<!-- 新增消息通知信息 -->
+	<insert id="insertData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_XX_NOTICE.pro_insertData(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},
+          		#{p_name,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_content,mode=IN,jdbcType=VARCHAR},
+          		#{p_type,mode=IN,jdbcType=VARCHAR},
+          		#{p_operator,mode=IN,jdbcType=VARCHAR},
+          		#{p_id,mode=OUT,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</insert>
+	
+	
+	<!-- 根据消息通知id修改消息通知的状态 -->
+	<update id="updateDataStatus" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_XX_NOTICE.pro_updateDataStatus(
+          		#{p_id,mode=IN,jdbcType=VARCHAR},  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+	
+</mapper>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>业务工作考核-总览界面-右边对应的左边LI标签界面</title>
+    <link rel="stylesheet" type="text/css" href="../../css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/icon.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/ywgzkh_zcjdgz.css"/>
+    <link rel="stylesheet" href="../../css/zTreeStyle/ztreedemo.css" type="text/css"/>
+    <link rel="stylesheet" href="../../css/zTreeStyle/zTreeStyle.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/bounced.css"/>
+
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/echarts.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/plugin/echarts-all.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/constant.js"></script>
+    <script src="../../js/zhyw/utils/base64.js"></script>
+</head>
+<style>
+    .logo_sp2 {
+        width: 90px;
+        height: 32px;
+        background-color: #fff;
+        border-radius: 5px;
+        outline: none;
+        border: 1px solid #ccc;
+        color: #444;
+        /*margin: 0 0 0 10px;*/
+        cursor: pointer;
+    }
+
+    .logo_sp3 {
+        width: 60px;
+        height: 32px;
+        background-color: #d6d7ad;
+        border-radius: 5px;
+        outline: none;
+        border: 1px solid #d0c9ad;
+        color: #e25715;;
+        margin: 0 0 0 10px;
+        cursor: pointer;
+    }
+</style>
+<body>
+<div class="right_com">
+    <div class="top">
+        <div class="top_logo">
+            <img src="../../image/icon_tb.png"
+                 style="float: left; margin: 15px 10px 0 0;">
+            <span style="float: left; line-height: 50px;" id="ywkhzbTitle"></span>
+            <!-- <button class="logo_sp">发起考核审批</button> -->
+            <!-- <button class="logo_bc">保存</button> -->
+            <button class="logo_sp" id="ywgzYysq" onclick="bounced_yysq();" style="display:none">异议申请</button>
+            <button class="logo_sp" id="openYwlxkh" onclick="openBouncedGs();" style="display: none">公示</button>
+            <!-- <button class="logo_sp" id="fqkhsp" onclick="bounced_khsp()" style="display:none;">发起考核审批</button> -->
+            <!-- <button class="logo_sp" id="sureKhr" onclick="bounced_spr()" style="display:none;">指定考核人</button> -->
+            <!-- <button class="logo_bc" onclick="jspjdf('460100','2017','13');" style="display:none;">计算评价得分</button> -->
+        </div>
+        <div class="top_com">
+            <div class="top_con">
+                <div class="con_s">
+                    <div class="con_top">
+                        <span id="ywkhjcf" class="con_jc">基础分</span>
+                        <button id="jcfz" class="con_jcf">0分</button>
+                    </div>
+                    <div style="height: 300px; width: 400px;margin: auto;">
+                        <div id="main1" style="height: 100%; width: 100%;margin: auto;"></div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="top_con">
+                <div class="con_s">
+                    <div class="con_top">
+                        <span id="ywkhpjf" class="con_jc">评价分</span>
+                        <button id="pjfz" class="con_jcf">0分</button>
+                    </div>
+                    <div style="height: 300px; width: 400px;">
+                        <div id="main2" style="height: 100%; width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="conter">
+        <table id="dg" class="tab_le" data-options="nowrap:false"></table>
+        <div>
+            <button id="i_button" onclick="updateYwlxkhfz()" style="cursor: pointer;display:none;" class="but_last">确认
+            </button>
+            <button id="i_button_rjbas" onclick="updateYwlxkhRjbafz()" style="cursor: pointer;display:none;"
+                    class="but_last">确认
+            </button>
+
+            <input type="hidden" id="rjbasfzJson" name="rjbasfzJson"><!-- 人均办案数分值的json -->
+            <input type="hidden" id="rjbasZjcf" name="rjbasZjcf"><!-- 人均办案数的总基础分 -->
+            <input type="hidden" id="rjbasZpjf" name="rjbasZpjf"><!-- 人均办案数的总评价分 -->
+            <input type="hidden" id="rjbasKhf" name="rjbasKhf"><!-- 人均办案数的考核分 -->
+        </div>
+    </div>
+</div>
+<!-- 评分材料 -->
+<div id="bz" class="bounced" style="display: none">
+    <div class="bounced_all">
+        <form id="sfjnform" method='post'>
+            <div class="bounced_tot">
+                <span id="sfjntitle">查看备注</span>
+                <div class="tot_img" onclick="closeClDetail()"></div>
+            </div>
+            <div style="margin: 0 auto; margin-top: 20px; width: 444px;">
+                <div>
+                    <p style="margin-bottom: 10px;">评分理由:</p>
+                    <textarea id="bztext"
+                              style="resize: none; width: 400px; height: 120px;"></textarea>
+                </div>
+                <div id="fjshow"></div>
+            </div>
+        </form>
+
+        <form id="upfileform" method="post" enctype="multipart/form-data"
+              style="float: left; width: 300px;">
+            <div id="upload" style='margin-top: 10px; margin-left: 28px;'>
+                <input buttonText="选择文件" id="upfileinput"
+                       style='width: 265px; height: 30px;' name="file"
+                       placeholder='未选择文件' class="easyui-filebox"/>
+            </div>
+        </form>
+        <button id="upfilebutton" onclick="uploadfile()" class="btn_scwj">上传文件</button>
+
+        <div class="bot_btn">
+            <button id="qxButton1" onclick="closeClDetail()" class="bot_btn_2">取消</button>
+            <button id="qdButton1" onclick="closeClDetail()" class="bot_btn_1">确定</button>
+            <button id="bcButton1" onclick="setbz()" class="bot_btn_1">保存</button>
+
+        </div>
+    </div>
+</div>
+
+<!-- 案件分值div -->
+<div id="ywkh_ajcx_div" style="display:none;">
+	<div id="ywkh_ajcx_table"></div>
+</div>
+
+
+<!-- 指定考核人弹窗  -->
+<div class="zdspr_bounced" style="display: none;">
+    <div class="bounced_all" style="width:540px;">
+        <div class="bounced_tot">
+            <span>指定考核人</span>
+            <div class="tot_img" onclick="bounced_spl()"></div>
+        </div>
+        <!-- 添加 -->
+        <div class="xiadivbt1" style="margin-top: 40px;">
+            <span style=" height:28px; color: #333; font-size: 14px;margin-left: 45px;">当前考核项名称:</span>
+            <input type="text" id="ywkhmc" name="ywkhmc" style="width: 320px; height: 32px; line-height: 32px;"/>
+        </div>
+        <div class="xiadivbt1" style="margin-top: 40px;">
+            <span style=" height:28px; color: #333; font-size: 14px;margin-left: 45px;">单位名称(只读):</span>
+            <input type="text" id="ywkhxDwbm" name="ywkhxDwbm" readonly
+                   style="width: 320px; height: 32px; line-height: 32px;"/>
+        </div>
+        <div class="xiadivbt1">
+            <span style="color:#333;font-size:14px;margin-left:40px;">指定考核人员:</span>
+            <div style="height:32px; position:relative; width:348px;border:1px solid #c1c1c1; border-radius: 4px; float: right;margin-right:45px;background: #ebebe4;">
+                <input type="text" id="xzYwkhSpr" data-options="lines:true" name="lbSelect"
+                       style="width: 320px; height: 32px; line-height: 32px; border: none; margin-left: 5px; outline: none;"
+                       disabled="disabled"/>
+                <a id="menuYwgzkhBtn" href="#" onclick="showYwgzkhMenu();" class="a_style"
+                   style="background: url('../../js/plugin/easyui/themes/bootstrap/images/combo_arrow.png') no-repeat center center; background-color: #F2F2F2"></a>
+                <div id="menuYwgzkhContent" class="menuContent" style="display: none; position: absolute;">
+                    <ul id="treeYwgzkhDemo" class="ztree"
+                        style="width: 338px; background-color: #fff;margin-top: 2px;"></ul>
+                </div>
+            </div>
+        </div>
+        <div class="xiadivbt">
+            <input class="xiadivbt_1" type="button" onclick="bounced_spl();" value="取消"/>
+            <input class="xiadivbt_2" type="button" onclick="addYwgzkhSpr();" value="确定"/>
+        </div>
+    </div>
+</div>
+
+<!-- 公示的弹窗 -->
+<div class="gs_bounced" style="display: none;">
+    <div class="bounced_all" style="width:500px;">
+        <div class="bounced_tot">
+            <span>公示</span>
+            <div class="tot_img" onclick="bounced_gs();"></div>
+        </div>
+        <!-- 添加 -->
+        <div class="xiadivbt1" style="margin-top: 40px;">
+            <span style=" height:28px; color: #333; font-size: 14px;margin-left: 45px;">公示考核项名称:</span>
+            <input type="text" id="gskhmc" name="gskhmc" readonly
+                   style="width: 320px; height: 32px; line-height: 32px;border:0px;"/>
+        </div>
+        <div class="xiadivbt1" style="margin-top: 40px;">
+            <span style=" height:28px; color: #333; font-size: 14px;margin-left: 45px;">单位名称(只读):</span>
+            <input type="text" id="gsDwmc" name="gsDwmc" readonly
+                   style="width: 320px; height: 32px; line-height: 32px;border:0px;"/>
+        </div>
+        <div class="xiadivbt">
+            <input class="xiadivbt_1" type="button" onclick="bounced_gs();" value="取消"/>
+            <input class="xiadivbt_2" type="button" onclick="modifyKhlxZt();" value="确定"/>
+        </div>
+    </div>
+</div>
+
+
+<!-- 异议申请弹框 -->
+<div class="yysq_bounced" style="display: none;">
+    <div class="bounced_all" id="ywgzkh_bounced_all" style="height:520px;margin-top: 80px;">
+        <div class="bounced_tot">
+            <span>异议申请</span>
+            <div class="tot_img" onclick="bounced_yyss()"></div>
+        </div>
+        <div class="xiadivbt1" style="margin-top: 40px;margin-left: 45px;">
+            <span class="left_rig"><p style="float:left;">检察院&nbsp;:&nbsp;&nbsp;</p></span>
+            <span class="left_rig" style="width:300px;" id="yysqAgDwmc"></span>
+        </div>
+        <div class="xiadivbt1" style="margin-top:0px;margin-left: 45px;">
+            <span class="left_rig"><p style="float:left;">部门&nbsp;:&nbsp;&nbsp;</p></span>
+            <span class="left_rig" id="yysqAgBmmc"></span>
+        </div>
+        <div class="xiadivbt1" style="margin-top:0px;margin-left: 45px;">
+            <span class="left_rig"><p style="float:left;">申请人&nbsp;:&nbsp;&nbsp;</p></span>
+            <span class="left_rig" id="yysqAgMc"></span>
+        </div>
+        <div class="xiadivbt1" style="margin-top:0px;margin-left: 45px;">
+            <span class="left_rig"><p style="float:left;">异议项名称&nbsp;:&nbsp;&nbsp;</p></span>
+            <span class="left_rig" id="yysqZbxmc"></span>
+        </div>
+        <!--<div class="xiadivbt1" style="margin-top:0px;margin-left: 45px;">-->
+        <!--<span class="left_rig"><p style="float:left;">分管领导&nbsp;:&nbsp;&nbsp;</p></span>-->
+        <!--<input type="text" id="yysqKhr" name="yysqKhr" style=" height:28px; color: #333;"/>-->
+        <!--</div>-->
+        <!--<div style="margin-top:0px;margin-left: 45px;">-->
+        <!--<span class="left_rig"><p style="float:left;">异议说明&nbsp;:&nbsp;&nbsp;</p></span>-->
+        <!--<textarea id="yysqAgSm" rows="" cols="" style="width:338px;height:130px;resize: none;"></textarea>-->
+        <!--</div>-->
+
+        <iframe id="ajaxUpload" name="ajaxUpload" style="display:none"></iframe>
+        <form method="post" id="Email_form" target="ajaxUpload"
+              enctype="multipart/form-data">
+            <div id="myfiles">
+
+                <input type="hidden" id="ywlxkhId" name="ywlxkhId"/>
+                <input type="hidden" id="yyrgh" name="yyrgh"/>
+                <input type="hidden" id="yyrmc" name="yyrmc"/>
+                <input type="hidden" id="yysprgh" name="yysprgh"/>
+                <input type="hidden" id="yysprmc" name="yysprmc"/>
+                <div class="xiadivbt1" style="margin-top:0px;margin-left: 45px;">
+                    <span class="left_rig"><p style="float:left;">分管领导&nbsp;:&nbsp;&nbsp;</p></span>
+                    <input type="text" id="yysqKhr" style=" height:28px; color: #333;"/>
+                </div>
+                <div style="margin-top:0px;margin-left: 45px;">
+                    <span class="left_rig"><p style="float:left;">异议说明&nbsp;:&nbsp;&nbsp;</p></span>
+                    <textarea id="yysqAgSm" name="yysqAgSm" rows="" cols=""
+                              style="width:338px;height:130px;resize: none;"></textarea>
+                </div>
+
+
+                <div style="margin-left: 16px;margin-top: 5px;">
+                    <input type="button"  onclick="addYyFile()" class="logo_sp2" value="上传附件"/>
+
+                    <div id="fileDiv" style="float: right; width: 300px;margin-right: 80px">
+                        <div>
+                            <input buttonText="选择文件" name="files" id="file0" style='width: 265px; height: 30px;' class="easyui-filebox"/>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </form>
+
+
+
+        <div class="xiadivbt">
+            <input class="xiadivbt_1" type="button" onclick="bounced_yyss()" value="取消"/>
+            <input class="xiadivbt_2" type="button" onclick="ywkhYySure();" value="确定"/>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script type="text/javascript" src="../../js/zhyw/ywgzkh/ywgzkh_show_count.js"></script>
+<script type="text/javascript" src="../../js/zhyw/ywgzkh/ywgzkh_zdkhr.js"></script>
+<!-- 异议申请、公示流程 -->
+<script type="text/javascript" src="../../js/zhyw/ywgzkh/ywgzkh_yysqlc.js"></script>
+<!-- <script type="text/javascript" src="../../js/zhyw/ywgzkh/ywgzkh_zcjdgz.js"></script> -->
+
+</html>

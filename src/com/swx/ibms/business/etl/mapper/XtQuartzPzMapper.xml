@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:对应的mapper文件包名 -->
+<mapper namespace="com.swx.ibms.business.etl.mapper.XtQuartzPzMapper">
+	<!-- 
+		  id                 VARCHAR2(32) not null,
+		  clazz              VARCHAR2(30) not null,
+		  job_name           VARCHAR2(30) not null,
+		  job_group_name     VARCHAR2(30) not null,
+		  trigger_name       VARCHAR2(30) not null,
+		  trigger_group_name VARCHAR2(30),
+		  cron               VARCHAR2(30) not null,
+		  cjr_mc             VARCHAR2(30),
+		  cjr                VARCHAR2(10),
+		  cjsj               DATE not null,
+		  xgsj               DATE not null,
+		  status             NUMBER default 0,
+		  state              VARCHAR2(300),
+		  xh                 NUMBER
+	 -->
+	<resultMap type="XtQuartzPz" id="xtQuartzPzMap">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="clazz" column="clazz" javaType="java.lang.String"></result>
+		<result property="jobName" column="job_name" javaType="java.lang.String"></result>
+		<result property="jobGroupName" column="job_group_name" javaType="java.lang.String"></result>
+		<result property="triggerName" column="trigger_name" javaType="java.lang.String"></result>
+		<result property="triggerGroupName" column="trigger_group_name" javaType="java.lang.String"></result>
+		<result property="cron" column="cron" javaType="java.lang.String"></result>
+		<result property="cjr" column="cjr" javaType="java.lang.String"></result>
+		<result property="cjrMc" column="cjr_mc" javaType="java.lang.String"></result>
+		<result property="cjsj" column="cjsj" javaType="java.util.Date"></result>
+		<result property="xgsj" column="xgsj" javaType="java.util.Date"></result>
+		<result property="status" column="status" javaType="java.lang.Integer"></result>
+		<result property="state" column="state" javaType="java.lang.String"></result>
+		<result property="xh" column="xh" javaType="java.lang.Integer"></result>
+	</resultMap>
+	
+	<select id="getXtQuartzPzPageList" resultMap="xtQuartzPzMap" parameterType="java.util.Map">
+		SELECT * FROM XT_QUZARTZ_PZ WHERE 1=1 ORDER BY CJSJ DESC,XGSJ DESC
+	</select>
+	
+	<select id="getLastXtQuartzPz" resultMap="xtQuartzPzMap" parameterType="java.util.Map">
+		<![CDATA[ 
+			SELECT * FROM (SELECT * FROM XT_QUZARTZ_PZ ORDER BY CJSJ DESC,XGSJ DESC) t WHERE ROWNUM < 2 
+		]]>
+	</select>
+	
+	<select id="getXtQuartzPzById" resultMap="xtQuartzPzMap" parameterType="java.lang.String">
+		SELECT * FROM XT_QUZARTZ_PZ WHERE id = #{id}
+	</select>
+	
+	<insert id="addXtQuartzPz" parameterType="XtQuartzPz">
+		INSERT INTO XT_QUZARTZ_PZ (id,
+								  clazz,
+								  job_name,
+								  job_group_name,
+								  trigger_name,
+								  trigger_group_name,
+								  cron,
+								  cjr_mc,
+								  cjr,
+								  cjsj,
+								  status,
+								  state
+								  <!-- ,xh -->
+								  ) 
+							VALUES(#{id},
+								   #{clazz},
+								   #{jobName},
+								   #{jobGroupName},
+								   #{triggerName},
+								   #{triggerGroupName},
+								   #{cron},
+								   #{cjrMc},
+								   #{cjr},
+								   #{cjsj},
+								   0,
+								   #{state}
+								   <!-- ,#{xh} -->
+								   )
+	</insert>	
+	
+	<update id="modifyXtQuartzPz" parameterType="XtQuartzPz">
+		UPDATE XT_QUZARTZ_PZ SET xgsj = #{xgsj},
+							     clazz = #{clazz},
+							     job_name = #{jobName},
+							     job_group_name = #{jobGroupName},
+							     trigger_name =  #{triggerName},
+							     trigger_group_name = #{triggerGroupName},
+							     cron = #{cron},
+							     cjr_mc = #{cjrMc},
+							     cjr = #{cjr},
+							     state = #{state}
+		WHERE ID = #{id}
+	</update>
+	
+	<delete id="deleteXtQuartzPz" parameterType="java.lang.String" >
+		DELETE FROM XT_QUZARTZ_PZ WHERE ID = #{id}
+	</delete>
+	
+</mapper>

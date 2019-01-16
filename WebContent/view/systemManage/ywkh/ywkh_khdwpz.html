@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>业务考核-考核单位配置</title>
+    <!--页面css--->
+    <link rel="stylesheet" type="text/css" href="../../../css/xtpz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/xtpz_rygl.css" />
+    <link rel="stylesheet" type="text/css"href="../../../js/plugin/easyui/themes/bootstrap/easyui.css">
+    <link rel="stylesheet" type="text/css"href="../../../js/plugin/easyui/themes/icon.css">
+    <!--<link type="text/css" rel="stylesheet"href="../../../js/plugin/easyui/themes/default/easyui.css" />-->
+    <link rel="stylesheet" href="../../../css/zTreeStyle/ztreedemo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css" />
+    <style>
+
+        .left_ul li:nth-of-type(8) a{
+			background-color:#0876D5;
+			color:#fff;
+			border: 1px solid #0876D5;
+			cursor:pointer;
+		}
+    </style>
+    <!--页面通用js-->
+    <script type="text/javascript" src="../../../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../js/plugin/easyui/jquery.easyui.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+    <script type="text/javascript" src="../../../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../../../js/zhyw/utils/common.js"></script>
+</head>
+<body>
+    <div class="xtpz">
+        <div class="xtpz_top">当前位置 : 系统配置</div>
+        <div class="xtpz_content">
+            <!--左侧树-->
+            <div class="content_left">
+                <div class="left_tree"></div>
+            </div>
+
+            <!--右侧内容-->
+            <div class="content_right">
+                <div class="right_top">
+                    <img src="../../../image/icon_sd.png" style="float: left;margin: 17px 12px 0px 12px; ">业务考核配置
+                </div>
+
+                <div class="right_btnk" style="width:97%">
+                    <ul class="right_ul">
+                        <li id="right_title_li1" class="right_li" style="width:105px;" onclick="selectTitle(1)">考核单位配置</li>
+                        <li id="right_title_li2" class="" style="width:105px;" onclick="selectTitle(2)">考核类型配置</li>
+                        <li id="right_title_li3" class="" style="width:105px;" onclick="selectTitle(3)">在编人数配置</li>
+                        <li id="right_title_li4" class="" style="width:105px;" onclick="selectTitle(4)">考核指标配置</li>
+                        <!--<li id='addKhdw1' style="width:105px;">添加考核单位</li>-->
+                    </ul>
+
+                    <div class="right_com" style="margin-top: 10px">
+                        <div id="unitToolbar" style="width: 100%; height: 30px;padding: 10px">
+                            <span style="float: left;font-size: 14px; margin-top: 3px;">单位:</span>
+                            <!-- 单位树 -->
+                            <div style="float:left;height: 20px;margin-top: 2px; position: relative; margin-left: 10px;width: 18%; border: 1px solid #c1c1c1; border-radius: 4px;">
+                                <input id="citySel2" type="text" readonly style="border: none;border-radius: 4px; width: 100%;height: 16px;";/>
+                                <a id="menuBtn2" href="#" onclick="showMenu2(); return false;" class="a_style" style="height: 20px;background: url('../../../js/plugin/easyui/themes/bootstrap/images/combo_arrow.png') no-repeat center center; background-color: #F2F2F2"></a>
+                                <div id="menuContent2" style="display: none; position: fixed; z-index: 2;">
+                                    <ul id="treeDemo2" class="ztree" style="margin-top: 0; width:262px;background-color: #fff"></ul>
+                                </div>
+                            </div>
+                            <!-- 单位树 --><input type="hidden" id="qxYwkhKhdwDwbm">
+                            <a id="khdwReload" href="javascript:void(0)" onclick="clearLoad();" style="margin-left: 10px;">重新加载</a>
+
+                            <a id='addKhdw' class="addKhdwIcon" style="margin-left: 10px;">添加考核单位</a>
+                        </div>
+
+                        <table id="ywkhKhdwTable" style="width: 100%;"></table>
+                    </div>
+
+                    <div class="right_coml" style="display: none">
+                        <div style="width: 100%; float: left;height:500px;">
+                            <div style="width: 700px; float: left;margin-top: 50px;height:100%;">
+                                <div class="right_list">
+									<span>
+										<div class="list_1">单位名称:</div>
+									</span>
+                                    <!-- 单位树 -->
+                                    <div style="float:left;height: 30px; position: relative;width: 400px; border: 1px solid #c1c1c1; border-radius: 4px;">
+                                        <input id="citySel1" type="text" readonly style="height: 25px; border: none; width: 370px;margin-top: 2px;" />
+                                        <a id="menuBtn1" href="#" onclick="showMenu1(); return false;" class="a_style" style="height: 30px;background: url('../../../js/plugin/easyui/themes/bootstrap/images/combo_arrow.png') no-repeat center center; background-color: #F2F2F2"></a>
+                                        <div id="menuContent1" style="display: none; position: absolute; z-index: 2;top:31px;width:399px;">
+                                            <ul id="treeDemo1" class="ztree" style="margin-top: 0; width: 100%; background-color: #fff;padding:0;"></ul>
+                                        </div>
+                                    </div>
+                                    <!-- 单位树 -->
+                                    <input type="hidden" id="ywkhKhdwDwbm" name="ywkhKhdwDwbm">
+                                    <!--<input type="hidden" id="ywkhKhdwId" name="ywkhKhdwId">-->
+                                </div>
+                                <div class="right_list">
+									<span>
+										<div class="list_1">单位级别:</div>
+									</span>
+                                    <input id="ywkhDwjb" name="ywkhDwjb" readonly="readonly">
+                                </div>
+                                <div class="right_list">
+                                    <button id="addfgld" onclick="addOrModifyYwkhKhdw();" class="fgld_btn" >新增</button>
+                                    <!--<button id="updatefgld" onclick="updateYwkhKhdw()" class="fgld_btn">修改</button>-->
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 28%; float: left"></div>
+                    </div>
+                </div>
+
+                <div id="xt_ywkh_khlx_page" style="display:none;float: left;width: 100%;"></div>
+                <div id="xt_ywkh_zbrs_page" style="display:none;float: left;width: 100%;"></div>
+                <div id="xt_ywkh_khzb_page" style="display:none;float: left;width: 100%;"></div>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+<!--本页面js-->
+<script src="../../../js/zhyw/ywkh/ywkh_khdwpz.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(".left_tree").load("../left_menu.html");
+
+    var flag = getRequest() ? getRequest().type : "";
+    if (flag == "4") { // 考核指标新增/修改页面的返回按钮 location.href = "../ywkh/ywkh_khdwpz.html?type=4";
+        selectTitle(4); // 点击返回按钮后选中指标配置
+    }
+
+    function selectTitle(type) {
+        $(".right_ul li").removeClass("right_li");
+        $("#right_title_li" + type).addClass("right_li");
+
+        $("#xt_ywkh_khlx_page").hide();
+        $("#xt_ywkh_zbrs_page").hide();
+        $("#xt_ywkh_khzb_page").hide();
+
+        if (1 == type) {
+            window.location.reload();
+            $('.right_com').css('display', 'block');
+            $('#addfgld').css('display', 'block');
+            $("#citySel1").attr("value", "");  //单位树的值设为空
+            $("#ywkhDwjb").val(""); //单位级别设为空
+            $(".content_right").css('height','');
+        } else if (2 == type) {
+            $('.right_com').css('display', 'none'); // 考核单位
+            $('.right_coml').css('display', 'none'); // 考核单位添加
+            $('.right_com_zbrs').css('display', 'none'); // 在编人数
+            $('.right_coml_zbrs').css('display', 'none'); // 在编人数
+            $('#ywkhZbpzContent').css('display', 'none'); // 考核指标
+            $("#xt_ywkh_khlx_page").show();
+            $("#xt_ywkh_khlx_page").load("ywkh_khlxpz.html");
+            $(".content_right").css('height','');
+        } else if (3 == type) {
+            $('.right_com').css('display', 'none'); // 考核单位
+            $('.right_coml').css('display', 'none'); // 考核单位添加
+            $("#xt_ywkh_zbrs_page").show();
+            $("#xt_ywkh_zbrs_page").load("../zbrs/zbrs.html");
+            $(".content_right").css('height','');
+        } else if(4 == type){
+            // $("#grjx_wsfz_edit_div").remove();
+            $('.right_com').css('display', 'none'); // 考核单位
+            $('.right_coml').css('display', 'none'); // 考核单位添加
+            $("#xt_ywkh_khzb_page").show();
+            $("#xt_ywkh_khzb_page").load("../ywgz/xtpz_ywgzpzgl.html");
+            $(".content_right").css('height','');
+        }
+    }
+</script>
+</html>

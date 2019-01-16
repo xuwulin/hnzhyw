@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>业务工作考核-总览界面-左边列表界面</title>
+    <link rel="stylesheet" type="text/css" href="../../css/ywgzkh_tree.css"/>
+
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/common.js"></script>
+</head>
+<body>
+<div class="con_tree">
+    <ul>
+        <li id="ywkh_zl_ul_li"  onclick="zl_page()" class="li_hove"  style="display:none;">总览</li>
+        <!-- <li id="ywgz05" onclick='zcjdgz_page("05")'>职务犯罪侦查工作</li>
+        <li id="ywgz02" onclick='zcjdgz_page("02")'>侦查监督工作</li>
+        <li id="ywgz03" onclick='zcjdgz_page("03")'>公诉工作</li>
+        <li id="ywgz01" onclick='zcjdgz_page("01")'>未成年人刑事检察工作</li>
+        <li id="ywgz10" onclick='zcjdgz_page("10")'>预防职务犯罪工作</li>
+        <li id="ywgz04" onclick='zcjdgz_page("04")'>刑事执行检察工作</li>
+        <li id="ywgz07" onclick='zcjdgz_page("07")'>民事行政检察工作</li>
+        <li id="ywgz08" onclick='zcjdgz_page("08")'>控告检察工作</li>
+        <li id="ywgz09" onclick='zcjdgz_page("09")'>刑事申诉检察工作</li>
+        <li id="ywgz06" onclick='zcjdgz_page("06")'>乡镇检察室工作</li>
+        <li id="ywgz11" onclick='zcjdgz_page("11")'>研究室工作</li>
+        <li id="ywgz12" onclick='zcjdgz_page("12")'>案件管理工作</li>
+        <li id="ywgz13" onclick='zcjdgz_page("13")'>人均办案数</li> -->
+    </ul>
+</div>
+
+</body>
+<script type="text/javascript" charset="utf-8">
+	//获取参数 paramsTree 
+	var ywlxArray = [];
+	ywlxArray= paramsTree;
+	//获取数据字典表的权重信息
+	//获取参数  --展示左边li标签显示的数据
+	var tzlx=tzlx;
+	for(var i=0;i<ywlxArray.length;i++){
+		if(i==0&&tzlx=="false"){
+			$(".li_hove").after("<li id='"+(ywlxArray[i].khfzid)+"' class='li_hove'  onclick=zcjdgz_page('"+ywlxArray[i].khlx+"','"+ywlxArray[i].khfzid+"','"+ywlxArray[i].ywlxkhid+"','"+ywlxArray[i].lxkhzt+"') >"+ywlxArray[i].khmc+"</li>");	
+			zcjdgz_page(ywlxArray[i].khlx,ywlxArray[i].khfzid,ywlxArray[i].ywlxkhid,ywlxArray[i].lxkhzt);
+		}
+		else{
+			$(".li_hove").after("<li id='"+(ywlxArray[i].khfzid)+"' onclick=zcjdgz_page('"+ywlxArray[i].khlx+"','"+ywlxArray[i].khfzid+"','"+ywlxArray[i].ywlxkhid+"','"+ywlxArray[i].lxkhzt+"') >"+ywlxArray[i].khmc+"</li>");		
+		}
+	}
+	
+	//控制li标签的选中状态
+	$(".con_tree>ul>li").click(function(){
+		$(".li_hove").removeClass("li_hove");
+		$(this).addClass("li_hove");		
+	 });
+	//点中总览li标签跳转页面
+	function zl_page() {
+		$("#right_com").load("ywgzkh_zl.html", function() {
+			paramsZl = paramsTree;
+		});
+	};
+	//传递到ywgzkh_zcjdgz.html页面的参数
+	var spSign = null;  //审批标示
+	if(paramsTree.spSign){
+		spSign = paramsTree.spSign;
+	}
+	var paramsZcjd = null;
+	//点中li标签跳转页面
+	function zcjdgz_page(khlx,khfzid,ywlxkhid,lxkhzt) {	
+		
+        $(".li_hove").removeClass("li_hove"); 
+		$("#"+khfzid+"").addClass("li_hove");	
+		$("#right_com").load("ywgzkh_zcjdgz.html", function() {
+			paramsZcjd = {
+				khlx : khlx,
+				khfzid : khfzid,
+				ywlxkhid : ywlxkhid,
+				spSign : spSign,
+				lxkhzt : lxkhzt
+			};
+		});
+	}
+
+	function isNull(obj){
+		return obj==null||obj==undefined||obj=="undefined";
+	}
+</script>
+<!-- <script type="text/javascript" src="../../js/zhyw/ywgzkh/ywgzkh_tree.js" charset="utf-8"></script> -->
+</html>

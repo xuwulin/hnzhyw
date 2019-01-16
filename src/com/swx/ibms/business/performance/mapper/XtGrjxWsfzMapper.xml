@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swx.ibms.business.performance.mapper.XtGrjxWsfzMapper" >
+
+    <resultMap id="BaseResultMap" type="com.swx.ibms.business.performance.bean.XtGrjxWsfz" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="WS_NUM" property="wsNum" jdbcType="VARCHAR" />
+        <result column="SSBM" property="ssbm" jdbcType="VARCHAR" />
+        <result column="WS_NAME" property="wsName" jdbcType="VARCHAR" />
+        <result column="FZ" property="fz" jdbcType="DECIMAL" />
+        <result column="CREATEBY" property="createby" jdbcType="VARCHAR" />
+        <result column="CREATEDATE" property="createdate" jdbcType="TIMESTAMP" />
+        <result column="UPDATEBY" property="updateby" jdbcType="VARCHAR" />
+        <result column="UPDATEDATE" property="updatedate" jdbcType="TIMESTAMP" />
+        <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+        <result column="XH" property="xh" jdbcType="DECIMAL" />
+        <result column="DELFLAG" property="delflag" jdbcType="CHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, WS_NUM as wsNum, SSBM, WS_NAME as wsName, FZ, CREATEBY, CREATEDATE, UPDATEBY, UPDATEDATE, REMARKS,
+        XH, DELFLAG
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from XT_GRJX_WSFZ
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from XT_GRJX_WSFZ
+        where ID = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.swx.ibms.business.performance.bean.XtGrjxWsfz" >
+        insert into XT_GRJX_WSFZ (ID, WS_NUM, SSBM,
+            WS_NAME, FZ, CREATEBY, 
+            CREATEDATE, UPDATEBY, UPDATEDATE, 
+            REMARKS, XH, DELFLAG
+            )
+        values (#{id,jdbcType=VARCHAR}, #{wsNum,jdbcType=VARCHAR}, #{ssbm,jdbcType=VARCHAR}, 
+            #{wsName,jdbcType=VARCHAR}, #{fz,jdbcType=DECIMAL}, #{createby,jdbcType=VARCHAR}, 
+            #{createdate,jdbcType=TIMESTAMP}, #{updateby,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, 
+            #{remarks,jdbcType=VARCHAR}, #{xh,jdbcType=DECIMAL}, #{delflag,jdbcType=CHAR}
+            )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.swx.ibms.business.performance.bean.XtGrjxWsfz" >
+        insert into XT_GRJX_WSFZ
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="wsNum != null" >
+                WS_NUM,
+            </if>
+            <if test="ssbm != null" >
+                SSBM,
+            </if>
+            <if test="wsName != null" >
+                WS_NAME,
+            </if>
+            <if test="fz != null" >
+                FZ,
+            </if>
+            <if test="createby != null" >
+                CREATEBY,
+            </if>
+            <if test="createdate != null" >
+                CREATEDATE,
+            </if>
+            <if test="updateby != null" >
+                UPDATEBY,
+            </if>
+            <if test="updatedate != null" >
+                UPDATEDATE,
+            </if>
+            <if test="remarks != null" >
+                REMARKS,
+            </if>
+            <if test="xh != null" >
+                XH,
+            </if>
+            <if test="delflag != null" >
+                DELFLAG,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="wsNum != null" >
+                #{wsNum,jdbcType=VARCHAR},
+            </if>
+            <if test="ssbm != null" >
+                #{ssbm,jdbcType=VARCHAR},
+            </if>
+            <if test="wsName != null" >
+                #{wsName,jdbcType=VARCHAR},
+            </if>
+            <if test="fz != null" >
+                #{fz,jdbcType=DECIMAL},
+            </if>
+            <if test="createby != null" >
+                #{createby,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null" >
+                #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateby != null" >
+                #{updateby,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedate != null" >
+                #{updatedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="xh != null" >
+                #{xh,jdbcType=DECIMAL},
+            </if>
+            <if test="delflag != null" >
+                #{delflag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.swx.ibms.business.performance.bean.XtGrjxWsfz" >
+        update XT_GRJX_WSFZ
+        <set >
+            <if test="wsNum != null" >
+                WS_NUM = #{wsNum,jdbcType=VARCHAR},
+            </if>
+            <if test="ssbm != null" >
+                SSBM = #{ssbm,jdbcType=VARCHAR},
+            </if>
+            <if test="wsName != null" >
+                WS_NAME = #{wsName,jdbcType=VARCHAR},
+            </if>
+            <if test="fz != null" >
+                FZ = #{fz,jdbcType=DECIMAL},
+            </if>
+            <if test="createby != null" >
+                CREATEBY = #{createby,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null" >
+                CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateby != null" >
+                UPDATEBY = #{updateby,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedate != null" >
+                UPDATEDATE = #{updatedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                REMARKS = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="xh != null" >
+                XH = #{xh,jdbcType=DECIMAL},
+            </if>
+            <if test="delflag != null" >
+                DELFLAG = #{delflag,jdbcType=CHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.swx.ibms.business.performance.bean.XtGrjxWsfz" >
+        update XT_GRJX_WSFZ
+        set WS_NUM = #{wsNum,jdbcType=VARCHAR},
+            SSBM = #{ssbm,jdbcType=VARCHAR},
+            WS_NAME = #{wsName,jdbcType=VARCHAR},
+            FZ = #{fz,jdbcType=DECIMAL},
+            CREATEBY = #{createby,jdbcType=VARCHAR},
+            CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+            UPDATEBY = #{updateby,jdbcType=VARCHAR},
+            UPDATEDATE = #{updatedate,jdbcType=TIMESTAMP},
+            REMARKS = #{remarks,jdbcType=VARCHAR},
+            XH = #{xh,jdbcType=DECIMAL},
+            DELFLAG = #{delflag,jdbcType=CHAR}
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <select id="getXtGrjxWsfzAllList" resultType="com.swx.ibms.business.performance.bean.XtGrjxWsfz">
+        select
+        <include refid="Base_Column_List" />
+        from XT_GRJX_WSFZ ORDER BY xh,CREATEDATE DESC,UPDATEDATE DESC
+    </select>
+
+    <select id="queryResultByParams" resultType="com.swx.ibms.business.performance.bean.XtGrjxWsfz">
+        select
+        <include refid="Base_Column_List" />
+        from XT_GRJX_WSFZ
+        where WS_NUM = #{wsNum,jdbcType=VARCHAR}
+          <!--<if test="ssbm !=null and ssbm !='' ">
+              and SSBM = #{ssbm,jdbcType=VARCHAR}
+          </if>
+          <if test="fz !=null and fz !='' ">
+              and FZ = #{fz,jdbcType=DECIMAL}
+          </if>-->
+        ORDER BY xh,CREATEDATE,UPDATEDATE
+    </select>
+
+    <!--根据分值查询文书模板信息-->
+    <select id="queryWsfzByFz" resultType="com.swx.ibms.business.performance.bean.XtGrjxWsfz">
+        select
+        <include refid="Base_Column_List" />
+        from XT_GRJX_WSFZ
+        where FZ = #{fz,jdbcType=DECIMAL}
+          and SSBM = #{bmlbbm,jdbcType=VARCHAR}
+        ORDER BY xh,CREATEDATE,UPDATEDATE
+    </select>
+
+</mapper>

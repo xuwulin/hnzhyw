@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>业务工作考核-审批加总览界面</title>
+    <link rel="stylesheet" type="text/css" href="../../css/ywgzkh_total.css"/>
+    <link rel="stylesheet" href="../../css/zTreeStyle/ztreedemo.css" type="text/css"/>
+    <link rel="stylesheet" href="../../css/zTreeStyle/zTreeStyle.css" type="text/css"/>
+
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+    <script src="../../js/zhyw/utils/base64.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/service/UserService.js"></script>
+</head>
+<body>
+<div id="judicialfilesmanage" style="display:none;" class="judicialfilesmanage">
+    <div class="judicialfilesmanage_tilte">
+        <span>当前位置:待办事项审批</span>
+    </div>
+    <div class="judicialfilesmanage_one">
+        <div class="judicialfilesmanage_two" style="height: 13px;"></div>
+        <div class="judicail_table" style="margin: 0 20px;">
+            <table class="r_table" style="width: 100%; border: 1px solid #cae3fd;" cellpadding="0" cellspacing="0">
+                <tbody id=''>
+                <tr id="ywgzSpTr"
+                    style="background: #d8ecff; height: 31px; line-height: 31px; text-align: left; color: #134671">
+                    <td style="width: 40px"></td>
+                    <td>单位名称</td>
+                    <td>部门名称</td>
+                    <td>审批人</td>
+                    <td>审批意见</td>
+                    <td>审批时间</td>
+                    <td>审批结果</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="ywgzSpyjDiv" class="judicialfilesmanage_two" style="margin: 20px 20px; height: 32px">
+            <span>审批意见</span>
+            <input id="ywgzSpjy" class="judicialfilesmanage_two_input2" type="text" style="width: calc(100% - 80px); line-height: 26px">
+        </div>
+        <div id="ywgzyysmDiv" class="judicialfilesmanage_two" style="margin: 20px 20px; height: 32px ;display:none;">
+            <span>异议说明</span>
+            <input id="ywgzyysm" class="judicialfilesmanage_two_input2" type="text" style="border:0px;readonly:readonly;width: calc(100% - 80px); line-height: 26px">
+
+        </div>
+        <div id="ywgzyysmDiv2" class="judicialfilesmanage_two" style="margin: 20px 20px; height: 32px ;display:none;">
+            <span>异议附件</span>
+            <div id="yysmfj"  style="border:0px;readonly:readonly;width: calc(100% - 80px); line-height: 26px">
+
+            </div>
+        </div>
+        <div style='margin-right: 21px; overflow: hidden; margin-bottom: 10px;' id="">
+            <a id="button_agree" class="ju_btn" style="float: right; margin-left: 35px" onclick="ywgzAgree();">同意</a>
+            <a id="button_refuse" class="ju_btn_white" style="float: right; margin-left: 10px" onclick="ywgzRefuse();">退回</a>
+            <a id="button_read" class="ju_btn" style="display:none;float: right; margin-left: 35px" onclick="ywgzRead();">设为已读</a>
+            <a id="button_recall" class="ju_btn" style="display:none;float: right; margin-left: 35px" onclick="">撤回</a>
+        </div>
+    </div>
+</div>
+<div id="text">
+
+</div>
+<div id="right_com">
+
+</div>
+</body>
+
+<script type="text/javascript" src="../../js/zhyw/ywgzkh/ywgzkh_splc.js" charset="utf-8"></script>
+<!-- <script type="text/javascript" src="../../js/zhyw/ywgzkh/ywgzkh_total_sp.js" charset="utf-8"></script> -->
+</html>

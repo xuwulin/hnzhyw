@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:对应的mapper文件包名 -->
+<mapper namespace="com.swx.ibms.business.archives.mapper.PersonMapper">
+	<!-- 个人信息配置mapper，对个人信息实现CRUD -->
+	<!--
+		个人信息的结果集  id：结果集名称   type:实体类名称
+		property:实体类属性名      column：数据库对应列的字段名
+		javaType:数据库列的字段所对应的java中的数据类型
+
+		重要字段名:java ==== database
+				id === id === 个人信息id
+				dwbm === dwbm === 单位编码
+				bmbm === bmbm === 部门编码
+				gh === gh === 工号
+				gender === gender === 性别(0 女  1 男)
+				nation === nation === 民族
+				zzmm === zzmm === 政治面貌
+				zjlx === zjlx === 证件类型(1 身份证 2 工作证 3 其他)
+				zjhm === zjhm === 证件号码
+				jg === jg === 籍贯
+				xzz === xzz === 现住址(保留字段，以防后面要用)
+				jtzz === jtzz === 家庭住址
+				phone === phone === 手机号码
+				telephone ===telephone === 座机
+				email === email === 邮箱
+				gzdw === gzdw === 工作单位
+				whcd === whcd === 文化程度
+	-->
+	<resultMap id="personXxMap" type="com.swx.ibms.business.archives.bean.Person">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="bmbm" column="bmbm" javaType="java.lang.String"></result>
+		<result property="gh" column="gh" javaType="java.lang.String"></result>
+		<result property="gender" column="gender" javaType="java.lang.String"></result>
+		<result property="nation" column="nation" javaType="java.lang.String"></result>
+		<result property="zzmm" column="zzmm" javaType="java.lang.String"></result>
+		<result property="zjlx" column="zjlx" javaType="java.lang.String"></result>
+		<result property="zjhm" column="zjhm" javaType="java.lang.String"></result>
+		<result property="jg" column="jg" javaType="java.lang.String"></result>
+		<result property="xzz" column="xzz" javaType="java.lang.String"></result>
+		<result property="jtzz" column="jtzz" javaType="java.lang.String"></result>
+		<result property="phone" column="phone" javaType="java.lang.String"></result>
+		<result property="telephone" column="telephone" javaType="java.lang.String"></result>
+		<result property="email" column="email" javaType="java.lang.String"></result>
+		<result property="gzdw" column="gzdw" javaType="java.lang.String"></result>
+		<result property="whcd" column="whcd" javaType="java.lang.String"></result>
+		<result property="daId" column="da_id" javaType="java.lang.String"></result>
+		<result property="birthday" column="birthday" javaType="java.lang.String"></result>
+		<result property="sflb" column="sflb" javaType="java.lang.String"></result>
+		<result property="grade" column="grade" javaType="java.lang.String"></result>
+		<result property="postInfo" column="postInfo" javaType="java.lang.String"></result>
+		<result property="adminRank" column="adminRank" javaType="java.lang.String"></result>
+		<result property="reDate" column="reDate" javaType="java.lang.String"></result>
+		<result property="xw" column="xw" javaType="java.lang.String"></result>
+		<result property="zp" column="zp"  typeHandler="com.swx.ibms.common.utils.BlobTypeHandler"></result> <!-- jdbcType="BLOB" typeHandler="com.swx.zhyw.common.BlobTypeHandler" -->
+		<result property="zpName" column="zp_name" javaType="java.lang.String"></result>
+	</resultMap>
+
+
+	<!--
+		个人经历的结果集  id：结果集名称   type:实体类名称
+		property:实体类属性名      column：数据库对应列的字段名
+		javaType:数据库列的字段所对应的java中的数据类型
+
+		重要字段名:java ===- database
+				id === id === 个人信息经历id
+				personId === grjbxx_id === 个人基本信息id
+				sDate === s_date === 开始日期
+				eDate === e_date === 结束日期
+				name === name === 单位名称/学校名称
+				adress === adress === 地址
+				zwName === zw_name === 职位名称/学校担任职位名称
+				type === type === 类型（1：工作经历   2：教育经历  3 其他）
+				daId === da_id === 档案id
+	-->
+	<resultMap id="personJlMap" type="com.swx.ibms.business.archives.bean.PersonJl">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="personId" column="grjbxx_id" javaType="java.lang.String"></result>
+		<result property="sDate" column="s_date" javaType="java.lang.String"></result>
+		<result property="eDate" column="e_date" javaType="java.lang.String"></result>
+		<result property="name" column="name" javaType="java.lang.String"></result>
+		<result property="adress" column="adress" javaType="java.lang.String"></result>
+		<result property="zwName" column="zw_name" javaType="java.lang.String"></result>
+		<result property="type" column="type" javaType="java.lang.String"></result>
+		<result property="daId" column="da_id" javaType="java.lang.String"></result>
+		<result property="gzbm" column="gzbm" javaType="java.lang.String"></result>
+		<result property="gzzz" column="gzzz" javaType="java.lang.String"></result>
+	</resultMap>
+
+
+	<!--
+		个人头像（附件）的结果集  id：结果集名称   type:实体类名称
+		property:实体类属性名      column：数据库对应列的字段名
+		javaType:数据库列的字段所对应的java中的数据类型
+
+		重要字段名:java ===- database
+				id === id === 上传附件实体类id
+				wbid === wbid === 外键id(存放的是外键的id，并没有在数据库进行真正的外键关联)
+				wjmc === wjmc === 文件名称
+				wjdz === wjdz === 文件存放地址
+				fjlx === fjlx === 附件类型(1 司法文档 附件 2 案件问题反馈附件 3 图片 4 文档  5 其他)
+	-->
+	<resultMap id="personFjMap" type="com.swx.ibms.business.system.bean.Upload">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="wbid" column="wbid" javaType="java.lang.String"></result>
+		<result property="wjmc" column="wjmc" javaType="java.lang.String"></result>
+		<result property="wjdz" column="wjdz" javaType="java.lang.String"></result>
+		<result property="fjlx" column="fjlx" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<!-- 根据单位编码、工号查询此人的个人基本信息 -->
+	<!-- 根据经历id以及联合个人基本信息表查询个人经历 -->
+	<!-- 根据附件id以及联合个人基本信息表查询个人头像（附件）的信息 -->
+	<select id="selectList" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_PERSON.pro_selectList(
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_gh,mode=IN,jdbcType=VARCHAR},
+  		    #{p_da_id,mode=IN,jdbcType=VARCHAR},
+  		    #{p_cursor1,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=personXxMap},
+  		    #{p_cursor2,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=personJlMap},
+  		    #{p_cursor3,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=personFjMap}
+  		)}
+  		]]>
+	</select>
+
+	<!-- 新增个人基本信息 -->
+	<insert id="insertGrjbxxData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_PERSON.pro_insertGrjbxxData(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},
+          		#{p_gender,mode=IN,jdbcType=VARCHAR},
+          		#{p_nation,mode=IN,jdbcType=VARCHAR},
+          		#{p_zzmm,mode=IN,jdbcType=VARCHAR},
+          		#{p_zjlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_zjhm,mode=IN,jdbcType=VARCHAR},
+          		#{p_jg,mode=IN,jdbcType=VARCHAR},
+          		#{p_xzz,mode=IN,jdbcType=VARCHAR},
+          		#{p_jtzz,mode=IN,jdbcType=VARCHAR},
+          		#{p_phone,mode=IN,jdbcType=VARCHAR},
+          		#{p_telephone,mode=IN,jdbcType=VARCHAR},
+          		#{p_email,mode=IN,jdbcType=VARCHAR},
+          		#{p_gzdw,mode=IN,jdbcType=VARCHAR},
+          		#{p_whcd,mode=IN,jdbcType=VARCHAR},
+          		#{p_da_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_birthday,mode=IN,jdbcType=VARCHAR},
+          		#{p_sflb,mode=IN,jdbcType=VARCHAR},
+          		#{p_grade,mode=IN,jdbcType=VARCHAR},
+          		#{p_postInfo,mode=IN,jdbcType=VARCHAR},
+          		#{p_adminRank,mode=IN,jdbcType=VARCHAR},
+          		#{p_reDate,mode=IN,jdbcType=VARCHAR},
+          		#{p_xw,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR},
+          		#{p_id,mode=OUT,jdbcType=VARCHAR}
+          		)}
+    	]]>
+	</insert>
+
+
+	<!-- 新增个人经历信息 -->
+	<insert id="insertGrjlData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_PERSON.pro_insertGrjlData(
+          		#{p_grjbxx_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_s_date,mode=IN,jdbcType=VARCHAR},
+          		#{p_e_date,mode=IN,jdbcType=VARCHAR},
+          		#{p_name,mode=IN,jdbcType=VARCHAR},
+          		#{p_adress,mode=IN,jdbcType=VARCHAR},
+          		#{p_zw_name,mode=IN,jdbcType=VARCHAR},
+          		#{p_type,mode=IN,jdbcType=VARCHAR},
+          		#{p_gzbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gzzz,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR},
+          		#{p_id,mode=OUT,jdbcType=VARCHAR},
+          		#{p_da_id,mode=IN,jdbcType=VARCHAR}
+          		)}
+    	]]>
+	</insert>
+
+	<!-- 新增个人头像信息 -->
+	<insert id="insertGrFlData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_PERSON.pro_insertGrFlData(
+          		#{p_wjmc,mode=IN,jdbcType=VARCHAR},
+          		#{p_wjdz,mode=IN,jdbcType=VARCHAR},
+          		#{p_wbid,mode=IN,jdbcType=VARCHAR},
+          		#{p_fjlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_id,mode=OUT,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)}
+    	]]>
+	</insert>
+
+
+	<!-- 根据个人基本信息id修改个人基本信息 -->
+	<update id="updateGrjbxxData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_PERSON.pro_updateGrjbxxData(
+          		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},
+          		#{p_gender,mode=IN,jdbcType=VARCHAR},
+          		#{p_nation,mode=IN,jdbcType=VARCHAR},
+          		#{p_zzmm,mode=IN,jdbcType=VARCHAR},
+          		#{p_zjlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_zjhm,mode=IN,jdbcType=VARCHAR},
+          		#{p_jg,mode=IN,jdbcType=VARCHAR},
+          		#{p_xzz,mode=IN,jdbcType=VARCHAR},
+          		#{p_jtzz,mode=IN,jdbcType=VARCHAR},
+          		#{p_phone,mode=IN,jdbcType=VARCHAR},
+          		#{p_telephone,mode=IN,jdbcType=VARCHAR},
+          		#{p_email,mode=IN,jdbcType=VARCHAR},
+          		#{p_gzdw,mode=IN,jdbcType=VARCHAR},
+          		#{p_whcd,mode=IN,jdbcType=VARCHAR},
+          		#{p_da_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_birthday,mode=IN,jdbcType=VARCHAR},
+          		#{p_sflb,mode=IN,jdbcType=VARCHAR},
+          		#{p_grade,mode=IN,jdbcType=VARCHAR},
+          		#{p_postInfo,mode=IN,jdbcType=VARCHAR},
+          		#{p_adminRank,mode=IN,jdbcType=VARCHAR},
+          		#{p_reDate,mode=IN,jdbcType=VARCHAR},
+          		#{p_xw,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)}
+    	]]>
+	</update>
+
+	<!-- 根据个人经历id修改个人经历信息 -->
+	<update id="updateGrjlData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_PERSON.pro_updateGrjlData(
+          		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_s_date,mode=IN,jdbcType=VARCHAR},
+          		#{p_e_date,mode=IN,jdbcType=VARCHAR},
+          		#{p_name,mode=IN,jdbcType=VARCHAR},
+          		#{p_adress,mode=IN,jdbcType=VARCHAR},
+          		#{p_zw_name,mode=IN,jdbcType=VARCHAR},
+          		#{p_type,mode=IN,jdbcType=VARCHAR},
+          		#{p_gzbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gzzz,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)}
+    	]]>
+	</update>
+
+
+	<!-- 根据附件id修改个人附件信息 -->
+	<update id="updateFjData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_PERSON.pro_updateFjData(
+          		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_wjmc,mode=IN,jdbcType=VARCHAR},
+          		#{p_wjdz,mode=IN,jdbcType=VARCHAR},
+          		#{p_fjlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)}
+    	]]>
+	</update>
+
+
+	<!-- 根据个人基本信息id删除个人基本信息 -->
+	<delete id="deleteGrjbxxData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_PERSON.pro_deleteGrjbxxData(
+          		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)}
+    	]]>
+	</delete>
+
+
+	<!-- 根据个人经历信息id删除个人经历信息 -->
+	<delete id="deleteGrjlData" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_PERSON.pro_deleteGrjlData(
+          		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)}
+    	]]>
+	</delete>
+
+
+	<!-- 根据档案归总id、个人基本信息id删除个人基本信息表、个人经历表、附件表（个人头像） -->
+	<delete id="deleteAllGrxxById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_PERSON.pro_deleteAllGrxxById(
+          		#{p_grjbxx_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_da_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)}
+    	]]>
+	</delete>
+
+	<!-- 根据单位编码、工号从yx_sfda_grjbxx表中获取最新档案信息，用于创建新档案时赋值 -->
+	<select id="selectInfo" resultMap="personXxMap">
+		select a.*
+		from(
+		  select t.*
+		  from YX_SFDA_GRJBXX t
+		  where dwbm = #{dwbm}
+		  	and gh = #{gh}
+		  order by create_date desc
+		  ) a
+		  where rownum = 1
+	</select>
+
+	<!-- 根据查询出的最近的个人基本信息的id和da_id去查询对应的工作经历和教育经历:type = 1表示工作经历，2表示学习经历 -->
+	<select id="selectExpOfWork" resultType="java.util.HashMap">
+		select t.*
+		from YX_SFDA_GRJL t
+		where t.grjbxx_id = #{grjbxxId}
+		   and t.da_id = #{daId}
+		   and t.type = '1'
+	</select>
+
+	<select id="selectExpOfStudy" resultType="java.util.HashMap">
+		select t.*
+		from YX_SFDA_GRJL t
+		where t.grjbxx_id = #{grjbxxId}
+		   and t.da_id = #{daId}
+		   and t.type = '2'
+	</select>
+
+
+	<update id="modifySfdaGrjbxxZpById" parameterType="java.util.HashMap">
+		UPDATE YX_SFDA_GRJBXX SET ZP = #{zp},ZP_NAME = #{zpName} WHERE ID = #{id}
+	</update>
+
+
+	<select id="selectPerson"  resultMap="personXxMap"> <!-- resultType="Person" -->
+		<![CDATA[
+			SELECT * FROM YX_SFDA_GRJBXX A WHERE A.DWBM =#{dwbm} AND A.GH = #{gh} AND a.da_id = #{daId} and rownum < 2
+		]]>
+	</select>
+
+	<select id="selectPersonJlList"  resultMap="personJlMap"> <!-- resultType="PersonJl" -->
+		SELECT B.* FROM YX_SFDA_GRJL B INNER JOIN YX_SFDA_GRJBXX A ON A.id = B.GRJBXX_ID and a.da_id = b.da_id
+		WHERE B.Grjbxx_Id = #{grjbxxId}
+	</select>
+
+
+</mapper>

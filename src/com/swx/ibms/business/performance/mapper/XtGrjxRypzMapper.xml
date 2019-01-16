@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swx.ibms.business.performance.mapper.XtGrjxRypzMapper" >
+
+    <resultMap id="BaseResultMap" type="com.swx.ibms.business.performance.bean.XtGrjxRypz" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="TYPEID" property="typeid" jdbcType="VARCHAR" />
+        <result column="RYDWBM" property="rydwbm" jdbcType="CHAR" />
+        <result column="RYGH" property="rygh" jdbcType="CHAR" />
+        <result column="CREATEBY" property="createby" jdbcType="VARCHAR" />
+        <result column="CREATEDATE" property="createdate" jdbcType="TIMESTAMP" />
+        <result column="UPDATEBY" property="updateby" jdbcType="VARCHAR" />
+        <result column="UPDATEDATE" property="updatedate" jdbcType="TIMESTAMP" />
+        <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+        <result column="XH" property="xh" jdbcType="DECIMAL" />
+        <result column="DELFLAG" property="delflag" jdbcType="CHAR" />
+        <result column="BMLBMC" property="bmlbmc" jdbcType="VARCHAR" />
+        <result column="BMLBBM" property="bmlbbm" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, TYPEID, RYDWBM, RYGH, CREATEBY, CREATEDATE, UPDATEBY, UPDATEDATE, REMARKS, XH,
+        DELFLAG, BMLBMC, BMLBBM
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from XT_GRJX_RYPZ
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from XT_GRJX_RYPZ
+        where ID = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.swx.ibms.business.performance.bean.XtGrjxRypz" >
+        insert into XT_GRJX_RYPZ (ID, TYPEID, RYDWBM,
+            RYGH, CREATEBY, CREATEDATE,
+            UPDATEBY, UPDATEDATE, REMARKS,
+            XH, DELFLAG)
+        values (#{id,jdbcType=VARCHAR}, #{typeid,jdbcType=VARCHAR}, #{rydwbm,jdbcType=CHAR},
+            #{rygh,jdbcType=CHAR}, #{createby,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP},
+            #{updateby,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+            #{xh,jdbcType=DECIMAL}, #{delflag,jdbcType=CHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.swx.ibms.business.performance.bean.XtGrjxRypz" >
+        insert into XT_GRJX_RYPZ
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="typeid != null" >
+                TYPEID,
+            </if>
+            <if test="rydwbm != null" >
+                RYDWBM,
+            </if>
+            <if test="rygh != null" >
+                RYGH,
+            </if>
+            <if test="createby != null" >
+                CREATEBY,
+            </if>
+            <if test="createdate != null" >
+                CREATEDATE,
+            </if>
+            <if test="updateby != null" >
+                UPDATEBY,
+            </if>
+            <if test="updatedate != null" >
+                UPDATEDATE,
+            </if>
+            <if test="remarks != null" >
+                REMARKS,
+            </if>
+            <if test="xh != null" >
+                XH,
+            </if>
+            <if test="delflag != null" >
+                DELFLAG,
+            </if>
+            <if test="bmlbmc != null" >
+                BMLBMC,
+            </if>
+            <if test="bmlbbm != null" >
+                BMLBBM,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="typeid != null" >
+                #{typeid,jdbcType=VARCHAR},
+            </if>
+            <if test="rydwbm != null" >
+                #{rydwbm,jdbcType=CHAR},
+            </if>
+            <if test="rygh != null" >
+                #{rygh,jdbcType=CHAR},
+            </if>
+            <if test="createby != null" >
+                #{createby,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null" >
+                #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateby != null" >
+                #{updateby,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedate != null" >
+                #{updatedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="xh != null" >
+                #{xh,jdbcType=DECIMAL},
+            </if>
+            <if test="delflag != null" >
+                #{delflag,jdbcType=CHAR},
+            </if>
+            <if test="bmlbmc != null" >
+                #{bmlbmc,jdbcType=CHAR},
+            </if>
+            <if test="bmlbbm != null" >
+                #{bmlbbm,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.swx.ibms.business.performance.bean.XtGrjxRypz" >
+        update XT_GRJX_RYPZ
+        <set >
+            <if test="typeid != null and typeid !='' " >
+                TYPEID = #{typeid,jdbcType=VARCHAR},
+            </if>
+            <if test="rydwbm != null and rydwbm != '' " >
+                RYDWBM = #{rydwbm,jdbcType=CHAR},
+            </if>
+            <if test="rygh != null and rygh !='' " >
+                RYGH = #{rygh,jdbcType=CHAR},
+            </if>
+            <if test="createby != null and createby !='' " >
+                CREATEBY = #{createby,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null and createdate !='' " >
+                CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateby != null and updateby!='' " >
+                UPDATEBY = #{updateby,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedate != null and updatedate !='' " >
+                UPDATEDATE = #{updatedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null and remarks !='' " >
+                REMARKS = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="xh != null and xh !='' " >
+                XH = #{xh,jdbcType=DECIMAL},
+            </if>
+            <if test="delflag != null and delflag !='' " >
+                DELFLAG = #{delflag,jdbcType=CHAR},
+            </if>
+            <if test="bmlbmc != null and bmlbmc !='' " >
+                BMLBMC = #{bmlbmc,jdbcType=CHAR},
+            </if>
+            <if test="bmlbbm != null and bmlbbm!='' " >
+                BMLBBM = #{,jdbcType=CHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.swx.ibms.business.performance.bean.XtGrjxRypz" >
+        update XT_GRJX_RYPZ
+        set TYPEID = #{typeid,jdbcType=VARCHAR},
+            RYDWBM = #{rydwbm,jdbcType=CHAR},
+            RYGH = #{rygh,jdbcType=CHAR},
+            CREATEBY = #{createby,jdbcType=VARCHAR},
+            CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+            UPDATEBY = #{updateby,jdbcType=VARCHAR},
+            UPDATEDATE = #{updatedate,jdbcType=TIMESTAMP},
+            REMARKS = #{remarks,jdbcType=VARCHAR},
+            XH = #{xh,jdbcType=DECIMAL},
+            DELFLAG = #{delflag,jdbcType=CHAR}
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <select id="getGrjxKhryPzList" resultType="com.swx.ibms.business.performance.bean.XtGrjxRypz">
+        select
+        <include refid="Base_Column_List" />
+        from xt_grjx_rypz
+        <if test="dwbm != null and dwbm != ''">
+            where rydwbm = #{dwbm}
+        </if>
+        ORDER BY xh,CREATEDATE,UPDATEDATE
+    </select>
+
+    <select id="getGrjxKhryPzByDwGh" resultType="com.swx.ibms.business.performance.bean.XtGrjxRypz">
+        select
+        <include refid="Base_Column_List" />
+        from xt_grjx_rypz t WHERE RYDWBM = #{dwbm} and RYGH = #{gh} and delflag = 'N' ORDER BY xh,CREATEDATE,UPDATEDATE
+    </select>
+
+</mapper>

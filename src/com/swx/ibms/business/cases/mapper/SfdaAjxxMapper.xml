@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.cases.mapper.SfdaAjxxMapper">
+	<!-- 司法档案下的检察官案件信息 -->
+	<resultMap id="sfdaAjxxMap" type="com.swx.ibms.business.cases.bean.SfdaAjxx">
+		<result property="ajId" column="ajId" javaType="java.lang.String"></result>
+		<result property="daId" column="da_id" javaType="java.lang.String"></result>
+		<result property="ajName" column="ajName" javaType="java.lang.String"></result>
+		<result property="ajYwlx" column="ajYwlx" javaType="java.lang.String"></result>
+		<result property="ajSlrq" column="ajSlrq" javaType="java.util.Date"></result>
+		<result property="ajWjrq" column="ajWjrq" javaType="java.util.Date"></result>
+		<result property="ajlb" column="ajlb" javaType="java.lang.String"></result>
+		<result property="ajsl" column="ajsl" javaType="java.lang.Integer"></result>
+		<result property="bz" column="bz" javaType="java.lang.String"></result>
+		<result property="ajlx" column="ajlx" javaType="java.lang.String"></result>
+		<result property="ajStatus" column="ajStatus" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<!-- 查询所有司法档案下的检察官主办案件信息 -->
+	<resultMap id="sfdaZbAjxxMap" type="java.util.Map"></resultMap>
+	<select id="getSfdaZbAjxxPageList" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_SFDA_AJXX.pro_getSfdaZbAjxxPageList( 
+  		    #{p_da_id,mode=IN,jdbcType=VARCHAR},
+  		    #{p_status,mode=IN,jdbcType=VARCHAR},
+  		    #{p_start,mode=IN,jdbcType=INTEGER},
+  		    #{p_end,mode=IN,jdbcType=INTEGER},
+  		    #{p_total,mode=OUT,jdbcType=INTEGER},
+  		    #{p_avg_basc,mode=OUT,jdbcType=INTEGER},
+  		    #{p_all_avg_basc,mode=OUT,jdbcType=INTEGER},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sfdaZbAjxxMap},
+  		    #{p_ywlx_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sfdaZbAjxxMap}
+  		)} 
+  		]]>
+	</select>
+	
+	<!-- 查询所有司法档案下的检察官参办/从办/协办案件信息 -->
+	<resultMap id="sfdaCbAjxxMap" type="java.util.Map"></resultMap>
+	<select id="getSfdaCbAjxxPageList" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_SFDA_AJXX.pro_getSfdaCbAjxxPageList( 
+  		    #{p_da_id,mode=IN,jdbcType=VARCHAR},
+  		    #{p_status,mode=IN,jdbcType=VARCHAR},
+  		    #{p_start,mode=IN,jdbcType=INTEGER},
+  		    #{p_end,mode=IN,jdbcType=INTEGER},
+  		    #{p_total,mode=OUT,jdbcType=INTEGER},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sfdaCbAjxxMap}
+  		)} 
+  		]]>
+	</select>
+	
+	<!-- 查询单条司法档案下的检察官案件信息根据id -->
+	<select id="getSfdaAjxxById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_SFDA_AJXX.pro_getSfdaAjxxById( 
+  		    #{p_ajId,mode=IN,jdbcType=VARCHAR},
+  		    #{p_status,mode=IN,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sfdaAjxxMap}
+  		)} 
+  		]]>
+	</select>
+	
+	<!-- 添加司法档案下的检察官案件信息  -->
+	<insert id="addSfdaAjxx" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_SFDA_AJXX.pro_addSfdaAjxx(
+          		#{p_ajId,mode=IN,jdbcType=VARCHAR},
+          		#{p_da_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_ajName,mode=IN,jdbcType=VARCHAR},
+          		#{p_ajYwlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_ajSlrq,mode=IN,jdbcType=DATE},
+          		#{p_ajWjrq,mode=IN,jdbcType=DATE},
+          		#{p_ajlb,mode=IN,jdbcType=VARCHAR},
+          		#{p_ajsl,mode=IN,jdbcType=INTEGER},
+          		#{p_bz,mode=IN,jdbcType=VARCHAR},
+          		#{p_ajlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_createTime,mode=IN,jdbcType=DATE},
+          		#{p_errMsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</insert>
+	
+	<!-- 修改司法档案下的检察官案件信息 -->
+	<update id="updateSfdaAjxx" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_SFDA_AJXX.pro_updateSfdaAjxx(
+          		#{p_ajId,mode=IN,jdbcType=VARCHAR},
+          		#{p_ajName,mode=IN,jdbcType=VARCHAR},
+          		#{p_ajYwlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_ajSlrq,mode=IN,jdbcType=DATE},
+          		#{p_ajWjrq,mode=IN,jdbcType=DATE},
+          		#{p_ajlb,mode=IN,jdbcType=VARCHAR},
+          		#{p_ajsl,mode=IN,jdbcType=INTEGER},
+          		#{p_bz,mode=IN,jdbcType=VARCHAR},
+          		#{p_modifyTime,mode=IN,jdbcType=DATE},
+          		#{p_errMsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+	
+	<!-- 删除司法档案下的检察官案件信息 -->
+	<delete id="deleteSfdaAjxx" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_SFDA_AJXX.pro_deleteSfdaAjxx(
+          		#{p_ajId,mode=IN,jdbcType=VARCHAR},
+          		#{p_errMsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</delete>
+	
+	<!-- 根据档案id修改此档案对应的案件信息的状态 -->
+	<update id="updateStatusByDaId" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_SFDA_AJXX.pro_updateStatusByDaId( 
+  		    #{p_da_id,mode=IN,jdbcType=VARCHAR},
+  		    #{p_status,mode=IN,jdbcType=VARCHAR},
+  		    #{p_errMsg,mode=OUT,jdbcType=VARCHAR}
+  		)} 
+  		]]>
+	</update>
+	
+	
+	<update id="modifyStatusByAjId" parameterType="java.util.HashMap" >
+		UPDATE YX_SFDA_AJXX SET AJSTATUS = #{ajStatus} where instr(#{ajId},AJID)>0
+	</update>
+	
+</mapper>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:对应的mapper文件包名 -->
+<mapper namespace="com.swx.ibms.business.appraisal.mapper.YwkhkhlxpzMapper">
+    <resultMap id="ywkhkhlxpzMap" type="com.swx.ibms.business.appraisal.bean.YwkhKhlxPz">
+        <result property="id" column="id" javaType="java.lang.String"></result>
+        <result property="khlx" column="khlx" javaType="java.lang.String"></result>
+        <result property="ywlx" column="ywlx" javaType="java.lang.String"></result>
+        <result property="ywmc" column="ywmc" javaType="java.lang.String"></result>
+        <result property="khmc" column="khmc" javaType="java.lang.String"></result>
+        <result property="qz" column="qz" javaType="java.lang.String"></result>
+    </resultMap>
+
+   <resultMap id="ywkhkhlxMap" type="com.swx.ibms.business.appraisal.bean.YwkhKhlxPz">
+        <result property="ywbm" column="ywbm" javaType="java.lang.String"></result>
+        <result property="ywjc" column="ywjc" javaType="java.lang.String"></result>     
+    </resultMap>
+    
+    <!-- 查询全部并分页排序 -->
+    <!-- id：mapper类对应的方法名   parameterType:方法参数类型   statementType:CALLABLE 标示调用存储过程 -->
+    <select id="getPageListKhlx" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[
+ 		{call PKG_YWKH.pro_get_khlxkhx(
+ 			#{p_ywlx,mode=IN,jdbcType=VARCHAR},
+ 			#{p_start,mode=IN,jdbcType=INTEGER},
+ 			#{p_end,mode=IN,jdbcType=INTEGER},
+ 			#{p_total,mode=OUT,jdbcType=INTEGER},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ywkhkhlxpzMap}
+  		)}
+  		]]>
+    </select>
+  
+	 <!-- 获取考核类型下拉框-->
+   <select  id="getywkhkhlx"   parameterType="java.util.Map"    statementType="CALLABLE">
+	<![CDATA[
+	{call PKG_YWKH.PRO_GET_YWLX(
+                #{P_CURSOR,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ywkhkhlxMap},
+                #{P_ERRMSG,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]> 
+   </select>
+   
+   	 <!-- 新增考核类型 -->
+   <select  id="addywkhkhlx"   parameterType="java.util.Map"    statementType="CALLABLE">
+	<![CDATA[
+	{call PKG_YWKH.PROC_ADD_YWKHLX(
+          	#{ P_ID,mode=IN,jdbcType=VARCHAR},
+ 			#{P_YWLX,mode=IN,jdbcType=VARCHAR},
+ 			#{P_YWMC,mode=IN,jdbcType=VARCHAR},
+ 			#{P_KHLX,mode=IN,jdbcType=VARCHAR},
+ 			#{P_KHMC,mode=IN,jdbcType=VARCHAR},
+ 			#{P_QZ,mode=IN,jdbcType=VARCHAR},
+            #{P_ERRMSG,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]> 
+   </select>
+   
+ <!--删除选中行业务类型 -->
+   <select  id="deleteywkhkhlx"   parameterType="java.util.Map"    statementType="CALLABLE">
+	<![CDATA[
+	{call PKG_YWKH.PROC_DELETE_YWKHLX(
+          	#{ P_ID ,mode=IN,jdbcType=VARCHAR},
+            #{P_ERRMSG,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]> 
+   </select>
+
+   	 <!-- 修改考核类型 -->
+   <select  id="updateywkhkhlx"   parameterType="java.util.Map"    statementType="CALLABLE">
+	<![CDATA[
+	{call PKG_YWKH.PROC_UPDATE_YWKHLX(
+          	#{ P_ID,mode=IN,jdbcType=VARCHAR},
+ 			#{P_YWLX,mode=IN,jdbcType=VARCHAR},
+ 			#{P_YWMC,mode=IN,jdbcType=VARCHAR},
+ 			#{P_KHMC,mode=IN,jdbcType=VARCHAR},
+ 			#{P_QZ,mode=IN,jdbcType=VARCHAR},
+            #{P_ERRMSG,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]> 
+   </select>
+   	 <!-- 查询业务类型下考核类型新增编码 -->
+   <select  id="ywkhkhlxbm"   parameterType="java.util.Map"    statementType="CALLABLE">
+	<![CDATA[
+	{call PKG_YWKH.PROC_GET_YWKHLXBM(
+ 			#{P_LXBM,mode=OUT,jdbcType=VARCHAR},
+            #{P_ERRMSG,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]> 
+   </select>
+
+
+    <resultMap id="zhywMap" type="com.swx.ibms.business.appraisal.bean.YwkhKhlxPz">
+        <result property="id" column="ID" javaType="java.lang.String"></result>
+        <result property="khlx" column="KHLX" javaType="java.lang.String"></result>
+        <result property="ywlx" column="YWLX" javaType="java.lang.String"></result>
+        <result property="khmc" column="KHMC" javaType="java.lang.String"></result>
+        <result property="ywmc" column="YWMC" javaType="java.lang.String"></result>
+    </resultMap>
+
+  	 <!-- 分业务类型获取业务考核中的考核 【此处还有系统管理中的业务考核-指标管理模块有调用】 -->
+   <select  id="getZhyw" parameterType="java.util.Map" statementType="CALLABLE">
+	<![CDATA[
+	{call PKG_YWKH.pro_get_zhyw(
+ 			#{p_errmsg,mode=OUT,jdbcType=VARCHAR},
+ 			#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=zhywMap}
+         )}
+        ]]>
+   </select>
+	
+	<select id="getKhlxInfoByKhmc" parameterType="java.lang.String" resultType="com.swx.ibms.business.appraisal.bean.YwkhKhlxPz">
+		<![CDATA[
+			SELECT * FROM XT_YWGZ_KHLXPZ t WHERE t.khmc = #{khlxmc} AND ROWNUM < 2
+		]]>
+    </select>
+	
+</mapper>

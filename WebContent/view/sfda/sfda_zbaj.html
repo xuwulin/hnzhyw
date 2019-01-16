@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>司法档案-主办案件页面</title>
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/bootstrap/easyui.css">
+    <link href="../../css/thenewfile.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body>
+<div class="thenewfile">
+    <div class="title_url">
+    <span class="dagztitle" style="float: left; color:#666; line-height: 50px;font-size:18px;font-family:微软雅黑;"></span>
+        <button onclick="clickBack();">
+            <img src="../../image/fh.png" style="float: left;margin: 8px 5px 0 18px;">
+            <span style="display: inline-block;float: left;color: #095EDA;line-height: 30px;">返回</span>
+        </button>
+    </div>
+    <div class="conditions">
+            <div class="conditions_one">
+                <div class="conditions_two">
+                    <span>
+                        <p>办案效果</p>
+                    </span>
+                    <input type="text" id="baxg" name = "baxg">
+                </div>
+                <div class="conditions_three">
+                    <span>
+                        <p>违法行使职权情况</p>
+                    </span>
+                    <input type="text" id="wfxszqqk" name = "wfxszqqk">
+                </div>
+                <div class="conditions_two">
+                    <span>
+                        <p>办案安全</p>
+                    </span>
+                    <input type="text" id="baaq" name = "baaq">
+                </div>
+            </div>
+            <div class="conditions_one">
+                <div class="conditions_two">
+                    <span>
+                        <p>司法瑕疵</p>
+                    </span>
+                    <input type="text" id="sfxc" name = "sfxc">
+                </div>
+                <div class="conditions_three">
+                    <span>
+                        <p>案件质量评查结果</p>
+                    </span>
+                    <input type="text" id="ajzlpcjg" name = "ajzlpcjg">
+                </div>
+                <div  class="conditions_two">
+                    <button id="baocun" onclick="submitform()">保存</button>
+                </div>
+            </div>
+    </div>
+    <div class="content">
+        <div class="content1">
+            <div class="content1_tit">
+                <div style="background: url('../../image/ajxx.png') no-repeat;width: 22px;height: 22px;float: left;margin: 0 5px 0 5px;"></div>
+                <span style="color:#0360a9 ">案件信息</span>
+            </div>
+            <div class="content1_con">
+                <ul class="content_ul1">
+                    <li>案件名称 &nbsp;:&nbsp; <span id = "ajmc"></span></li>
+                    <li>案件类别 &nbsp;:&nbsp; <span id= "ajlb"></span></li>
+                    <li>承办单位 &nbsp;:&nbsp; <span id = "cbdw"></span></li>
+                    <li>承办部门 &nbsp;:&nbsp;  <span id="cbbm"></span></li>
+                </ul>
+                <ul class="content_ul1">
+                    <li>承办人 &nbsp;:&nbsp; <span id="cbr"></span></li>
+                    <li>案件状态 &nbsp;:&nbsp; <span id="ajzt"></span></li>
+                    <li>部门受案号 &nbsp;:&nbsp; <span id="bmsah"></span></li>
+                    <li>受理日期 &nbsp;:&nbsp; <span id="slrq"></span></li>
+                </ul>
+                <div style="width:100%;    overflow: hidden;">
+                   <span style="width: 6%; height: 100%;margin-left: 2%; float: left;"> 案情摘要 &nbsp;: &nbsp;</span>
+                    <p id="aqzy" style="width: 80%; display: inline-block;float: left;"></p>
+               </div>
+            </div>
+        </div>
+        <div class="content2">
+            <div class="content1_tit">
+                <div style="background: url('../../image/xyr.png') no-repeat;width: 22px;height: 22px;float: left;margin: 0 5px 0 5px;"></div>
+                <span style="color:#0360a9 ">嫌疑人信息</span>
+            </div>
+            <div class="content2_tab">
+                <ul id="xyrlist" class="content_tab1">
+                    <li>姓名</li>
+                    <li>姓别</li>
+                    <li>职务</li>
+                    <li>级别</li>
+                    <li>出生日期</li>
+                    <li>证件号码</li>
+                    <li>操作</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+<script type="text/javascript" src="../../js/zhyw/sfda/sfda_zbaj.js"></script>
+</html>

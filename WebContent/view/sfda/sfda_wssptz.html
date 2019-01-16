@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" name="" content="IE=edge,chrome=1"/>
+    <title>司法档案-文书审批情况</title>
+
+    <style type="text/css">
+        a {
+            color: blue;
+            text-decoration: none;
+        }
+
+        .table_czan_ys{
+            width: 30px;
+            height: 18px;
+            display: inline-block;
+            line-height: 18px;
+            border: 1px solid #4B97D8;
+            border-radius: 3px;
+            color: #4B97D8;
+        }
+
+        .table_czan_ys:hover{
+            background: #4B97D8;
+            color: #fff;
+        }
+
+        .archives_search {
+            background: #0674D3;
+            width: 76px;
+            height: 26px;
+            border: 1px solid #0674D3;
+            color: #fff;
+            margin-right: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            outline: none;
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="../../css/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/SFGL_YSDA.css"/>
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/bootstrap/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../../css/paging.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/zTreeStyle/ztreedemo.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/zTreeStyle/zTreeStyle.css"/>
+
+    <script type="text/javascript" src="../../js/plugin/echarts-all.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/zhyw/macarons.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/history.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/paging.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/swx_component.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/contentstree.js"></script>
+    <script type="text/javascript" src="../../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/base64.js"></script>
+</head>
+
+<body style="height: 1000px;">
+<div class="top_url">
+    <span class="dagztitle" style="float: left; color:#666; line-height: 50px;font-size:18px;margin-left:21%;font-family:微软雅黑;"></span>
+</div>
+<div class="content">
+    <!--左侧树形导航-->
+    <div class="contents_tree">
+        <ul class="tree_ul"></ul>
+    </div>
+    <!--右侧内容体-->
+    <div class="contents_details" style="height: 1000px;">
+        <div style="width: 98%; margin: 15px 1% 0;">
+
+            <div class="wssptz_one" id="div_wssptz" rigth-name="wssptz">
+                <div class="wssptz_right">
+                    <div style="margin-bottom: 20px;">
+                        <div class="examine_table_xxnr">
+                            <div id="wssptz_title" style="width: 100%;height: 40px;border-bottom: 1px solid #B1D4EA;margin-bottom: 10px;">
+                                <span  style="color: #0674D3;line-height: 40px;display: inline-block;">案件文书审批情况</span>
+                            </div>
+
+                            <div id="search-toolbar" style="min-height: 20px;height:auto;padding:10px;">
+                                <label style="font-size: 14px;color: #0674D3;display: inline-block;margin-left: 20px;">选择时间：</label>
+                                <input type="text" id="kssj" name="kssj" class="textbo" style="height: 30px"> -
+                                <input type="text" id="jssj" name="jssj" class="textbo" style="height: 30px">
+                                <button id="searchWs" class="archives_search" style="height:30px;margin-right:600px;float: right">查询</button>
+                            </div>
+
+                            <p style="color: #0674D3;">审批案件列表</p>
+                            <br>
+                            <span id="spaj">
+								<table id="spaj_table"></table>
+							</span>
+
+                            <br>
+                            <p style="color: #0674D3;">审批文书列表</p>
+                            <!--<p style="color: #0674D3;">审批文书总数：<span id="countsOfWs" style="color: red;"></span></p>-->
+                            <br/>
+                            <!-- 文书审批台账展示 -->
+                            <span id="wssptz">
+								<table id="wssptz_table"></table>
+							</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 文书审批台账详情查看弹出框 -->
+<div id="showWsDetail" class="showWsDetail">
+    <!-- 文书审批台账展示 -->
+    <span id="wssptzDetail">
+		<table id="wssptzDetail_table"></table>
+	</span>
+</div>
+
+
+<script type="text/javascript" src="../../js/zhyw/sfda/sfda_base.js"></script>
+<script type="text/javascript" src="../../js/zhyw/sfda/sfda_wssptz.js"></script>
+<script type="text/javascript">
+    //resizeParentIframe();
+    $('#spyj').textbox({
+        width: 350,
+        height: 32
+    });
+    resizeParentIframe();
+    $('body').on('click', '.tree_ul a', function () {
+        resizeParentIframe();
+    });
+    // $(function () {
+    //     $extend($.fn.validatebox.defaults.rules,{
+    //         CHS:{
+    //             validator:function (value) {
+    //                 return /^[\u0391-\uFFE5]+$/.test(value)
+    //             },
+    //             message:"汉字"
+    //         }
+    //     })
+    // })
+
+</script>
+</body>
+</html>

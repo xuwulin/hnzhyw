@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>个人绩效交叉核查配置页面</title>
+	<link rel="stylesheet" type="text/css" href="../../../css/xtpz_hcpz.css" />
+	<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/bootstrap/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/icon.css">
+	<!--<link type="text/css" rel="stylesheet" href="../../../js/plugin/easyui/themes/default/easyui.css" />-->
+	<link rel="stylesheet" href="../../../css/zTreeStyle/ztreedemo.css" type="text/css" />
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css" />
+<style type="text/css">
+	/*.left_ul li:nth-of-type(9) a{*/
+		/*background-color:#0876D5;*/
+		/*color:#fff;*/
+		/*border: 1px solid #0876D5;*/
+		/*cursor:pointer;*/
+	/*}*/
+</style>
+
+	<script type="text/javascript" src="../../../js/plugin/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../js/plugin/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../../../js/zhyw/utils/constant.js"></script>
+	<script type="text/javascript" src="../../../js/zhyw/utils/common.js"></script>
+	<script type="text/javascript" src="../../../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+</head>
+<body>
+       <div >
+               <!--<div class="xtpz_top">当前位置 : 系统配置</div> -->
+               <!--<div class="xtpz_content">-->
+                        <!--<div class="content_left">-->
+                            <!--<div class="left_tree"></div>-->
+                        <!--</div>-->
+                     <!--<div class="content_right">-->
+                        <!--<div class="right_top">-->
+                               <!--<img src="../../../image/icon_sd.png" style="float: left;margin: 17px 12px 0px 12px; ">核查配置-->
+                        <!--</div>-->
+                        
+                        <!-- datagrid -->
+                        <div >
+                        	<table id="hcpz_dg"></table>
+							<!-- toolbar -->
+							<div id="hcpz_tb" style="height: auto; padding: 10px;">
+								<span style="float: left;padding-top:3px;padding-left:10px;">单位:</span>
+							<!-- 单位树 -->
+								<div style="float:left;height: 20px;margin-top: 2px; position: relative; margin-left: 10px;padding-left: 5px;width: 18%; border: 1px solid #c1c1c1; border-radius: 4px;">
+									<input id="citySel2" type="text" readonly style="border: none; width: 90%" /> 
+									<a id="menuBtn2" href="#" onclick="showMenu2(); return false;" class="a_style" style="height: 20px;background: url('../../../js/plugin/easyui/themes/bootstrap/images/combo_arrow.png') no-repeat center center; background-color: #F2F2F2"></a>
+									<div id="menuContent2"
+										style="display: none; position: absolute; z-index: 2;">
+									<ul id="treeDemo2" class="ztree"
+										style="margin-top: 0; width: 88%; background-color: #fff"></ul>
+									</div>
+								</div>
+							<!-- 单位树 -->
+							    <a id="addButton" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="showDouncedA();" style="margin-left: 10px;">添加</a>
+							    <a id="editButton" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="showDouncedB();"style="margin-left: 10px;">修改</a>
+							    <a id="delButton" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="hcpzDel()" style="margin-left: 10px;">删除</a>
+							    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="clearLoad()" style="    margin-left: 10px;">重新加载</a>
+							</div>
+                        
+                        </div>
+                        <!--  -->
+		             <!--</div>-->
+               <!--</div>-->
+       </div>
+<!--        弹框 -->
+       <div id="xjtjnfDetail" class="bounced" style="display: none">
+			<div class="bounced_all">
+				<div class="xiadivbt1" style="margin-top: 40px;">
+					<span><p>业务类型:</p></span> 
+					<select id="ywlxcombobox" class="easyui-combobox" name="dept" style="width:300px;height:32px;">    
+					</select> 
+				</div>
+				<div class="xiadivbt1">
+					<span><p>核查单位:</p></span> 
+					<div style="height: 32px; position: relative; width: 298px; border: 1px solid #c1c1c1; border-radius: 4px;    float: left;">
+						<input id="citySel1" type="text" readonly style="border: none; width: 90%" /> 
+						<a id="menuBtn1" href="#" onclick="showMenu1(); return false;" class="a_style" style="background: url('../../../js/plugin/easyui/themes/bootstrap/images/combo_arrow.png') no-repeat center center; background-color: #F2F2F2"></a>
+						<div id="menuContent1"
+							style="display: none; position: absolute; z-index: 2;">
+							<ul id="treeDemo1" class="ztree"
+								style="margin-top: 0; width: 133%; background-color: #fff"></ul>
+						</div>
+					</div>
+				</div>
+				<div class="xiadivbt1" >
+					<span><p>被核查单位:</p></span> 
+					<div style="height: 32px; position: relative; width: 298px; border: 1px solid #c1c1c1; border-radius: 4px;    float: left;">
+						<input id="citySel" type="text" readonly style="border: none; width: 90%" /> 
+						<a id="menuBtn" href="#" onclick="showMenu(); return false;" class="a_style" style="background: url('../../../js/plugin/easyui/themes/bootstrap/images/combo_arrow.png') no-repeat center center; background-color: #F2F2F2"></a>
+						<div id="menuContent"
+							style="display: none; position: absolute; z-index: 2;">
+							<ul id="treeDemo" class="ztree"
+								style="margin-top: 0; width: 133%; background-color: #fff"></ul>
+						</div>
+					</div>
+				</div>
+				<div class="xiadivbt1" hidden=hidden>
+					<span><p>开始时间:</p></span> 
+					<input  id="kssj"  type= "text" class= "easyui-datebox" required ="required" style="width: 300px;height:32px;    border: 1px solid #c1c1c1;"> </input>  
+				</div>
+				<div class="xiadivbt1" hidden=hidden>
+					<span><p>结束时间:</p></span> 
+					<input  id="jssj"  type= "text" class= "easyui-datebox" required ="required" style="width: 300px;height:32px;    border: 1px solid #c1c1c1;"> </input>  
+				</div>
+				<div class="xiadivbt1" >
+					<span><p>选择添加年份:</p></span> 
+					<select id="hcnd" class="easyui-combobox" name="dept" style="width:300px;height:32px;">
+					</select> 
+				</div>
+				<div class="xiadivbt1" >
+					<span><p>选择添加季度:</p></span> 
+					<select id="hcjd" class="easyui-combobox" name="dept" style="width:300px;height:32px;"> 
+						<option value="1">第一季度</option>
+						<option value="2">第二季度</option>
+						<option value="3">第三季度</option>
+						<option value="4">第四季度</option>
+					</select> 
+				</div>
+				<span id="msg" hidden=hidden style="color: red;margin-left: 120px;">请输入正确的数据</span>
+				<div class="xiadivbt" style="margin-top: 40px;">
+					<input type="button" onclick="closeDounced();" value="取消" style="background:#fff;border:1px solid #c1c1c1;color:#666;">
+					 <input type="button" onclick="jccuowu();" value="确定" style="margin-right: 10px;" />
+				</div>
+			</div>
+		</div>
+</body>
+<script type="text/javascript">
+	// $(".left_tree").load("../left_menu.html");
+	
+	var sdwjb = top.currentUserInfo.dwjb;
+	if(sdwjb!=2){
+		$("#xtpzgl").css("display","none");
+	}
+
+	// $(".left_ul li a").click(function(){
+	// 	$('.xtpzli').removeClass('xtpzli');
+	// 	$(this).addClass('xtpzli');
+	// });
+	function showDounced() {
+		parent.ifeblick();
+		$("#xjtjnfDetail").fadeIn("fast");
+	}
+	function closeDounced() {
+		parent.ifenone();
+		$("#xjtjnfDetail").fadeOut("fast");
+	}
+</script>
+<script type="text/javascript" src="../../../js/zhyw/xtgl/xtpz_hcpz.js"></script>
+</html>

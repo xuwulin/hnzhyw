@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swx.ibms.business.performance.mapper.XtGrjxBmlbMapper" >
+
+    <resultMap id="BaseResultMap" type="com.swx.ibms.business.performance.bean.XtGrjxBmlb" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="BMLBMC" property="bmlbmc" jdbcType="VARCHAR" />
+        <result column="BMLBBM" property="bmlbbm" jdbcType="VARCHAR" />
+        <result column="CREATEBY" property="createby" jdbcType="VARCHAR" />
+        <result column="CREATEDATE" property="createdate" jdbcType="VARCHAR" />
+        <result column="UPDATEBY" property="updateby" jdbcType="VARCHAR" />
+        <result column="UPDATEDATE" property="updatedate" jdbcType="VARCHAR" />
+        <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+        <result column="XH" property="xh" jdbcType="DECIMAL" />
+        <result column="DELFLAG" property="delflag" jdbcType="CHAR" />
+    </resultMap>
+
+    <select id="selectAllBmlb" resultMap="BaseResultMap">
+        select * from xt_grjx_bmlb
+        WHERE DELFLAG = 'N'
+        ORDER BY xh,CREATEDATE,UPDATEDATE
+    </select>
+
+    <insert id="insertBmlb">
+        insert into xt_grjx_bmlb (  id,
+                                    bmlbmc,
+                                    bmlbbm,
+                                    CREATEBY,
+                                    CREATEDATE,
+                                    REMARKS,
+                                    XH,
+                                    DELFLAG)
+                          values (  #{id},
+                                    #{bmlbmc},
+                                    #{bmlbbm},
+                                    #{cjr},
+                                    #{cjsj},
+                                    #{ms},
+                                    #{xh},
+                                    'N'
+                                 )
+    </insert>
+
+    <update id="updateBmlb">
+        update xt_grjx_bmlb set bmlbmc = #{bmlbmc},
+                                UPDATEBY = #{gxr},
+                                UPDATEDATE = #{gxsj},
+                                REMARKS = #{ms},
+                                XH = #{xh}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBmlb">
+        delete from xt_grjx_bmlb where id = #{id}
+    </delete>
+
+    <select id="getMaxBmlbbm" resultType="java.lang.String">
+        select max(to_number(bmlbbm)) bmlbbm
+        from xt_grjx_bmlb
+    </select>
+
+    <select id="isExistBmlbmc" resultType="java.lang.Integer">
+        select count(bmlbmc)
+        from xt_grjx_bmlb
+        where bmlbmc = #{bmlbmc}
+    </select>
+
+    <select id="getGrjxBmlbList" resultMap="BaseResultMap">
+        select * from xt_grjx_bmlb
+        WHERE DELFLAG = 'N'
+        ORDER BY UPDATEDATE,CREATEDATE
+    </select>
+
+    <select id="getBmlbByBmlbbm" resultMap="BaseResultMap">
+      select * from xt_grjx_bmlb
+      where DELFLAG = 'N'
+        and bmlbbm = #{bmlbbm}
+    </select>
+</mapper>

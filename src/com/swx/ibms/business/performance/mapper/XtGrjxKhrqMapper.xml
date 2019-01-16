@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swx.ibms.business.performance.mapper.XtGrjxKhrqMapper" >
+
+    <resultMap id="BaseResultMap" type="com.swx.ibms.business.performance.bean.XtGrjxKhrq" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="KSRQ" property="ksrq" jdbcType="VARCHAR" />
+        <result column="JSRQ" property="jsrq" jdbcType="VARCHAR" />
+        <result column="CREATEBY" property="createby" jdbcType="VARCHAR" />
+        <result column="CREATEDATE" property="createdate" jdbcType="TIMESTAMP" />
+        <result column="UPDATEBY" property="updateby" jdbcType="VARCHAR" />
+        <result column="UPDATEDATE" property="updatedate" jdbcType="TIMESTAMP" />
+        <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+        <result column="XH" property="xh" jdbcType="DECIMAL" />
+        <result column="DELFLAG" property="delflag" jdbcType="CHAR" />
+        <result column="DEADLINE" property="deadline" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, KSRQ, JSRQ, CREATEBY, CREATEDATE, UPDATEBY, UPDATEDATE, REMARKS, XH, DELFLAG,DEADLINE
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from XT_GRJX_KHRQ
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from XT_GRJX_KHRQ
+        where ID = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.swx.ibms.business.performance.bean.XtGrjxKhrq" >
+        insert into XT_GRJX_KHRQ (ID, KSRQ, JSRQ,
+            CREATEBY, CREATEDATE, UPDATEBY, 
+            UPDATEDATE, REMARKS, XH, 
+            DELFLAG,DEADLINE)
+        values (#{id,jdbcType=VARCHAR}, #{ksrq,jdbcType=VARCHAR}, #{jsrq,jdbcType=VARCHAR}, 
+            #{createby,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{updateby,jdbcType=VARCHAR}, 
+            #{updatedate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{xh,jdbcType=DECIMAL}, 
+            #{delflag,jdbcType=CHAR},#{deadline})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.swx.ibms.business.performance.bean.XtGrjxKhrq" >
+        insert into XT_GRJX_KHRQ
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                ID,
+            </if>
+            <if test="ksrq != null" >
+                KSRQ,
+            </if>
+            <if test="jsrq != null" >
+                JSRQ,
+            </if>
+            <if test="createby != null" >
+                CREATEBY,
+            </if>
+            <if test="createdate != null" >
+                CREATEDATE,
+            </if>
+            <if test="updateby != null" >
+                UPDATEBY,
+            </if>
+            <if test="updatedate != null" >
+                UPDATEDATE,
+            </if>
+            <if test="remarks != null" >
+                REMARKS,
+            </if>
+            <if test="xh != null" >
+                XH,
+            </if>
+            <if test="delflag != null" >
+                DELFLAG,
+            </if>
+            <if test="deadline != null" >
+                DEADLINE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="ksrq != null" >
+                #{ksrq,jdbcType=VARCHAR},
+            </if>
+            <if test="jsrq != null" >
+                #{jsrq,jdbcType=VARCHAR},
+            </if>
+            <if test="createby != null" >
+                #{createby,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null" >
+                #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateby != null" >
+                #{updateby,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedate != null" >
+                #{updatedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="xh != null" >
+                #{xh,jdbcType=DECIMAL},
+            </if>
+            <if test="delflag != null" >
+                #{delflag,jdbcType=CHAR},
+            </if>
+            <if test="deadline != null" >
+                DEADLINE = #{deadline},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.swx.ibms.business.performance.bean.XtGrjxKhrq" >
+        update XT_GRJX_KHRQ
+        <set >
+            <if test="ksrq != null" >
+                KSRQ = #{ksrq,jdbcType=VARCHAR},
+            </if>
+            <if test="jsrq != null" >
+                JSRQ = #{jsrq,jdbcType=VARCHAR},
+            </if>
+            <if test="createby != null" >
+                CREATEBY = #{createby,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null" >
+                CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateby != null" >
+                UPDATEBY = #{updateby,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedate != null" >
+                UPDATEDATE = #{updatedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                REMARKS = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="xh != null" >
+                XH = #{xh,jdbcType=DECIMAL},
+            </if>
+            <if test="delflag != null" >
+                DELFLAG = #{delflag,jdbcType=CHAR},
+            </if>
+            <if test="deadline != null" >
+                DEADLINE = #{deadline},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.swx.ibms.business.performance.bean.XtGrjxKhrq" >
+        update XT_GRJX_KHRQ
+        set KSRQ = #{ksrq,jdbcType=VARCHAR},
+            JSRQ = #{jsrq,jdbcType=VARCHAR},
+            CREATEBY = #{createby,jdbcType=VARCHAR},
+            CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+            UPDATEBY = #{updateby,jdbcType=VARCHAR},
+            UPDATEDATE = #{updatedate,jdbcType=TIMESTAMP},
+            REMARKS = #{remarks,jdbcType=VARCHAR},
+            XH = #{xh,jdbcType=DECIMAL},
+            DELFLAG = #{delflag,jdbcType=CHAR}
+            DEADLINE = #{deadline}
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <select id="getGrjxKhrqPzList" resultType="com.swx.ibms.business.performance.bean.XtGrjxKhrq">
+        select
+          <include refid="Base_Column_List" />
+        from XT_GRJX_KHRQ ORDER BY UPDATEDATE,CREATEDATE
+    </select>
+
+    <!-- 查询最新的一条考核日期配置<include refid="Base_Column_List" /> -->
+    <select id="getGrjxKhrqPzLatest" resultType="com.swx.ibms.business.performance.bean.XtGrjxKhrq">
+        <![CDATA[
+          SELECT * FROM (
+            select * FROM XT_GRJX_KHRQ WHERE DELFLAG = 'N' ORDER BY CREATEDATE desc,updatedate desc
+             ) where rownum < 2
+         ]]>
+    </select>
+
+</mapper>

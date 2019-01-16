@@ -1,0 +1,2155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.performance.mapper.GrjxAjWsMapper">
+
+	<!--指定时间段内受理的案件：适用于每个部门-->
+	<select id="getAjOfAccepted" resultType="java.util.HashMap">
+		select t.bmsah,
+			   t.tysah,
+			   t.ajmc,
+			   t.ajlb_mc,
+			   t.ajlb_bm,
+			   t.cbr,
+			   t.cbrgh,
+			   t.cbbm_mc,
+			   t.cbbm_bm,
+			   t.slrq
+        from TYYW_GG_AJJBXX_TYYW t
+        where t.sfsc = 'N'
+          and t.cbdw_bm = #{dwbm}
+          and t.cbrgh = #{gh}
+          and t.slrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+	</select>
+
+	<!--【案件完结日期需要根据文书来判断】指定时间段内办结的案件：【刑申】-->
+	<select id="getAj" resultType="java.util.HashMap">
+		select a.bmsah,
+		a.tysah,
+		a.ajmc,
+		a.ajlb_mc,
+		a.ajlb_bm,
+		a.cbr,
+		a.cbrgh,
+		a.cbbm_mc,
+		a.cbbm_bm,
+		a.slrq,
+		(case when (select max(ws.sprq) sprq
+		from yx_ws_sl_tyyw ws
+		where ws.bmsah = a.bmsah
+		and ws.tysah = a.tysah
+		and ws.sfsc = 'N'
+		and ws.wsmbbh in ('100000090009', '100000090018', '100000090020', '100000090021',
+		'100000090031', '100000090032', '100000090053', '100000090062',
+		'100000090064', '100000090077', '100000090080', '100000090082',
+		'100000090083', '100000090088', '100000090092', '100000090096','100000090110'
+		)
+		) is not null
+		or
+		(select max(ws.sprq) sprq
+		from yx_ws_sl_tyyw ws
+		where ws.bmsah = a.bmsah
+		and ws.tysah = a.tysah
+		and ws.sfsc = 'N'
+		and ws.wsmbbh in ('100000090009', '100000090018', '100000090020', '100000090021',
+		'100000090031', '100000090032', '100000090053', '100000090062',
+		'100000090064', '100000090077', '100000090080', '100000090082',
+		'100000090083', '100000090088', '100000090092', '100000090096','100000090110'
+		)
+		) != ''
+		then (select max(ws.sprq) sprq
+		from yx_ws_sl_tyyw ws
+		where ws.bmsah = a.bmsah
+		and ws.tysah = a.tysah
+		and ws.sfsc = 'N'
+		and ws.wsmbbh in ('100000090009', '100000090018', '100000090020', '100000090021',
+		'100000090031', '100000090032', '100000090053', '100000090062',
+		'100000090064', '100000090077', '100000090080', '100000090082',
+		'100000090083', '100000090088', '100000090092', '100000090096','100000090110'
+		)
+		)
+		else (select aj.wcrq
+		from tyyw_gg_ajjbxx_tyyw aj
+		where aj.bmsah = a.bmsah
+		and aj.tysah = a.tysah
+		)
+		end) as wjrq
+		from (
+		select t.bmsah,
+		t.tysah,
+		t.ajmc,
+		t.ajlb_mc,
+		t.ajlb_bm,
+		t.cbr,
+		t.cbrgh,
+		t.cbbm_mc,
+		t.cbbm_bm,
+		t.slrq
+		from tyyw_gg_ajjbxx_tyyw t
+		inner join yx_ws_sl_tyyw w on t.bmsah = w.bmsah and t.tysah = w.tysah
+		where t.cbdw_bm = #{dwbm}
+		and t.cbrgh = #{gh}
+		and t.ajzt in ('2', '3')  <!--案件状态2：已办结；3：已归档-->
+		and t.sfsc = 'N'
+		and w.sfsc = 'N'
+		and (case when (select max(ws.sprq) sprq
+		from yx_ws_sl_tyyw ws
+		where ws.bmsah = t.bmsah
+		and ws.tysah = t.tysah
+		and ws.sfsc = 'N'
+		and ws.wsmbbh in ('100000090009', '100000090018', '100000090020', '100000090021',
+		'100000090031', '100000090032', '100000090053', '100000090062',
+		'100000090064', '100000090077', '100000090080', '100000090082',
+		'100000090083', '100000090088', '100000090092', '100000090096','100000090110'
+		)
+		) is not null
+		or
+		(select max(ws.sprq) sprq
+		from yx_ws_sl_tyyw ws
+		where ws.bmsah = t.bmsah
+		and ws.tysah = t.tysah
+		and ws.sfsc = 'N'
+		and ws.wsmbbh in ('100000090009', '100000090018', '100000090020', '100000090021',
+		'100000090031', '100000090032', '100000090053', '100000090062',
+		'100000090064', '100000090077', '100000090080', '100000090082',
+		'100000090083', '100000090088', '100000090092', '100000090096','100000090110'
+		)
+		) != ''
+		then (select max(ws.sprq) sprq
+		from yx_ws_sl_tyyw ws
+		where ws.bmsah = t.bmsah
+		and ws.tysah = t.tysah
+		and ws.sfsc = 'N'
+		and ws.wsmbbh in ('100000090009', '100000090018', '100000090020', '100000090021',
+		'100000090031', '100000090032', '100000090053', '100000090062',
+		'100000090064', '100000090077', '100000090080', '100000090082',
+		'100000090083', '100000090088', '100000090092', '100000090096','100000090110'
+		)
+		)
+		else t.wcrq
+		end) between to_date(#{kssj}, 'yyyy-MM-dd') and to_date(#{jssj}, 'yyyy-MM-dd')
+		group by t.bmsah, t.tysah, t.ajmc, t.ajlb_mc, t.ajlb_bm, t.cbr, t.cbrgh, t.cbbm_mc, t.cbbm_bm, t.slrq
+		) a
+	</select>
+
+	<!--【受理日期和完成日期】都在指定时间段内办结的案件：【检查技术】-->
+	<select id="queryBjAj" resultType="java.util.HashMap">
+		select t.bmsah,
+		t.tysah,
+		t.ajmc,
+		t.ajlb_mc,
+		t.ajlb_bm,
+		t.cbr,
+		t.cbrgh,
+		t.cbbm_mc,
+		t.cbbm_bm,
+		t.slrq,
+		t.wcrq wjrq
+		from tyyw_gg_ajjbxx_tyyw t
+		where t.cbdw_bm = #{dwbm}
+		and t.cbrgh = #{gh}
+		and t.ajzt in ('2', '3')  <!--案件状态2：已办结；3：已归档-->
+		and t.sfsc = 'N'
+		and t.slrq between to_date(#{kssj}, 'yyyy-MM-dd') and to_date(#{jssj}, 'yyyy-MM-dd')
+		and t.wcrq between to_date(#{kssj}, 'yyyy-MM-dd') and to_date(#{jssj}, 'yyyy-MM-dd')
+		group by t.bmsah, t.tysah, t.ajmc, t.ajlb_mc, t.ajlb_bm, t.cbr, t.cbrgh, t.cbbm_mc, t.cbbm_bm, t.slrq, t.wcrq
+	</select>
+
+	<!--【受理日期和完成日期】都在指定时间段内的【检验鉴定和技术性证据审查】这两类案件的办结的案件：【检查技术】-->
+	<select id="queryBjAjOfJyAndJs" resultType="java.util.HashMap">
+		select t.bmsah,
+		t.tysah,
+		t.ajmc,
+		t.ajlb_mc,
+		t.ajlb_bm,
+		t.cbr,
+		t.cbrgh,
+		t.cbbm_mc,
+		t.cbbm_bm,
+		t.slrq,
+		t.wcrq,
+		t.bjrq,
+		t.dqrq
+		from tyyw_gg_ajjbxx_tyyw t
+		where t.cbdw_bm = #{dwbm}
+		and t.cbrgh = #{gh}
+		and t.ajzt in ('2', '3')  <!--案件状态2：已办结；3：已归档-->
+		and t.ajlb_bm in ('1304', '1305')
+		and t.sfsc = 'N'
+		and t.slrq between to_date(#{kssj}, 'yyyy-MM-dd') and to_date(#{jssj}, 'yyyy-MM-dd')
+		and t.wcrq between to_date(#{kssj}, 'yyyy-MM-dd') and to_date(#{jssj}, 'yyyy-MM-dd')
+		group by t.bmsah, t.tysah, t.ajmc, t.ajlb_mc, t.ajlb_bm, t.cbr, t.cbrgh, t.cbbm_mc, t.cbbm_bm, t.slrq, t.wcrq, t.bjrq, t.dqrq
+	</select>
+
+	<!--【完成日期】在指定时间内的案件，案件状态为已办/归档，案件的当前阶段为流程结束:【公诉】-->
+	<select id="selectBjAj" resultType="java.util.HashMap">
+		select t.bmsah,
+		t.tysah,
+		t.ajmc,
+		t.ajlb_mc,
+		t.ajlb_bm,
+		t.cbr,
+		t.cbrgh,
+		t.cbbm_mc,
+		t.cbbm_bm,
+		t.slrq,
+		t.wcrq wjrq,
+		t.dqjd
+		from tyyw_gg_ajjbxx_tyyw t
+		where t.cbdw_bm = #{dwbm}
+		and t.cbrgh = #{gh}
+		and t.ajzt in ('2', '3')  <!--案件状态2：已办结；3：已归档-->
+		and t.dqjd = '流程结束'
+		and t.sfsc = 'N'
+		and t.wcrq between to_date(#{kssj}, 'yyyy-MM-dd') and to_date(#{jssj}, 'yyyy-MM-dd')
+		group by t.bmsah, t.tysah, t.ajmc, t.ajlb_mc, t.ajlb_bm, t.cbr, t.cbrgh, t.cbbm_mc, t.cbbm_bm, t.slrq, t.wcrq, t.dqjd
+	</select>
+
+	<!--查询某一部门所办结的案件总数 【公诉】-->
+	<select id="selectBjAjOfBm" resultType="java.util.HashMap">
+		select t.bmsah,
+		t.tysah,
+		t.ajmc,
+		t.ajlb_mc,
+		t.ajlb_bm,
+		t.cbr,
+		t.cbrgh,
+		t.cbbm_mc,
+		t.cbbm_bm,
+		t.slrq,
+		t.wcrq wjrq,
+		t.dqjd
+		from tyyw_gg_ajjbxx_tyyw t
+		where t.cbdw_bm = #{dwbm}
+		and t.cbbm_bm = #{bmbm}
+		and t.ajzt in ('2', '3')  <!--案件状态2：已办结；3：已归档-->
+		and t.dqjd = '流程结束'
+		and t.sfsc = 'N'
+		and t.wcrq between to_date(#{kssj}, 'yyyy-MM-dd') and to_date(#{jssj}, 'yyyy-MM-dd')
+		group by t.bmsah, t.tysah, t.ajmc, t.ajlb_mc, t.ajlb_bm, t.cbr, t.cbrgh, t.cbbm_mc, t.cbbm_bm, t.slrq, t.wcrq, t.dqjd
+	</select>
+
+	<!--【受理日期】在指定日期内的 案件状态为已办或归档的案件 为办结案件：【侦监、执检（检察官）】-->
+	<select id="selectBjAjOfZj" resultType="java.util.HashMap">
+		select t.bmsah,
+		t.tysah,
+		t.ajmc,
+		t.ajlb_mc,
+		t.ajlb_bm,
+		t.cbr,
+		t.cbrgh,
+		t.cbbm_mc,
+		t.cbbm_bm,
+		t.slrq,
+		t.wcrq wjrq
+		from tyyw_gg_ajjbxx_tyyw t
+		where t.cbdw_bm = #{dwbm}
+		and t.cbrgh = #{gh}
+		and t.ajzt in ('2', '3')  <!--案件状态2：已办结；3：已归档-->
+		and t.sfsc = 'N'
+		and t.slrq between to_date(#{kssj}, 'yyyy-MM-dd') and to_date(#{jssj}, 'yyyy-MM-dd')
+		group by t.bmsah, t.tysah, t.ajmc, t.ajlb_mc, t.ajlb_bm, t.cbr, t.cbrgh, t.cbbm_mc, t.cbbm_bm, t.slrq, t.wcrq
+	</select>
+
+	<!--【执检 检察辅助人员的办结案件】检察文书、流转签发单最后一位审核人的审核日期在考核日期内：【执检（检察辅助人员）】-->
+	<select id="selectBjAjOfZjJf" resultType="java.util.HashMap">
+		select *
+		from (
+			select a.bmsah,
+				   a.tysah,
+				   a.ajmc,
+				   a.ajlb_mc,
+				   a.ajlb_bm,
+				   a.cbr,
+				   a.cbrgh,
+				   a.cbbm_mc,
+				   a.cbbm_bm,
+				   a.slrq,
+				   (select max(ws.sprq) sprq
+					from yx_ws_sl_tyyw ws
+					where ws.bmsah = a.bmsah
+					  and ws.tysah = a.tysah
+					  and ws.sfsc = 'N'
+				   ) as wjrq
+			from (
+				  select t.bmsah,
+						 t.tysah,
+						 t.ajmc,
+						 t.ajlb_mc,
+						 t.ajlb_bm,
+						 t.cbr,
+						 t.cbrgh,
+						 t.cbbm_mc,
+						 t.cbbm_bm,
+						 t.slrq
+				  from tyyw_gg_ajjbxx_tyyw t
+				  inner join yx_ws_sl_tyyw w on t.bmsah = w.bmsah and t.tysah = w.tysah
+				  where t.cbdw_bm = #{dwbm}
+					and t.cbrgh = #{gh}
+					and t.sfsc = 'N'
+					and w.sfsc = 'N'
+				  group by t.bmsah, t.tysah, t.ajmc, t.ajlb_mc, t.ajlb_bm, t.cbr, t.cbrgh, t.cbbm_mc, t.cbbm_bm, t.slrq
+			) a
+		)
+		where wjrq between to_date(#{kssj}, 'yyyy-MM-dd') and to_date(#{jssj}, 'yyyy-MM-dd')
+	</select>
+
+	<!--【侦监】：追加逮捕的犯罪嫌疑人被依法批准逮捕的，加分0.3分/人-->
+	<select id="selectZj1" resultType="java.util.HashMap">
+		select t.bmsah,
+		t.tysah,
+		t.ajmc,
+		t.ajlb_mc,
+		t.ajlb_bm,
+		t.cbr,
+		t.cbrgh,
+		t.cbbm_mc,
+		t.cbbm_bm,
+		t.slrq,
+		t.wcrq
+		from tyyw_gg_ajjbxx_tyyw t
+		inner join yx_ws_sl_tyyw w on t.bmsah = w.bmsah and t.tysah = w.tysah
+		where t.cbdw_bm = #{dwbm}
+		and t.cbrgh = #{gh}
+		and t.ajzt in ('2', '3')  <!--案件状态2：已办结；3：已归档-->
+		and t.sfsc = 'N'
+		and w.sfsc = 'N'
+		and w.wsmbbh in ('100000020337', '100000020338', '100000020306')
+		and t.slrq between to_date(#{kssj}, 'yyyy-MM-dd') and to_date(#{jssj}, 'yyyy-MM-dd')
+		group by t.bmsah, t.tysah, t.ajmc, t.ajlb_mc, t.ajlb_bm, t.cbr, t.cbrgh, t.cbbm_mc, t.cbbm_bm, t.slrq, t.wcrq
+	</select>
+
+	<!--【侦监】：监督行政执法部门移送涉嫌犯罪案件的，加分0.4分/件-->
+	<select id="selectZj2" resultType="java.util.HashMap">
+		SELECT GG.*
+		FROM TYYW_GG_AJJBXX_TYYW GG
+		INNER JOIN TYYW_ZJ_LAJD_TYYW JD ON GG.BMSAH = JD.BMSAH AND JD.SFSC = 'N'
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON GG.BMSAH = XYR.BMSAH AND XYR.SFSC = 'N'
+		WHERE GG.SFSC = 'N'
+		AND GG.CBDW_BM = #{dwbm}
+		AND GG.CBRGH = #{gh}
+		AND GG.AJLB_BM = '0204'
+		AND JD.XZZFJGYSRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND JD.XZZFJGYSRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND JD.JDLX_DM = '0225123040300'
+
+		UNION ALL
+
+		SELECT GG.*
+		FROM TYYW_GG_AJJBXX_TYYW GG
+		INNER JOIN TYYW_WJ_LAJD_TYYW JD ON GG.BMSAH = JD.BMSAH AND JD.SFSC = 'N'
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON GG.BMSAH = XYR.BMSAH AND XYR.SFSC = 'N'
+		WHERE GG.SFSC = 'N'
+		AND GG.CBDW_BM = #{dwbm}
+		AND GG.CBRGH = #{gh}
+		AND GG.AJLB_BM='1704'
+		AND JD.XZZFJGYSRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND JD.XZZFJGYSRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND JD.JDLX_DM = '0225123040300'
+	</select>
+
+	<!--【侦监】：监督行政执法机关移送后公安机关直接立案的，加分0.5分/件-->
+	<select id="selectZj3" resultType="java.util.HashMap">
+		SELECT GG.*
+		FROM TYYW_GG_AJJBXX_TYYW GG
+		INNER JOIN TYYW_ZJ_LAJD_TYYW JD ON GG.BMSAH = JD.BMSAH AND JD.SFSC = 'N'
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON GG.BMSAH = XYR.BMSAH AND XYR.SFSC = 'N'
+		WHERE GG.SFSC = 'N'
+		AND GG.CBDW_BM = #{dwbm}
+		AND GG.CBRGH = #{gh}
+		AND GG.AJLB_BM = '0204'
+		AND JD.LARQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND JD.LARQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND JD.JDLX_DM = '0225123040300'
+		AND JD.LAJG_DM BETWEEN '9901190102000' AND '9901190102999'
+
+		UNION ALL
+
+		SELECT GG.*
+		FROM TYYW_GG_AJJBXX_TYYW GG
+		INNER JOIN TYYW_WJ_LAJD_TYYW JD ON GG.BMSAH = JD.BMSAH AND JD.SFSC = 'N'
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON GG.BMSAH = XYR.BMSAH AND XYR.SFSC = 'N'
+		WHERE GG.SFSC = 'N'
+		AND GG.CBDW_BM = #{dwbm}
+		AND GG.CBRGH = #{gh}
+		AND GG.AJLB_BM = '1704'
+		AND JD.LARQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND JD.LARQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND JD.JDLX_DM = '0225123040300'
+		AND JD.LAJG_DM BETWEEN '9901190102000' AND '9901190102999'
+	</select>
+
+	<!--【侦监】：监督公安机关立案或者撤案的，加分0.4分/件-->
+	<select id="selectZj4" resultType="java.util.HashMap">
+		SELECT GG.*
+		FROM TYYW_GG_AJJBXX_TYYW GG
+		INNER JOIN TYYW_ZJ_LAJD_TYYW JD ON GG.BMSAH = JD.BMSAH AND JD.SFSC = 'N'
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON GG.BMSAH = XYR.BMSAH AND XYR.SFSC = 'N'
+		WHERE GG.SFSC = 'N'
+		AND GG.CBDW_BM = #{dwbm}
+		AND GG.CBRGH = #{gh}
+		AND GG.AJLB_BM = '0204'
+		AND (
+		(JD.GAJGZDLARQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd') AND JD.GAJGZDLARQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd'))
+		OR
+		(JD.GAZXTZLARQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd') AND JD.GAZXTZLARQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd'))
+		)
+		AND JD.JDLX_DM = '0225123040100'
+
+		UNION ALL
+
+		SELECT GG.*
+		FROM TYYW_GG_AJJBXX_TYYW GG
+		INNER JOIN TYYW_WJ_LAJD_TYYW JD ON GG.BMSAH = JD.BMSAH AND JD.SFSC = 'N'
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON GG.BMSAH = XYR.BMSAH AND XYR.SFSC = 'N'
+		WHERE GG.SFSC = 'N'
+		AND GG.CBDW_BM = #{dwbm}
+		AND GG.CBRGH = #{gh}
+		AND GG.AJLB_BM = '1704'
+		AND (
+		(JD.GAJGZDLARQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd') AND JD.GAJGZDLARQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd'))
+		OR
+		(JD.GAZXTZLARQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd') AND JD.GAZXTZLARQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd'))
+		)
+		AND JD.JDLX_DM = '0225123040100'
+
+		UNION ALL
+
+		SELECT GG.*
+		FROM TYYW_GG_AJJBXX_TYYW GG
+		INNER JOIN TYYW_ZJ_LAJD_TYYW JD ON GG.BMSAH = JD.BMSAH AND JD.SFSC = 'N'
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON GG.BMSAH = XYR.BMSAH AND XYR.SFSC = 'N'
+		WHERE GG.SFSC = 'N'
+		AND GG.CBDW_BM = #{dwbm}
+		AND GG.CBRGH = #{gh}
+		AND GG.AJLB_BM = '0204'
+		AND (
+		(JD.LAGAJGZDCARQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd') AND JD.LAGAJGZDCARQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd'))
+		OR
+		(JD.GAJGZXRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd') AND JD.GAJGZXRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd'))
+		)
+		AND JD.JDLX_DM = '0225123040200'
+
+		UNION ALL
+
+		SELECT GG.*
+		FROM TYYW_GG_AJJBXX_TYYW GG
+		INNER JOIN TYYW_WJ_LAJD_TYYW JD ON GG.BMSAH = JD.BMSAH AND JD.SFSC = 'N'
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON GG.BMSAH = XYR.BMSAH AND XYR.SFSC = 'N'
+		WHERE GG.SFSC = 'N'
+		AND GG.CBDW_BM = #{dwbm}
+		AND GG.CBRGH = #{gh}
+		AND GG.AJLB_BM = '1704'
+		AND (
+		(JD.LAGAJGZDCARQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd') AND JD.LAGAJGZDCARQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd'))
+		OR
+		(JD.GAJGZXTZCASRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd') AND JD.GAJGZXTZCASRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd'))
+		)
+		AND JD.JDLX_DM = '0225123040200'
+	</select>
+
+	<!--【侦监】：上述1-5监督案件的犯罪嫌疑人被判有罪的，再加分0.3分/件-->
+	<select id="selectZj5" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM = DWBM.DWBM AND JBXX.ZCJG_DWDM = DWBM.GXDWDM
+		INNER JOIN TYYW_GS_SCQS_TYYW SCQS ON JBXX.BMSAH = SCQS.BMSAH
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH = XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC = 'N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '0301'
+		AND SCQS.YSPJSXRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND SCQS.YSPJSXRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX = 'Y'
+		AND (
+		(XYRQK.YSPJZM_AYDM BETWEEN '9903101000000' AND '9903107999000'
+		OR XYRQK.YSPJZM_AYDM BETWEEN '9903110000000' AND '9903110999900'
+		) AND DWBM.GXDWLB_DM BETWEEN '9901190102000' AND '9901190105000'
+		)
+
+		UNION
+
+		SELECT JBXX.* FROM
+		TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='0301'
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.SFLAJDDX = 'Y'
+		AND (
+		(XYRQK.ESPJZM_AYDM BETWEEN  '9903101000000' AND '9903107999000'
+		OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900'
+		) AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000'
+		)
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_GS_ESSS_TYYW ESSS ON JBXX.BMSAH=ESSS.BMSAH
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE  JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '0303'
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000'
+		AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000' )
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX = 'Y'
+		AND (
+		(XYRQK.ESPJZM_AYDM BETWEEN '9903101000000' AND '9903107999000'
+		OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900'
+		) AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000'
+		)
+		AND ESSS.CTRQ IS NOT NULL
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='0304'
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX='Y'
+		AND (
+		(XYRQK.ESPJZM_AYDM BETWEEN '9903101000000' AND '9903107999000'
+		OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900'
+		) AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000'
+		)
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '0326'
+		AND XYRQK.FHCSSXRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.FHCSSXRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX = 'Y'
+		AND (
+		(XYRQK.FHCSPJZM_AYDM BETWEEN '9903101000000' AND '9903107999000'
+		OR XYRQK.FHCSPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900'
+		) AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000'
+		)
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '0326'
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.SFLAJDDX = 'Y'
+		AND (
+		(XYRQK.ESPJZM_AYDM BETWEEN '9903101000000' AND '9903107999000'
+		OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900'
+		) AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000'
+		)
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_SCQS_TYYW SCQS ON JBXX.BMSAH=SCQS.BMSAH
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1722'
+		AND SCQS.YSPJSXRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND SCQS.YSPJSXRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX = 'Y'
+		AND (
+		(XYRQK.YSPJZM_AYDM BETWEEN '9903101000000' AND '9903107999000'
+		OR XYRQK.YSPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900'
+		) AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000'
+		)
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '1722'
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.SFLAJDDX = 'Y'
+		AND (
+		(XYRQK.ESPJZM_AYDM BETWEEN '9903101000000' AND '9903107999000'
+		OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900'
+		) AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000'
+		)
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_ESSS_TYYW ESSS ON JBXX.BMSAH=ESSS.BMSAH
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE  JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '1730'
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000'
+		AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000' )
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX = 'Y'
+		AND (
+		(XYRQK.ESPJZM_AYDM BETWEEN '9903101000000' AND '9903107999000'
+		OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900'
+		) AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000'
+		)
+		AND ESSS.CTRQ IS NOT NULL
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '1731'
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX = 'Y'
+		AND (
+		(XYRQK.ESPJZM_AYDM BETWEEN '9903101000000' AND '9903107999000'
+		OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900'
+		) AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000'
+		)
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '1757'
+		AND XYRQK.FHCSSXRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.FHCSSXRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX = 'Y'
+		AND (
+		(XYRQK.FHCSPJZM_AYDM BETWEEN '9903101000000' AND '9903107999000'
+		OR XYRQK.FHCSPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900'
+		) AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000'
+		)
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1757'
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.SFLAJDDX='Y'
+		AND (
+		(XYRQK.ESPJZM_AYDM BETWEEN '9903101000000' AND '9903107999000'
+		OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900'
+		) AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000'
+		)
+
+	</select>
+
+	<!--【侦监】：上述1-5监督案件的犯罪嫌疑人被判处三年以上有期徒刑的，再加分0.2分/件-->
+	<select id="selectZj6" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM = DWBM.DWBM AND JBXX.ZCJG_DWDM = DWBM.GXDWDM
+		INNER JOIN TYYW_GS_SCQS_TYYW SCQS ON JBXX.BMSAH = SCQS.BMSAH
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH = XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '0301'
+		AND SCQS.YSPJSXRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND SCQS.YSPJSXRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX = 'Y'
+		AND XYRQK.YSXGX_DM = '0333334400400'
+		AND XYRQK.YSXGXXQ &gt;= '36' AND XYRQK.YSXGXXQ &lt; '120'
+		AND ((XYRQK.YSPJZM_AYDM BETWEEN '9903101000000' AND '9903107999000' OR XYRQK.YSPJZM_AYDM BETWEEN '9903110000000' AND '9903110999900') AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='0301'
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.SFLAJDDX='Y'
+		AND XYRQK.ESXGX_DM= '0333334400400'
+		AND XYRQK.ESXGXXQ &gt;= '36' AND  XYRQK.ESXGXXQ &lt; '120'
+		AND ((XYRQK.ESPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000'  OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900') AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_GS_ESSS_TYYW ESSS ON JBXX.BMSAH=ESSS.BMSAH
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='0303'
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000'
+		AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000' )
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX='Y'
+		AND XYRQK.ESXGX_DM= '0333334400400'
+		AND XYRQK.ESXGXXQ &gt;= '36' AND  XYRQK.ESXGXXQ &lt; '120'
+		AND ((XYRQK.ESPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000'  OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900') AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+		AND ESSS.CTRQ IS NOT NULL
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='0304'
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX='Y'
+		AND XYRQK.ESXGX_DM= '0333334400400'
+		AND XYRQK.ESXGXXQ &gt;= '36' AND  XYRQK.ESXGXXQ &lt; '120'
+		AND ((XYRQK.ESPJZM_AYDM BETWEEN '9903101000000' AND '9903107999000' OR XYRQK.ESPJZM_AYDM BETWEEN '9903110000000' AND '9903110999900')  AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='0326'
+		AND XYRQK.FHCSSXRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.FHCSSXRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX='Y'
+		AND XYRQK.FHCSXGX_DM= '0333334400400'
+		AND XYRQK.FHCSXGXXQ &gt;= '36' AND  XYRQK.FHCSXGXXQ &lt; '120'
+		AND ((XYRQK.FHCSPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000'  OR XYRQK.FHCSPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900') AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='0326'
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.SFLAJDDX='Y'
+		AND XYRQK.ESXGX_DM= '0333334400400'
+		AND XYRQK.ESXGXXQ &gt;= '36' AND  XYRQK.ESXGXXQ &lt; '120'
+		AND ((XYRQK.ESPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000' OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900')  AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_SCQS_TYYW SCQS ON JBXX.BMSAH=SCQS.BMSAH
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1722'
+		AND SCQS.YSPJSXRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND SCQS.YSPJSXRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX='Y'
+		AND XYRQK.YSXGX_DM= '0333334400400'
+		AND XYRQK.YSXGXXQ &gt;= '36' AND  XYRQK.YSXGXXQ &lt; '120'
+		AND ((XYRQK.YSPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000'  OR XYRQK.YSPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900') AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1722'
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.SFLAJDDX='Y'
+		AND XYRQK.ESXGX_DM= '0333334400400'
+		AND XYRQK.ESXGXXQ &gt;= '36' AND  XYRQK.ESXGXXQ &lt; '120'
+		AND ((XYRQK.ESPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000'  OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900') AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_ESSS_TYYW ESSS ON JBXX.BMSAH=ESSS.BMSAH
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE  JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1730'
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000'
+		AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000' )
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX='Y'
+		AND XYRQK.ESXGX_DM= '0333334400400'
+		AND XYRQK.ESXGXXQ &gt;= '36' AND  XYRQK.ESXGXXQ &lt; '120'
+		AND ((XYRQK.ESPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000'  OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900') AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+		AND ESSS.CTRQ IS NOT NULL
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1731'
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX='Y'
+		AND XYRQK.ESXGX_DM= '0333334400400'
+		AND XYRQK.ESXGXXQ &gt;= '36' AND  XYRQK.ESXGXXQ &lt; '120'
+		AND ((XYRQK.ESPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000' OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900')  AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1757'
+		AND XYRQK.FHCSSXRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.FHCSSXRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX='Y'
+		AND XYRQK.FHCSXGX_DM= '0333334400400'
+		AND XYRQK.FHCSXGXXQ &gt;= '36' AND  XYRQK.FHCSXGXXQ &lt; '120'
+		AND ((XYRQK.FHCSPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000'  OR XYRQK.FHCSPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900') AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1757'
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.SFLAJDDX='Y'
+		AND XYRQK.ESXGX_DM= '0333334400400'
+		AND XYRQK.ESXGXXQ &gt;= '36' AND  XYRQK.ESXGXXQ &lt; '120'
+		AND ((XYRQK.ESPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000' OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900')  AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+	</select>
+
+	<!--【侦监】：上述1-5监督案件的犯罪嫌疑人被判处十年以上有期徒刑的，再加分0.5分/件-->
+	<select id="selectZj7" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_GS_SCQS_TYYW SCQS ON JBXX.BMSAH=SCQS.BMSAH
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='0301'
+		AND SCQS.YSPJSXRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND SCQS.YSPJSXRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX='Y'
+		AND ((XYRQK.YSXGX_DM= '0333334400400'
+		AND XYRQK.YSXGXXQ &gt;= '120' AND  XYRQK.YSXGXXQ &lt; '300')
+		OR (XYRQK.YSXGX_DM BETWEEN '0333334400100' AND '0333334400300'))
+		AND ((XYRQK.YSPJZM_AYDM BETWEEN '9903101000000' AND '9903107999000' OR XYRQK.YSPJZM_AYDM BETWEEN '9903110000000' AND '9903110999900') AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='0301'
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.SFLAJDDX='Y'
+		AND ((XYRQK.YSXGX_DM= '0333334400400' AND XYRQK.YSXGXXQ &gt;= '120' AND  XYRQK.YSXGXXQ &lt; '300')
+		OR (XYRQK.YSXGX_DM BETWEEN '0333334400100' AND '0333334400300'))
+		AND ((XYRQK.ESPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000'  OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900') AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_GS_ESSS_TYYW ESSS ON JBXX.BMSAH=ESSS.BMSAH
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE  JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='0303'
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000'
+		AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000' )
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX='Y'
+		AND ((XYRQK.ESXGX_DM= '0333334400400' AND XYRQK.ESXGXXQ &gt;= '120' AND  XYRQK.ESXGXXQ &lt; '300')
+		OR (XYRQK.ESXGX_DM BETWEEN '0333334400100' AND '0333334400300'))
+		AND ((XYRQK.ESPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000'  OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900') AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+		AND ESSS.CTRQ IS NOT NULL
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='0304'
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX='Y'
+		AND ((XYRQK.ESXGX_DM= '0333334400400' AND XYRQK.ESXGXXQ &gt;= '120' AND  XYRQK.ESXGXXQ &lt; '300')
+		OR (XYRQK.ESXGX_DM BETWEEN '0333334400100' AND '0333334400300'))
+		AND ((XYRQK.ESPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000' OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900')  AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='0326'
+		AND XYRQK.FHCSSXRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.FHCSSXRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX='Y'
+		AND ((XYRQK.FHCSXGX_DM= '0333334400400' AND XYRQK.FHCSXGXXQ &gt;= '120' AND  XYRQK.FHCSXGXXQ &lt; '300')
+		OR (XYRQK.FHCSXGX_DM BETWEEN '0333334400100' AND '0333334400300'))
+		AND ((XYRQK.FHCSPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000'  OR XYRQK.FHCSPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900') AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_GS_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='0326'
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.SFLAJDDX='Y'
+		AND ((XYRQK.ESXGX_DM= '0333334400400' AND XYRQK.ESXGXXQ &gt;= '120' AND  XYRQK.ESXGXXQ &lt; '300')
+		OR (XYRQK.ESXGX_DM BETWEEN '0333334400100' AND '0333334400300'))
+		AND ((XYRQK.ESPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000' OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900')  AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_SCQS_TYYW SCQS  ON JBXX.BMSAH=SCQS.BMSAH
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1722'
+		AND SCQS.YSPJSXRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND SCQS.YSPJSXRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX='Y'
+		AND ((XYRQK.YSXGX_DM= '0333334400400' AND XYRQK.YSXGXXQ &gt;= '120' AND  XYRQK.YSXGXXQ &lt; '300')
+		OR (XYRQK.YSXGX_DM BETWEEN '0333334400100' AND '0333334400300'))
+		AND ((XYRQK.YSPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000'  OR XYRQK.YSPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900') AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1722'
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.SFLAJDDX='Y'
+		AND ((XYRQK.ESXGX_DM= '0333334400400' AND XYRQK.ESXGXXQ &gt;= '120' AND  XYRQK.ESXGXXQ &lt; '300')
+		OR (XYRQK.ESXGX_DM BETWEEN '0333334400100' AND '0333334400300'))
+		AND ((XYRQK.ESPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000'  OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900') AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_ESSS_TYYW ESSS ON JBXX.BMSAH=ESSS.BMSAH
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE  JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1730'
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000'
+		AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000' )
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX='Y'
+		AND ((XYRQK.ESXGX_DM= '0333334400400' AND XYRQK.ESXGXXQ &gt;= '120' AND  XYRQK.ESXGXXQ &lt; '300')
+		OR (XYRQK.ESXGX_DM BETWEEN '0333334400100' AND '0333334400300'))
+		AND ((XYRQK.ESPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000'  OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900') AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+		AND ESSS.CTRQ IS NOT NULL
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1731'
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX='Y'
+		AND ((XYRQK.ESXGX_DM= '0333334400400' AND XYRQK.ESXGXXQ &gt;= '120' AND  XYRQK.ESXGXXQ &lt; '300')
+		OR (XYRQK.ESXGX_DM BETWEEN '0333334400100' AND '0333334400300'))
+		AND ((XYRQK.ESPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000' OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900')  AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1757'
+		AND XYRQK.FHCSSXRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.FHCSSXRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND XYRQK.SFLAJDDX='Y'
+		AND ((XYRQK.FHCSXGX_DM= '0333334400400' AND XYRQK.FHCSXGXXQ &gt;= '120' AND  XYRQK.FHCSXGXXQ &lt; '300')
+		OR (XYRQK.FHCSXGX_DM BETWEEN '0333334400100' AND '0333334400300'))
+		AND ((XYRQK.FHCSPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000'  OR XYRQK.FHCSPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900') AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN XT_DM_GXDWBM_TYYW DWBM ON JBXX.CBDW_BM=DWBM.DWBM AND JBXX.ZCJG_DWDM=DWBM.GXDWDM
+		INNER JOIN TYYW_WJ_XYRQK_TYYW XYRQK ON JBXX.BMSAH=XYRQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1757'
+		AND XYRQK.ESCPWSSDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND XYRQK.ESCPWSSDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND (XYRQK.ESCPJG_DM &lt;&gt; '0307191502000' AND XYRQK.ESCPJG_DM &lt;&gt; '0307191505000')
+		AND XYRQK.SFLAJDDX='Y'
+		AND ((XYRQK.ESXGX_DM= '0333334400400' AND XYRQK.ESXGXXQ &gt;= '120' AND  XYRQK.ESXGXXQ &lt; '300')
+		OR (XYRQK.ESXGX_DM BETWEEN '0333334400100' AND '0333334400300'))
+		AND ((XYRQK.ESPJZM_AYDM BETWEEN  '9903101000000'  AND '9903107999000' OR XYRQK.ESPJZM_AYDM BETWEEN  '9903110000000' AND '9903110999900')  AND DWBM.GXDWLB_DM  BETWEEN '9901190102000' AND '9901190105000' )
+
+	</select>
+
+	<!--【侦监】：书面纠正违法且侦查机关回复整改的，加分0.3分/件-->
+	<select id="selectZj8" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZJ_ZCHDJD_TYYW ZCHDJD ON JBXX.BMSAH=ZCHDJD.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='0212'
+		AND ZCHDJD.ZCRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND ZCHDJD.ZCRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+	</select>
+
+	<!--【侦监】：发出检察建议且有关单位整改回复的，加分0.5分/件-->
+	<select id="selectZj9" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_GG_JCJYQK_TYYW JCJYQK  ON JBXX.BMSAH=JCJYQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND (JBXX.AJLB_BM LIKE '02%' OR JBXX.AJLB_BM='1701')
+		AND JCJYQK.CNRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND JCJYQK.CNRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND JCJYQK.JCJYXZ_DM  IS NOT NULL
+	</select>
+
+	<!--【执检】：减假暂案件发现不当提出书面纠正意见被采纳的，每件计2分-->
+	<select id="selectZj10" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZXJC_JJTQJRSCQK_TYYW JJTQ ON JBXX.BMSAH=JJTQ.BMSAH
+		INNER JOIN TYYW_ZXJC_TQJJSCQK_TYYW TQJJ ON JBXX.BMSAH=TQJJ.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1608'
+		AND JJTQ.SMTCJZYJRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND JJTQ.SMTCJZYJRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND TQJJ.TQZL_DM = '1621000100000'
+		AND (JJTQ.FXBDLX_DM BETWEEN  '1622000100000' AND '1622000200000' OR JJTQ.FXBDLX_DM =  '1622009900000')
+		AND TQJJ.TQDW_DM  BETWEEN  '1620000100000' AND '1620000300000'
+
+		UNION ALL
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZXJC_JJTQSCQK_TYYW JJTQ ON JBXX.BMSAH=JJTQ.BMSAH
+		INNER JOIN TYYW_ZXJC_TQJJSCQK_TYYW TQJJ ON JBXX.BMSAH=JJTQ.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1609'
+		AND JJTQ.SMTCJZYJRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND JJTQ.SMTCJZYJRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND TQJJ.TQZL_DM = '1621000100000'
+		AND JJTQ.FXBDLX_DM  BETWEEN  '1622000300000' AND '1622009900000'
+
+		UNION ALL
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZXJC_CDSCQK_TYYW JJTQ ON JBXX.BMSAH=JJTQ.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1610'
+		AND JJTQ.SCFXBDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND JJTQ.SCFXBDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND JJTQ.CDZL_DM = '1624000100000'
+		AND JJTQ.FXBDLX_DM  BETWEEN  '1622000300000' AND '1622009900000'
+
+		UNION ALL
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZXJC_CDSCQK_TYYW JJTQ ON JBXX.BMSAH=JJTQ.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1610'
+		AND JJTQ.SCFXBDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND JJTQ.SCFXBDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND JJTQ.CDZL_DM = '1624000300000'
+		AND JJTQ.FXBDLX_DM  BETWEEN  '1622000300000' AND '1622009900000'
+
+		UNION ALL
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZXJC_JJTQJRSCQK_TYYW JJTQ ON JBXX.BMSAH=JJTQ.BMSAH
+		INNER JOIN TYYW_ZXJC_TQJJSCQK_TYYW TQJJ ON JBXX.BMSAH=TQJJ.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1608'
+		AND JJTQ.SMTCJZYJRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND JJTQ.SMTCJZYJRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND TQJJ.TQZL_DM = '1621000200000'
+		AND (JJTQ.FXBDLX_DM BETWEEN  '1622000100000' AND '1622000200000' OR JJTQ.FXBDLX_DM =  '1622009900000')
+		AND TQJJ.TQDW_DM  BETWEEN  '1620000100000' AND '1620000200000'
+
+		UNION ALL
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZXJC_JJTQSCQK_TYYW JJTQ ON JBXX.BMSAH=JJTQ.BMSAH
+		INNER JOIN TYYW_ZXJC_TQJJSCQK_TYYW TQJJ ON JBXX.BMSAH=TQJJ.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1609'
+		AND JJTQ.SMTCJZYJRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND JJTQ.SMTCJZYJRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND TQJJ.TQZL_DM = '1621000200000'
+		AND JJTQ.FXBDLX_DM  BETWEEN  '1622000300000' AND '1622009900000'
+
+		UNION ALL
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZXJC_CDSCQK_TYYW JJTQ ON JBXX.BMSAH=JJTQ.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1610'
+		AND JJTQ.SCFXBDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND JJTQ.SCFXBDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND JJTQ.CDZL_DM = '1624000200000'
+		AND JJTQ.FXBDLX_DM  BETWEEN  '1622000300000' AND '1622009900000'
+
+		UNION ALL
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZXJC_CDSCQK_TYYW JJTQ ON JBXX.BMSAH=JJTQ.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1610'
+		AND JJTQ.SCFXBDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND JJTQ.SCFXBDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND JJTQ.CDZL_DM = '1624000400000'
+		AND JJTQ.FXBDLX_DM  BETWEEN  '1622000300000' AND '1622009900000'
+
+		UNION ALL
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZXJC_ZYJWZXCBSCQK_TYYW ZYJW ON JBXX.BMSAH=ZYJW.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1611'
+		AND ZYJW.SMTCJZYJRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND ZYJW.SMTCJZYJRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND (ZYJW.FXBDLX_DM BETWEEN  '1622000100000' AND '1622000200000' OR ZYJW.FXBDLX_DM =  '1622009900000')
+		AND ZYJW.CBDWLX_DM  BETWEEN  '1620000100000' AND '1620000200000'
+
+		UNION ALL
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZXJC_ZYJWZXCBSCQK_TYYW ZYJW ON JBXX.BMSAH=ZYJW.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1611'
+		AND ZYJW.SMTCJZYJRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND ZYJW.SMTCJZYJRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND ZYJW.FXTZHDBDQX_DM = '1622000300000'
+		AND ZYJW.CBDWLX_DM  BETWEEN  '1620000100000' AND '1620000600000'
+
+		UNION ALL
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZXJC_ZYJWZXJDSCQK_TYYW ZYJW ON JBXX.BMSAH=ZYJW.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1612'
+		AND ZYJW.SMTCJZYJRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND ZYJW.SMTCJZYJRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND ZYJW.JDDWLX_DM = '1620000400000'
+		AND ZYJW.FXBDLX_DM  BETWEEN '1622000400000' AND '1622009900000'
+
+		UNION ALL
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZXJC_ZYJWZXJDSCQK_TYYW ZYJW ON JBXX.BMSAH=ZYJW.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1612'
+		AND ZYJW.SMTCJZYJRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND ZYJW.SMTCJZYJRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND ZYJW.JDDWLX_DM = '1620000600000'
+		AND ZYJW.FXBDLX_DM  BETWEEN '1622000400000' AND '1622009900000'
+	</select>
+
+	<!--【执检】：提出释放或变更强制措施建议被采纳的，每件计2分-->
+	<select id="selectZj11" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZXJC_BYXBLQK_TYYW BYXBLQK ON JBXX.BMSAH=BYXBLQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1602'
+		AND BYXBLQK.FKRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND BYXBLQK.FKRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND BYXBLQK.FKJG_DM  BETWEEN  '1610000100001' AND '1610000100002'
+	</select>
+
+	<!--【执检】：纠正违法通知书或检察建议书被采纳的，每件计2分-->
+	<select id="selectZj12" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZXJC_JZWFXX_TYYW JZWFXX ON JBXX.BMSAH=JZWFXX.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1626'
+		AND JZWFXX.FKRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND JZWFXX.FKRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND JZWFXX.FKYJ_DM = '1618000100000'
+		AND (JZWFXX.WFNR_DM  BETWEEN  '1627000100000' AND '1627000400017')
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_YF_JCJYGY_TYYW JCJYGY ON JBXX.BMSAH=JCJYGY.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1632'
+		AND JCJYGY.FKRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND JCJYGY.FKRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND (JCJYGY.CNQK_DM ='1002230500001' OR JCJYGY.CNQK_DM ='1002230500002' )
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZXJC_JWLZBDQK_TYYW JWLZBDQK ON JBXX.BMSAH=JWLZBDQK.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1629'
+		AND JWLZBDQK.FKRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND JWLZBDQK.FKRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND JWLZBDQK.FKYJ_DM = '1618000100000'
+		AND (JWLZBDQK.LZBDDWLX_DM BETWEEN '1630000200000'  AND '1630000300002' OR  JWLZBDQK.LZBDDWLX_DM = '1630000400000' OR JWLZBDQK.LZBDDWLX_DM = '1630000600000')
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZXJC_JZWFXX_TYYW JZWFXX ON JBXX.BMSAH=JZWFXX.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1628'
+		AND JZWFXX.FKRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND JZWFXX.FKRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND JZWFXX.FKYJ_DM = '1618000100000'
+		AND (JZWFXX.WFDWLX_DM BETWEEN '1642000100000'  AND '1642000300099')
+
+		UNION
+
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_ZXJC_CCXFXBDXX_TYYW CCXFXBDXX ON JBXX.BMSAH=CCXFXBDXX.BMSAH
+		INNER JOIN TYYW_GG_XYRJBXX_TYYW XYR ON JBXX.BMSAH = XYR.BMSAH AND XYR.SFSC='N'
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='1617'
+		AND CCXFXBDXX.FKRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND CCXFXBDXX.FKRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND CCXFXBDXX.FKYJ_DM = '1618000100000'
+
+	</select>
+
+	<!--办理生效裁判（含调解）监督案件提出再审检察建议或者提请、提出抗诉的，每件计8分-->
+	<select id="selectMx1" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_MX_MSXZJD_TYYW MSXZJD ON JBXX.BMSAH=MSXZJD.BMSAH
+		WHERE JBXX.SFSC='N'
+		  AND JBXX.CBDW_BM = #{dwbm}
+		  AND JBXX.CBRGH = #{gh}
+		  AND JBXX.AJLB_BM = '0701'
+		  AND MSXZJD.AJXZ_DM BETWEEN '0702300000000' AND '0702399000000'
+		  AND MSXZJD.AJXZ_DM BETWEEN '0702301010000' AND '0702301990000'
+		  AND MSXZJD.JACLRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		  AND MSXZJD.JACLRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		  AND ((MSXZJD.JACLQK_DM = '0704220100006')
+		       OR (MSXZJD.JACLQK_DM = '0704220100009')
+		       OR (MSXZJD.JACLQK_DM BETWEEN '0704220100001'  AND '0704220100003')
+		)
+	</select>
+
+	<!--办理审判人员违法行为监督案件提出检察建议的，每件计5分-->
+	<select id="selectMx2" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_MX_SPCXJD_TYYW SPCXJD ON JBXX.BMSAH=SPCXJD.BMSAH
+		WHERE JBXX.SFSC='N'
+		  AND JBXX.CBDW_BM = #{dwbm}
+		  AND JBXX.CBRGH = #{gh}
+		  AND JBXX.AJLB_BM = '0702'
+		  AND SPCXJD.SPCXZWFQX_DM LIKE '%0739100000100%'
+		  AND SPCXJD.JARQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		  AND SPCXJD.JARQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		  AND SPCXJD.JAQK_DM = '0730255660100'
+	</select>
+
+	<!--办理执行监督案件提出检察建议的，每件计5分-->
+	<select id="selectMx3" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_MX_ZXHDJD_TYYW ZXHDJD ON JBXX.BMSAH=ZXHDJD.BMSAH
+		WHERE JBXX.SFSC='N'
+		  AND JBXX.CBDW_BM = #{dwbm}
+		  AND JBXX.CBRGH = #{gh}
+		  AND JBXX.AJLB_BM = '0703'
+		  AND ZXHDJD.SQJDLX_DM BETWEEN '0740100000000' AND '0740300009900'
+		  AND JBXX.SLRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		  AND JBXX.SLRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		  AND ZXHDJD.AJXZ_DM LIKE '%07023%'
+	</select>
+
+	<!--办理行政机关不当履行职责监督案件（包括督促起诉案件）提出检察建议的，每件计5分-->
+	<select id="selectMx4" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN Tyyw_Mx_Bdlxzzjd_Tyyw BDLXZZJD ON JBXX.BMSAH=BDLXZZJD.BMSAH
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '0704'
+		AND BDLXZZJD.BDCDXBDLXZZDQX_DM = '0743010000200'
+		AND BDLXZZJD.JARQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND BDLXZZJD.JARQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND BDLXZZJD.BDCDXXZ_DM  IS NOT NULL
+		AND BDLXZZJD.JAQK_DM = '0730255660100'
+	</select>
+
+	<!--检察官办理对下级院不支持监督决定进行复查的案件,维持原处理决定的，每件计1分-->
+	<select id="selectMx5" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_MX_FCJZ_TYYW FCJZ ON JBXX.BMSAH=FCJZ.BMSAH
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '0707'
+		AND FCJZ.XFCDX_DM BETWEEN '0719233200001' AND '0719233200007'
+		AND FCJZ.JARQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND FCJZ.JARQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND FCJZ.AJXZ_DM BETWEEN '0702300000000' AND '0702399000000'
+		AND FCJZ.JAQK_DM = '0721233400001'
+	</select>
+
+	<!--办理生效裁判监督案件提请上级院抗诉未获支持或案件抗诉后法院未予采纳的，每件扣2分-->
+	<select id="selectMx6" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_MX_MSXZJD_TYYW MSXZJD ON JBXX.BMSAH=MSXZJD.BMSAH
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '0701'
+		AND MSXZJD.AJXZ_DM BETWEEN '0702300000000' AND '0702399000000'
+		AND MSXZJD.AJXZ_DM BETWEEN '0702301010000' AND '0702301990000'
+		AND MSXZJD.KSAJZSRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND MSXZJD.KSAJZSRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND MSXZJD.KSAJZSJG_DM =  '0709220200004'
+	</select>
+
+	<!--办理生效裁判（含调解）监督案件提出再审检察建议被法院采纳或者提请抗诉被上级院支持、提出抗诉得到法院采纳的，每件加2分-->
+	<select id="selectMx7" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_MX_MSXZJD_TYYW MSXZJD ON JBXX.BMSAH=MSXZJD.BMSAH
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '0701'
+		AND MSXZJD.AJXZ_DM BETWEEN '0702300000000' AND '0702399000000'
+		AND MSXZJD.AJXZ_DM BETWEEN '0702301010000' AND '0702301990000'
+		AND MSXZJD.KSAJZSRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND MSXZJD.KSAJZSRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND MSXZJD.KSAJZSJG_DM IN('0709220200001','0709220200002','0709220200003','0709220200005')
+		UNION
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_MX_MSXZJD_TYYW MSXZJD ON JBXX.BMSAH=MSXZJD.BMSAH
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '0701'
+		AND MSXZJD.SFCNZSJY ='Y'
+		AND MSXZJD.AJXZ_DM BETWEEN '0702300000000' AND '0702399000000'
+		AND MSXZJD.AJXZ_DM BETWEEN '0702301010000' AND '0702301990000'
+		AND MSXZJD.ZSJCJYHFYZSRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND MSXZJD.ZSJCJYHFYZSRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND MSXZJD.ZSJCJYHFYZSJG_DM IN('0705185200001','0705185200002','0705185200004','0705185200005')
+	</select>
+
+	<!--办理案件中促成当事人和解，案件作终结审查处理的，每件加3分-->
+	<select id="selectMx8" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_MX_MSXZJD_TYYW MSXZJD ON JBXX.BMSAH=MSXZJD.BMSAH
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '0701'
+		AND MSXZJD.AJXZ_DM BETWEEN '0702300000000' AND '0702399000000'
+		AND MSXZJD.AJXZ_DM BETWEEN '0702301010000' AND '0702301990000'
+		AND MSXZJD.XSRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND MSXZJD.XSRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND MSXZJD.XSQK_DM ='0710220500001'
+	</select>
+
+	<!--办理审判人员违法行为监督案件提出检察建议被法院采纳的，每件加2分-->
+	<select id="selectMx9" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_MX_SPCXJD_TYYW SPCXJD ON JBXX.BMSAH=SPCXJD.BMSAH
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '0702'
+		AND SPCXJD.SPCXZWFQX_DM LIKE '%0739100000100%'
+		AND SPCXJD.TCJCJYCNRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND SPCXJD.TCJCJYCNRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+	</select>
+
+	<!--办理执行监督案件提出检察建议被法院采纳的，每件加2分-->
+	<select id="selectMx10" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_MX_ZXHDJD_TYYW ZXHDJD ON JBXX.BMSAH=ZXHDJD.BMSAH
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM='0703'
+		AND ZXHDJD.TCJCJYCNRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND ZXHDJD.TCJCJYCNRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND ZXHDJD.AJXZ_DM LIKE '%07023%'
+	</select>
+
+	<!--办理行政机关不当履职的监督案件（包括督促起诉案件）提出检察建议被采纳的，每件加2分-->
+	<select id="selectMx11" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_MX_BDLXZZJD_TYYW BDLXZZJD ON JBXX.BMSAH=BDLXZZJD.BMSAH
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '0704'
+		AND BDLXZZJD.BDCDXBDLXZZDQX_DM = '0743010000200'
+		AND BDLXZZJD.CNDCYFLXZZJCJYRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND BDLXZZJD.CNDCYFLXZZJCJYRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND BDLXZZJD.BDCDXXZ_DM  IS NOT NULL
+	</select>
+
+	<!--办理复查案件，改变原处理决定，提出抗诉，得到法院采纳的，每件加3分-->
+	<select id="selectMx12" resultType="java.util.HashMap">
+		SELECT JBXX.*
+		FROM TYYW_GG_AJJBXX_TYYW JBXX
+		INNER JOIN TYYW_MX_FCJZ_TYYW FCJZ ON JBXX.BMSAH=FCJZ.BMSAH
+		WHERE JBXX.SFSC='N'
+		AND JBXX.CBDW_BM = #{dwbm}
+		AND JBXX.CBRGH = #{gh}
+		AND JBXX.AJLB_BM = '0707'
+		AND FCJZ.CXJDJG_DMS='0722233500002'
+		AND FCJZ.CXJDRQ &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+		AND FCJZ.CXJDRQ &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+		AND FCJZ.AJXZ_DM BETWEEN '0702300000000' AND '0702399000000'
+	</select>
+
+	<!--2、3分的文书-->
+	<select id="getWsByScore" resultType="java.util.HashMap">
+		select w.bmsah,
+		w.tysah,
+		w.wsmc,
+		nvl(w.wsbh,'') wsbh,
+		nvl(w.wsmbbh,'') wsmbbh,
+		w.nzrxm,
+		w.nzrq,
+		w.sprq,
+		a.ajmc
+		from YX_WS_SL_TYYW w
+		inner join TYYW_GG_AJJBXX_TYYW a on w.bmsah = a.bmsah and w.tysah = a.tysah
+		where w.sfsc = 'N'
+		and w.nzrgh = #{gh}
+		<if test="bmsahs!=null and bmsahs!='' ">
+			and w.bmsah in
+			<foreach collection="bmsahs" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="tysahs!=null and tysahs!='' ">
+			and w.tysah in
+			<foreach collection="tysahs" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="fz != null and fz != ''">
+			and w.wsmbbh in (
+			select f.ws_num
+			from XT_GRJX_WSFZ f
+			where f.fz = #{fz}
+			and f.ssbm = #{bmlbbm}
+			and f.delflag = 'N'
+			)
+		</if>
+	</select>
+
+	<!--其他文书-->
+	<select id="getOtherWs" resultType="java.util.HashMap">
+		select w.bmsah,
+		w.tysah,
+		w.wsmc,
+		nvl(w.wsbh,'') wsbh,
+		nvl(w.wsmbbh,'') wsmbbh,
+		w.nzrxm,
+		w.nzrq,
+		w.sprq,
+		a.ajmc
+		from YX_WS_SL_TYYW w
+		inner join TYYW_GG_AJJBXX_TYYW a on w.bmsah = a.bmsah and w.tysah = a.tysah
+		where w.sfsc = 'N'
+		and w.nzrgh = #{gh}
+		<if test="bmsahs!=null and bmsahs!='' ">
+			and w.bmsah in
+			<foreach collection="bmsahs" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="tysahs!=null and tysahs!='' ">
+			and w.tysah in
+			<foreach collection="tysahs" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="fz != null and fz != ''">
+			and (w.wsmbbh not in (
+			select f.ws_num
+			from XT_GRJX_WSFZ f
+			where f.fz in ('2','3')
+			and f.ssbm = #{bmlbbm}
+			and f.delflag = 'N'
+			)
+			or w.wsmbbh is null)
+		</if>
+	</select>
+
+	<!--应该制作而未制作文书的案件数量：刑申和检技的应制作未制作文书的模板编码-->
+	<select id="getCountsOfNotMadeWs" resultType="java.lang.Integer">
+		select count(*) sl
+		from yx_ws_sl_tyyw ws
+		where ws.bmsah = #{bmsah}
+		  and ws.tysah = #{tysah}
+		  and ws.sfsc = 'N'
+		  and ws.wsmbbh in ('100000090034','100000090038', '100000130020', '100000130021',
+		  '100000130023', '100000130011', '100000130024'
+		  )
+	</select>
+
+	<!--根据部门受案号获取“某一个案件”：完结日期要根据文书来判断==》 【刑申】 -->
+	<select id="getAjByBmsah" resultType="java.util.HashMap">
+		select a.bmsah,
+		a.tysah,
+		a.ajmc,
+		a.ajlb_mc,
+		a.ajlb_bm,
+		a.cbr,
+		a.cbrgh,
+		a.cbbm_mc,
+		a.cbbm_bm,
+		a.slrq,
+		(case when (select max(ws.sprq) sprq
+		from yx_ws_sl_tyyw ws
+		where ws.bmsah = a.bmsah
+		and ws.tysah = a.tysah
+		and ws.sfsc = 'N'
+		and ws.wsmbbh in ('100000090009', '100000090018', '100000090020', '100000090021',
+		'100000090031', '100000090032', '100000090053', '100000090062',
+		'100000090064', '100000090077', '100000090080', '100000090082',
+		'100000090083', '100000090088', '100000090092', '100000090096','100000090110'
+		)
+		) is not null
+		or
+		(select max(ws.sprq) sprq
+		from yx_ws_sl_tyyw ws
+		where ws.bmsah = a.bmsah
+		and ws.tysah = a.tysah
+		and ws.sfsc = 'N'
+		and ws.wsmbbh in ('100000090009', '100000090018', '100000090020', '100000090021',
+		'100000090031', '100000090032', '100000090053', '100000090062',
+		'100000090064', '100000090077', '100000090080', '100000090082',
+		'100000090083', '100000090088', '100000090092', '100000090096','100000090110'
+		)
+		) != ''
+		then (select max(ws.sprq) sprq
+		from yx_ws_sl_tyyw ws
+		where ws.bmsah = a.bmsah
+		and ws.tysah = a.tysah
+		and ws.sfsc = 'N'
+		and ws.wsmbbh in ('100000090009', '100000090018', '100000090020', '100000090021',
+		'100000090031', '100000090032', '100000090053', '100000090062',
+		'100000090064', '100000090077', '100000090080', '100000090082',
+		'100000090083', '100000090088', '100000090092', '100000090096','100000090110'
+		)
+		)
+		when (select aj.ajlb_bm
+		from tyyw_gg_ajjbxx_tyyw aj
+		where aj.bmsah = a.bmsah
+		and aj.tysah = a.tysah
+		) = '0201'
+		or
+		(select aj.ajlb_bm
+		from tyyw_gg_ajjbxx_tyyw aj
+		where aj.bmsah = a.bmsah
+		and aj.tysah = a.tysah
+		) = '0301'
+		<!--or
+        (select aj.bjrq
+         from tyyw_gg_ajjbxx_tyyw aj
+         where aj.bmsah = a.bmsah
+           and aj.tysah = a.tysah
+        ) is not null
+        or
+        (select aj.bjrq
+         from tyyw_gg_ajjbxx_tyyw aj
+         where aj.bmsah = a.bmsah
+           and aj.tysah = a.tysah
+        ) != ''-->
+		then (select aj.bjrq
+		from tyyw_gg_ajjbxx_tyyw aj
+		where aj.bmsah = a.bmsah
+		and aj.tysah = a.tysah
+		)
+		else (select aj.wcrq
+		from tyyw_gg_ajjbxx_tyyw aj
+		where aj.bmsah = a.bmsah
+		and aj.tysah = a.tysah
+		)
+		end) as wjrq,
+		a.aqzy
+		from (
+		select t.bmsah,
+		t.tysah,
+		t.ajmc,
+		t.ajlb_mc,
+		t.ajlb_bm,
+		t.cbr,
+		t.cbrgh,
+		t.cbbm_mc,
+		t.cbbm_bm,
+		t.slrq,
+		t.aqzy
+		from tyyw_gg_ajjbxx_tyyw t
+		inner join yx_ws_sl_tyyw w on t.bmsah = w.bmsah and t.tysah = w.tysah
+		where t.bmsah = #{bmsah}
+		and t.ajzt in ('2', '3')
+		and t.sfsc = 'N'
+		and w.sfsc = 'N'
+		group by t.bmsah, t.tysah, t.ajmc, t.ajlb_mc, t.ajlb_bm, t.cbr, t.cbrgh, t.cbbm_mc, t.cbbm_bm, t.slrq, t.aqzy
+		) a
+	</select>
+
+	<!--根据部门受案号获取“某一个案件”：完结日期取完成日期 ==》【公诉】-->
+	<select id="selectAjByBmsah" resultType="java.util.HashMap">
+		select t.bmsah,
+			   t.tysah,
+			   t.ajmc,
+			   t.ajlb_mc,
+			   t.ajlb_bm,
+			   t.cbr,
+			   t.cbrgh,
+			   t.cbbm_mc,
+			   t.cbbm_bm,
+			   t.slrq,
+			   t.wcrq wjrq,
+			   t.aqzy
+		from tyyw_gg_ajjbxx_tyyw t
+		where t.bmsah = #{bmsah}
+		group by t.bmsah, t.tysah, t.ajmc, t.ajlb_mc, t.ajlb_bm, t.cbr, t.cbrgh, t.cbbm_mc, t.cbbm_bm, t.slrq, t.wcrq, t.aqzy
+	</select>
+
+	<!--根据部门受案号（集合）获取所有案件集合,案件的完结日期需要根据提交的文书来判断 :刑申-->
+	<select id="getAjsByBmsahs" resultType="java.util.HashMap">
+		select a.bmsah,
+		a.tysah,
+		a.ajmc,
+		a.ajlb_mc,
+		a.ajlb_bm,
+		a.cbr,
+		a.cbrgh,
+		a.cbbm_mc,
+		a.cbbm_bm,
+		a.slrq,
+		(case when (select max(ws.sprq) sprq
+		from yx_ws_sl_tyyw ws
+		where ws.bmsah = a.bmsah
+		and ws.tysah = a.tysah
+		and ws.sfsc = 'N'
+		and ws.wsmbbh in ('100000090009', '100000090018', '100000090020', '100000090021',
+		'100000090031', '100000090032', '100000090053', '100000090062',
+		'100000090064', '100000090077', '100000090080', '100000090082',
+		'100000090083', '100000090088', '100000090092', '100000090096','100000090110'
+		)
+		) is not null
+		or
+		(select max(ws.sprq) sprq
+		from yx_ws_sl_tyyw ws
+		where ws.bmsah = a.bmsah
+		and ws.tysah = a.tysah
+		and ws.sfsc = 'N'
+		and ws.wsmbbh in ('100000090009', '100000090018', '100000090020', '100000090021',
+		'100000090031', '100000090032', '100000090053', '100000090062',
+		'100000090064', '100000090077', '100000090080', '100000090082',
+		'100000090083', '100000090088', '100000090092', '100000090096','100000090110'
+		)
+		) != ''
+		then (select max(ws.sprq) sprq
+		from yx_ws_sl_tyyw ws
+		where ws.bmsah = a.bmsah
+		and ws.tysah = a.tysah
+		and ws.sfsc = 'N'
+		and ws.wsmbbh in ('100000090009', '100000090018', '100000090020', '100000090021',
+		'100000090031', '100000090032', '100000090053', '100000090062',
+		'100000090064', '100000090077', '100000090080', '100000090082',
+		'100000090083', '100000090088', '100000090092', '100000090096','100000090110'
+		)
+		)
+		when (select aj.ajlb_bm
+		from tyyw_gg_ajjbxx_tyyw aj
+		where aj.bmsah = a.bmsah
+		and aj.tysah = a.tysah
+		) = '0201'
+		or
+		(select aj.ajlb_bm
+		from tyyw_gg_ajjbxx_tyyw aj
+		where aj.bmsah = a.bmsah
+		and aj.tysah = a.tysah
+		) = '0301'
+		<!--or
+        (select aj.bjrq
+         from tyyw_gg_ajjbxx_tyyw aj
+         where aj.bmsah = a.bmsah
+           and aj.tysah = a.tysah
+        ) is not null
+        or
+        (select aj.bjrq
+         from tyyw_gg_ajjbxx_tyyw aj
+         where aj.bmsah = a.bmsah
+           and aj.tysah = a.tysah
+        ) != ''-->
+		then (select aj.bjrq
+		from tyyw_gg_ajjbxx_tyyw aj
+		where aj.bmsah = a.bmsah
+		and aj.tysah = a.tysah
+		)
+		else (select aj.wcrq
+		from tyyw_gg_ajjbxx_tyyw aj
+		where aj.bmsah = a.bmsah
+		and aj.tysah = a.tysah
+		)
+		end) as wjrq
+		from (
+		select t.bmsah,
+		t.tysah,
+		t.ajmc,
+		t.ajlb_mc,
+		t.ajlb_bm,
+		t.cbr,
+		t.cbrgh,
+		t.cbbm_mc,
+		t.cbbm_bm,
+		t.slrq
+		from tyyw_gg_ajjbxx_tyyw t
+		inner join yx_ws_sl_tyyw w on t.bmsah = w.bmsah and t.tysah = w.tysah
+		where t.ajzt in ('2', '3')
+		<if test="bmsahs!=null and bmsahs!='' ">
+			and w.bmsah in
+			<foreach collection="bmsahs" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		and t.sfsc = 'N'
+		and w.sfsc = 'N'
+		group by t.bmsah, t.tysah, t.ajmc, t.ajlb_mc, t.ajlb_bm, t.cbr, t.cbrgh, t.cbbm_mc, t.cbbm_bm, t.slrq
+		) a
+
+	</select>
+
+	<!--根据部门受案号（集合）获取所有案件集合,案件的完结日期直接取案件的“完成日期”-->
+	<select id="getWjajsByBmsahs" resultType="java.util.HashMap">
+		select t.bmsah,
+		t.tysah,
+		t.ajmc,
+		t.ajlb_mc,
+		t.ajlb_bm,
+		t.cbr,
+		t.cbrgh,
+		t.cbbm_mc,
+		t.cbbm_bm,
+		t.slrq,
+		t.wcrq wjrq
+		from tyyw_gg_ajjbxx_tyyw t
+		inner join yx_ws_sl_tyyw w on t.bmsah = w.bmsah and t.tysah = w.tysah
+		where t.ajzt in ('2', '3')
+		<if test="bmsahs!=null and bmsahs!='' ">
+			and w.bmsah in
+			<foreach collection="bmsahs" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		and t.sfsc = 'N'
+		and w.sfsc = 'N'
+		group by t.bmsah, t.tysah, t.ajmc, t.ajlb_mc, t.ajlb_bm, t.cbr, t.cbrgh, t.cbbm_mc, t.cbbm_bm, t.slrq, t.wcrq
+	</select>
+
+	<!--部门领导或领导指定人核阅的案件-->
+	<select id="getAjOfReviewAj" resultType="java.util.HashMap">
+		select aj.bmsah,
+			   aj.tysah,
+			   aj.ajmc,
+			   aj.ajlb_mc,
+			   aj.ajlb_bm,
+			   aj.cbr,
+			   aj.cbrgh,
+			   aj.cbbm_mc,
+			   aj.cbbm_bm,
+			   aj.slrq,
+			   sp.sprxm,
+			   sp.sprgh,
+			   to_char((select max(s.sprq) from tyyw_yx_ws_sp_tyyw s where s.bmsah = aj.bmsah and s.tysah = aj.tysah and s.sfsc = 'N'),'yyyy-MM-dd') sprq
+		from tyyw_gg_ajjbxx_tyyw aj
+		inner join tyyw_yx_ws_sp_tyyw sp on aj.bmsah = sp.bmsah and aj.tysah = sp.tysah
+		where sp.dwbm = #{dwbm}
+		  and sp.sprgh = #{gh}
+		  and sp.sfsc = 'N'
+		  and sp.sprq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+		group by aj.bmsah,
+				 aj.tysah,
+			     aj.ajmc,
+			     aj.ajlb_mc,
+			     aj.ajlb_bm,
+			     aj.cbr,
+			     aj.cbrgh,
+			     aj.cbbm_mc,
+			     aj.cbbm_bm,
+			     aj.slrq,
+			     sp.sprxm,
+			     sp.sprgh
+	</select>
+
+	<!--红灯案件（办理超期），办结日期获或完成日期大于到期日期-->
+	<select id="getAjOfOvertimeAj" resultType="java.util.HashMap">
+		select t.bmsah,
+			   t.tysah,
+			   t.ajmc,
+			   t.ajlb_mc,
+			   t.ajlb_bm,
+			   t.cbr,
+			   t.cbrgh,
+			   t.cbbm_mc,
+			   t.cbbm_bm,
+			   t.slrq,
+			   t.wcrq,
+			   t.bjrq,
+			   t.dqrq
+		from TYYW_GG_AJJBXX_TYYW t
+		where t.cbdw_bm = #{dwbm}
+		  and t.cbrgh = #{gh}
+		  and t.sfsc = 'N'
+		  and t.dqrq between to_date(#{kssj}, 'yyyy-MM-dd') and to_date(#{jssj}, 'yyyy-MM-dd')
+		  and (t.wcrq > t.dqrq or t.bjrq > t.dqrq)
+	</select>
+
+	<!--根据部门受案号和统一受案号查询文书-->
+	<select id="getWsInfoByBmsahAndTysah" resultType="java.util.HashMap">
+		select t.bmsah,
+			   t.tysah,
+			   t.wsmc,
+			   t.wsbh,
+			   t.wsmbbh,
+			   t.nzrxm,
+			   t.nzrgh,
+			   t.nzrq,
+			   t.sprgh,
+			   t.sprxm,
+			   t.sprq
+		from yx_ws_sl_tyyw t
+		where t.bmsah = #{bmsah}
+		  and t.tysah = #{tysah}
+		  and t.sfsc = 'N'
+	</select>
+
+	<!--根据案件类别编码获取案件-->
+	<select id="countsOfExamineAndAccept" resultType="java.util.HashMap">
+		select a.bmsah,
+		a.tysah,
+		a.ajmc,
+		a.ajlb_mc,
+		a.ajlb_bm,
+		a.cbr,
+		a.cbrgh,
+		a.cbbm_mc,
+		a.cbbm_bm,
+		a.slrq,
+		a.wcrq wjrq
+		from TYYW_GG_AJJBXX_TYYW a
+		where a.cbdw_bm = #{dwbm}
+		and a.cbrgh = #{gh}
+		and a.ajzt in ('2', '3')  <!--案件状态2：已办结；3：已归档-->
+		and a.sfsc = 'N'
+		and a.ajlb_bm in ('0800', '0802', '0803', '0807', '0808')
+		and a.wcrq between to_date(#{kssj}, 'yyyy-MM-dd') and to_date(#{jssj}, 'yyyy-MM-dd')
+	</select>
+
+	<!--根据案件类别编码获取案件-->
+	<select id="getAjByajlbbm" resultType="java.util.HashMap">
+		select a.bmsah,
+		a.tysah,
+		a.ajmc,
+		a.ajlb_mc,
+		a.ajlb_bm,
+		a.cbr,
+		a.cbrgh,
+		a.cbbm_mc,
+		a.cbbm_bm,
+		a.slrq,
+		a.wcrq wjrq
+		from TYYW_GG_AJJBXX_TYYW a
+		where a.cbdw_bm = #{dwbm}
+		and a.cbrgh = #{gh}
+		and a.ajzt in ('2', '3')
+		and a.sfsc = 'N'
+		and a.wcrq between to_date(#{kssj}, 'yyyy-MM-dd') and to_date(#{jssj}, 'yyyy-MM-dd')
+		and a.ajlb_bm in
+		<if test='ajlbbms != null and ajlbbms.size() > 0'>
+			<foreach item='item' index='index' collection='ajlbbms' open='(' separator=',' close=')'>
+				#{item}
+			</foreach>
+		</if>
+	</select>
+
+</mapper>

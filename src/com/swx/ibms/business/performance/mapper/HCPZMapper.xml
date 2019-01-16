@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.performance.mapper.HCPZMapper">
+	<!-- 自定义返回结果集 -->
+	<resultMap id="HCPZMap" type="com.swx.ibms.business.performance.bean.HCPZ">
+        <result property="id" column="id"  javaType="java.lang.String"></result>
+		<result property="hcdwbm" column="hcdwbm"  javaType="java.lang.String"></result>
+		<result property="hcbmbm" column="hcbmbm" javaType="java.lang.String"></result>
+		<result property="bhcdwbm" column="bhcdwbm" javaType="java.lang.String"></result>
+		<result property="bhcbmbm" column="bhcbmbm" javaType="java.lang.String"></result>
+		<result property="ywlx" column="ywlx" javaType="java.lang.String"></result>
+		<result property="ywmc" column="ywmc" javaType="java.lang.String"></result>
+		<result property="kssj" column="kssj" javaType="java.lang.String"></result>
+		<result property="jssj" column="jssj" javaType="java.lang.String"></result>
+		<result property="bhcdwmc" column="bhcdwmc" javaType="java.lang.String"></result>
+		<result property="hcdwmc" column="hcdwmc" javaType="java.lang.String"></result>
+   </resultMap>
+   <!-- 业务类型列表专用map -->
+   <resultMap id="YWLXMap" type="com.swx.ibms.business.performance.bean.HCPZ">
+		<result property="ywlx" column="ywlx" javaType="java.lang.String"></result>
+		<result property="ywmc" column="ywmc" javaType="java.lang.String"></result>
+   </resultMap>
+   
+   <!-- 部门映射列表专用map -->
+   <resultMap id="BMYSSMap" type="com.swx.ibms.business.performance.bean.HCPZ">
+		<result property="bmlbbm" column="bmlbbm" javaType="java.lang.String"></result>
+   </resultMap>
+
+	<insert id="insert" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[  
+        {call pkg_sfdasp.proc_i_hcpz(
+          #{p_hcdwbm,mode=IN,jdbcType=VARCHAR},
+          #{p_hcbmbm,mode=IN,jdbcType=VARCHAR},	
+          #{p_bhcdwbm,mode=IN,jdbcType=VARCHAR},
+          #{p_bhcbmbm,mode=IN,jdbcType=VARCHAR},
+          #{p_ywlx,mode=IN,jdbcType=VARCHAR},
+          #{p_kssj,mode=IN,jdbcType=VARCHAR},
+          #{p_jssj,mode=IN,jdbcType=VARCHAR},
+          #{Y,mode=OUT,jdbcType=VARCHAR}
+          )}  
+        ]]>
+	</insert>
+	<delete id="delete" parameterType="java.util.Map" statementType="CALLABLE">
+       <![CDATA[  
+       {call pkg_sfdasp.proc_d_hcpz(
+         #{p_bhcdwbm,mode=IN,jdbcType=VARCHAR},
+         #{p_ywlx,mode=IN,jdbcType=VARCHAR},
+         #{p_kssj,mode=IN,jdbcType=VARCHAR},         
+         #{Y,mode=OUT,jdbcType=VARCHAR}
+         )}  
+       ]]>
+	</delete>
+<!-- 	<update id="update" parameterType="java.util.Map" statementType="CALLABLE">
+       <![CDATA[  
+       {call pkg_sfdasp.proc_c_hcpz(
+         #{p_id,mode=IN,jdbcType=VARCHAR},
+         #{p_hcdwbm,mode=IN,jdbcType=VARCHAR},
+         #{p_hcbmbm,mode=IN,jdbcType=VARCHAR},	
+         #{p_bhcdwbm,mode=IN,jdbcType=VARCHAR},
+         #{p_bhcbmbm,mode=IN,jdbcType=VARCHAR},
+         #{Y,mode=OUT,jdbcType=VARCHAR}
+         )}  
+       ]]>
+	</update> -->
+	<select id="select" parameterType="java.util.Map" statementType="CALLABLE">
+      <![CDATA[  
+      {call pkg_sfdasp.proc_s_hcpz(	
+        #{p_bhcdwbm,mode=IN,jdbcType=VARCHAR},
+        #{p_pages,mode=IN,jdbcType=VARCHAR},
+        #{p_pagee,mode=IN,jdbcType=VARCHAR},
+        #{p_total,mode=OUT,jdbcType=VARCHAR},
+        #{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=HCPZMap}
+        )}  
+      ]]>
+	</select>
+	<select id="selectdwbmywlx" parameterType="java.util.Map" statementType="CALLABLE">
+      <![CDATA[  
+      {call pkg_sfdasp.proc_sa_hcpz(	
+        #{p_bhcdwbm,mode=IN,jdbcType=VARCHAR},
+        #{p_ywlx,mode=IN,jdbcType=VARCHAR},
+        #{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=HCPZMap}
+        )}  
+      ]]>
+	</select>
+	<select id="selectdwbmywlxsj" parameterType="java.util.Map" statementType="CALLABLE">
+      <![CDATA[  
+      {call pkg_sfdasp.proc_sasj_hcpz(	
+        #{p_bhcdwbm,mode=IN,jdbcType=VARCHAR},
+        #{p_ywlx,mode=IN,jdbcType=VARCHAR},
+        #{p_sj,mode=IN,jdbcType=VARCHAR},
+        #{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=HCPZMap}
+        )}  
+      ]]>
+	</select>
+	
+	<!-- 通过业务类型得到部门编码  -->
+	<select id="getbmlbbyywlx" parameterType="java.util.Map" statementType="CALLABLE">
+	  <![CDATA[  
+      {call pkg_sfdasp.proc_s_bmys(	
+        #{p_ywlx,mode=IN,jdbcType=VARCHAR},
+        #{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=BMYSSMap}
+        )}  
+      ]]>
+	</select>
+		<!-- 通过单位编码和部门编码 得到一个单独的hcpz  -->
+	<select id="selectone" parameterType="java.util.Map" statementType="CALLABLE">
+	  <![CDATA[  
+      {call pkg_sfdasp.proc_so_bmys(	
+        #{p_bhcdwbm,mode=IN,jdbcType=VARCHAR},
+        #{p_bhcbmbm,mode=IN,jdbcType=VARCHAR},
+        #{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=HCPZMap}
+        )}  
+      ]]>
+	</select>
+	<!--  -->
+	<select id="getywlxlist" parameterType="java.util.Map" statementType="CALLABLE">
+	  <![CDATA[  
+      {call pkg_sfdasp.proc_s_ywlx(	
+        #{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=YWLXMap}
+        )}  
+      ]]>
+	</select>
+	<select id="getAllhcpz" parameterType="java.util.Map" statementType="CALLABLE">
+	  <![CDATA[  
+      {call pkg_sfdasp.proc_ssl_hcpz(
+      	#{p_pages,mode=IN,jdbcType=VARCHAR},
+      	#{p_pagee,mode=IN,jdbcType=VARCHAR},
+      	#{p_total,mode=OUT,jdbcType=VARCHAR},
+        #{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=HCPZMap}
+        )}  
+      ]]>
+	</select>
+	<select id="gethcpzcount" parameterType="java.util.Map" statementType="CALLABLE">
+	  <![CDATA[  
+      {call pkg_sfdasp.proc_count_hcpz(
+      	#{p_num,mode=OUT,jdbcType=VARCHAR}
+        )}  
+      ]]>
+	</select>
+	<select id="getndjd" parameterType="java.util.Map" statementType="CALLABLE">
+	  <![CDATA[  
+      {call pkg_sfdasp.proc_s_nd(
+      	#{p_spstid,mode=IN,jdbcType=VARCHAR},
+      	#{p_nd,mode=OUT,jdbcType=VARCHAR},
+      	#{p_jd,mode=OUT,jdbcType=VARCHAR},
+      	#{p_ywlx,mode=OUT,jdbcType=VARCHAR},
+      	#{p_dwbm,mode=OUT,jdbcType=VARCHAR}
+        )}  
+      ]]>
+	</select>
+	<select id="getdwjb" parameterType="java.util.Map" statementType="CALLABLE">
+	  <![CDATA[  
+      {call pkg_sfdasp.proc_s_dwjb(
+      	#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+      	#{p_dwjb,mode=OUT,jdbcType=VARCHAR},
+      	#{p_dwmc,mode=OUT,jdbcType=VARCHAR}
+        )}  
+      ]]>
+	</select>
+	
+	<select id="getisjc" parameterType="java.util.Map" statementType="CALLABLE">
+	  <![CDATA[  
+      {call pkg_sfdasp.proc_s_lclx(
+      	#{p_spstid,mode=IN,jdbcType=VARCHAR},
+      	#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+      	#{p_jdlx,mode=OUT,jdbcType=VARCHAR}
+        )}  
+      ]]>
+	</select>
+	
+	
+</mapper>

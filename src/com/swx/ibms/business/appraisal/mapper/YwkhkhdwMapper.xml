@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:对应的mapper文件包名 -->
+<mapper namespace="com.swx.ibms.business.appraisal.mapper.YwkhkhdwMapper">
+    <resultMap id="ywkhkhdwMap" type="Ywkhkhdw">
+        <result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+        <result property="dwmc" column="dwmc" javaType="java.lang.String"></result>
+        <result property="dwjb" column="dwjb" javaType="java.lang.String"></result>
+        <result property="dwjc" column="dwjc" javaType="java.lang.String"></result>
+        <result property="sfsc" column="sfsc" javaType="java.lang.String"></result>
+    </resultMap>
+
+    <!--考虑到考核单位的字段可能有变这儿根据单位编码查询单位级别另外写一个结果集-->
+    <resultMap id="ywkhDwbmMap" type="java.util.Map">
+        <result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+        <result property="dwmc" column="dwmc" javaType="java.lang.String"></result>
+        <result property="dwjb" column="dwjb" javaType="java.lang.String"></result>
+        <result property="dwjc" column="dwjc" javaType="java.lang.String"></result>
+        <result property="fdwbm" column="fdwbm" javaType="java.lang.String"></result>
+    </resultMap>
+
+    <!-- 查询全部并分页排序 -->
+    <!-- id：mapper类对应的方法名   parameterType:方法参数类型   statementType:CALLABLE 标示调用存储过程 -->
+    <select id="getPageListKhdw" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[
+ 		{call PKG_YWKH.pro_getPageList_khdw(
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+ 			#{p_start,mode=IN,jdbcType=INTEGER},
+ 			#{p_end,mode=IN,jdbcType=INTEGER},
+ 			#{p_total,mode=OUT,jdbcType=INTEGER},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ywkhkhdwMap}
+  		)}
+  		]]>
+    </select>
+
+    <!--根据单位编码查询单位级别以及单位信息-->
+    <select id="getDwjbByDwbm" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[
+ 		{call PKG_YWKH.pro_get_dwjbByDwbm(
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ywkhDwbmMap}
+  		)}
+  		]]>
+    </select>
+
+    <!--添加或者修改被考核单位信息-->
+    <insert id="addKhdw" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[
+ 		{call PKG_YWKH.pro_add_khdw(
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+ 			#{p_dwmc,mode=IN,jdbcType=VARCHAR},
+ 			#{p_fdwbm,mode=IN,jdbcType=VARCHAR},
+ 			#{p_dwjb,mode=IN,jdbcType=VARCHAR},
+ 			#{p_dwjc,mode=IN,jdbcType=VARCHAR},
+ 			#{p_sfsc,mode=IN,jdbcType=VARCHAR},
+  		    #{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+  		)}
+  		]]>
+    </insert>
+
+    <!--逻辑删除被考核单位信息（假删除）-->
+    <update id="modifyKhdw" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[
+ 		{call PKG_YWKH.pro_modify_khdw(
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+  		)}
+  		]]>
+    </update>
+
+    <!--根据考核单位或者父单位编码获取考核信息-->
+    <select id="getKhdwByDw" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[
+ 		{call PKG_YWKH.pro_get_khdwByDw(
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+ 			#{p_fdwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ywkhkhdwMap}
+  		)}
+  		]]>
+    </select>
+
+</mapper>

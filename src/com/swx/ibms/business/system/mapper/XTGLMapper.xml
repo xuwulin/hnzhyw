@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.system.mapper.XTGLMapper">
+	<!-- 自定义结果集 -->
+	
+	<!-- 单位编码结果集 -->
+	<resultMap id="DwbmMap" type="DWBM">
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="dwmc" column="dwmc" javaType="java.lang.String"></result>
+		<result property="fdwbm" column="fdwbm" javaType="java.lang.String"></result>
+		<result property="dwjb" column="dwjb" javaType="java.lang.String"></result>
+		<result property="sfsc" column="sfsc" javaType="java.lang.String"></result>
+		<result property="dwjc" column="dwjc" javaType="java.lang.String"></result>
+		<result property="dwsx" column="dwsx" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	
+	<!-- 部门编码结果集 -->
+	<resultMap id="BmbmMap" type="BMBM">
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="bmbm" column="bmbm" javaType="java.lang.String"></result>
+		<result property="fbmbm" column="fbmbm" javaType="java.lang.String"></result>
+		<result property="bmmc" column="bmmc" javaType="java.lang.String"></result>
+		<result property="bmjc" column="bmjc" javaType="java.lang.String"></result>
+		<result property="bmwhjc" column="bmwhjc" javaType="java.lang.String"></result>
+		<result property="bmahjc" column="bmahjc" javaType="java.lang.String"></result>
+		<result property="sflsjg" column="sflsjg" javaType="java.lang.String"></result>
+		<result property="sfcbbm" column="sfcbbm" javaType="java.lang.String"></result>
+		<result property="bmxh" column="bmxh" javaType="java.lang.Integer"></result>
+		<result property="bz" column="bz" javaType="java.lang.String"></result>
+		<result property="sfsc" column="sfsc" javaType="java.lang.String"></result>
+		<result property="bmys" column="bmys" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<!-- 人员编码结果集 -->
+	<resultMap id="RybmMap" type="com.swx.ibms.business.rbac.bean.RYBM">
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="gh" column="gh" javaType="java.lang.String"></result>
+		<result property="dlbm" column="dlbm" javaType="java.lang.String"></result>
+		<result property="kl" column="kl" javaType="java.lang.String"></result>
+		<result property="mc" column="mc" javaType="java.lang.String"></result>
+		<result property="gzzh" column="gzzh" javaType="java.lang.String"></result>
+		<result property="yddhhm" column="yddhhm" javaType="java.lang.String"></result>
+		<result property="dzyj" column="dzyj" javaType="java.lang.String"></result>
+		<result property="ydwbm" column="ydwbm" javaType="java.lang.String"></result>
+		<result property="ydwmc" column="ydwmc" javaType="java.lang.String"></result>
+		<result property="sflsry" column="sflsry" javaType="java.lang.String"></result>
+		<result property="sfsc" column="sfsc" javaType="java.lang.String"></result>
+		<result property="sftz" column="sftz" javaType="java.lang.String"></result>
+<!-- 		<result property="zp" column="zp" javaType="java.lang.String"></result> -->
+		<result property="xb" column="xb" javaType="java.lang.String"></result>
+		<result property="caid" column="caid" javaType="java.lang.String"></result>
+		<result property="zrjcggh" column="zrjcggh" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<!-- 角色编码结果集 -->
+	<resultMap id="JsbmMap" type="com.swx.ibms.business.rbac.bean.JSBM">
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="dwmc" column="dwmc" javaType="java.lang.String"></result>
+		<result property="jsbm" column="jsbm" javaType="java.lang.String"></result>
+		<result property="jsmc" column="jsmc" javaType="java.lang.String"></result>
+		<result property="bmbm" column="bmbm" javaType="java.lang.String"></result>
+		<result property="jsxh" column="jsxh" javaType="java.lang.Integer"></result>
+		<result property="spjsbm" column="spjsbm" javaType="java.lang.String"></result>
+		<result property="description" column="description" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<!-- 人员角色分配结果集 -->
+	<resultMap id="FpMap" type="RYJSFP">
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="bmbm" column="bmbm" javaType="java.lang.String"></result>
+		<result property="jsbm" column="jsbm" javaType="java.lang.String"></result>
+		<result property="gh" column="gh" javaType="java.lang.String"></result>
+		<result property="zjldgh" column="zjldgh" javaType="java.lang.String"></result>
+		<result property="ryxh" column="ryxh" javaType="java.lang.Integer"></result>
+	</resultMap>
+
+
+	<!-- 单位编码操作 -->
+	<!-- 查询所有单位列表 -->
+	<select id="getAllDw" parameterType="java.util.Map" statementType="CALLABLE">
+			<![CDATA[  
+        	{call PKG_XTGL.proc_getalldw(	  
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=DwbmMap},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          	)} 
+    ]]>
+	</select>
+
+	<!-- 查询单位信息 -->
+	<select id="getDw" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_XTGL.proc_getdw(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=DwbmMap},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>  
+	</select>
+
+	<!-- 添加单位 -->
+	<insert id="addDw" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_XTGL.proc_adddw(	
+        		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_dwmc,mode=IN,jdbcType=VARCHAR},
+        		#{p_fdwbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_dwjb,mode=IN,jdbcType=VARCHAR},
+        		#{p_sfsc,mode=IN,jdbcType=VARCHAR},
+        		#{p_dwjc,mode=IN,jdbcType=VARCHAR},
+        		#{p_dwsx,mode=IN,jdbcType=VARCHAR},   
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          	)} 
+          	]]> 
+	</insert>
+
+	<!-- 更新单位信息 -->
+	<update id="updateDw" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_XTGL.proc_updatedw(	
+        		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_dwmc,mode=IN,jdbcType=VARCHAR},
+        		#{p_fdwbm,mode=IN,jdbcType=VARCHAR},
+        		#{p_dwjb,mode=IN,jdbcType=VARCHAR},
+        		#{p_sfsc,mode=IN,jdbcType=VARCHAR},
+        		#{p_dwjc,mode=IN,jdbcType=VARCHAR},
+        		#{p_dwsx,mode=IN,jdbcType=VARCHAR},   
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          	)} 
+          	]]> 
+	</update>
+
+	<!-- 删除单位 -->
+	<delete id="deleteDw" parameterType="java.util.Map" statementType="CALLABLE">
+			<![CDATA[  
+        	{call PKG_XTGL.proc_deletedw(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    		]]>
+	</delete>
+
+
+
+
+
+
+
+
+	<!-- 部门编码操作 -->
+	<!-- 查询某个单位下的所有部门列表 -->
+	<select id="getBmByDwbm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_XTGL.proc_getbmbydwbm(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=BmbmMap},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>  
+	</select>
+
+	<!-- 查询部门信息 -->
+	<select id="getBm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_XTGL.proc_getbm(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=BmbmMap},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</select>
+
+	<!-- 添加部门 -->
+	<insert id="addBm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_XTGL.proc_addbm(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_fbmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmmc,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmjc,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmwhjc,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmahjc,mode=IN,jdbcType=VARCHAR},
+          		#{p_sflsjg,mode=IN,jdbcType=VARCHAR},
+          		#{p_sfcbbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmxh,mode=IN,jdbcType=INTEGER},
+          		#{p_bz,mode=IN,jdbcType=VARCHAR},
+          		#{p_sfsc,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmys,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</insert>
+
+	<!-- 更新部门信息 -->
+	<update id="updateBm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_XTGL.proc_updatebm(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_fbmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmmc,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmjc,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmwhjc,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmahjc,mode=IN,jdbcType=VARCHAR},
+          		#{p_sflsjg,mode=IN,jdbcType=VARCHAR},
+          		#{p_sfcbbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmxh,mode=IN,jdbcType=INTEGER},
+          		#{p_bz,mode=IN,jdbcType=VARCHAR},
+          		#{p_sfsc,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmys,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+
+	<!-- 删除部门 -->
+	<delete id="deleteBm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_XTGL.proc_deletebm(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</delete>
+
+
+
+
+
+	<!-- 角色编码操作 -->
+	<!-- 查询某个部门下的所有角色列表 -->
+	<select id="getJsBybmbm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_XTGL.proc_getjsbybmbm(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=JsbmMap},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</select>
+
+	<!-- 查询角色信息 -->
+	<select id="getJs" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_XTGL.proc_getjs(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_jsbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=JsbmMap},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</select>
+
+	<!-- 添加角色 -->
+	<insert id="addJs" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_XTGL.proc_addjs(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_jsbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_jsmc,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_jsxh,mode=IN,jdbcType=INTEGER},
+          		#{p_spjsbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_description,mode=IN,jdbcType=VARCHAR},	  
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</insert>
+
+	<!-- 更新角色信息 -->
+	<update id="updateJs">
+		update XT_ZZJG_JSBM
+		set jsmc = #{jsmc},
+			bmbm = #{bmbm},
+			jsxh = #{jsxh},
+			spjsbm = #{spjsbm},
+			description = #{description}
+		where dwbm = #{dwbm}
+		  and bmbm = #{bmbm}
+		  and jsbm = #{jsbm}
+	</update>
+
+	<!-- 删除角色 -->
+	<delete id="deleteJs" parameterType="java.util.Map">
+		delete from XT_ZZJG_JSBM
+		where dwbm = #{dwbm}
+		  and bmbm = #{bmbm}
+		  and jsbm = #{jsbm}
+	</delete>
+
+	<!-- 人员编码操作 -->
+	<!-- 查询某个角色下的所有人员列表 -->
+	<select id="getRyByBmbm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_XTGL.proc_getrybybmbm(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_jsbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_upper,mode=IN,jdbcType=INTEGER},
+          		#{p_floor,mode=IN,jdbcType=INTEGER},
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=RybmMap},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)}
+    	]]>
+	</select>
+
+	<!-- 查询人员信息 -->
+	<select id="getRy" resultMap="RybmMap">
+		SELECT b.DWBM,
+		b.BMBM,
+		b.JSBM,
+		b.GH,
+		c.jsmc,
+		a.DLBM,
+		a.KL,
+		a.MC,
+		a.GZZH,
+		a.YDDHHM,
+		a.DZYJ,
+		a.YDWBM,
+		a.YDWMC,
+		a.SFLSRY,
+		a.SFSC,
+		a.SFTZ,
+		a.ZP,
+		a.XB,
+		a.CAID,
+		a.ZRJCGGH
+		FROM XT_ZZJG_RYBM a
+		inner join XT_ZZJG_RYJSFP b on a.dwbm = b.dwbm and a.gh = b.gh
+		inner join (select tj.dwbm,tj.bmbm,tj.jsbm,tj.jsmc from XT_QX_JSBM_TYYW tj where tj.dwbm = #{dwbm}
+		union
+		select zj.dwbm,zj.bmbm,zj.jsbm,zj.jsmc from XT_ZZJG_JSBM zj where zj.dwbm = #{dwbm} and zj.sfsc = 'N') c
+		on b.dwbm = c.dwbm and b.jsbm = c.jsbm and b.bmbm = c.bmbm and a.dwbm = c.dwbm
+
+		WHERE a.dwbm = #{dwbm}
+		and a.sfsc = 'N'
+		<if test="name != '' and name != null">
+			and a.mc like concat(#{name},'%') or a.dlbm like concat(#{name},'%')
+		</if>
+		order by b.bmbm desc, b.jsbm asc
+
+	</select>
+
+	<!-- 添加人员 -->
+	<insert id="addRy" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_XTGL.proc_addry(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},
+          		#{p_dlbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_kl,mode=IN,jdbcType=VARCHAR},
+          		#{p_mc,mode=IN,jdbcType=VARCHAR},
+          		#{p_gzzh,mode=IN,jdbcType=VARCHAR},
+          		#{p_yddhhm,mode=IN,jdbcType=VARCHAR},
+          		#{p_dzyj,mode=IN,jdbcType=VARCHAR},
+          		#{p_ydwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_ydwmc,mode=IN,jdbcType=VARCHAR},
+          		#{p_sflsry,mode=IN,jdbcType=VARCHAR},
+          		#{p_sfsc,mode=IN,jdbcType=VARCHAR},
+          		#{p_sftz,mode=IN,jdbcType=VARCHAR},
+          		#{p_xb,mode=IN,jdbcType=VARCHAR},
+          		#{p_caid,mode=IN,jdbcType=VARCHAR},
+          		#{p_zrjcggh,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)}
+    	]]>
+	</insert>
+
+	<!-- 更新人员信息 -->
+	<update id="updateRy">
+		update XT_ZZJG_RYBM
+		set mc = #{mc},
+			gh = #{gh},
+			xb = #{xb},
+			kl = #{kl},
+			gzzh = #{gzzh}
+		where dwbm = #{dwbm}
+		  and gh = #{oldGh}
+		  and dlbm = #{dlbm}
+	</update>
+
+	<update id="updatePer">
+		update xt_zzjg_rybm
+		set mc = #{mc},
+		    gh = #{gh},
+		    xb = #{xb},
+		    kl = #{kl},
+		    gzzh = #{gzzh}
+		where dwbm = #{dwbm}
+		  and gh = #{oldGh}
+		  and dlbm = #{dlbm}
+	</update>
+
+	<!-- 删除人员-->
+	<delete id="deleteRy" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_XTGL.proc_deletery(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_jsbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)}
+    	]]>
+	</delete>
+
+	<!-- 人员分配操作 -->
+	<!-- 查询人员的直接领导 -->
+	<select id="getFp" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_XTGL.proc_getfp(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_jsbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=FpMap},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)}
+    	]]>
+	</select>
+
+
+	<!-- 更新分配信息 -->
+	<update id="updateFp" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_XTGL.proc_getfp(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_jsbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},
+          		#{p_zjldgh,mode=IN,jdbcType=VARCHAR},
+          		#{p_ryxh,mode=IN,jdbcType=INTEGER},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)}
+    	]]>
+	</update>
+
+
+	<!-- 增加分配信息 -->
+	<insert id="addFp" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_XTGL.proc_addfp(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_jsbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},
+          		#{p_zjldgh,mode=IN,jdbcType=VARCHAR},
+          		#{p_ryxh,mode=IN,jdbcType=INTEGER},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)}
+    	]]>
+	</insert>
+
+
+	<!-- 删除分配信息 -->
+	<delete id="deleteFp" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_XTGL.proc_deletefp(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_jsbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)}
+    	]]>
+	</delete>
+
+
+	<!-- 根据档案中的所属人单位名称和所属人工号查询所属人名字 -->
+	<select id="selectMcByGh" resultType="java.lang.String">
+		SELECT MC
+	    FROM XT_ZZJG_RYBM_tyyw r1
+	    WHERE r1.DWBM = #{dwbm}
+		  AND r1.GH = #{gh}
+	    union all
+	    select mc
+	    from xt_zzjg_rybm r2
+	    where r2.dwbm = #{dwbm}
+		  and r2.gh = #{gh}
+	</select>
+
+	<select id="getJsByDwbm" resultMap="JsbmMap">
+		select a.*,
+			   b.dwmc
+		from XT_ZZJG_JSBM a
+		inner join XT_ZZJG_DWBM_tyyw b on a.dwbm = b.dwbm
+		where a.dwbm = #{dwbm}
+		  and a.sfsc = 'N'
+		order by a.bmbm desc, a.jsbm asc
+	</select>
+
+	<select id="getJsbmByBmbm" resultType="java.lang.String">
+		select max(jsbm) jsbm
+		from(
+			select max(jsbm) jsbm
+			from XT_ZZJG_JSBM
+			where dwbm = #{dwbm}
+			  and bmbm = #{bmbm}
+
+			union all
+
+			select max(jsbm) jsbm
+			from xt_qx_jsbm_tyyw
+			where dwbm = #{dwbm}
+			  and bmbm = #{bmbm}
+		)
+	</select>
+
+	<select id="getMaxGh" resultType="java.lang.String">
+		select max(gh) gh
+		from(
+			 select max(r.gh) gh
+			 from XT_ZZJG_RYBM r
+			 where r.dwbm = #{dwbm}
+
+			 union
+
+			 select max(rt.gh) gh
+			 from xt_zzjg_rybm_tyyw rt
+			 where rt.dwbm = #{dwbm}
+    	)
+	</select>
+
+	<insert id="addJsToRyjsfp">
+		insert into XT_ZZJG_RYJSFP (dwbm,bmbm,jsbm,gh)
+							values (#{dwbm},#{bmbm},#{jsbm},#{gh})
+	</insert>
+
+	<update id="updateJsToRyjsfp">
+		update XT_ZZJG_RYJSFP
+		set bmbm = #{bmbm},
+			jsbm = #{jsbm},
+			gh = #{gh}
+		where dwbm = #{dwbm}
+		  and gh = #{oldGh}
+	</update>
+
+	<update id="suspension">
+		update XT_ZZJG_RYBM
+		set sftz = 'Y'
+		where dwbm = #{dwbm}
+		  and gh = #{gh}
+	</update>
+
+	<select id="aliasVerify" resultType="java.lang.Integer">
+		select max(sl) sl
+		from(
+			 select nvl(count(dlbm),0) sl
+   			 from XT_ZZJG_RYBM
+   			 where dlbm = #{dlbm}
+      		   and dwbm = #{dwbm}
+
+       		 union
+
+      		 select nvl(count(dlbm),0) sl
+    		 from xt_zzjg_rybm_tyyw
+    		 where dlbm = #{dlbm}
+      		   and dwbm = #{dwbm}
+      	)
+	</select>
+
+	<select id="deptNameVerify" resultType="java.lang.Integer">
+		select max(sl) sl
+		from(
+			 select nvl(count(bmmc),0) sl
+   			 from XT_ZZJG_BMBM
+   			 where bmmc = #{bmmc}
+      		   and dwbm = #{dwbm}
+
+       		 union
+
+      		 select nvl(count(bmmc),0) sl
+    		 from XT_ZZJG_BMBM_TYYW
+    		 where bmmc = #{bmmc}
+      		   and dwbm = #{dwbm}
+      	)
+	</select>
+
+</mapper>

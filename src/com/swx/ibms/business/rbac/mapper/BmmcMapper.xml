@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.rbac.mapper.BmmcMapper">
+	<!-- 自定义结果集 -->
+	<!-- 单位编码结果集 -->
+	<resultMap id="BmmcMap" type="com.swx.ibms.business.rbac.bean.Bmmc">
+		<result property="bmbm" column="bmbm" javaType="java.lang.String"></result>
+		<result property="bmmc" column="bmmc" javaType="java.lang.String"></result>
+	</resultMap>
+	<resultMap id="JxdfpmMap" type="com.swx.ibms.business.performance.bean.Jxdfpm">
+		<result property="mc" column="mc" javaType="java.lang.String"></result>
+		<result property="jxzf" column="jxzf" javaType="java.lang.String"></result>
+		<result property="ywjc" column="ywjc" javaType="java.lang.String"></result>
+	</resultMap>
+	<resultMap id="JxjhsjMap" type="com.swx.ibms.business.performance.bean.Jxjhsj">
+		<result property="ywlx" column="ywlx" javaType="java.lang.String"></result>
+		<result property="jxmax" column="jxmax" javaType="java.lang.String"></result>
+		<result property="jxavg" column="jxavg" javaType="java.lang.String"></result>
+		<result property="jxmin" column="jxmin" javaType="java.lang.String"></result>
+	</resultMap>
+	<!-- 查询该单位下的所有部门名称 -->
+	<select id="getAllBmmc" parameterType="java.util.Map"
+			statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_DBYW.pro_getallbmmc(
+  		    #{dwbm,mode=IN,jdbcType=VARCHAR},
+          	#{cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=BmmcMap}
+  		)}
+  	]]>
+	</select>
+	<!-- 查询该单位下的所有部门编码 -->
+	<select id="getAllBmbms" parameterType="java.util.Map"
+			statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_DBYW.select_all_bmbms(
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          	#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=xtDepartmentMap}
+  		)}
+  	]]>
+	</select>
+	<!-- 查询查询单位名称 -->
+	<select id="getDwmc" parameterType="java.util.Map"
+			statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_DBYW.pro_getdwmc(
+  		    #{dwbm,mode=IN,jdbcType=VARCHAR},
+          	#{dwmc,mode=OUT,jdbcType=VARCHAR},
+          	#{errmsg,mode=OUT,jdbcType=VARCHAR}
+  		)}
+  	]]>
+	</select>
+	<!-- 查询部门名称 -->
+	<select id="getBmmc" parameterType="java.util.Map"
+			statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_DBYW.pro_getbmmc(
+  		    #{dwbm,mode=IN,jdbcType=VARCHAR},
+          	#{gh,mode=IN,jdbcType=VARCHAR},
+          	#{cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=BmmcMap},
+          	#{errmsg,mode=OUT,jdbcType=VARCHAR}
+  		)}
+  	]]>
+	</select>
+	<!-- 返回考核人数信息 -->
+	<select id="getKhRs" parameterType="java.util.Map"
+			statementType="CALLABLE">
+	    <![CDATA[
+	    {call PKG_DBYW.get_khrs(
+	        #{ykhcount,mode=OUT,jdbcType=VARCHAR},
+	        #{zgkhcount,mode=OUT,jdbcType=VARCHAR},
+	        #{dwbm,mode=IN,jdbcType=VARCHAR},
+	        #{ryjs,mode=IN,jdbcType=INTEGER},
+	        #{bmbms,mode=IN,jdbcType=VARCHAR},
+	        #{bmyss,mode=IN,jdbcType=VARCHAR},
+	        #{maxyear,mode=OUT,jdbcType=INTEGER},
+	        #{maxseason,mode=OUT,jdbcType=INTEGER},
+	        #{errmsg,mode=OUT,jdbcType=VARCHAR}
+	    )}
+	    ]]>
+	</select>
+	<!-- 返回绩效得分前五名 -->
+	<select id="getJxdfpm" parameterType="java.util.Map"
+			statementType="CALLABLE">
+	    <![CDATA[
+	    {call PKG_DBYW.get_jxdfpm(
+	       #{dwbm,mode=IN,jdbcType=VARCHAR},
+	       #{ryjs,mode=IN,jdbcType=INTEGER},
+	       #{bmbms,mode=IN,jdbcType=VARCHAR},
+	       #{bmyss,mode=IN,jdbcType=VARCHAR},
+	       #{cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=JxdfpmMap},
+	       #{errmsg,mode=OUT,jdbcType=VARCHAR}
+	    )}
+	    ]]>
+	</select>
+	<!-- 返回业务类型,最高分,平均分,最低分 -->
+	<select id="getJxjhsj" parameterType="java.util.Map"
+			statementType="CALLABLE">
+	    <![CDATA[
+	    {call PKG_DBYW.get_jxjhsj(
+	       #{dwbm,mode=IN,jdbcType=VARCHAR},
+	       #{ryjs,mode=IN,jdbcType=INTEGER},
+	       #{bmbms,mode=IN,jdbcType=VARCHAR},
+	       #{bmyss,mode=IN,jdbcType=VARCHAR},
+	       #{cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=JxjhsjMap},
+	       #{errmsg,mode=OUT,jdbcType=VARCHAR}
+	    )}
+	    ]]>
+	</select>
+
+	<select id="getBmByDwbm" resultType="com.swx.ibms.business.rbac.bean.Bmmc">
+		<!-- select a.* ,'tyyw' lb from XT_ZZJG_BMBM_tyyw a where dwbm = #{dwbm}
+			union all -->
+		select b.*,'zhyw' lb from
+		XT_ZZJG_BMBM b where dwbm = #{dwbm} and
+		sfsc='N'
+	</select>
+
+	<select id="getBmmcBybmbm" resultType="com.swx.ibms.business.rbac.bean.RYBM">
+		select  dwbm,
+		bmbm,
+		bmmc,
+		jsbm,
+		jsmc,
+		gh,
+		dlbm,
+		mc,
+		gzzh,
+		yddhhm,
+		dzyj,
+		ydwbm,
+		ydwmc,
+		sflsry,
+		sfsc,
+		sftz,
+		xb,
+		caid,
+		zrjcggh
+		from (
+		select rownum rown,
+		b.bmbm,
+		b.jsbm,
+		a.*,
+		(select c.bmmc from XT_ZZJG_BMBM c where c.dwbm = a.dwbm and b.bmbm = c.bmbm) bmmc,
+		(select d.jsmc from XT_ZZJG_JSBM d where d.dwbm = a.dwbm and d.bmbm = b.bmbm and d.jsbm = b.jsbm) jsmc
+		from XT_ZZJG_RYBM a ,XT_ZZJG_RYJSFP b
+		where a.sfsc='N'
+		and a.dwbm=b.dwbm
+		and a.gh=b.gh
+		and b.dwbm=#{dwbm}
+		<if test="bmbm !=null and bmbm !=''">
+			and b.bmbm=#{bmbm}
+		</if>
+		<if test="jsbm !=null and jsbm !=''">
+			and b.jsbm=#{jsbm}
+		</if>
+		)
+		where rown>#{startrow} and rown <![CDATA[<]]>#{endrow} order by gzzh desc
+
+	</select>
+
+	<select id="getBmmcBybmbm2" resultType="com.swx.ibms.business.rbac.bean.RYBM">
+		select  dwbm,
+		gh,
+		dlbm,
+		mc,
+		gzzh,
+		yddhhm,
+		dzyj,
+		ydwbm,
+		ydwmc,
+		sflsry,
+		sfsc,
+		sftz,
+		xb,
+		caid,
+		zrjcggh
+		from (
+		select rownum rown,
+		a.*
+		from XT_ZZJG_RYBM_tyyw a ,XT_QX_RYJSFP_tyyw b
+		where a.dwbm=b.dwbm
+		and a.sfsc='N'
+		and a.gh=b.gh
+		and b.dwbm=#{dwbm}
+		<if test="bmbm !=null and bmbm !=''">
+			and b.bmbm=#{bmbm}
+		</if>
+		) where rown>#{startrow} and rown <![CDATA[<]]>#{endrow} order by gzzh desc
+	</select>
+
+	<select id="getJsBybm" resultType="JSBM">
+		select * from XT_ZZJG_JSBM t where t.dwbm =#{dwbm} and t.bmbm = #{bmbm} and t.sfsc='N'
+	</select>
+
+	<select id="getTotal" resultType="Integer">
+		select count(*) from XT_ZZJG_RYJSFP b
+		where b.dwbm=#{dwbm}
+		<if test="bmbm !=null and bmbm !=''">
+			and b.bmbm=#{bmbm}
+		</if>
+		<if test="bmbm !=null and bmbm !=''">
+			and b.jsbm=#{jsbm}
+		</if>
+	</select>
+
+	<select id="getTotalBybm" resultType="Integer">
+		select count(*) from XT_ZZJG_RYJSFP b
+		where b.dwbm=#{dwbm}
+		<if test="bmbm !=null and bmbm !=''">
+			and b.bmbm=#{bmbm}
+		</if>
+	</select>
+
+	<select id="getRyByBmbm" resultType="com.swx.ibms.business.rbac.bean.RYBM">
+		select dwbm,
+		gh,
+		dlbm,
+		mc,
+		gzzh,
+		yddhhm,
+		dzyj,
+		ydwbm,
+		ydwmc,
+		sflsry,
+		sfsc,
+		sftz,
+		xb,
+		caid,
+		zrjcggh,
+		bmmc,
+		jsmc
+		from
+		(
+		select rownum rown,
+		a.*,
+		(select c.bmmc from XT_ZZJG_BMBM c where c.dwbm = a.dwbm and b.bmbm = c.bmbm) bmmc,
+		(select d.jsmc from XT_ZZJG_JSBM d where d.dwbm = a.dwbm and d.bmbm = b.bmbm and d.jsbm = b.jsbm) jsmc
+		from XT_ZZJG_RYBM a ,XT_ZZJG_RYJSFP b
+		where a.dwbm=b.dwbm
+		and a.gh=b.gh
+		and a.sfsc='N'
+		and b.dwbm=#{dwbm}
+		<if test="bmbm !=null and bmbm !=''">
+			and b.bmbm=#{bmbm}
+		</if>
+
+		) where rown>#{startrow} and rown <![CDATA[<]]>#{endrow} order by gzzh desc
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

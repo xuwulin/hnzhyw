@@ -1,0 +1,61 @@
+@CHARSET "UTF-8";
+.bounced{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right:0;
+    background-color: rgba(0,0,0,0.6);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#50030303,endColorstr=#50030303);
+}
+.bounced_all{
+    width: 500px;
+/*     height: 400px; */
+    border: 1px solid #fff;
+    border-radius: 3px;
+    background-color: #fff;
+    margin: 8% auto;
+}
+.bounced_tot{
+    height: 40px;
+    width: 100%;
+    border-bottom: 1px solid #D7D7D7;
+}
+.tot_img{
+    width: 24px;
+    height: 24px;
+    background: url("../image/close.png") no-repeat;
+    float: right;
+    margin: 10px 10px;
+    cursor:pointer;
+}
+.bounced_save{
+    width: 92%;
+    height: 65px;
+}
+.bounced_save>button{
+    width: 90px;
+    height: 35px;
+    border: 1px solid #2B9CD8;
+    border-radius: 4px;
+    background-color: #2B9CD8;
+    color: white;
+    font-size: 16px;
+    float: right;
+
+}
+.btn_all{
+	cursor: pointer;
+    width: 150px !important;
+    height: 32px !important;
+    background-color: #0876d5 !important;
+    margin-left: 100px;
+    border: 1px solid #0876d5;
+    border-radius: 3px;
+    color: #fff;
+    display: inline;
+}
+.span_all{
+	padding:5px;
+	font-size: 20px;
+}

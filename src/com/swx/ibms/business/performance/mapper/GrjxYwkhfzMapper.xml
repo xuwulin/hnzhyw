@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swx.ibms.business.performance.mapper.GrjxYwkhfzMapper" >
+
+    <resultMap id="BaseResultMap" type="com.swx.ibms.business.performance.bean.ydkhqbtg" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="YDKHID" property="ydkhid" jdbcType="VARCHAR" />
+        <result column="YWLX" property="ywlx" jdbcType="VARCHAR" />
+        <result column="YWZF" property="ywzf" jdbcType="DECIMAL" />
+        <result column="ZBKPGL" property="zbkpgl" jdbcType="CLOB" />
+        <result column="ZBKPDF" property="zbkpdf" jdbcType="CLOB" />
+        <result column="ZPRGH" property="zprgh" jdbcType="CHAR" />
+        <result column="ZPR" property="zpr" jdbcType="VARCHAR" />
+        <result column="BMPFRGH" property="bmpfrgh" jdbcType="CHAR" />
+        <result column="BMPFR" property="bmpfr" jdbcType="VARCHAR" />
+        <result column="RSBPFRGH" property="rsbpfrgh" jdbcType="CHAR" />
+        <result column="RSBPFR" property="rsbpfr" jdbcType="VARCHAR" />
+        <result column="ZBKPBT" property="zbkpbt" jdbcType="VARCHAR" />
+        <result column="DWJB" property="dwjb" jdbcType="VARCHAR" />
+        <result column="SPSFTG" property="spsftg" jdbcType="VARCHAR" />
+        <result column="JCPFRGH" property="jcpfrgh" jdbcType="CHAR" />
+        <result column="JCPFR" property="jcpfr" jdbcType="VARCHAR" />
+        <result column="ZPJDF" property="zpjdf" jdbcType="DECIMAL" />
+        <result column="PDJBMC" property="pdjbmc" jdbcType="VARCHAR" />
+        <result column="PDJB" property="pdjb" jdbcType="CHAR" />
+        <result column="BMBM" property="bmbm" jdbcType="VARCHAR" />
+        <result column="JCGPFR" property="jcgpfr" jdbcType="VARCHAR" />
+        <result column="JCGPFRGH" property="jcgpfrgh" jdbcType="CHAR" />
+        <result column="FGYLDPFR" property="fgyldpfr" jdbcType="VARCHAR" />
+        <result column="FGYLDPFRGH" property="fgyldpfrgh" jdbcType="CHAR" />
+        <result column="RYLX" property="rylx" jdbcType="CHAR" />
+        <result column="JSLX" property="ryjs" jdbcType="CHAR" />
+        <result column="CLJS" property="cljs" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, YDKHID, YWLX, YWZF, ZBKPGL, ZBKPDF, ZPRGH, ZPR, BMPFRGH, BMPFR, RSBPFRGH, RSBPFR,
+        ZBKPBT, DWJB, SPSFTG, JCPFRGH, JCPFR, ZPJDF, PDJBMC, PDJB, BMBM,FGYLDPFR,FGYLDPFRGH,JCGPFR,JCGPFRGH,RYLX,RYJS,CLJS
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from YX_GRJX_YWKHFZ
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from YX_GRJX_YWKHFZ
+        where ID = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.swx.ibms.business.performance.bean.ydkhqbtg" >
+        insert into YX_GRJX_YWKHFZ (ID, YDKHID, YWLX,
+            YWZF, ZBKPGL, ZBKPDF, ZPRGH,
+            ZPR, BMPFRGH, BMPFR,
+            RSBPFRGH, RSBPFR, ZBKPBT,
+            DWJB, SPSFTG, JCPFRGH,
+            JCPFR, ZPJDF, PDJBMC,
+            PDJB,BMBM)
+        values (#{id,jdbcType=VARCHAR}, #{ydkhid,jdbcType=VARCHAR}, #{ywlx,jdbcType=VARCHAR},
+            #{ywzf,jdbcType=DECIMAL}, #{zbkpgl,jdbcType=CLOB}, #{zbkpdf,jdbcType=CLOB}, #{zprgh,jdbcType=CHAR},
+            #{zpr,jdbcType=VARCHAR}, #{bmpfrgh,jdbcType=CHAR}, #{bmpfr,jdbcType=VARCHAR},
+            #{rsbpfrgh,jdbcType=CHAR}, #{rsbpfr,jdbcType=VARCHAR}, #{zbkpbt,jdbcType=VARCHAR},
+            #{dwjb,jdbcType=VARCHAR}, #{spsftg,jdbcType=VARCHAR}, #{jcpfrgh,jdbcType=CHAR},
+            #{jcpfr,jdbcType=VARCHAR}, #{zpjdf,jdbcType=DECIMAL}, #{pdjbmc,jdbcType=VARCHAR},
+            #{pdjb,jdbcType=CHAR}),#{bmbm,jdbcType=VARCHAR}
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.swx.ibms.business.performance.bean.ydkhqbtg" >
+        insert into YX_GRJX_YWKHFZ
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null and id !='' " >
+                ID,
+            </if>
+            <if test="ydkhid != null and ydkhid !='' " >
+                YDKHID,
+            </if>
+            <if test="ywlx != null and ywlx != '' " >
+                YWLX,
+            </if>
+            <if test="ywzf != null and ywzf !='' " >
+                YWZF,
+            </if>
+            <if test="zprgh != null and zprgh !='' " >
+                ZPRGH,
+            </if>
+            <if test="zpr != null and zpr !='' " >
+                ZPR,
+            </if>
+            <if test="bmpfrgh != null and bmpfrgh !='' " >
+                BMPFRGH,
+            </if>
+            <if test="bmpfr != null and bmpfr !='' " >
+                BMPFR,
+            </if>
+            <if test="rsbpfrgh != null and rsbpfrgh != '' " >
+                RSBPFRGH,
+            </if>
+            <if test="rsbpfr != null and rsbpfr != '' " >
+                RSBPFR,
+            </if>
+            <if test="dwjb != null and dwjb !='' " >
+                DWJB,
+            </if>
+            <if test="spsftg != null and spsftg !='' " >
+                SPSFTG,
+            </if>
+            <if test="jcpfrgh != null and jcpfrgh !='' " >
+                JCPFRGH,
+            </if>
+            <if test="jcpfr != null and jcpfr !='' " >
+                JCPFR,
+            </if>
+            <if test="zpjdf != null and zpjdf !='' " >
+                ZPJDF,
+            </if>
+            <if test="pdjbmc != null and pdjbmc !='' " >
+                PDJBMC,
+            </if>
+            <if test="pdjb != null and pdjb !='' " >
+                PDJB,
+            </if>
+            <if test="bmbm != null and bmbm !='' " >
+                BMBM,
+            </if>
+            <if test="zbkpbt != null and zbkpbt != '' " >
+                ZBKPBT,
+            </if>
+            <if test="zbkpgl != null and zbkpgl !='' " >
+                ZBKPGL,
+            </if>
+            <if test="zbkpdf != null and zbkpdf !='' " >
+                ZBKPDF,
+            </if>
+            <if test="rylx != null and rylx !='' " >
+                RYLX,
+            </if>
+            <if test="ryjs != null and ryjs !='' " >
+                RYJS,
+            </if>
+            <if test="jcgpfr != null and jcgpfr !='' " >
+                jcgpfr,
+            </if>
+            <if test="jcgpfrgh != null and jcgpfrgh !='' " >
+                jcgpfrgh,
+            </if>
+            <if test="cljs != null and cljs !='' " >
+                cljs,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null and id !='' " >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="ydkhid != null and ydkhid !='' " >
+                #{ydkhid,jdbcType=VARCHAR},
+            </if>
+            <if test="ywlx != null and ywlx != '' " >
+                #{ywlx,jdbcType=VARCHAR},
+            </if>
+            <if test="ywzf != null and ywzf !='' " >
+                #{ywzf,jdbcType=DECIMAL},
+            </if>
+            <if test="zprgh != null and zprgh !='' " >
+                #{zprgh,jdbcType=CHAR},
+            </if>
+            <if test="zpr != null and zpr !='' " >
+                #{zpr,jdbcType=VARCHAR},
+            </if>
+            <if test="bmpfrgh != null and bmpfrgh !='' " >
+                #{bmpfrgh,jdbcType=CHAR},
+            </if>
+            <if test="bmpfr != null and bmpfr !='' " >
+                #{bmpfr,jdbcType=VARCHAR},
+            </if>
+            <if test="rsbpfrgh != null and rsbpfrgh != '' " >
+                #{rsbpfrgh,jdbcType=CHAR},
+            </if>
+            <if test="rsbpfr != null and rsbpfr != '' " >
+                #{rsbpfr,jdbcType=VARCHAR},
+            </if>
+            <if test="dwjb != null and dwjb !='' " >
+                #{dwjb,jdbcType=VARCHAR},
+            </if>
+            <if test="spsftg != null and spsftg !='' " >
+                #{spsftg,jdbcType=VARCHAR},
+            </if>
+            <if test="jcpfrgh != null and jcpfrgh !='' " >
+                #{jcpfrgh,jdbcType=CHAR},
+            </if>
+            <if test="jcpfr != null and jcpfr !='' " >
+                #{jcpfr,jdbcType=VARCHAR},
+            </if>
+            <if test="zpjdf != null and zpjdf !='' " >
+                #{zpjdf,jdbcType=DECIMAL},
+            </if>
+            <if test="pdjbmc != null and pdjbmc !='' " >
+                #{pdjbmc,jdbcType=VARCHAR},
+            </if>
+            <if test="pdjb != null and pdjb !='' " >
+                #{pdjb,jdbcType=CHAR},
+            </if>
+            <if test="bmbm != null and bmbm !='' " >
+                #{bmbm,jdbcType=VARCHAR},
+            </if>
+            <if test="zbkpbt != null and zbkpbt != '' " >
+                #{zbkpbt,jdbcType=VARCHAR},
+            </if>
+            <if test="zbkpgl != null and zbkpgl !='' " >
+                #{zbkpgl,jdbcType=CLOB},
+            </if>
+            <if test="zbkpdf != null and zbkpdf !='' " >
+                #{zbkpdf,jdbcType=CLOB},
+            </if>
+            <if test="rylx != null and rylx !='' " >
+                #{rylx,jdbcType=VARCHAR},
+            </if>
+            <if test="ryjs != null and ryjs !='' " >
+                #{ryjs,jdbcType=VARCHAR},
+            </if>
+            <if test="jcgpfr != null and jcgpfr !='' " >
+                #{jcgpfr,jdbcType=VARCHAR},
+            </if>
+            <if test="jcgpfrgh != null and jcgpfrgh !='' " >
+                #{jcgpfrgh,jdbcType=CHAR},
+            </if>
+            <if test="cljs != null and cljs !='' " >
+                #{cljs,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.swx.ibms.business.performance.bean.ydkhqbtg" >
+        update YX_GRJX_YWKHFZ
+        <set >
+            <if test="ydkhid != null" >
+                YDKHID = #{ydkhid,jdbcType=VARCHAR},
+            </if>
+            <if test="ywlx != null" >
+                YWLX = #{ywlx,jdbcType=VARCHAR},
+            </if>
+            <if test="ywzf != null" >
+                YWZF = #{ywzf,jdbcType=DECIMAL},
+            </if>
+            <if test="zbkpdf != null" >
+                ZBKPDF = #{zbkpdf,jdbcType=CLOB},
+            </if>
+            <if test="zprgh != null" >
+                ZPRGH = #{zprgh,jdbcType=CHAR},
+            </if>
+            <if test="zpr != null" >
+                ZPR = #{zpr,jdbcType=VARCHAR},
+            </if>
+            <if test="bmpfrgh != null" >
+                BMPFRGH = #{bmpfrgh,jdbcType=CHAR},
+            </if>
+            <if test="bmpfr != null" >
+                BMPFR = #{bmpfr,jdbcType=VARCHAR},
+            </if>
+            <if test="rsbpfrgh != null" >
+                RSBPFRGH = #{rsbpfrgh,jdbcType=CHAR},
+            </if>
+            <if test="rsbpfr != null" >
+                RSBPFR = #{rsbpfr,jdbcType=VARCHAR},
+            </if>
+            <if test="dwjb != null" >
+                DWJB = #{dwjb,jdbcType=VARCHAR},
+            </if>
+            <if test="spsftg != null" >
+                SPSFTG = #{spsftg,jdbcType=VARCHAR},
+            </if>
+            <if test="jcpfrgh != null" >
+                JCPFRGH = #{jcpfrgh,jdbcType=CHAR},
+            </if>
+            <if test="jcpfr != null" >
+                JCPFR = #{jcpfr,jdbcType=VARCHAR},
+            </if>
+            <if test="jcgpfrgh != null and jcgpfrgh !='' " >
+                JCGPFRGH = #{jcgpfrgh,jdbcType=CHAR},
+            </if>
+            <if test="jcgpfr != null and jcgpfr !='' " >
+                JCGPFR = #{jcgpfr,jdbcType=VARCHAR},
+            </if>
+            <if test="zpjdf != null" >
+                ZPJDF = #{zpjdf,jdbcType=DECIMAL},
+            </if>
+            <if test="pdjbmc != null" >
+                PDJBMC = #{pdjbmc,jdbcType=VARCHAR},
+            </if>
+            <if test="pdjb != null" >
+                PDJB = #{pdjb,jdbcType=CHAR},
+            </if>
+            <if test="bmbm != null" >
+                BMBM = #{bmbm,jdbcType=VARCHAR},
+            </if>
+            <if test="cljs != null and cljs !='' " >
+                CLJS = #{cljs,jdbcType=VARCHAR},
+            </if>
+            <if test="zbkpbt != null" >
+                ZBKPBT = #{zbkpbt,jdbcType=VARCHAR},
+            </if>
+            <if test="zbkpgl != null" >
+                ZBKPGL = #{zbkpgl,jdbcType=CLOB},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.swx.ibms.business.performance.bean.ydkhqbtg" >
+        update YX_GRJX_YWKHFZ
+        set YDKHID = #{ydkhid,jdbcType=VARCHAR},
+            YWLX = #{ywlx,jdbcType=VARCHAR},
+            YWZF = #{ywzf,jdbcType=DECIMAL},
+            ZBKPGL = #{zbkpgl,jdbcType=CLOB},
+            ZBKPDF = #{zbkpdf,jdbcType=CLOB},
+            ZPRGH = #{zprgh,jdbcType=CHAR},
+            ZPR = #{zpr,jdbcType=VARCHAR},
+            BMPFRGH = #{bmpfrgh,jdbcType=CHAR},
+            BMPFR = #{bmpfr,jdbcType=VARCHAR},
+            RSBPFRGH = #{rsbpfrgh,jdbcType=CHAR},
+            RSBPFR = #{rsbpfr,jdbcType=VARCHAR},
+            ZBKPBT = #{zbkpbt,jdbcType=VARCHAR},
+            DWJB = #{dwjb,jdbcType=VARCHAR},
+            SPSFTG = #{spsftg,jdbcType=VARCHAR},
+            JCPFRGH = #{jcpfrgh,jdbcType=CHAR},
+            JCPFR = #{jcpfr,jdbcType=VARCHAR},
+            ZPJDF = #{zpjdf,jdbcType=DECIMAL},
+            PDJBMC = #{pdjbmc,jdbcType=VARCHAR},
+            PDJB = #{pdjb,jdbcType=CHAR},
+            BMBM = #{bmbm,jdbcType=VARCHAR}
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updatePerOfScoreByPrimaryKey" parameterType="com.swx.ibms.business.performance.bean.ydkhqbtg">
+        update YX_GRJX_YWKHFZ
+        set BMPFRGH = #{bmpfrgh,jdbcType=CHAR},
+            BMPFR = #{bmpfr,jdbcType=VARCHAR},
+            RSBPFRGH = #{rsbpfrgh,jdbcType=CHAR},
+            RSBPFR = #{rsbpfr,jdbcType=VARCHAR},
+            JCPFRGH = #{jcpfrgh,jdbcType=CHAR},
+            JCPFR = #{jcpfr,jdbcType=VARCHAR},
+            JCGPFRGH = #{jcgpfrgh,jdbcType=CHAR},
+            JCGPFR = #{jcgpfr,jdbcType=VARCHAR},
+            FGYLDPFRGH = #{fgyldpfrgh,jdbcType=CHAR},
+            FGYLDPFR = #{fgyldpfr,jdbcType=VARCHAR},
+            PDJBMC = #{pdjbmc,jdbcType=VARCHAR},
+            PDJB = #{pdjb,jdbcType=CHAR}
+        where YDKHID = #{ydkhid,jdbcType=VARCHAR}
+    </update>
+
+    <select id="getGrjxKhBtAndKhNrByParams" resultType="com.swx.ibms.business.performance.bean.ydkhqbtg">
+        SELECT f.* FROM YX_GRJX_YWKHFZ f
+        INNER JOIN YX_GRJX_YDKH k ON k.id = f.ydkhid
+        WHERE k.dwbm = #{dwbm}
+        and k.gh = #{gh}
+        <if test="year != null and year != '' " >
+            and k.year = #{year}
+        </if>
+        <if test="ksrq != null and ksrq != '' " >
+            and k.ksrq = #{ksrq}
+        </if>
+        <if test="jsrq != null and jsrq != '' " >
+            and k.jsrq = #{jsrq}
+        </if>
+        <if test="bmbm != null and bmbm != '' " >
+            and f.bmbm in (#{bmbm})
+        </if>
+    </select>
+
+    <delete id="deleteByYdKhId" parameterType="java.lang.String">
+        delete from
+        YX_GRJX_YWKHFZ
+        where ydkhid = #{ydkhid}
+    </delete>
+
+
+    <update id="updateByYdkhIdSelective" parameterType="com.swx.ibms.business.performance.bean.ydkhqbtg" >
+        update YX_GRJX_YWKHFZ
+        <set >
+            <if test="ywlx != null and ywlx !='' " >
+                YWLX = #{ywlx,jdbcType=VARCHAR},
+            </if>
+            <if test="ywzf != null and ywzf !='' " >
+                YWZF = #{ywzf,jdbcType=DECIMAL},
+            </if>
+            <if test="zbkpdf != null and zbkpdf !='' " >
+                ZBKPDF = #{zbkpdf,jdbcType=CLOB},
+            </if>
+            <if test="zprgh != null and zprgh!='' " >
+                ZPRGH = #{zprgh,jdbcType=CHAR},
+            </if>
+            <if test="zpr != null and zpr !='' " >
+                ZPR = #{zpr,jdbcType=VARCHAR},
+            </if>
+            <if test="bmpfrgh != null and bmpfrgh !='' " >
+                BMPFRGH = #{bmpfrgh,jdbcType=CHAR},
+            </if>
+            <if test="bmpfr != null and bmpfr !='' " >
+                BMPFR = #{bmpfr,jdbcType=VARCHAR},
+            </if>
+            <if test="rsbpfrgh != null and rsbpfrgh !='' " >
+                RSBPFRGH = #{rsbpfrgh,jdbcType=CHAR},
+            </if>
+            <if test="rsbpfr != null and rsbpfr !='' " >
+                RSBPFR = #{rsbpfr,jdbcType=VARCHAR},
+            </if>
+            <if test="dwjb != null and dwjb !='' " >
+                DWJB = #{dwjb,jdbcType=VARCHAR},
+            </if>
+            <if test="spsftg != null and spsftg !='' " >
+                SPSFTG = #{spsftg,jdbcType=VARCHAR},
+            </if>
+            <if test="jcpfrgh != null and jcpfrgh !='' " >
+                JCPFRGH = #{jcpfrgh,jdbcType=CHAR},
+            </if>
+            <if test="jcpfr != null and jcpfr !='' " >
+                JCPFR = #{jcpfr,jdbcType=VARCHAR},
+            </if>
+            <if test="zpjdf != null and zpjdf !='' " >
+                ZPJDF = #{zpjdf,jdbcType=DECIMAL},
+            </if>
+            <if test="pdjbmc != null and pdjbmc !='' " >
+                PDJBMC = #{pdjbmc,jdbcType=VARCHAR},
+            </if>
+            <if test="pdjb != null and pdjb !=''" >
+                PDJB = #{pdjb,jdbcType=CHAR},
+            </if>
+            <if test="bmbm != null and bmbm !='' " >
+                BMBM = #{bmbm,jdbcType=VARCHAR},
+            </if>
+            <if test="zbkpbt != null and zbkpbt !='' " >
+                ZBKPBT = #{zbkpbt,jdbcType=VARCHAR},
+            </if>
+            <if test="fgyldpfr != null and fgyldpfr !='' " >
+                FGYLDPFR = #{fgyldpfr,jdbcType=VARCHAR},
+            </if>
+            <if test="fgyldpfrgh != null and fgyldpfrgh !='' " >
+                FGYLDPFRGH = #{fgyldpfrgh,jdbcType=CHAR},
+            </if>
+            <if test="jcgpfrgh != null and jcgpfrgh !='' " >
+                JCGPFRGH = #{jcgpfrgh,jdbcType=CHAR},
+            </if>
+            <if test="jcgpfr != null and jcgpfr !='' " >
+                JCGPFR = #{jcgpfr,jdbcType=VARCHAR},
+            </if>
+            <if test="cljs != null and cljs !='' " >
+                CLJS = #{cljs,jdbcType=VARCHAR},
+            </if>
+            <if test="zbkpgl != null and zbkpgl !='' " >
+                ZBKPGL = #{zbkpgl,jdbcType=CLOB},
+            </if>
+        </set>
+        where YDKHID = #{ydkhid,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectByYwkhId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from YX_GRJX_YWKHFZ
+        where YDKHID = #{ydkhid,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getCountsOfCompleted" resultType="java.lang.Integer">
+        select count(*)
+        from TYYW_GG_AJJBXX_TYYW t
+        where t.sfsc = 'N'
+          and t.ajzt in ('2','3')
+          and t.cbdw_bm = #{dwbm}
+          and t.cbrgh = #{gh}
+          and (case when t.bjrq is null or t.bjrq = '' then t.wcrq
+					else t.bjrq
+		       end) between to_date(#{ksrq},'yyyy-MM-dd') and to_date(#{jsrq},'yyyy-MM-dd')
+    </select>
+
+    <select id="getCountsOfAccepted" resultType="java.lang.Integer">
+        select count(*)
+        from TYYW_GG_AJJBXX_TYYW t
+        where t.sfsc = 'N'
+          and t.cbdw_bm = #{dwbm}
+          and t.cbrgh = #{gh}
+          and t.slrq between to_date(#{ksrq},'yyyy-MM-dd') and to_date(#{jsrq},'yyyy-MM-dd')
+    </select>
+
+    <select id="selectByAjyjGh" resultType="java.lang.String">
+        SELECT DISTINCT R.GH as GH
+        FROM XT_ZZJG_RYBM_TYYW R
+        INNER JOIN XT_QX_RYJSFP_TYYW P ON P.GH = R.GH
+        INNER JOIN XT_QX_JSBM_TYYW J ON J.JSBM = P.JSBM
+        INNER JOIN XT_ZZJG_BMBM_TYYW B ON B.BMBM = J.BMBM AND J.BMBM = P.BMBM
+          AND B.SFSC = 'N'
+          AND R.SFSC = 'N'
+          AND R.DWBM = #{dwbm}
+          AND P.DWBM = #{dwbm}
+          AND B.DWBM = #{dwbm}
+          AND J.DWBM = #{dwbm}
+          AND B.BMBM = #{bmbm}
+          AND J.JSMC != '内勤'
+    </select>
+
+
+</mapper>

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人绩效-绩效考核详情页面</title>
+    <style type="text/css">
+
+        /*a{
+            font-weight: bold;
+        }*/
+
+        a:hover{
+            color: #ff5401;
+        }
+
+        .table_czan_ys{
+            width: 50px;
+            height: 20px;
+            display: inline-block;
+            border: 1px solid #4B97D8;
+            border-radius: 3px;
+            color: #4B97D8;
+            padding: 0 1px;
+            margin-right: 5px;
+            text-align: center;
+            text-decoration-line: none;
+        }
+
+        .table_czan_ys:hover{
+            background: #4B97D8;
+            color: #fff;
+        }
+
+        .but_last2{
+            height: 32px;
+            width: 15%;
+            float: right;
+            margin-top: -30px;
+            margin-right: 80px;
+            display: none;
+        }
+        .but_last2 button{
+            width: 80px;
+            height: 32px;
+            border: 1px solid #0575D2;
+            background-color: #0575D2;
+            color: white;
+            border-radius: 3px;
+            float: right;
+        }
+
+        .lxxx_btn{
+            cursor: pointer;
+            background-color: white;
+            font-size: 14px;
+            width: 100px;
+            float: right;
+            height: 30px;
+            border: 1px solid #095EDA;
+            border-radius: 5px;
+            margin-top:9px;
+            font-family: 'Microsoft YaHei UI';
+        }
+
+        .l-btn-text > label{
+            height: 24px;
+        }
+
+
+    </style>
+    <link rel="stylesheet" type="text/css" href="../css/jxkh.css">
+    <link rel="stylesheet" type="text/css" href="../css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../css/zTreeStyle/ztreedemo.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/zTreeStyle/zTreeStyle.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/SFGL_YSDA_INDEX.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/bounced.css"/>
+    <link rel="stylesheet" type="text/css" href="../js/plugin/easyui/themes/bootstrap/easyuiOverride.css"/>
+    <link rel="stylesheet" type="text/css" href="../js/plugin/easyui/themes/icon.css"/>
+
+    <script type="text/javascript" src="../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../js/plugin/echarts-all.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/zhyw/macarons.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/history.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+</head>
+<body>
+<div class="personal" style="overflow: auto;">
+    <div id="anchorPoint" class="title_tit">
+        <div class="title_tit_al" style="margin-left:0;">
+            <div style="color: #333; font-size: 18px; float: left; line-height: 37px;">姓名</div>
+            <div id="grjx_name" style="color: #ff5401; font-size: 22px; float: left; line-height: 37px; margin-left: 10px"></div>
+        </div>
+
+        <div class="title_tit_al" style="margin-left:10px;">
+            <div style="color: #333; font-size: 18px; float: left; line-height: 37px;">部门类别</div>
+            <span id="bmlb" style="display: inline-block; font-size: 22px; color: #ff5401; float: left; margin-left: 10px; line-height: 37px;"></span>
+        </div>
+
+        <!--修改：年份不需要设置下拉框，直接显示年份,将原来的年份下拉框隐藏(改动最小)-->
+        <div class="title_tit_al">
+            <div style="color: #333; font-size: 18px; float: left; line-height: 37px;">年份</div>
+            <span id="currentYear" style="display: inline-block; font-size: 22px; color: #ff5401; float: left; margin-left: 10px; line-height: 37px;"></span>
+        </div>
+
+        <div class="title_tit_al" id="grjczfDiv" style="display: none;">
+            <div style="color: #333; font-size: 18px; float: left; line-height: 37px;">自评总分</div>
+            <span id="grjxdf" style="display: inline-block; font-size: 22px; color: #ff5401; float: left; margin-left: 10px; line-height: 37px;"></span>
+        </div>
+
+        <div class="title_tit_al" id="grpjzfDiv" style="display: none;">
+            <div style="color: #333; font-size: 18px; float: left; line-height: 37px;">评价总分</div>
+            <span id="zpjdfspan" style="display: inline-block; font-size: 22px; color: #ff5401; float: left; margin-left: 10px; line-height: 37px;"></span>
+        </div>
+
+        <div class="title_tit_al" id="pddjDiv" style="display: none">
+            <div style="color: #333; font-size: 18px; float: left; line-height: 37px;">评定等级</div>
+            <span id="pddj" style="display: inline-block; font-size: 22px; color: #ff5401; float: left; margin-left: 10px; line-height: 37px;"></span>
+        </div>
+
+        <!--修改：取消年份选择，将其隐藏（改动最小）-->
+        <div style="width: 100px; height: 40px; float: left; margin-top: 8px; margin-left: 10px; display: none">
+            <select id="selectyear" class="easyui-combobox" data-options="valueField: 'id',textField: 'text'" style="height: 36px; width: 100px;"></select>
+        </div>
+
+        <!--修改：取消季度选择，将其隐藏（改动最小）-->
+        <div style="width: 100px; height: 40px; float: left; margin-top: 8px; margin-left: 10px; display: none">
+            <select id="selectseason" class="easyui-combobox" data-options="valueField: 'id',textField: 'text'" style="height: 36px; width: 80px;"></select>
+        </div>
+
+        <!--<div style="width: 100px; height: 40px; float: left;">
+        	<button id="export_grjx_excel" style="cursor: pointer;display:none;" onclick="exportGrjxToExcel();">导出为Excel</button>
+        </div>-->
+
+        <button id="goback" style="cursor: pointer; color: #095EDA; display: inline-block; font-size: 15px; float: right; line-height: 20px;">
+            <img alt="" src="../image/fh.png" style="margin-right: 5px;">返回
+        </button>
+
+        <button id="ywkh_fqsc" style="cursor: pointer; color: #095EDA; display: none; font-size: 15px; float: right; line-height: 20px;" onclick="delydkh()">
+            <a href="#anchorPoint" style="text-decoration: none; color: #095EDA">删除</a>
+        </button>
+
+        <button id="ywkh_fqsp" style="cursor: pointer; color: #095EDA; display: inline-block; font-size: 15px; float: right; line-height: 20px;" onclick="showDetail()" value="123456">发起审批</button>
+
+        <button id="recall" style="cursor: pointer; color: #095EDA; display: inline-block;
+				font-size: 15px; float: right; line-height: 20px;">撤回申请</button>
+
+        <button id="grjx_gs_btn" style="cursor: pointer; color: #095EDA; display: none;
+				font-size: 15px; float: right; line-height: 20px;">公示</button>
+
+        <button id="grjx_yy_btn" style="cursor: pointer; color: #095EDA; display: none;
+				font-size: 15px; float: right; line-height: 20px;">异议</button> <!--inline-block--->
+
+        <button id="exportword_Btn" style="display:none;cursor: pointer; color: #095EDA; font-size: 15px; float: right; line-height: 20px;">导出为Word</button>
+
+        <!--<button id="export_grjx_excel" style="cursor: pointer;display:none; color: #095EDA; font-size: 15px; float: right; line-height: 20px;"  onclick="exportGrjxToExcel();">导出为Excel</button>-->
+
+        <!-- 给“导出为Excel”按钮前加一个图标-->
+        <div class="lxxx_btn" id="export_grjx_excel" style="display: block;" onclick="exportGrjxToExcel();">
+            <img src="../image/xz.png" style="float: left; margin-top: 8px; margin-left: 5px;width: 15px;height: 14px;">
+            <span style="line-height: 22px;color: #095EDA; display: inline-block; margin-top: 5px;">导出为Excel</span>
+        </div>
+    </div>
+
+    <div class="al_center">
+        <!--图表-->
+        <!--<ul class="al_center_ul">
+            &lt;!&ndash; 				<li style="border-bottom: 2px solid #0864ac; color: #0360a9;">侦监</li> &ndash;&gt;
+            &lt;!&ndash; 				<li>公诉</li> &ndash;&gt;
+            &lt;!&ndash; 				<li>预防</li> &ndash;&gt;
+        </ul>-->
+        <br>
+        <!--表格-->
+        <div id="main" style="height: 500px;"></div>
+    </div>
+
+    <div class="al_botton">
+        <div class="al_botton_1">
+
+            <div style="background: url('../image/grjx.png') no-repeat; width: 100px; height: 22px; float: left; margin: 15px 5px 0 20px;">
+                <span style="color: #1874dc; display: inline-block; margin-left: 30px">个人绩效</span>
+            </div>
+
+            <div style="float: left; margin-top: 10px">
+                <!-- 确定按钮：分数填录完毕保存 -->
+                <button class="grjx_i_button" onclick="showPromptMessage()" style="background-color:#5CB85C; border: 1px solid #5CB85C;">考核等次说明</button>
+                <button id="i_button" class="grjx_i_button" style="margin-left: 10px">保存</button>
+            </div>
+
+
+            <div style="margin-right: 20px; float: right; font-size: 14px;">
+                <div class="pant_your" id="zprDiv" style="display: none">
+                    <span style="color: #333; font-size: 18px; line-height: 22px; display: inline-block;">自评人:</span>
+                    <span id="zpr" class="span_pfr"></span>
+                </div>
+                <div class="pant_your" id="jcgpfrDiv" style="display: none">
+                    <span style="color: #333; font-size: 18px; line-height: 22px;display: inline-block;">检察官评分人:</span>
+                    <span id="jcgpfr" class="span_pfr"></span>
+                </div>
+                <div class="pant_your" id="bmpfrDiv" style="display: none">
+                    <span style="color: #333; font-size: 18px; line-height: 22px;display: inline-block;">部门评分人:</span>
+                    <span id="bmpfr" class="span_pfr"></span>
+                </div>
+                <div class="pant_your" id="fgyldpfrDiv" style="display: none">
+                    <span style="color: #333; font-size: 18px; line-height: 22px;display: inline-block;">分管院领导评分人:</span>
+                    <span id="fgyldpfr" class="span_pfr"></span>
+                </div>
+                <div class="pant_your" id="jcpfrDiv" style="display: none">
+                    <span style="color: #333; font-size: 18px; line-height: 22px;display: inline-block;">交叉考核评分人:</span>
+                    <span id="jcpfr" class="span_pfr"></span>
+                </div>
+                <div class="pant_your" id="rsbpfrDiv" style="display: none">
+                    <span style="color: #333; font-size: 18px; line-height: 22px;display: inline-block;">绩效考核委员会评分人:</span>
+                    <span id="rsbpfr" class="span_pfr"></span>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 100%;">
+            <table id="dg" class="tab_le"></table>
+            <!--<div class="but_last" style="float: right;">-->
+                <!--<button id="i_button" class="grjx_i_button">保存</button>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+
+<!--点击数量显示弹框-->
+<div id="ShowCounts" class="bounced" style="display: none">
+    <div class="bounced_all_1" style="width: 1200px; margin-left: 60px;">
+        <div class="bounced_tot">
+            <span id="countsDetail">数量详情</span>
+            <div class="tot_img" onclick="closeClDetail()"></div>
+        </div>
+
+        <div id="CaseHandlingEfficiency" style="display: none;">
+            <label style="margin-left: 10px" id="title_1">办结案件：</label><span id="value_1" style="color: red"></span>
+            <div id="table_comp_div">
+                <table id="completedDatagrid"></table>
+            </div>
+
+            <label style="margin-left: 10px; margin-top: 10px;" id="title_2">受理案件：</label><span id="value_2" style="color: red"></span>
+            <div id="table_acc_div">
+                <table id="acceptedDatagrid"></table>
+            </div>
+            <label style="margin-left: 10px; margin-top: 10px;" id="title_3">结案率：</label><span id="value_3" style="color: red"></span>
+        </div>
+
+        <div style="margin: 0 auto; height: 360px;">
+            <div id="ajSelect" style="display: none;margin-top: 5px; margin-left: 10px">
+                <label>选择案件：</label>
+                <input type="text" id="ajList" class="combo">
+            </div>
+            <div class="but_last2">
+                <button id="selectAjSure_btn" onclick="selectAjSure()" style="cursor: pointer;">确认</button>
+            </div>
+            <div id="table_div" style="margin-top: 5px">
+                <table id="countsDatagrid"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="showWsInfoByBT_div" class="bounced" style="display: none">
+    <div class="bounced_all_1" style="width: 1200px; margin-left: 60px;">
+        <div class="bounced_tot">
+            <span>文书详情</span>
+            <div class="tot_img" onclick="closeWsDetail()"></div>
+        </div>
+
+        <div style="margin: 0 auto; height: 360px;">
+
+            <div style="margin-top: 5px">
+                <table id="wsDetailDatagrid"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 评分材料 -->
+<div id="bz" class="bounced" style="display: none">
+    <div class="bounced_all_1">
+        <form id="grjx_pfcl_form" method='post'>
+            <div class="bounced_tot">
+                <span id="pfcl_title">查看备注</span>
+                <div class="tot_img" onclick="closeClDetail()"></div>
+            </div>
+            <div style="margin: 0 auto; margin-top: 20px; width: 444px;">
+                <div>
+                    <p>评分理由：</p>
+                    <textarea id="bztext" style=" resize: none;width:400px;height:120px;"></textarea>
+                </div>
+                <div id="fjshow"></div>
+            </div>
+        </form>
+
+        <form id="upfileform" method="post" enctype="multipart/form-data" style="float: left; width: 300px;">
+            <div id="upload" style='margin-top: 10px; margin-left: 28px;'>
+                <input buttonText="选择文件" id="upfileinput" style='width:265px;height:30px;' name="file" placeholder='未选择文件' class="easyui-filebox"/>
+            </div>
+        </form>
+        <button id="upfilebutton" onclick="uploadfile()" class="btn_scwj">上传文件</button>
+
+        <div class="bot_btn">
+            <button id="qxButton1" onclick="closeClDetail()" class="bot_btn_2">取消</button>
+            <button id="save_Button1" onclick="setbz()" class="bot_btn_1">保存</button>
+            <button id="qdButton1" onclick="closeClDetail()" class="bot_btn_1">确定</button>
+        </div>
+    </div>
+</div>
+
+<!-- 选择审批人弹出窗口 -->
+<div id="shDetail" class="bounced" style="display: none">
+    <div class="bounced_all">
+        <form id="grjx_audit_form" method='post'>
+            <div class="bounced_tot">
+                <span id="grjx_audit_title">个人绩效考核发起审批</span>
+                <div class="tot_img" onclick="closeDetail()"></div>
+            </div>
+            <div class="bounced_select" style="margin: 0 auto; margin-top: 20px; width: 444px; height: 55px; position: relative;">
+                <div>
+                    <span style="margin-right: 6px; float: left; margin-left: 8px; line-height: 34px;">选择审批人:</span>
+                    <div >
+                        <!--style="background-color: #EBEBE4; height: 32px; position: relative; width: 348px; border: 1px solid #c1c1c1; border-radius: 4px; float: left;"
+                        <input type="text" id="xzspr" data-options="lines:true" name="lbSelect" style="width: 320px; height: 32px; line-height: 32px; border: none; margin-left: 5px; outline: none;" disabled="disabled"/>
+                        <a id="menuBtn" href="#" onclick="showMenu(); return false;" class="a_style" style="background: url('../js/plugin/easyui/themes/bootstrap/images/combo_arrow.png') no-repeat center center; background-color: #F2F2F2"></a>
+                        <br/>-->
+                        <div>
+                            <input id="grjx_audit_tree" type="text" name = "grjx_audit_tree" style="width: 348px; height: 32px; line-height: 32px;border-radius: 4px;"/>
+                        </div>
+                    </div>
+                </div>
+                <div id="menuContent" class="menuContent" style="display: none; position: absolute; top: 35px; left: 91px;">
+                    <ul id="treeDemo" class="ztree" style="margin-top: 0; width: 338px; background-color: #fff"></ul>
+                </div>
+            </div>
+        </form>
+        <div class="bounced_save" style="margin-top: 50px">
+            <button id="grjx_audit_cacel_btn" onclick="closeDetail();" style="cursor: pointer; background: #fff; color: #777">取消</button>
+            <button id="grjx_audit_save_btn" onclick="sendAudit()" style="cursor: pointer; margin-right: 15px">确定</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- 个人绩效（公示） -->
+<!--<div id="grjx_gsxx_edit_window" style="display: none;margin: auto;">-->
+<div id="grjx_gsxx_edit_window" class="bounced" style="display: none">
+    <div class="bounced_all">
+        <form id="grjx_gsxx_form" method="post">
+            <div class="bounced_tot">
+                <span id="grjx_gs_title">个人绩效公示</span>
+                <div class="tot_img" onclick="closeDetail()"></div>
+            </div>
+            <div style="padding: 10px 20px;">
+                <div style="margin-bottom: 10px;">
+                    <div style="width: 110px;float: left;">公示起止日期：<input type="hidden" id="grjx_gs_jxkhid" name = "jxkhid"/><input type="hidden" id="grjx_gs_id" name = "id"/></div>
+                    <div><input id="grjx_gs_ksrq" name="ksrq"/>-<input id="grjx_gs_jsrq" name="jsrq"/></div>
+                </div>
+                <div>
+                    <div style="width: 110px;float: left;">公示备注/理由：</div>
+                    <textarea name="remarks" style="height: 100px;  width: calc(100% - 113px); border-radius: 3px;resize: none;"></textarea>
+                </div>
+                <!--<div style="text-align: center;margin: 15px 0 10px 0;">-->
+                <!--&lt;!&ndash;<div>&ndash;&gt;-->
+                <!--<a id="grjx_gs_sure" href="javascript:void(0);" style=" margin-right: 40px;">保存</a>-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;<div>&ndash;&gt;-->
+                <!--<a id="grjx_gs_recall" href="javascript:void(0);">取消</a>-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--</div>-->
+            </div>
+        </form>
+        <div class="bounced_save" style="margin-top: 50px">
+            <button id="grjx_gs_recall" onclick="closeDetail();" style="cursor: pointer; background: #fff; color: #777">取消</button>
+            <button id="grjx_gs_sure" style="cursor: pointer; margin-right: 15px">确定</button>
+        </div>
+    </div>
+</div>
+
+<!--考核等次说明-->
+<div id="prompt_message_window" class="bounced" style="display: none">
+    <div class="bounced_all" style="width: 700px; height: 500px;">
+        <div class="bounced_tot">
+            <span>考核等次规则</span>
+            <div class="tot_img" onclick="closeDetail()"></div>
+        </div>
+        <div style="width: 700px;height: 450px;overflow: auto">
+            <!--检察官-->
+            <div id="prosecutor" style="display: none;">
+                一、检察官绩效考核结果，应记入检察官的个人司法档案，作为检察官提拔使用、晋职晋级、绩效考核奖金分配以及公务员考核的重要依据。
+                <br>
+                二、检察官绩效考核等次分为一、二、三、四等次。
+                评定为一等次的人数一般不超过本院检察官总数的20%，没有符合本说明第五条规定的情况的，可以在本院不评定四等次。
+                检察长、副检察长、检察委员会专职委员一般不评定为一等次。
+                <br>
+                三、检察官绩效考核等次确定为一等次的，原则上应当在本部门绩效考核得分高，完成工作认为质量和效率高、效果好、对本部门工作贡献大，职业操守评价无扣分。
+                <br>
+                四、具有下列情形之一的，检察官不得评定为一、二等次：
+                <br>
+                （一）无正当事由未完成工作任务的；
+                <br>
+                （二）无正当事由不履行或不正确履行岗位职责，造成不良后果或者不良社会影响，情节较轻的；
+                <br>
+                （三）办理的案件有重大司法瑕疵的；
+                <br>
+                （四）在绩效考核中弄虚作假，情节较轻的；
+                <br>
+                （五）考核年度病假、事假累计超过3个月，或者旷工超过5天的；
+                <br>
+                （六）其他不应当评定为一、二等次的情形。
+                <br>
+                五、具有下列情形的，应当评定为四等次：
+                <br>
+                （一）在司法办案中故意违反法律法规或者存在重大过失，造成不良后果或者不良社会影响的；
+                <br>
+                （二）负有监督管理职责的检查官因故意或重大过失，怠于行使或不当行使监督管理职权，导致司法办案出现错误，情节较重的；
+                <br>
+                （三）在考核年度内被追究司法责任的；
+                <br>
+                （四）其他应当评定为不合格等次的情形。
+                <br>
+                六、检察官在考核年度内存在以下特殊情形的，区分情况进行处理：
+                <br>
+                （一）检察官在考核年度按照组织安排，离岗参加培训、开展精准扶贫、上挂下派锻炼或抽调到上级检察院及其他单位工作超过6个月的，
+                其绩效考核等次由本院征求有关单位或部门意见、综合其考核年度总体表现予以确定；
+                <br>
+                （二）考核年度病假、事假累计超过6个月，或者旷工超过10天或累计超过15天的，不进行考核；
+                <br>
+                （三）绩效考核时，检察官因与职务相关行为涉嫌违法乱纪正在接受组织调查的，暂不确定考核等次。调查结束后，根据情况补定等次；
+                <br>
+                （四）被给予纪律处分或者被追究刑事责任的，不进行考核。
+                <br>
+                七、年度绩效考核结合公务员考核工作在原则上同步进行，公务员年度考核按照《海南省公务员考核实施办法（试行）》执行。
+                <br>
+                检查官绩效考核被评定为一等次的，原则上其公务员年度考核应被评为优秀等次。
+            </div>
+
+            <!--检察辅助人员-->
+            <div id="staffPersonnel" style="display: none;">
+                一、检察辅助人员绩效考核结果，应记入人事档案，作为检察辅助人员选任检察官、晋职晋级、绩效考核奖金分配以及公务员考核的重要依据。
+                <br>
+                二、检察辅助人员绩效考核等次分为一、二、三、四等次。
+                评定为一等次的人数一般不超过本院检察辅助人员总数的20%，没有符合本说明第五条规定的情况的，可以在本院不评定四等次。
+                担任院领导的检察辅助人员一般不评定为一等次。
+                <br>
+                三、检察辅助人员绩效考核等次确定为一等次的，原则上应当在本部门绩效考核得分高，完成工作认为质量和效率高、效果好、对本部门工作贡献大，职业操守评价无扣分。
+                <br>
+                四、具有下列情形之一的，检察辅助人员不得评定为一、二等次：
+                <br>
+                （一）无正当事由未完成工作任务的；
+                <br>
+                （二）无正当事由不履行或不正确履行岗位职责，造成不良后果或者不良社会影响，情节较轻的；
+                <br>
+                （三）辅助办理的案件有重大司法瑕疵的；
+                <br>
+                （四）在绩效考核中弄虚作假，情节较轻的；
+                <br>
+                （五）考核年度病假、事假累计超过3个月，或者旷工超过5天的；
+                <br>
+                （六）其他不应当评定为一、二等次的情形。
+                <br>
+                五、具有下列情形的，应当评定为四等次：
+                <br>
+                （一）在辅助司法办案中故意违反法律法规或者存在重大过失，造成不良后果或者不良社会影响的；
+                <br>
+                （二）负有监督管理职责的检查辅助人员因故意或重大过失，怠于行使或不当行使监督管理职权，导致司法办案出现错误，情节较重的；
+                <br>
+                （三）在考核年度内被追究司法责任的；
+                <br>
+                （四）其他应当评定为不合格等次的情形。
+                <br>
+                五、检察辅助人员在考核年度内存在以下特殊情形的，区分情况进行处理：
+                <br>
+                （一）检察辅助人员在考核年度按照组织安排，离岗参加培训、开展精准扶贫、上挂下派锻炼或抽调到上级检察院及其他单位工作超过6个月的，
+                其绩效考核等次由本院征求有关单位或部门意见、综合其考核年度总体表现予以确定；
+                <br>
+                （二）考核年度病假、事假累计超过6个月，或者旷工超过10天或累计超过15天的，不进行考核；
+                <br>
+                （三）绩效考核时，检察辅助人员因与职务相关行为涉嫌违法乱纪正在接受组织调查的，暂不确定考核等次。调查结束后，根据情况补定等次；
+                <br>
+                （四）被给予纪律处分或者被追究刑事责任的，不进行考核。
+                <br>
+                六、年度绩效考核结合公务员考核工作在原则上同步进行，公务员年度考核按照《海南省公务员考核实施办法（试行）》执行。
+                <br>
+                检查辅助人员绩效考核被评定为一等次的，原则上其公务员年度考核应被评为优秀等次。
+            </div>
+
+            <!--司法行政人员-->
+            <div id="judicialAdministrator" style="display: none;">
+                一、司法行政人员绩效考核结果，应记入人事档案，作为提拔使用、晋职晋级、绩效考核奖金分配以及公务员考核的重要依据。
+                <br>
+                二、司法行政人员绩效考核等次分为一、二、三、四等次。
+                评定为一等次的人数一般不超过本院司法行政人员总数的20%，没有符合本说明第五条规定的情况的，可以在本院不评定四等次。
+                担任院领导的司法行政人员一般不评定为一等次。
+                <br>
+                三、司法行政人员绩效考核等次确定为一等次的，原则上应当在本部门绩效考核得分高，完成工作认为质量和效率高、效果好、对本部门工作贡献大，职业操守评价无扣分。
+                <br>
+                四、具有下列情形之一的，司法行政人员不得评定为一、二等次：
+                <br>
+                （一）无正当事由未完成工作任务的；
+                <br>
+                （二）无正当事由不履行或不正确履行岗位职责，造成不良后果或者不良社会影响，情节较轻的；
+                <br>
+                （三）在绩效考核中弄虚作假，情节较轻的；
+                <br>
+                （四）受到党纪、检纪处分的；
+                <br>
+                （五）考核年度病假、事假累计超过3个月，或者旷工超过5天的；
+                <br>
+                （六）其他不应当评定为一、二等次的情形。
+                <br>
+                五、具有下列情形的，应当评定为四等次：
+                <br>
+                （一）思想政治素质差；
+                <br>
+                （二）业务素质和工作能力无法适应工作要求；
+                <br>
+                （三）工作责任心或工作作风差；
+                <br>
+                （四）在工作中因严重失误、失职造成重大损失或恶劣社会影响；
+                <br>
+                （五）存在不廉洁问题，且情况较为严重；
+                <br>
+                （六）其他应当评定为不合格等次的情形。
+                <br>
+                五、司法行政人员在考核年度内存在以下特殊情形的，区分情况进行处理：
+                <br>
+                （一）司法行政人员在考核年度按照组织安排，离岗参加培训、开展精准扶贫、上挂下派锻炼或抽调到上级检察院及其他单位工作超过6个月的，
+                其绩效考核等次由本院征求有关单位或部门意见、综合其考核年度总体表现予以确定；
+                <br>
+                （二）考核年度病假、事假累计超过6个月，或者旷工超过10天或累计超过15天的，不进行考核；
+                <br>
+                （三）绩效考核时，司法行政人员因与职务相关行为涉嫌违法乱纪正在接受组织调查的，暂不确定考核等次。调查结束后，根据情况补定等次；
+                <br>
+                （四）被给予纪律处分或者被追究刑事责任的，不进行考核。
+                <br>
+                六、年度绩效考核结合公务员考核工作在原则上同步进行，公务员年度考核按照《海南省公务员考核实施办法（试行）》执行。
+                <br>
+                司法行政人员绩效考核被评定为一等次的，原则上其公务员年度考核应被评为优秀等次。
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="../js/zhyw/grjx/jxkh.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/zhyw/utils/WordExport.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/zhyw/grjx/excelExport.js" charset="utf-8"></script>
+<script src="../js/zhyw/utils/base64.js" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    resizeParentIframe();
+</script>
+</html>

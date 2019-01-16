@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.system.mapper.DjpdMapper">
+	
+	<resultMap id="djpdMap" type="Djpd">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="djdfsdxx" column="djdfsdxx" javaType="java.lang.Double"></result>
+		<result property="djdfsdsx" column="djdfsdsx" javaType="java.lang.Double"></result>
+		<result property="pdjb" column="pdjb" javaType="java.lang.String"></result>
+		<result property="pdjbmc" column="pdjbmc" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<!-- 得到评定级别信息 -->
+	<select id="selectDjpd" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		{call pkg_xtgl.selectdjpd(
+		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=djpdMap}
+		)}
+	</select>
+	<!-- 评定级别 -->
+	<select id="djpd" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		{call pkg_xtgl.djpd(
+		#{p_zpjdf,mode=IN,jdbcType=DOUBLE},
+		#{p_pdjb,mode=OUT,jdbcType=VARCHAR},
+		#{p_pdjbmc,mode=OUT,jdbcType=VARCHAR},
+		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+		)}
+	</select>
+	
+	<update id="update">
+	update XT_GRJX_DJPD t set t.djdfsdxx = #{djdfsdxx},t.djdfsdsx = #{djdfsdsx} where t.pdjb = #{pdjb} 
+	</update>
+	
+
+</mapper>

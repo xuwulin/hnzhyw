@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>系统管理-绩效考核指标管理页面</title>
+	<link href="../../../css/bounced.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../../css/xtpz.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/xtpz_ywkhzbgl.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/easyui.css"/>
+	<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/bootstrap/easyui.css"/>
+	<!--<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/default/easyui.css">-->
+	<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/icon.css">
+
+	<!---引入通用js--->
+	<script type="text/javascript" src="../../../js/plugin/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../js/plugin/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../../../js/zhyw/utils/constant.js"></script>
+	<script type="text/javascript" src="../../../js/zhyw/utils/common.js"></script>
+	<style type="text/css">
+		.left_ul li:nth-of-type(6) a{
+			background-color:#0876D5;
+			color:#fff;
+			border: 1px solid #0876D5;
+			cursor:pointer;
+		}
+	</style>
+</head>
+<body>
+	<div class="xtpz">
+		<div class="xtpz_top">当前位置 : 个人绩效考核配置</div>
+		<div class="xtpz_content">
+			<div class="content_left">
+				<div class="left_tree"></div>
+			</div>
+			<div class="content_right">
+				<div class="right_top">
+					<img src="../../../image/icon_sd.png"
+						style="float: left; margin: 17px 12px 0px 12px;">个人绩效考核配置
+				</div>
+
+				<div class="content_title">
+					<ul class="content_title_ul">
+						<li id="right_title_li1" class="" onclick="selectTitle(1)">考核指标配置</li>
+						<li id="right_title_li2" class="" onclick="selectTitle(2)">考核时间配置</li>
+						<li id="right_title_li3" class="" onclick="selectTitle(3)">考核人员配置</li>
+						<li id="right_title_li4" class="" onclick="selectTitle(4)">文书类型分数配置</li>
+						<li id="right_title_li5" class="" onclick="selectTitle(5)">交叉考核配置</li>
+					</ul>
+				</div>
+
+				<div class="right_table" style="margin-top: 15px;">
+					<ul class="right_ul">
+						<li id="right_li2" class="" onclick="selectList(2)">省院</li>
+						<li id="right_li3" class="" onclick="selectList(3)">市院</li>
+						<li id="right_li4" class="" onclick="selectList(4)">基层院</li>
+						<button id="syxz" class="btn_xz" onclick="showDetail();">新增</button>
+					</ul>
+					<div class="right_com">
+						<div style="width: 100%; height: 20px"></div>
+						<!-- <table border="1px solid #E6EBF1" cellspacing="0" cellpadding="0" id="grjxlist">
+	                                             <tr>
+	                                                   <th>单位</th>
+	                                                   <th>业务</th>
+	                                                   <th>角创建人</th>
+	                                                   <th>操作</th>
+	                                             </tr>
+	                                      </table> -->
+						<table id="dg"></table>
+					</div>
+				</div>
+				<div class="right_tablel">
+					<div class="personal">
+						<div class="al_botton">
+							<div class="al_botton_1">
+								<div
+									style="background: url('../../../image/grjx.png') no-repeat; width: 22px; height: 22px; float: left; margin: 15px 5px 0 20px;"></div>
+								<span
+									style="color: #1874dc; display: inline-block; margin-top: 14px">个人绩效</span>
+								<div style="margin-right: 20px; float: right; font-size: 14px;">
+									<!-- 					<div class="pant_your"> -->
+									<!-- 						删除列<select name="deletecolumn" id="deletecolumn"> -->
+									<!-- 							</select> -->
+									<!-- 						<button onclick="deleteCloumn()">确认删除</button> -->
+									<!-- 					</div> -->
+									<!-- 					<div class="pant_your"> -->
+									<!-- 						新列名<input type="text" id="addname"> 在 <select -->
+									<!-- 							name="column" id="column"> -->
+									<!-- 						</select> <select name="position" id="position"> -->
+									<!-- 							<option value="1">前</option> -->
+									<!-- 							<option value="2">后</option> -->
+									<!-- 						</select>新建列 -->
+									<!-- 						<button onclick="addCloumn()">确认</button> -->
+									<!-- 					</div> -->
+									<div class="pant_your">
+										<button onclick="wirtetable()">编辑</button>
+									</div>
+									<div class="pant_your">
+										<button onclick="addRow()">添加行</button>
+									</div>
+									<div class="pant_your"></div>
+								</div>
+							</div>
+							<div style="width: 100%;">
+								<table id="dg" class="tab_le" data-options="nowrap:false"></table>
+								<div class="but_last">
+									<button id="i_button" style="cursor: pointer;"
+										onclick="save_data()">确认</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!---////////////////////////////////////////考核日期配置界面\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\---->
+				<div id="xt_grjx_khrq_page" style="display:none;float: left;margin-top: 15px;width: 95%;padding-left: 20px;"></div>
+				<!---////////////////////////////////////////考核人员以及类型配置界面\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\---->
+				<div id="xt_grjx_ryType_page" style="display:none;float: left;margin: 15px 20px;width:95%;"></div>
+				<!---////////////////////////////////////////文书分数配置界面\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\---->
+				<div id="xt_grjx_wsfzpz_page" style="display:none;float: left;margin: 15px 20px;width: 95%;"></div>
+				<!---////////////////////////////////////////交叉考核配置界面\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\---->
+				<div id="xt_grjx_jckh_page" style="display:none;float: left;margin: 15px 20px;width: 95%;"></div>
+			</div>
+		</div>
+	</div>
+	<!-- 添加弹框 -->
+	<div id="xjtjnfDetail" class="bounced" style="display: none">
+		<div class="bounced_all" style="height: 300px">
+			<div class="xiadivbt1">
+				<span>单位级别：</span>
+				<select id="dwjb" class="easyui-combobox" name="dwjb" style="width: 250px; height: 28px; border: 1px solid #c1c1c1;">
+				</select>
+			</div>
+			<div class="xiadivbt1">
+				<span>部门类别：</span><!--之前是业务类别，现改为部门，传bmbm-->
+				<select id="ywlb" class="easyui-combobox" name="ywlb" style="width: 250px; height: 28px; border: 1px solid #c1c1c1;">
+				</select>
+			</div>
+			<div class="xiadivbt1">
+				<span>人员类别：</span>
+				<select id="type" class="easyui-combobox" name="type" style="width: 250px; height: 28px; border: 1px solid #c1c1c1;">
+				</select>
+			</div>
+			<div class="xiadivbt" style="margin-top: 40px;">
+				<input type="button" onclick="closeDetail();" value="取消" style="background: #fff; border: 1px solid #c1c1c1; color: #666;"/>
+				<input type="button" onclick="xz();" value="确定" style="margin-right: 10px;" />
+			</div>
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript">
+	$(".left_tree").load("../left_menu.html");
+	var sdwjb = top.currentUserInfo.dwjb;
+	var glob_dwbm = top.currentUserInfo.dwbm;
+	if(sdwjb!=2){
+		$("#xtpzgl").css("display","none");
+	}
+	var TitleType = null; // 标题类型
+	var type = null; //单位级别的类型
+	//这儿是点击新增按钮打开新增页面的DIV并赋值。
+
+	function showDetail() {
+		parent.ifeblick();
+		$("#xjtjnfDetail").fadeIn("fast");
+
+		// 为业务类别下拉框赋值
+		// var ywlbArr = $("#ywlb").combobox("getData");
+		// if (ywlbArr.length > 0) {
+		// 	$('#ywlb').combobox('select',ywlbArr[0].ywbm);
+		// }
+
+		// 业务类别改为部门类别
+        // $("#ywlb").combotree({
+         //    onSelect:function(node){
+         //        var bmbm = node.id;
+         //    },
+        // });
+
+        $("#ywlb").combobox({
+            url : rootPath + '/service/grjxBmlb/getBmlbList',
+            method : "post",
+            valueField : "bmlbbm",
+            textField : "bmlbmc",
+            required : true,
+            editable : false,
+            onSelect: function (node) {
+                // $("#grjx_khry_bmlbmc").combobox('setValue',node.bmlbmc);
+                // $("#grjx_khry_bmlbbm").val(checkStrReturnEmpty(node.bmlbbm));
+            }
+        });
+
+        // 为人员类别下拉框赋值
+        // var typeDataArr = $("#type").combobox("getData");
+        // if (typeDataArr.length > 0) {
+			// $('#type').combobox('select',typeDataArr[0].dictTypeValue);
+        // }
+
+		// 人员类别改为从XT_GRJX_RYTYPE表中取
+        $("#type").combobox({
+            onSelect:function(node){
+                var ryId = node.id;
+            },
+        });
+	}
+
+	function closeDetail() {
+		parent.ifenone();
+		$("#xjtjnfDetail").fadeOut("fast");
+	}
+
+$(function() {
+	 selectTitle(1); // 默认选中考核指标配置
+
+	if(top.currentUserInfo.dwjb == 2) {
+		selectList(2);
+	}else if(top.currentUserInfo.dwjb==3){
+		// $("#right_li3").click();
+		$("#right_li4").css("display","none");
+		$("#right_li2").css("display","none");
+		selectList(3);
+	}else if(top.currentUserInfo.dwjb==4){
+		// $("#right_li4").click();
+		$("#right_li3").css("display","none");
+		$("#right_li2").css("display","none");
+		selectList(4);
+	}
+
+	// selectList(2); // 默认选中省院
+
+	/********************下面这段暂时注释，因为暂时由统一业务同步业务编码表提供数据（20171026）*************************/
+	/**
+	$("#ywlb").combobox({
+		data : [ {
+			text : '监督办',
+			value : "01"
+		}, {
+			text : '侦监',
+			value : "02",
+			selected : true
+		}, {
+			text : '公诉',
+			value : "03"
+		}, {
+			text : '反贪',
+			value : "04"
+		}, {
+			text : '反渎',
+			value : "05"
+		}, {
+			text : '监所',
+			value : "06"
+		}, {
+			text : '民行',
+			value : "07"
+		}, {
+			text : '控告',
+			value : "08"
+		}, {
+			text : '申诉',
+			value : "09"
+		}, {
+			text : '预防',
+			value : "10"
+		}, {
+			text : '检委办',
+			value : "11"
+		}, {
+			text : '复核检察厅',
+			value : "12"
+		}, {
+			text : '检察技术',
+			value : "13"
+		} ]
+	}); */
+
+	//获取业务类型的下拉框
+	// $("#ywlb").combobox({
+	// 	url : rootPath + "/service/grjxZbpz/getYwlxList",
+	// 	method : 'post',
+	// 	valueField:'ywbm',
+	// 	textField:'ywjc',
+	// });
+
+	// 业务类别改为部门名称，传部门编码
+    getBmbmSelectTree("ywlb",null,null,null,"250px","28px",null); //引用于common.js
+	$("#ywlb").combotree({
+        required : true,
+	});
+
+	//获取数据字典里面的人员类别值
+	// $("#type").combobox({
+	// 	url : rootPath + "/service/dataDict/getSelectByTypeOrSign?sign=khzb",
+	// 	method : 'post',
+	// 	valueField:'dictTypeValue',
+	// 	textField:'dictName',
+	// 	select : 'dictName',
+	// });
+
+	// 人员类别改为从XT_GRJX_RYTYPE表中获取，传人员对应的id
+    $("#type").combobox({
+        url : rootPath + '/service/grjxKhryTypePz/getGrjxKhryTypePzList',
+        method : "post",
+        valueField : "id",
+        textField : "name",
+        required : true,
+        editable : false,
+    });
+
+});
+
+    function selectTitle(type) {
+        TitleType = type;
+        $(".content_title_ul li").removeClass("right_li");
+        $("#right_title_li" + type).addClass("right_li");
+
+        $(".right_table").css("display", "none");
+        $("#xt_grjx_khrq_page").hide();
+        $("#xt_grjx_ryType_page").hide();
+        $("#xt_grjx_wsfzpz_page").hide();
+        $("#xt_grjx_jckh_page").hide();
+
+        if (1 == TitleType) {
+            $(".right_table").css("display", "block");
+            $(".content_right").css('height','');
+        } else if (2 == TitleType) {
+            // 注：在加载xtpz_grjx_khrq.html子页面之前要将添加的弹出层移除，不然点击一次加载一次，会出现多个弹出层的form导致id不唯一
+            $("#grjx_khrq_edit_div").remove();
+            $("#xt_grjx_khrq_page").show();
+            $("#xt_grjx_khrq_page").load("xtpz_grjx_khrq.html");
+            $(".content_right").css('height','');
+        } else if (3 == TitleType) {
+            $("#grjx_bmlb_edit_div").remove();
+            $("#grjx_khry_edit_div").remove();
+            $("#grjx_khry_type_edit_div").remove();
+            $("#xt_grjx_ryType_page").show();
+            $("#xt_grjx_ryType_page").load("xtpz_grjx_khry.html");
+            $(".content_right").css('height','1300');
+			// $("#iframe").height('1500px');
+        } else if(4 == TitleType){
+            $("#grjx_wsfz_edit_div").remove();
+            $("#xt_grjx_wsfzpz_page").show();
+            $("#xt_grjx_wsfzpz_page").load("xtpz_grjx_wsfz.html");
+            $(".content_right").css('height','');
+        } else if (5 == TitleType) {
+            $("#xjtjnfDetail").remove();
+            $("#xt_grjx_jckh_page").show();
+            $("#xt_grjx_jckh_page").load("../jchc/xtpz_hcpz.html");
+            $(".content_right").css('height','');
+		}
+    }
+
+	function selectList(t) {
+		type=t;
+		$(".right_ul li").removeClass("right_li");
+		$("#right_li" + t).addClass("right_li");
+		/* var ch = $("#grjxlist").children();
+		ch.remove(); */
+		/* $.get('/zhyw/service/grjxZbpz/selectList?dwjb=' + t, function(data) {
+			var dt = eval('(' + data + ')');
+			var length = dt.length;
+			for (var i = 0; i < length; i++) {
+				var yw = ywlb(dt[i].ywlb);
+				if(dt[i].ywlb<10){
+// 					;
+					dt[i].ywlb="0"+dt[i].ywlb;
+				}
+				var tr = "<tr><td>" + yw + "</td><td>" + dt[i].operator
+						+ "</td><td><a href='admin_khzb.html?id="
+						+ dt[i].zbpzId + "&ywlb=" + dt[i].ywlb + "&dwjb="
+						+ dt[i].dwjb + "'>修改</a></td></tr>";
+				$("#grjxlist").append(tr);
+			}
+
+		}); */
+		var url= rootPath + "/service/grjxZbpz/selectList";
+		$('#dg').datagrid({    
+		    url:url,
+		    loadMsg:'数据加载中，请稍等。。。',
+		    rownumbers:true,
+			pagination:true,
+            striped: true,
+			pageNumber:1,
+			pageSize:20,
+			pageList:[5,10,15,20],
+			queryParams: {
+				dwjb: t
+			},
+			method : 'post',
+		    columns:[[    
+		        {field:'dwjb',align:'center',title:'单位级别',width:'19%',formatter: function(value,row,index){
+		        		if(row.dwjb=='2'){
+		        			return "省院";
+		        		}else if(row.dwjb=='3'){
+		        			return "市院";
+		        		}else if(row.dwjb=='4'){
+		        			return "基层院";
+		        		}else{
+		        			return "";
+		        		}
+		        }},
+		        {field:'ywlb',align:'center',title:'部门类别',width:'10%',formatter: getBmlbmc},
+		        	/**************************下面这段暂时注释，因为暂时由统一业务同步业务编码表提供数据（20171026）***************************/
+		        	/*
+		        	if (row.ywlb == "01") {
+		    			return "监督办";
+		    		}
+		        	else if (row.ywlb == "02") {
+		    			return "侦监";
+		    		}
+		        	else if (row.ywlb == "03") {
+		    			return "公诉";
+		    		}
+		        	else if (row.ywlb == "04") {
+		    			return "反贪";
+		    		}
+		        	else if (row.ywlb == "05") {
+		    			return "反渎";
+		    		}
+		    		else if (row.ywlb == "06") {
+		    			return "监所";
+		    		}
+		    		else if (row.ywlb == "07") {
+		    			return "民行";
+		    		}
+		    		else if (row.ywlb == "08") {
+		    			return "控告";
+		    		}
+		    		else if (row.ywlb == "09") {
+		    			return "申诉";
+		    		}
+		    		else if (row.ywlb == "10") {
+		    			return "预防";
+		    		}
+		    		else if (row.ywlb == "11") {
+		    			return "检委办";
+		    		}
+		    		else if (row.ywlb == "12") {
+		    			return "复核检察厅";
+		    		}
+		    		else if (row.ywlb == "13") {
+		    			return "检察技术";
+		    		} */
+		    		 // var ywjc1="";
+		    		/*   //这儿注释是因为该也页面初始化的时候已经把数据查询出来了，可以直接拿来用。
+		    		$.ajax({
+		    			url : rootPath + "/service/grjxZbpz/getYwlxList",
+		    			type : 'post',
+		    			async : false,
+		    			data : {
+		    				ywbm : row.ywlb
+		    			},
+		    			dataType : 'json',
+		    			success : function(data) {
+		    				if (data&&data.length>0) {
+		    					ywjc1=data[0].ywjc;
+							}else{
+								ywjc1= "";
+							}
+		    			}
+		    		}); */ 
+		    		// if(value){
+		    		// 	var ywlbArr = $("#ywlb").combobox("getData");
+		    		// 	if(ywlbArr&&ywlbArr.length>0){
+		    		// 		for(var i =0 ;i<ywlbArr.length;i++){
+		    		// 			if(ywlbArr[i].ywbm == value){
+		    		// 				ywjc1 = ywlbArr[i].ywjc;
+		    		// 			}
+		    		// 		}
+		    		// 	}
+		    		// }
+
+
+	        {field:'type',align:'center',title:'人员类别',width:'10%',formatter: getRylb},
+	        {field:'ssrq',align:'center',title:'所属年份',width:'10%'},
+		    {field:'operator',align:'center',title:'创建人',width:'10%'},
+		    {field:'operateTime',align:'center',title:'创建/修改时间',width:'20%',formatter: function(value,row,index){
+		    	if (value) {
+					return (new Date(value).format("yyyy-MM-dd"));
+				}else{
+					return "";
+				}
+		    }},
+		    {field:'cz',title:'操作',width:'20%',align:'center',formatter: function(value,row,index){
+		        	/* if(row.ywlb<10){
+		        		row.ywlb = "0"+row.ywlb;
+		        	} */
+		        	var data = JSON.stringify(row);
+		        	if(top.currentUserInfo.dwjb==2){
+	        			return "<a class='table_czan_ys' onclick='goToModifyPage("+data+");' >修改</a>"
+	        				 + "<a class='table_czan_ys' id='deldata' onclick='delData("+data+")'>删除</a>";
+		        	}else{
+		        		$("#syxz").css("display","none");
+		        		return "<a class='table_czan_ys' onclick='goToQueryPage("+data+");' >查看</a>" ;
+		        	}
+			}}
+		    ]]    
+		}); 
+		
+		//为单位级别下拉框设置值
+		if(t==2){
+			$("#dwjb").combobox({
+				data : [ {
+					text : '省院',
+					value : 2,
+					selected : true 
+				}, {
+					text : '市院',
+					value : 3
+				}, {
+					text : '基层院',
+					value : 4
+				} ],
+                required : true,
+                editable : false,
+			});
+		}
+		if(t==3){
+			$("#dwjb").combobox({
+				data : [ {
+					text : '省院',
+					value : 2
+				}, {
+					text : '市院',
+					value : 3,
+					selected : true
+				}, {
+					text : '基层院',
+					value : 4
+				} ]
+			});
+		}
+		if(t==4){
+			$("#dwjb").combobox({
+				data : [ {
+					text : '省院',
+					value : 2 
+				}, {
+					text : '市院',
+					value : 3
+				}, {
+					text : '基层院',
+					value : 4,
+					selected : true
+				} ]
+			});
+		}
+	}
+
+/*********************暂时关闭下列方法，因为暂时调整为数据信息从数据库查询获取（20171026）***************************/	
+	/* function ywlb(ywlb) {
+		var yw = null;
+		if (ywlb == "01") {
+			yw = "监督办";
+		}
+		if (ywlb == "02") {
+			yw = "侦监";
+		}
+		if (ywlb == "03") {
+			yw = "公诉";
+		}
+		if (ywlb == "04") {
+			yw = "反贪";
+		}
+		if (ywlb == "05") {
+			yw = "反渎";
+		}
+		if (ywlb == "06") {
+			yw = "监所";
+		}
+		if (ywlb == "07") {
+			yw = "民行";
+		}
+		if (ywlb == "08") {
+			yw = "控告";
+		}
+		if (ywlb == "09") {
+			yw = "申诉";
+		}
+		if (ywlb == "10") {
+			yw = "预防";
+		}
+		if (ywlb == "11") {
+			yw = "检委办";
+		}
+		if (ywlb == "12") {
+			yw = "复核检察厅";
+		}
+		if (ywlb == "13") {
+			yw = "检察技术";
+		}
+		return yw;
+	} */
+	
+	//点击新增个人绩效指标配置的确定按钮事件
+	function xz() {
+		parent.ifenone();
+		// 单位级别
+		var dwjbValue = $("#dwjb").combobox("getValue");
+		// 部门类别编码
+		var ywlbValue = $("#ywlb").combobox("getValue");
+		// 人员类别对应的id
+		var ryType = $("#type").combobox("getValue");
+
+
+		if("" == dwjbValue || "" == ywlbValue || "" == ryType) {
+			top.msgAlertInfo("请选择单位级别、业务类别、人员类型！");
+			return;
+		}
+		
+		$.ajax({
+			url : rootPath + "/service/grjxZbpz/isExist",
+			type : 'post',
+			async : false,
+			data : {
+				ywlb : ywlbValue,
+				dwjb : dwjbValue,
+				type : ryType
+			},
+			success : function(data) {
+				if(data>0){
+					top.msgAlertInfo("该配置记录已经存在！");
+				}
+				else{
+					 location.href = "admin_khzb.html?dwjb=" + dwjbValue + "&ywlb="+ ywlbValue + "&xzbt=1" + "&ryType="+ryType; 
+				}
+			}
+		});
+	}
+	//删除
+	function delData(data)
+	{
+		$.messager.confirm('确认','您确认想要删除记录吗？',function(r){    
+		    if (r){    
+		    	$.ajax({
+					url : rootPath + "/service/grjxZbpz/delete",
+					type : 'post',
+					async : false,
+					data : {
+						zbpzId:data.zbpzId
+					},
+					dataType:'json',
+					success : function(data) {
+						//top.msgAlertInfo(data.msg);
+						selectList(type);
+					}
+				});    
+		    }    
+		}); 
+	}
+	
+	
+	function goToModifyPage(data){
+		location.href="admin_khzb.html?id="+data.zbpzId+"&ywlb="+data.ywlb+"&dwjb="+data.dwjb+"&sfsy=1"+"&ryType="+data.type+"&ssrq="+data.ssrq;
+	}
+	
+	function goToQueryPage(data){
+		location.href="admin_khzb.html?id="+data.zbpzId+"&ywlb="+data.ywlb+"&dwjb="+data.dwjb+"&sfsy=0"+"&ryType="+data.type;
+	}
+	// 	function xgpz() {
+	// 		$('.right_table').css('display',' none');
+	// 		$('.right_tablel').css('display','block');
+	// 	}
+
+	function getBmlbmc(value, row, index) {
+	    var res = "";
+        $.ajax({
+            url : rootPath + '/service/grjxBmlb/getBmlbList',
+            type : 'post',
+            async : false,
+            dataType:'json',
+            success : function(data) {
+				for (var i = 0; i < data.length; i++) {
+                	if (data[i].bmlbbm == value) {
+						res = data[i].bmlbmc;
+					}
+				}
+            }
+        });
+        return res;
+    }
+
+    function getRylb(value, row, index) {
+        var res = "";
+        $.ajax({
+            url : rootPath + '/service/grjxKhryTypePz/getGrjxKhryTypePzList',
+            type : 'post',
+            async : false,
+            dataType:'json',
+            success : function(data) {
+                for (var i = 0; i < data.length; i++) {
+					if (data[i].id == value) {
+					    res = data[i].name
+					}
+                }
+            }
+        });
+        return res;
+    }
+
+
+
+
+</script>
+<!-- <script type="text/javascript" src="js/khzb.js"></script> -->
+</html>

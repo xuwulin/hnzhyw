@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>海南省人民检察院综合业务管理系统-登录页面</title>
+    <link rel="stylesheet" type="text/css" href="../js/plugin/easyui/themes/bootstrap/easyui.css">
+    <link type="text/css" rel="stylesheet" href="../js/plugin/easyui/themes/default/easyui.css"/>
+    <link href="../css/bounced.css" rel="stylesheet">
+    <script type="text/javascript" src="../js/plugin/easyui/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/constant.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/common.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/plugin/easyui/jquery.easyui.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+    <script src="../js/zhyw/utils/base64.js"></script>
+    <style>
+        .csshi_zydiv {
+            width: 50%;
+            float: left;
+            height: 50px;
+        }
+
+        .ceshi_span {
+            display: inline-block;
+            width: 70px;
+            float: left;
+        }
+
+        .ceshi_div {
+            width: calc(100% - 70px);
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<div class="easyui-layout" data-options="fit:'true'">
+    <!--<table cellpadding="5">-->
+    <!--<tr>-->
+
+
+    <!--<td style="text-align: right;">-->
+    <!--消息标题:-->
+    <!--</td>-->
+    <!--<td>-->
+    <!--<input type="text" id="title" class="easyui-textbox" style="width:230px;">-->
+    <!--</td>-->
+
+    <!--<td style="text-align: right;">-->
+    <!--是否已读:-->
+    <!--</td>-->
+    <!--<td>-->
+    <!--<select name="" id="read" class="easyui-combobox" style="width:230px;">-->
+    <!--<option value="true">是</option>-->
+    <!--<option value="false">否</option>-->
+    <!--</select>-->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td style="text-align: right;">-->
+    <!--消息状态:-->
+    <!--</td>-->
+    <!--<td>-->
+    <!--<select  id="state" class="easyui-combobox"   style="width:230px;">-->
+    <!--<option value="add">添加</option>-->
+    <!--<option value="modify">修改</option>-->
+    <!--<option value="delete">删除</option>-->
+    <!--</select>-->
+    <!--</td>-->
+    <!--<td style="text-align: right;">-->
+    <!--协议:-->
+    <!--</td>-->
+    <!--<td>-->
+    <!--<select name="" id="protocol" class="easyui-combobox" style="width:230px;">-->
+    <!--<option value="http">http</option>-->
+    <!--<option value="https">https</option>-->
+    <!--</select>-->
+    <!--</td>-->
+    <!--</tr>-->
+
+    <!--<tr>-->
+    <!--<td style="text-align: right;">-->
+    <!--地址:-->
+    <!--</td>-->
+    <!--<td><input type="text" id="address" style="width:230px;"></td>-->
+    <!--<td style="text-align: right;">-->
+    <!--参数:-->
+    <!--</td>-->
+    <!--<td><input type="text" id="params" class="easyui-textbox" style="width:230px;"></td>-->
+
+    <!--</tr>-->
+
+    <!--<tr>-->
+    <!--<td style="text-align: right;">-->
+    <!--消息摘要:-->
+    <!--</td>-->
+    <!--<td colspan="3">-->
+    <!--<input id="summary" class="easyui-textbox" data-options="multiline:true" type="text" style="height: 60px;width:556px; "></input>-->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--</table>-->
+    <!--<div style="margin-top: 10px; margin-left: 36%">-->
+    <!--<a id="zdgl_submit" onclick="setMessages()" class="easyui-linkbutton" style="width: 90px">提交</a>-->
+    <!--</div>-->
+    <div id="xjjxnfyfDetail" class="bounced" style="display:block">
+        <div class="bounced_all" style="height:340px;width: 700px;">
+
+            <div class="bounced_tot">
+                <span>新增我的个人绩效</span>
+                <div class="tot_img" onclick="closeDetail()"></div>
+            </div>
+            <div style="padding: 20px 0 0 30px;height: 215px;">
+                <div class="csshi_zydiv">
+                    <span class="ceshi_span">消息标题:</span>
+                    <div class="ceshi_div"><input type="text" id="title" class="easyui-textbox" style="width:230px;">
+                    </div>
+                </div>
+                <div class="csshi_zydiv">
+                    <span class="ceshi_span">是否已读:</span>
+                    <div class="ceshi_div">
+                        <select name="" id="read" class="easyui-combobox" style="width:230px;">
+                            <option value="true">是</option>
+                            <option value="false">否</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="csshi_zydiv">
+                    <span class="ceshi_span">消息状态:</span>
+                    <div class="ceshi_div">
+                        <select id="state" class="easyui-combobox" style="width:230px;">
+                            <option value="add">添加</option>
+                            <option value="modify">修改</option>
+                            <option value="delete">删除</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="csshi_zydiv">
+                    <span class="ceshi_span">协议:</span>
+                    <div class="ceshi_div">
+                        <select name="" id="protocol" class="easyui-combobox" style="width:230px;">
+                            <option value="http">http</option>
+                            <option value="https">https</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="csshi_zydiv">
+                    <span class="ceshi_span">地址:</span>
+                    <div class="ceshi_div">
+                        <input type="text" id="address" style="width:230px;">
+                    </div>
+                </div>
+                <div class="csshi_zydiv">
+                    <span class="ceshi_span">参数:</span>
+                    <div class="ceshi_div">
+                        <input type="text" id="params" class="easyui-textbox" style="width:230px;">
+                    </div>
+                </div>
+                <div class="csshi_zydiv">
+                    <span class="ceshi_span">消息摘要:</span>
+                    <div class="ceshi_div">
+                        <input id="summary" class="easyui-textbox" data-options="multiline:true" type="text"
+                               style="height: 60px;width:565px; ">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="xiadivbt">
+                <input class="xiadivbt_1" type="button" onclick="closeDetail();" value="取消"/>
+                <input class="xiadivbt_2" type="button" onclick="setMessages();" value="确定"/>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $.post(rootPath + "/service/login/getFiles", {}, function (result) {
+        var files = JSON.parse(result).data;
+        var fileArr = new Array();
+//        console.log(files);
+        getFile(files, fileArr, '')
+
+        fileArr.push({
+            id: '/index.html',
+            text: '/index.html'
+        })
+        fileArr.push({
+            id: '/login.html',
+            text: '/login.html'
+        })
+        fileArr.push({
+            id: '/toindex.html',
+            text: '/toindex.html'
+        })
+//        console.log(fileArr);
+
+        $("#address").combotree({
+            data: fileArr,
+            onBeforeSelect: function (data, q) {
+                if (!data.id) {
+                    var t = $("#address").combotree("tree");
+                    t.tree("uncheck", data.target);
+                    t.tree("toggle", data.target);
+                    t.tree("unselect", data.target);
+                    return;
+                }
+            }
+        })
+
+    })
+    function getFile(file, fileArr, fileName) {
+        for (var i in file) {
+            if (typeof file[i] == 'string') {
+                fileArr.push({
+                    id: fileName + '/' + file[i],
+                    text: fileName + '/' + file[i]
+                })
+                continue;
+            }
+            for (var j in file[i]) {
+                var childrenFileArr = new Array();
+                getFile(file[i][j], childrenFileArr, fileName + '/' + j);
+                fileArr.push({
+                    text: fileName + '/' + j,
+                    children: childrenFileArr,
+                    state: 'closed'
+                })
+            }
+
+        }
+        return fileArr;
+    }
+
+    function setMessages() {
+        var title = $("#title").textbox("getText").trim();
+        if (!title) {
+            alert("请输入标题");
+            return;
+        }
+
+        var read = $("#read").combobox("getValue");
+        if (!read) {
+            alert("请选择是否已读");
+            return;
+        }
+
+        var state = $("#state").combobox("getValue");
+        if (!state) {
+            alert("请选择消息状态");
+            return;
+        }
+
+        var protocol = $("#protocol").combobox("getValue");
+        if (!protocol) {
+            alert("请选择协议");
+            return;
+        }
+
+        var address = $("#address").combotree("getValue");
+        if (!address) {
+            alert("请选择地址");
+            return;
+        }
+
+        var summary = $("#summary").textbox("getText").trim();
+        if (!summary) {
+            alert("请输入消息摘要");
+            return;
+        }
+
+        var params = $("#params").val();
+        sendMessage(title,summary,address,params,"460000,0154");
+    }
+
+</script>
+</html>

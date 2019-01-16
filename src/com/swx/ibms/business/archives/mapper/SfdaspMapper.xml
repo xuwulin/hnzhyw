@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.archives.mapper.SfdaspMapper">
+
+	<resultMap id="SplcMap" type="Splc">
+		<result property="sprmc" column="sprmc" javaType="java.lang.String"></result>
+		<result property="spdw" column="spdw" javaType="java.lang.String"></result>
+		<result property="spbm" column="spbm" javaType="java.lang.String"></result>
+		<result property="spr" column="spr" javaType="java.lang.String"></result>
+		<result property="spyj" column="spyj" javaType="java.lang.String"></result>
+		<result property="spsj" column="spsj" javaType="java.sql.Date"></result>
+		<result property="spzt" column="spzt" javaType="java.lang.String"></result>
+		<result property="spztbm" column="spztbm" javaType="java.lang.String"></result>
+		<result property="spdwmc" column="spdwmc" javaType="java.lang.String"></result>
+		<result property="spbmmc" column="spbmmc" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<resultMap id="JdlcMap" type="Jdlc">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="jdlx" column="jdlx" javaType="java.lang.String"></result>
+		<result property="lcjd" column="lcjd" javaType="java.lang.String"></result>
+		<result property="xyjd" column="xyjd" javaType="java.lang.String"></result>
+		<result property="xycljs" column="xycljs" javaType="java.lang.String"></result>
+		<result property="xyclbm" column="xyclbm" javaType="java.lang.String"></result>
+		<result property="xycldw" column="xycldw" javaType="java.lang.String"></result>
+		<result property="jdzt" column="jsmc" javaType="java.lang.String"></result>
+		<result property="sm" column="sm" javaType="java.lang.String"></result>
+		<result property="xycldwlx" column="xycldwlx" javaType="java.lang.String"></result>
+		<result property="lclx" column="lclx" javaType="java.lang.String"></result>
+		<result property="ztbg" column="ztbg" javaType="java.lang.String"></result>
+		<result property="cljsxz" column="cljsxz" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<resultMap id="SpslidMap" type="Splc">
+		<result property="spdw" column="spdw" javaType="java.lang.String"></result>
+		<result property="spr" column="spr" javaType="java.lang.String"></result>
+		<result property="spbm" column="spbm" javaType="java.lang.String"></result>
+		<result property="jdlx" column="jdlx" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<!-- 插入司法档案审批实例 -->
+	<insert id="addSplcsl" parameterType="java.util.Map"
+		statementType="CALLABLE">
+        <![CDATA[  
+        {call pkg_sfdasp.add_splcsl(#{spdw,mode=IN,jdbcType=VARCHAR}, 
+                             #{spr,mode=IN,jdbcType=VARCHAR},
+                             #{spyj ,mode=IN,jdbcType=VARCHAR},
+                             #{splx ,mode=IN,jdbcType=VARCHAR},
+                             #{spzt ,mode=IN,jdbcType=VARCHAR},
+                             #{spid ,mode=IN,jdbcType=VARCHAR},
+                             #{Y ,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]>
+	</insert>
+	<!-- 插入处理事务 -->
+	<insert id="addClsw" parameterType="java.util.Map"
+		statementType="CALLABLE">
+	<![CDATA[  
+        {call pkg_sfdasp.add_clsw(#{clnr,mode=IN,jdbcType=VARCHAR}, 
+                             #{cllx,mode=IN,jdbcType=VARCHAR},
+                             #{wbid,mode=IN,jdbcType=VARCHAR},
+                             #{lcid,mode=IN,jdbcType=VARCHAR},
+                             #{Y,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]>
+	</insert>
+	<!-- 查询审批流程数据 -->
+	<select id="showSplc" parameterType="java.util.Map" statementType="CALLABLE">
+	<![CDATA[  
+        {call pkg_sfdasp.show_splcsl(
+        	#{p_spstid,mode=IN,jdbcType=VARCHAR},
+        	#{p_splx,mode=IN,jdbcType=VARCHAR},
+        	#{p_lcid,mode=IN,jdbcType=VARCHAR},
+            #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=SplcMap}
+         )}
+        ]]>
+	</select>
+	<select id="sfysplcsl" parameterType="java.util.Map"
+		statementType="CALLABLE">
+	<![CDATA[
+	{call pkg_select.sfysplcsl(
+	      #{gdid,mode=IN,jdbcType=VARCHAR},
+	      #{Y,mode=OUT,jdbcType=VARCHAR}
+          )}  
+	]]>
+	</select>
+	<select id="select_jdlc" parameterType="java.util.Map"
+		statementType="CALLABLE">
+	<![CDATA[
+	{call pkg_select.select_YX_SFDA_JDLC(
+	      #{jdzt,mode=IN,jdbcType=VARCHAR},
+	      #{lclx,mode=IN,jdbcType=VARCHAR},
+	      #{cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=JdlcMap}
+          )}  
+	]]>
+	</select>
+
+	<!-- 更改表结构后的新增实例接口 -->
+	<insert id="addNewSplcsl" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[ {call pkg_sfdasp.add_splcsl( 
+        	#{p_spdw,mode=IN,jdbcType=VARCHAR},
+        	#{p_spr,mode=IN,jdbcType=VARCHAR},
+        	#{p_spyj,mode=IN,jdbcType=VARCHAR},
+        	#{p_splx,mode=IN,jdbcType=VARCHAR},
+        	#{p_spzt,mode=IN,jdbcType=VARCHAR},
+        	#{p_spstid,mode=IN,jdbcType=VARCHAR},
+        	#{p_lcjd,mode=IN,jdbcType=VARCHAR},
+        	#{p_jdlx,mode=IN,jdbcType=VARCHAR},
+        	#{Y,mode=OUT,jdbcType=VARCHAR} 
+         )}
+        ]]>
+	</insert>
+
+	<!-- 更改表结构后的更新实例接口 -->
+	<update id="updateNewSplcsl" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        {call pkg_sfdasp.update_splcslspyj( 
+        							#{p_spdw,mode=IN,jdbcType=VARCHAR},
+        							#{p_spr,mode=IN,jdbcType=VARCHAR},
+        							#{p_dqspzt,mode=IN,jdbcType=VARCHAR},
+        							#{p_spzt,mode=IN,jdbcType=VARCHAR},
+        							#{p_spstid,mode=IN,jdbcType=VARCHAR},
+        							#{p_lcjd,mode=IN,jdbcType=VARCHAR},
+        							#{p_jdlx,mode=IN,jdbcType=VARCHAR},
+        							#{p_spyj,mode=IN,jdbcType=VARCHAR},
+        							#{Y,mode=OUT,jdbcType=VARCHAR} 
+         )}
+        ]]>
+	</update>
+
+	<!--通过流程类型、节点状态获取流程模板信息 -->
+	<select id="getLcmb" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        {call pkg_sfdasp.proc_getlcmb( 
+        							#{p_lclx,mode=IN,jdbcType=VARCHAR},
+        							#{p_jdzt,mode=IN,jdbcType=VARCHAR},
+        							#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=JdlcMap},
+        							#{p_errmsg,mode=OUT,jdbcType=VARCHAR} 
+         )}
+        ]]>
+	</select>
+	<!--通过节点类型获取流程模板信息 -->
+	<select id="getLcmbByJdlx" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        {call pkg_sfdasp.proc_getlcmbbyjdlx( 
+        							#{p_jdlx,mode=IN,jdbcType=VARCHAR},
+        							#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=JdlcMap},
+        							#{p_errmsg,mode=OUT,jdbcType=VARCHAR} 
+         )}
+        ]]>
+	</select>
+
+
+	<!-- 更新审批流程实例 -->
+	<update id="updatesplcsl" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        {call pkg_sfdasp.update_splcsl( 
+        							#{p_spdw,mode=IN,jdbcType=VARCHAR},
+        							#{p_spr,mode=IN,jdbcType=VARCHAR},
+        							#{p_spzt,mode=IN,jdbcType=VARCHAR},
+        							#{p_spstid,mode=IN,jdbcType=VARCHAR},
+        							#{p_spyj,mode=IN,jdbcType=VARCHAR},
+        							#{p_lcjd,mode=IN,jdbcType=VARCHAR},
+        							#{p_jdlx,mode=IN,jdbcType=VARCHAR},
+        							#{Y,mode=OUT,jdbcType=VARCHAR} 
+         )}
+        ]]>
+	</update>
+
+	<!-- 根据审批实体ID获取最新的流程实例信息 -->
+	<select id="getrecentlcsl" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        {call pkg_sfdasp.proc_getrecentlcsl( 
+        							#{p_spstid,mode=IN,jdbcType=VARCHAR},
+        							#{p_lcjd,mode=OUT,jdbcType=VARCHAR},
+        							#{p_jdlx,mode=OUT,jdbcType=VARCHAR},
+        							#{p_errmsg,mode=OUT,jdbcType=VARCHAR} 
+         )}
+        ]]>
+	</select>
+	<!-- 得到list,从中找到原单位或人员的信息 -->
+	<select id="getlcydwlist" parameterType="java.util.Map"
+		statementType="CALLABLE">
+				<![CDATA[  
+        {call pkg_sfdasp.proc_s_bmmsg(
+        	#{p_lcid,mode=IN,jdbcType=VARCHAR},
+	      	#{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=SpslidMap}
+         )}
+        ]]>
+	</select>
+
+</mapper>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+	<title>系统配置-绩效考核指标管理-详情页面</title>
+
+	<link rel="stylesheet" type="text/css" href="../../../css/card.css" >
+	<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/bounced.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/jxkh.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/bootstrap/easyui.css" />
+	<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/icon.css" />
+		
+	<script type="text/javascript" src="../../../js/plugin/easyui/jquery.min.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="../../../js/plugin/easyui/jquery.easyui.min.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="../../../js/plugin/easyui/locale/easyui-lang-zh_CN.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="../../../js/plugin/echarts-all.js" charset="utf-8" charset="UTF-8"></script>
+	<script type="text/javascript" src="../../../js/zhyw/macarons.js" charset="utf-8" charset="UTF-8"></script>
+	<script type="text/javascript" src="../../../js/zhyw/utils/history.js" charset="utf-8" charset="UTF-8"></script>
+	<script type="text/javascript" src="../../../js/zhyw/utils/constant.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="../../../js/zhyw/utils/common.js" charset="UTF-8"></script>
+</head>
+<style>
+.pant_yl>button {
+	margin-top: 10px;
+	width: 60px;
+	height: 30px;
+	border: 1px solid #0575d2;
+	border-radius: 3px;
+	background: #0575d2;
+	color: white;
+	margin-right: 5px;
+	cursor: pointer;
+}
+
+.pant_sc>button {
+	margin-top: 10px;
+	width: 60px;
+	height: 30px;
+	border: 1px solid #0575d2;
+	border-radius: 3px;
+	background: #0575d2;
+	color: white;
+	margin-right: 5px;
+	cursor: pointer;
+}
+.submitfilebt{
+    float:left;
+    width: 60px;
+    height: 30px;
+    border: 1px solid #0575d2;
+    border-radius: 3px;
+    background: #0575d2;
+    color: white;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.addfilebt{
+	margin-top: 5px;
+	margin-bottom: 5px;
+    width: 73px;
+    height: 20px;
+    border: 1px solid #0575d2;
+    border-radius: 3px;
+    background: #0575d2;
+    color: white;
+    margin-right: 5px;
+    cursor: pointer;
+}
+#addfileform>span{
+    margin-left: 47px;
+    float: left;
+}
+.xiadivbt1{
+    overflow: hidden;
+    margin-top: 20px;
+    height: 50px;
+}
+
+</style>
+<body style="">
+	<div class="personal" style="height: 2000px">
+		<div class="al_botton">
+			<div class="al_botton_1">
+				<div style="background: url('../../../image/grjx.png') no-repeat; width: 22px; height: 22px; float: left; margin: 15px 5px 0 20px;"></div>
+				<span style="color: #1874dc; display: inline-block; margin-top: 14px">个人绩效-考核指标配置</span>
+				<div style="margin-right: 20px; float: right; font-size: 14px; margin-top: 10px;">
+					<div class="pant_yl" style="float: left;padding-left:10px;">
+						<div id="grjx_khzb_edit_div" style="float:left; margin-top: 10px; margin-right:10px;line-height:22px;">
+							<span style="margin-right:5px">业务类别:</span>
+							<label style="margin-right:10px;font-weight:bold;" id="grjx_khzb_ywlb">
+								<!-- 刑事申诉检查条线 -->
+							</label>
+							<span style="margin-right:5px;">人员类别:</span>
+							<label style="margin-right:10px;font-weight:bold;" id="grjx_khzb_rylb">
+								<!-- 检察官 -->
+							</label>
+							<span>适用院:</span>
+						    <label style="margin-right:10px;font-weight:bold;" id="grjx_khzb_syy">
+								<!-- 省院 -->
+							</label>
+							<span>所属年份:</span>
+							<select id="grjxKhzbYear" class="easyui-combobox" name="grjxKhzbYear" style="width: 120px; height: 28px; border: 1px solid #c1c1c1;">
+							</select>
+						</div>
+						<button id="goback" style="background: #fff; color: #0575d2;">返回</button>
+				        <button class="yc_yl" id="scan" onclick="scan()">预览</button>
+					    <button style="display:none;" id="edit" class="yc_yl" onclick="edit()">编辑</button>
+					</div>
+					<div class="pant_sc" style="float: right; margin-left: 4px;">
+						<button class="yc_yl" id="addRow" onclick="addRow()">插入加行</button>
+						<button class="yc_yl" id="removeit" onclick="removeit()">删除行</button>
+						<button id="i_button" style="cursor: pointer;float: right;" onclick="save_data();">保存</button>
+					</div>
+				</div>
+			</div>
+			<div style="padding-top:15px;">
+				<table id="dg" class="tab_le" data-options="nowrap:false" style="width: 100%;"></table>
+			</div>
+			<div id="addfile" class="bounced" style="display: none;">
+				<div class="bounced_all" style="height: 300px;width:420px">
+					<div class="bounced_tot">
+						<span>上传附件</span>
+						<div class="tot_img" onclick="closeDetail()"></div>
+					</div>
+					<div class="xiadivbt1">
+						<form id="addfileform" method="post" enctype="multipart/form-data">
+							<input id="upfile3" type="text" style="width: 280px; height: 29px;" name="file">
+							<input class="submitfilebt" type="button" value="提交" onclick="SubmitForm()" >
+						</form> 
+					</div>
+					<div style="width:100%;float:left">
+							<span style="float:left;margin-left: 10px;">现有附件说明:</span>
+							<textarea  disabled="disabled"id="wjms" style="width:223px;height:120px;resize:none;"></textarea>
+				    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript" src="../../../js/zhyw/khzb.js" charset="utf-8"></script>
+<script type="text/javascript">
+$('#upfile3').filebox({    
+    buttonText: '选择文件', 
+    buttonAlign: 'left' 
+})
+</script>
+</html>

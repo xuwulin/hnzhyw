@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人绩效考核-个人绩效首页</title>
+    <style>
+        .grjx_export{
+            cursor: pointer;
+            display: none;
+            width: 126px; height: 30px;
+            background: url('../../image/xj.png') no-repeat;
+            float: right;
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            margin-left: 10px;
+            /*background-color: #E1871D;*/
+            /*background-position-y: center;*/
+            /*border-radius: 3px;*/
+        }
+    </style>
+    <link href="../../css/zhyw_grjx.css" rel="stylesheet" type="text/css">
+    <link href="../../css/bounced.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/bootstrap/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../../css/zTreeStyle/ztreedemo.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/zTreeStyle/zTreeStyle.css"/>
+
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/plugin/echarts-all.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/plugin/echarts.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/zhyw/macarons.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/history.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/common.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+</head>
+<body>
+<div style="overflow: auto;background-color:#EFEEF4;min-height:700px;position: relative;font-family: 微软雅黑">
+    <!--<div class="title_url">
+        <p>当前位置 : 检察官个人绩效考核 / 绩效考核总览</p>
+    </div>
+-->
+    <div class="title_logo">
+        <div style="border: 0.5px solid #c1c1c1; margin-top: 22px; width: 328px; float: left"></div>
+        <div style="float: left;">
+            <div style="width: 46px; height: 46px; margin-left: 34px; background: url('../../image/cx.png') no-repeat; float: left"></div>
+            <div style="font-size: 24px; color: #333; margin-left: 22px; line-height: 46px; float: left;">个人绩效考核查询</div>
+        </div>
+        <div style="border: 0.5px solid #c1c1c1; margin-top: 22px; width: 327px; float: left; margin-left: 34px"></div>
+    </div>
+
+    <div id="position" class="imj_content">
+        <div style="width: 100%; height: 40px;">
+
+            <!--单位树改造-->
+            <div style="width: 275px; height: 40px; line-height: 28px; float: left;">
+                <span style="float: left; line-height: 27px; margin-right: 5px; font-size: 13px;">单位：</span>
+                <input id="unit_tree" style="width: 202px;height: 29px;line-height:32px;"/>
+            </div>
+
+            <div style="width: 246px; height: 32px; line-height: 28px; float: left; margin-left: 10px;">
+                <span style="float: left; line-height: 27px; margin-right: 5px; font-size: 13px;">部门：</span>
+                <input id="department_tree" style="width: 196px !important;height: 100%;line-height:32px;"/>
+            </div>
+
+            <div style="width: 220px;float: left;">
+                <label style="font-size: 14px; color: #333;margin-left: 32px">是否公示：</label>
+                <select id='ifgs' class="easyui-combobox" editable = "false" style="width: 100px; height: 28px; color: #333; padding: 4px 2px; float: right">
+                    <option value=''>所有</option>
+                    <option value='1'>已公示</option>
+                    <option value='0'>未公示</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div style="width: 100%; height: 32px;">
+            <div style="width: 275px; height: 32px; line-height: 28px; float: left;">
+                <span style="float: left; line-height: 27px; margin-right: 5px; font-size: 13px;">年份：</span>
+                <input id="grjxnfid" type="text" class="combo" style="width: 202px !important;line-height:32px;"/>
+            </div>
+
+            <div style="width: 300px; height: 32px; line-height: 28px; float: left; margin-left: 10px;">
+                <label style="font-size: 14px; color: #333; line-height: 28px; float: left;">起始时间：</label>
+                <input class="easyui-datebox" id="startDate" class="startDate" name="startDate" style="width: 100px;height:28px;"></input> -
+                <input class="easyui-datebox" id="endDate" class="endDate" name="endDate" style="width: 100px;height:28px;"></input>
+            </div>
+        </div>
+
+        <div class="all_input">
+            <input id="ssrmc" type="text" placeholder="请输入你要查询的人员名称" style="width: 773px; height: 100%; border: none; border-left: 1px solid #c9c9c9; text-indent: 15px; float: left; line-height: 50px; border-bottom-left-radius: 5px; border-top-left-radius: 5px;">
+            <button onclick="cxbt();" style="cursor: pointer">查询</button>
+        </div>
+
+        <div class="content_bt">
+            <span id="selectcount" style="display: inline-block; font-size: 14px; color: #333"></span>
+            <div id="show_export_div_grjx" class="grjx_export" onclick="exportAll();">
+                <a href="#position" style="text-decoration: none; color: white;">导出个人绩效</a>
+            </div>
+            <div id="cxwdgrjxid" onclick="cxwdjx();" style="cursor: pointer; width: 126px; height: 30px; background: url('../../image/xj.png') no-repeat; float: right; color: white; text-align: center; line-height: 30px;">
+                查看我的个人绩效
+            </div>
+            <div id="show_add_div_grjx" style="cursor: pointer; width: 126px; height: 30px; background: url('../../image/xj.png') no-repeat; float: right; color: white; text-align: center; line-height: 30px; margin-right: 10px;">
+                新增我的个人绩效
+            </div>
+
+        </div>
+        <!--<div class="content_dd">
+            <ul id='dagzlist'></ul>
+            &lt;!&ndash; 				 <div class="li_title"> </div> &ndash;&gt;
+        </div>-->
+    </div>
+
+    <div class="conditions" >
+        <div class="conditions_one">
+            <!--<form id="query_from_grjx_index" method="get">-->
+            <!--<div class="conditions_two">-->
+            <!--<span>-->
+            <!--<label>年份：</label>-->
+            <!--</span>-->
+            <!--<input id="grjxnfid" type="text" class="combo" style="width: 196px !important;"/>-->
+            <!--<select id="grjxnfid" class="combo">
+                <option value='0' selected>所有</option>
+                <option value='2013'>2013</option>
+                <option value='2014'>2014</option>
+                <option value='2015'>2015</option>
+                <option value='2016'>2016</option>
+                <option value='2017'>2017</option>
+            </select>-->
+            <!--</div>-->
+
+            <!--<div class="conditions_two">-->
+            <!--<label>开始日期：</label>-->
+            <!--<input id="startDate" type="text" class="combo" style="height: 32px !important; width: 196px !important;">-->
+
+            <!--<span>
+                <p>起止日期：</p>
+            </span>-->
+            <!--<div>
+                <input id=""/> -
+                <input id=""/>
+            </div>-->
+            <!--<select id="grjxjdid" class="combo">-->
+            <!--<option value='0' selected>所有</option>-->
+            <!--<option value='1'>第一季度</option>-->
+            <!--<option value='2'>第二季度</option>-->
+            <!--<option value='3'>第三季度</option>-->
+            <!--<option value='4'>第四季度</option>-->
+            <!--</select>-->
+            <!--</div>-->
+
+            <div class="conditions_two" style="display: none">
+                <span>
+                    <p>起止日期：</p>
+                </span>
+                <select id="grjxjdid" class="combo">
+                    <option value='0' selected>所有</option>
+                    <option value='1'>第一季度</option>
+                    <option value='2'>第二季度</option>
+                    <option value='3'>第三季度</option>
+                    <option value='4'>第四季度</option>
+                </select>
+            </div>
+
+            <!--<div class="conditions_two">-->
+            <!--<label>结束日期：</label>-->
+            <!--<input id="endDate" type="text" class="combo" style="height: 32px !important; width: 196px !important;">-->
+            <!--</div>-->
+        </div>
+
+        <div class="conditions_one">
+            <!--<div id="xzjcyid" class="conditions_two">-->
+            <!--<span style="float: left;line-height: 32px; margin-right: 5px;">
+                <label>单位：</label>
+            </span>
+            <div style=" height: 32px; position: relative; width:70%;border: 1px solid #c1c1c1;border-radius: 4px;    float: left;background:#fff;">
+                <input id="citySel" type="text" readonly
+                       style="border:none;width:90%;height:100%;    margin-left: 3px;"/>
+                <a id="menuBtn" href="#" onclick="showMenu(); return false;" class="a_style"
+                   style="height:32px; line-height: 32px;background:url('../../js/plugin/easyui/themes/bootstrap/images/combo_arrow.png') no-repeat center center;background-color:#F2F2F2"></a>
+                <div id="menuContent" style="z-index:110;display: none; position: absolute;">
+                    <ul id="treeDemo" class="ztree" style="margin-top: 0; width: 250px;background-color:#fff"></ul>
+                </div>
+            </div>-->
+
+            <!--<span style="float: left; line-height: 32px; margin-right: 5px;">单位：</span>-->
+            <!--<input id="unit_tree" style="width: 196px !important;height: 100%;line-height:32px;"/>-->
+            <!--</div>-->
+
+            <!--单位树改造-->
+            <!--<div style="width: 275px; height: 40px; line-height: 28px; float: left;">
+                <span style="float: left; line-height: 27px; margin-right: 5px; font-size: 13px;">单位：</span>
+                <input id="citySel" style="width: 202px;height: 29px;line-height:32px;"/>
+            </div>-->
+
+
+            <!--<div id="xzbmid" class="conditions_three">-->
+            <!--<span style="margin-left: 15px">-->
+            <!--<p>部门：</p>-->
+            <!--</span>-->
+            <!--<input id="department_tree" style="width: 196px !important;height: 100%;line-height:32px;"/>-->
+            <!--&lt;!&ndash;<input id="bmxlid" style="width: 196px !important;height: 100%;line-height:32px;"/>&ndash;&gt;-->
+            <!--</div>-->
+
+            <!--<div class="conditions_two">-->
+            <!--<span style="margin-left: 15px">-->
+            <!--<p>姓名：</p>-->
+            <!--</span>-->
+            <!--<input id="xingmingid" style="width: 196px"/>-->
+            <!--</div>-->
+            <div class="conditions_two" style="display: none">
+                <span>
+                    <p>业务类型：</p>
+                </span>
+                <select id="ywlxid" class="combo">
+                    <option value='00' selected>所有</option>
+                    <option value='01'>监督办</option>
+                    <option value='02'>侦监</option>
+                    <option value='03'>公诉</option>
+                    <option value='04'>反贪</option>
+                    <option value='05'>反渎</option>
+                    <option value='06'>监所</option>
+                    <option value='07'>民行</option>
+                    <option value='08'>控告</option>
+                    <option value='09'>申诉</option>
+                    <option value='10'>预防</option>
+                    <option value='11'>检委办</option>
+                    <option value='12'>复核办</option>
+                    <option value='13'>检技</option>
+                    <option value='14'>案管</option>
+                    <option value='15'>铁检</option>
+                </select>
+            </div>
+
+            <div style="float: left;width: 30%;height: 50px;">
+                <span style="float: left; display: none">
+                    <p>
+                    	<label>
+                    		<input id="isdbms" TYPE="checkbox" style="margin: 6px; " checked="checked"/>对比模式
+                    	</label>
+                    </p>
+                </span>
+                </form>
+                <!--<button id="show_add_div_grjx" class="btn_r">新增个人绩效</button> &lt;!&ndash; onclick="showDetail();"  &ndash;&gt;-->
+                <!--<button id="cxwdgrjxid" onclick="cxwdjx();" class="btn_r">查看我的绩效</button>-->
+                <!--<button onclick="cxbt();" style="width:80px;" class="btn_r">查询</button>-->
+            </div>
+        </div>
+    </div>
+
+    <!-- 个人绩效分页展示区 -->
+    <div id="grjxzsid" style=" overflow: hidden; margin-bottom: 30px; margin-left: 40px"></div>
+
+    <!-- 分页按键区 -->
+    <div class="ajwtfk_foot_foot" style="text-align:center;">
+        <div id="fybtid" class="r_page"></div>
+    </div>
+
+
+    <!-- 添加个人绩效年份月份区 -->
+    <div id="xjjxnfyfDetail" class="bounced" style="display:none">
+        <div class="bounced_all" id="grjx_jxtj_div" style="height:420px;">
+            <div class="bounced_tot">
+                <span>新增我的个人绩效</span>
+                <div class="tot_img" onclick="closeDetail()"></div>
+            </div>
+
+            <div class="xiadivbt1" style="margin-top: 40px;">
+                <span style="margin-left: 42px;">选择添加年份</span>
+                <select id="xjjxnf" class="easyui-combobox" style="width:139px;font-size: 14px;color: #333;"></select>
+            </div>
+
+            <div class="xiadivbt1">
+                <span style="margin-left: 42px;">选择添加季度</span>
+                <select id="xjjxjd" class="easyui-combobox"
+                        style="width:139px;font-size: 14px;color: #333;float:left;float: left;">
+                    <option value='1'>第1季度</option>
+                    <option value='2'>第2季度</option>
+                    <option value='3'>第3季度</option>
+                    <option value='4'>第4季度</option>
+                </select>
+            </div>
+
+            <div class="xiadivbt1">
+                <span style="margin-left: 42px;">选择绩效类型</span>
+                <select id="xzywlxid" class="easyui-combobox" style="width:139px;font-size: 14px;color: #333;float:left;float: left;">
+                </select>
+            </div>
+
+            <div class="xiadivbt1" id = "grjx_index_rylb_div" style="display:none;">
+                <span style="margin-left: 42px;">选择人员类型</span>
+                <select id="grjxRyType" class="easyui-combobox" style="width:139px;font-size: 14px;color: #333;float:left;float: left;"></select>
+            </div>
+
+            <div class="xiadivbt">
+                <input class="xiadivbt_1" type="button" onclick="closeDetail();" value="取消"/>
+                <input class="xiadivbt_2" type="button" onclick="xjwdjx();" value="确定"/>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加个人绩效 -->
+    <div id="add_div_grjx" class="bounced" style="display:none">
+        <div class="bounced_all" id="grjx_jxtj_div_1" style="height:350px;font-size: 16px;font-family: 'microsoft yahei';">
+            <form id="grjx_add_form" method="post">
+                <div class="bounced_tot">
+                    <span>新增我的个人绩效</span>
+                    <div class="tot_img" onclick="closeDivGrjxAdd();"></div>
+                </div>
+
+                <div class="xiadivbt1" id="grjx_ry_bmlb_div" style="">
+                    <span style="margin-left: 42px;">选择部门类别:</span>
+                    <input name="bmlbbm" id="combobox_grjx_bmType"/>
+                </div>
+
+                <div class="xiadivbt1" id="grjx_ry_type_div" style="">
+                    <span style="margin-left: 42px;">选择人员类型:</span>
+                    <input name="typeid" id="combobox_grjx_ryType"/>
+                    <input name="dwjb"  id="dlr_dwjb" type="hidden"/>
+                    <input name="ksrq" type="hidden" value="01-01"/>
+                    <input name="jsrq" type="hidden" value="12-31"/>
+                </div>
+
+                <div class="xiadivbt1" id="grjx_ry_jslx_div" style="">
+                    <span style="margin-left: 42px;">选择角色类型:</span>
+                    <input name="jslx" id="combobox_grjx_jsType" style="width: 260px;height: 30px;" required="true"/>
+                </div>
+                <!--<div class="xiadivbt1" style="margin-top:25px;text-align: left;line-height: 60px;">
+                     <span style="margin-left: 42px;">确定创建个人绩效？</span>
+                </div>-->
+                <div class="xiadivbt" style="margin-bottom: 20px;">
+                    <input class="xiadivbt_1" type="button" onclick="closeDivGrjxAdd();" value="取消"/>
+                    <input class="xiadivbt_2" type="button" id="save_btn_grjx" value="确定"/>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<script type="text/javascript" src="../../js/zhyw/grjx/zhyw_grjx.js" charset="utf-8"></script>
+
+<!--<script type="text/javascript" src="../../js/zhyw/grjx/zhyw_grjx_index.js" charset="utf-8"></script>-->
+<script type="text/javascript">
+    parent.min_width();
+    $('.combo').combobox({
+        width: '70%',
+        height: 32
+    });
+    document.onkeydown = function (e) {
+        var ev = document.all ? window.event : e;
+        if (ev.keyCode == 13) {
+            cxbt();
+        }
+    };
+    resizeParentIframe();
+</script>
+</html>

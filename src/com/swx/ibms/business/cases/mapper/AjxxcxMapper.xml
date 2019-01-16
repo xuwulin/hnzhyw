@@ -1,0 +1,3137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.cases.mapper.AjxxcxMapper">
+	<!-- 自定义返回结果集 -->
+	<resultMap id="AjxxcxMap" type="AJXXCX">
+		<result property="bmsah" column="bmsah" javaType="java.lang.String"></result>
+		<result property="tysah" column="tysah" javaType="java.lang.String"></result>
+		<result property="cbdw_bm" column="cbdw_bm" javaType="java.lang.String"></result>
+		<result property="cbdw_mc" column="cbdw_mc" javaType="java.lang.String"></result>
+		<result property="cbrgh" column="cbrgh" javaType="java.lang.String"></result>
+		<result property="cbr" column="cbr" javaType="java.lang.String"></result>
+		<result property="ct" column="ct" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	
+	<!-- 案件信息查询 -->
+	<select id="selectlistAjxxcx" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+	        {call pkg_ajxxcx.selectlist_ajxxcx(
+	        	#{p_year,mode=IN,jdbcType=VARCHAR}, 
+	            #{p_bmsah,mode=IN,jdbcType=VARCHAR},
+	            #{p_cbdw_bm,mode=IN,jdbcType=VARCHAR},
+	            #{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=AjxxcxMap},
+	            #{p_count,mode=OUT,jdbcType=VARCHAR},
+	            #{p_top,mode=IN,jdbcType=VARCHAR},
+	            #{p_bottom,mode=IN,jdbcType=VARCHAR}
+	         )}
+	      ]]>
+	</select>
+	
+	<!-- ********************************************** 业务考核模块的案件信息查询【start】  **********************************************  -->
+	<resultMap id="commonAjMap" type="java.util.Map"></resultMap>
+	
+	<!--【业务考核中的乡镇检察室工作】 案件信息查询 -->
+	<select id="getYwkhXzjcAj" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+	        {call pkg_ajxxcx.get_ywkhXzjcAj(
+	        	#{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+	            #{p_kssj,mode=IN,jdbcType=VARCHAR},
+	            #{p_jssj,mode=IN,jdbcType=VARCHAR},
+	            #{p_ajlbbmStr,mode=IN,jdbcType=VARCHAR},
+	            #{p_type,mode=IN,jdbcType=VARCHAR},
+	            #{p_start,mode=IN,jdbcType=INTEGER},
+	            #{p_end,mode=IN,jdbcType=INTEGER},
+	            #{p_count,mode=OUT,jdbcType=VARCHAR},
+	            #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=commonAjMap}
+	         )}
+	     ]]>
+	</select>
+	
+	<!-- 【业务考核中的监督立案】案件信息查询 -->
+	<select id="getYwkhLajdAj" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+	        {call pkg_ajxxcx.get_ywkhLajdAj(
+	        	#{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+	            #{p_kssj,mode=IN,jdbcType=VARCHAR},
+	            #{p_jssj,mode=IN,jdbcType=VARCHAR},
+	            #{p_ajlbbmStr,mode=IN,jdbcType=VARCHAR},
+	            #{p_type,mode=IN,jdbcType=VARCHAR},
+	            #{p_start,mode=IN,jdbcType=INTEGER},
+	            #{p_end,mode=IN,jdbcType=INTEGER},
+	            #{p_count,mode=OUT,jdbcType=VARCHAR},
+	            #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=commonAjMap}
+	         )}
+	     ]]>
+	</select>
+	
+	
+	<!-- 【业务考核中的刑事申诉检察工作（分市院）】案件信息查询 -->
+	<select id="getYwkhXsssjcgzAj" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+	        {call pkg_ajxxcx.get_ywkhXsssjcgzAj(
+	        	#{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+	            #{p_kssj,mode=IN,jdbcType=VARCHAR},
+	            #{p_jssj,mode=IN,jdbcType=VARCHAR},
+	            #{p_ajlbbmStr,mode=IN,jdbcType=VARCHAR},
+	            #{p_type,mode=IN,jdbcType=VARCHAR},
+	            #{p_start,mode=IN,jdbcType=INTEGER},
+	            #{p_end,mode=IN,jdbcType=INTEGER},
+	            #{p_count,mode=OUT,jdbcType=VARCHAR},
+	            #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=commonAjMap}
+	         )}
+	     ]]>
+	</select>
+	
+	
+	<!-- 【业务考核中的案件管理工作（分市院,县区院）】案件信息查询 -->
+	<select id="getYwkhAjglgzAj" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+	        {call pkg_ajxxcx.get_ywkhAjglgzAj(
+	        	#{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+	            #{p_kssj,mode=IN,jdbcType=VARCHAR},
+	            #{p_jssj,mode=IN,jdbcType=VARCHAR},
+	            #{p_ajlbbmStr,mode=IN,jdbcType=VARCHAR},
+	            #{p_type,mode=IN,jdbcType=VARCHAR},
+	            #{p_start,mode=IN,jdbcType=INTEGER},
+	            #{p_end,mode=IN,jdbcType=INTEGER},
+	            #{p_count,mode=OUT,jdbcType=VARCHAR},
+	            #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=commonAjMap}
+	         )}
+	     ]]>
+	</select>
+
+
+	<!-- 【业务考核中的民事行政检察工作（县区院）】案件信息查询 -->
+	<select id="getYwkhMsxzjcgzAj" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+	        {call pkg_ajxxcx.get_ywkhMsxzjcgzAj(
+	        	#{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+	            #{p_kssj,mode=IN,jdbcType=VARCHAR},
+	            #{p_jssj,mode=IN,jdbcType=VARCHAR},
+	            #{p_ajlbbmStr,mode=IN,jdbcType=VARCHAR},
+	            #{p_type,mode=IN,jdbcType=VARCHAR},
+	            #{p_start,mode=IN,jdbcType=INTEGER},
+	            #{p_end,mode=IN,jdbcType=INTEGER},
+	            #{p_count,mode=OUT,jdbcType=VARCHAR},
+	            #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=commonAjMap}
+	         )}
+	     ]]>
+	</select>
+	
+	<!-- 【业务考核中的刑事执行检察工作（要区分分市院、县区院）】案件信息查询 -->
+	<select id="getYwkhXszxjcgzAj" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+	        {call pkg_ajxxcx.get_ywkhXszxjcgzAj(
+	        	#{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+	            #{p_kssj,mode=IN,jdbcType=VARCHAR},
+	            #{p_jssj,mode=IN,jdbcType=VARCHAR},
+	            #{p_ajlbbmStr,mode=IN,jdbcType=VARCHAR},
+	            #{p_type,mode=IN,jdbcType=VARCHAR},
+	            #{p_start,mode=IN,jdbcType=INTEGER},
+	            #{p_end,mode=IN,jdbcType=INTEGER},
+	            #{p_count,mode=OUT,jdbcType=VARCHAR},
+	            #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=commonAjMap}
+	         )}
+	     ]]>
+	</select>
+	
+	<!-- 【业务考核中的公诉工作（分市院、县区院）】案件信息查询 -->
+	<select id="getYwkhGsgzAj" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+	        {call pkg_ajxxcx.get_ywkhGsgzAj(
+	        	#{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+	            #{p_kssj,mode=IN,jdbcType=VARCHAR},
+	            #{p_jssj,mode=IN,jdbcType=VARCHAR},
+	            #{p_ajlbbmStr,mode=IN,jdbcType=VARCHAR},
+	            #{p_type,mode=IN,jdbcType=VARCHAR},
+	            #{p_start,mode=IN,jdbcType=INTEGER},
+	            #{p_end,mode=IN,jdbcType=INTEGER},
+	            #{p_count,mode=OUT,jdbcType=VARCHAR},
+	            #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=commonAjMap}
+	         )}
+	     ]]>
+	</select>
+	
+	<!-- 【业务考核中的未成年人刑事检察工作（分市院、县区院）】案件信息查询 -->
+	<select id="getYwkhWcnrxsjcgzAj" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+	        {call pkg_ajxxcx.get_ywkhWcnrxsjcgzAj(
+	        	#{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+	            #{p_kssj,mode=IN,jdbcType=VARCHAR},
+	            #{p_jssj,mode=IN,jdbcType=VARCHAR},
+	            #{p_ajlbbmStr,mode=IN,jdbcType=VARCHAR},
+	            #{p_type,mode=IN,jdbcType=VARCHAR},
+	            #{p_start,mode=IN,jdbcType=INTEGER},
+	            #{p_end,mode=IN,jdbcType=INTEGER},
+	            #{p_count,mode=OUT,jdbcType=VARCHAR},
+	            #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=commonAjMap}
+	         )}
+	     ]]>
+	</select>
+	
+	<!-- ********************************************** 业务考核模块的案件信息查询【end】 **********************************************   -->
+	<!--  ***************************************************************************************************************************************    -->
+	<!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  /////////////////////////////////////////////////////////////////////////////////////// -->
+	<!--  ***************************************************************************************************************************************    -->
+	<!-- ********************************************** 司法档案模块的案件信息查询【start】  **********************************************  -->
+	
+	<!--  查询档案所属人所有办案单元list集合 -->
+	<select id="selectAllBadybm" resultType="java.lang.String">
+	   	SELECT B.badybm 
+	   		FROM TYYW_XT_QX_BADYRYFP_TYYW B
+	 		INNER JOIN XT_ZZJG_RYBM_TYYW R 
+	 		ON B.DWBM = R.DWBM AND B.GH = R.GH AND R.sftz = 'N' AND R.sfsc = 'N'
+	 		WHERE R.DWBM = #{dwbm} 
+	 			AND R.GH = #{gh} 
+	</select>
+	
+	<!-- 本人所有办理的所有案件的 案件类别编码 list集合：修改，查询TYYW_GG_AJJBXX_TYYW和yx_sfda_ajxx两张表，且不用badybm  -->
+	<select id="selectbyAjbllxAll" resultType="java.util.HashMap">
+		select t.ajlb_bm
+		from TYYW_GG_AJJBXX_TYYW t
+		where t.sfsc = 'N'
+		  and t.cbdw_bm = #{dwbm}
+		  and t.cbrgh = #{gh}
+		group by ajlb_bm
+
+		union
+
+		select a.ajlb_bm
+		from yx_sfda_ajxx a
+		where a.sfsc = 'N'
+		  and a.cbdw_bm = #{dwbm}
+		  and a.cbrgh = #{gh}
+		  and a.ajstatus = '1'
+		group by a.ajlb_bm
+ 	</select>
+	
+	<!-- 查询当前人员的所在部门编码 -->
+	<select id="selectbyAjblbm" resultType="java.util.HashMap">
+		SELECT decode(b.fbmbm, null, b.bmbm, '', b.bmbm, b.fbmbm) bmbm
+		FROM xt_zzjg_rybm_tyyw r
+		INNER JOIN xt_qx_ryjsfp_tyyw p ON p.dwbm=r.dwbm AND p.gh = r.gh
+		INNER JOIN xt_qx_jsbm_tyyw j   ON j.dwbm=r.dwbm AND j.jsbm = p.jsbm
+		INNER JOIN xt_zzjg_bmbm_tyyw b ON j.bmbm = p.bmbm AND b.dwbm=r.dwbm AND b.bmbm = j.bmbm
+		AND B.SFSC = 'N'
+		AND R.SFSC = 'N'
+		AND P.DWBM = #{dwbm}
+		AND B.DWBM = #{dwbm}
+		AND R.DWBM = #{dwbm}
+		AND J.DWBM = #{dwbm}
+		AND R.GH = #{gh}
+	</select>
+	
+	<!-- 查询该部门下的所有人（内勤除外）的工号 -->
+	<select id="selectByAjyjGh" resultType="java.lang.String">
+		SELECT DISTINCT R.GH as GH
+	    FROM XT_ZZJG_RYBM_TYYW R
+	       INNER JOIN XT_QX_RYJSFP_TYYW P ON P.GH = R.GH
+	       INNER JOIN XT_QX_JSBM_TYYW J ON J.JSBM = P.JSBM
+	       INNER JOIN XT_ZZJG_BMBM_TYYW B ON B.BMBM = J.BMBM AND J.BMBM = P.BMBM
+	       AND B.SFSC = 'N'
+		   AND R.SFSC = 'N'
+		   AND R.DWBM = #{dwbm}
+		   AND P.DWBM = #{dwbm}
+		   AND B.DWBM = #{dwbm}
+	       AND J.DWBM = #{dwbm}
+		   AND B.BMBM = #{bmbm}
+		   AND J.JSMC != '内勤'
+	       <!--<if test='bmlist != null and bmlist.size() > 0'>
+		   		AND (B.BMBM in
+			   <foreach item='item' index='index' collection='bmlist' open='(' separator=',' close=')'>
+					#{item}
+			  </foreach>
+			  	or B.FBMBM in
+			  <foreach item='item' index='index' collection='bmlist' open='(' separator=',' close=')'>
+					#{item}
+			  </foreach>
+			  		)
+		  </if>-->
+     </select>
+	
+	<!-- 查询受理案件总数:受理日期在指定时间段内的案件 -->
+	<select id="selectCountsOfSlaj" resultType="java.util.HashMap">
+		select ajlb_bm,
+			   ajlb_mc,
+			   COUNT(ajlb_bm) AS slajsl
+		from (
+			  select ajjbxx.ajlb_bm,
+                     ajjbxx.ajlb_mc,
+					 ajjbxx.bmsah
+			  from TYYW_GG_AJJBXX_TYYW ajjbxx
+			  where ajjbxx.cbdw_bm = #{dwbm}
+			  	 and ajjbxx.cbrgh = #{gh}
+			     and ajjbxx.sfsc = 'N'
+				 and ajjbxx.slrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+
+		      union all
+
+		      select ajxx.ajlb_bm,
+		      		 ajxx.ajlb ajlb_mc,
+		      		 ajxx.bmsah
+		      from yx_sfda_ajxx ajxx
+		      where ajxx.cbdw_bm = #{dwbm}
+		      	 and ajxx.cbrgh = #{gh}
+		      	 and ajxx.sfsc = 'N'
+		      	 and ajxx.ajstatus = '1'
+		      	 and ajxx.ajslrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+		)
+		group by ajlb_bm,ajlb_mc
+	</select>
+
+	
+	<!--
+		查询受理案件总数和办结案件总数：在指定时间段内的案件，
+		注：审查逮捕案件（0201）和一审公诉案件（0301）以办结日期计算，其余案件以完成日期计算
+		线下案件（yx_sfda_ajxx表）都是以办结日期进行计算
+	-->
+	<select id="selectCountsOfBjaj" resultType="java.util.HashMap">
+		<!--这种查询方式，是将在指定时间段内已完成/办结的案件显示出来，得到对应的办结案件数（最小值为1，不可能为0）-->
+
+		select ajlb_bm,
+			   ajlb_mc,
+			   COUNT(ajlb_bm) AS bjajsl
+		from (
+			  select ajjbxx.ajlb_bm,
+					 ajjbxx.ajlb_mc,
+					 ajjbxx.bmsah
+			  from TYYW_GG_AJJBXX_TYYW ajjbxx
+			  where ajjbxx.cbdw_bm = #{dwbm}
+			  	and ajjbxx.cbrgh = #{gh}
+			    and ajjbxx.sfsc = 'N'
+				and (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+						  when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+					      else ajjbxx.wcrq
+		             end) between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+
+		      union all
+
+		      select ajxx.ajlb_bm,
+		      		 ajxx.ajlb ajlb_mc,
+		      		 ajxx.bmsah
+		      from yx_sfda_ajxx ajxx
+		      where ajxx.cbdw_bm = #{dwbm}
+		      	 and ajxx.cbrgh = #{gh}
+		      	 and ajxx.sfsc = 'N'
+		      	 and ajxx.ajstatus = '1'
+				 and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+		     )
+		group by ajlb_bm,ajlb_mc
+
+
+ 		<!--这种查询是将 在指定时间段内所办理的所有案件全部显示 显示受理案件数量（可以为0），办结案件数量（可以为0）
+ 			因为统计列表中的个人办案效率和部门办案效率都是在已完成/办结的案件的基础上进行
+ 			所以上面那种查询（目前使用）只是统计了有已完成/办结的案件类型
+ 			如果客户想把在指定时间段内没有办结的案件类型，但是由受理的案件类型也展示在统计列表中，那么久用下面这种查询方式
+ 		-->
+		<!--
+		select ajlb_bm,
+			   ajlb_mc,
+			   nvl(wm_concat(slajsl),0) slajsl,
+			   nvl(wm_concat(bjajsl),0) bjajsl
+		from (
+			  select ajlb_bm,
+					 ajlb_mc,
+					 COUNT(ajlb_bm) AS slajsl,
+			   		 null bjajsl
+			  from (
+					select ajjbxx.ajlb_bm,
+						   ajjbxx.ajlb_mc,
+						   ajjbxx.bmsah
+					from TYYW_GG_AJJBXX_TYYW ajjbxx
+					where ajjbxx.cbdw_bm = #{dwbm}
+					  and ajjbxx.cbrgh = #{gh}
+					  and ajjbxx.sfsc = 'N'
+					  and ajjbxx.slrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+
+					union all
+
+					select ajxx.ajlb_bm,
+						   ajxx.ajlb ajlb_mc,
+						   ajxx.bmsah
+					from yx_sfda_ajxx ajxx
+					where ajxx.cbdw_bm = #{dwbm}
+					  and ajxx.cbrgh = #{gh}
+					  and ajxx.sfsc = 'N'
+					  and ajxx.ajstatus = '1'
+					  and ajxx.ajslrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+		           )
+			  group by ajlb_bm,ajlb_mc
+
+			  union
+
+			  select ajlb_bm,
+					 ajlb_mc,
+					 null slajsl,
+					 COUNT(ajlb_bm) AS bjajsl
+			  from (
+					select ajjbxx.ajlb_bm,
+						   ajjbxx.ajlb_mc,
+						   ajjbxx.bmsah
+					from TYYW_GG_AJJBXX_TYYW ajjbxx
+					where ajjbxx.cbdw_bm = #{dwbm}
+					  and ajjbxx.cbrgh = #{gh}
+					  and ajjbxx.sfsc = 'N'
+					  and (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+								when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+								else ajjbxx.wcrq
+						   end) between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+
+		            union all
+
+					select ajxx.ajlb_bm,
+						   ajxx.ajlb ajlb_mc,
+						   ajxx.bmsah
+				    from yx_sfda_ajxx ajxx
+					where ajxx.cbdw_bm = #{dwbm}
+					  and ajxx.cbrgh = #{gh}
+					  and ajxx.sfsc = 'N'
+					  and ajxx.ajstatus = '1'
+					  and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+		           )
+		      group by ajlb_bm,ajlb_mc
+			 )
+		group by ajlb_bm,ajlb_mc
+		-->
+	</select>
+	
+	<!-- 个人办案效率，平均办理时间：完成/办结日期在该时间段内 -->
+	<select id="selectAvgTimeOfPer" resultType="java.util.HashMap">
+		<!--select ajlb_bm,
+			   ajlb_mc,
+			   round(AVG(default_bjrq - slrq), 2) AS grpjblsj
+		from (
+			<choose>
+				<when test="xzsj == 'wcrq'">
+					select ajjbxx.wcrq as default_bjrq,
+				</when>
+				<otherwise>
+					select ajjbxx.bjrq as default_bjrq,
+				</otherwise>
+			</choose>
+					   ajjbxx.ajlb_bm,
+					   ajjbxx.ajlb_mc,
+					   ajjbxx.slrq,
+					   ajjbxx.bmsah
+				from TYYW_GG_AJJBXX_TYYW ajjbxx
+				where ajjbxx.cbdw_bm = #{dwbm}
+					and ajjbxx.cbrgh = #{gh}
+					and ajjbxx.sfsc='N'
+					&lt;!&ndash; and ajjbxx.slrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd') &ndash;&gt;
+				<choose>
+					<when test="xzsj == 'wcrq'">
+						and ajjbxx.wcrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+					</when>
+					<otherwise>
+						and ajjbxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+					</otherwise>
+				</choose>
+
+				<if test='ajlbBmsAll != null and ajlbBmsAll.size() > 0'>
+					and ajjbxx.ajlb_bm in
+					<foreach item='item' index='index' collection='ajlbBmsAll' open='('
+							 separator=',' close=')'>
+						#{item}
+					</foreach>
+				</if>
+				<choose>
+					<when test="xzsj == 'wcrq'">
+						group by ajjbxx.ajlb_bm, ajlb_mc, ajjbxx.wcrq, ajjbxx.slrq, ajjbxx.bmsah
+					</when>
+					<otherwise>
+						group by ajjbxx.ajlb_bm, ajlb_mc, ajjbxx.bjrq, ajjbxx.slrq, ajjbxx.bmsah
+					</otherwise>
+				</choose>
+
+				union all
+
+			<choose>
+				<when test="xzsj == 'wcrq'">
+					select ajxx.ajwjrq as default_bjrq,
+				</when>
+				<otherwise>
+					select ajxx.bjrq as default_bjrq,
+				</otherwise>
+			</choose>
+					   ajxx.ajlb_bm,
+					   ajxx.ajlb ajlb_mc,
+					   ajxx.ajslrq,
+					   ajxx.bmsah
+				from YX_SFDA_AJXX ajxx
+				where ajxx.cbdw_bm = #{dwbm}
+					and ajxx.cbrgh = #{gh}
+					and ajxx.sfsc='N'
+					and ajxx.ajstatus = '1'
+					&lt;!&ndash; and ajxx.ajslrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd') &ndash;&gt;
+					<choose>
+						<when test="xzsj == 'wcrq'">
+							and ajxx.ajwjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+						</when>
+						<otherwise>
+							and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+						</otherwise>
+					</choose>
+				<if test='ajlbBmsAll != null and ajlbBmsAll.size() > 0'>
+					and ajxx.ajlb_bm in
+					<foreach item='item' index='index' collection='ajlbBmsAll' open='('
+							 separator=',' close=')'>
+						#{item}
+					</foreach>
+				</if>
+				<choose>
+					<when test="xzsj == 'wcrq'">
+						group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.ajwjrq, ajxx.ajslrq, ajxx.bmsah
+					</when>
+					<otherwise>
+						group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.bjrq, ajxx.ajslrq, ajxx.bmsah
+					</otherwise>
+				</choose>
+
+			  ) group by ajlb_bm, ajlb_mc-->
+
+
+
+		select ajlb_bm,
+			   ajlb_mc,
+			   round(AVG(default_bjrq - slrq), 2) AS grpjblsj
+		from (
+			  select (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+						   when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+						   else ajjbxx.wcrq
+					  end) default_bjrq,
+				     ajjbxx.ajlb_bm,
+				     ajjbxx.ajlb_mc,
+				     ajjbxx.slrq,
+				     ajjbxx.bmsah
+			  from TYYW_GG_AJJBXX_TYYW ajjbxx
+			  where ajjbxx.cbdw_bm = #{dwbm}
+				and ajjbxx.cbrgh = #{gh}
+				and ajjbxx.sfsc='N'
+				and (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+						  when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+						  else ajjbxx.wcrq
+					 end) between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+
+				<if test='ajlbBmsAll != null and ajlbBmsAll.size() > 0'>
+					and ajjbxx.ajlb_bm in
+					<foreach item='item' index='index' collection='ajlbBmsAll' open='('
+							 separator=',' close=')'>
+						#{item}
+					</foreach>
+				</if>
+			  group by ajjbxx.ajlb_bm,
+					   ajlb_mc,
+					   (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+						     when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+						     else ajjbxx.wcrq
+						end),
+					   ajjbxx.slrq,
+					   ajjbxx.bmsah
+
+
+
+				<!--union all
+
+				select ajxx.ajwjrq as default_bjrq,
+					   ajxx.ajlb_bm,
+					   ajxx.ajlb ajlb_mc,
+					   ajxx.ajslrq,
+					   ajxx.bmsah
+				from YX_SFDA_AJXX ajxx
+				where ajxx.cbdw_bm = #{dwbm}
+				  and ajxx.cbrgh = #{gh}
+				  and ajxx.sfsc='N'
+				  and ajxx.ajstatus = '1'
+				  and ajxx.ajwjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+		          <if test='ajlbBmsAll != null and ajlbBmsAll.size() > 0'>
+					  and ajxx.ajlb_bm in
+					  <foreach item='item' index='index' collection='ajlbBmsAll' open='('
+							 separator=',' close=')'>
+						#{item}
+					  </foreach>
+				  </if>
+				group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.ajwjrq, ajxx.ajslrq, ajxx.bmsah
+
+				union
+
+				select ajxx.bjrq as default_bjrq,
+					   ajxx.ajlb_bm,
+					   ajxx.ajlb ajlb_mc,
+					   ajxx.ajslrq,
+					   ajxx.bmsah
+				from YX_SFDA_AJXX ajxx
+				where ajxx.cbdw_bm = #{dwbm}
+				  and ajxx.cbrgh = #{gh}
+				  and ajxx.sfsc='N'
+				  and ajxx.ajstatus = '1'
+				  and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+		          <if test='ajlbBmsAll != null and ajlbBmsAll.size() > 0'>
+					  and ajxx.ajlb_bm in
+					  <foreach item='item' index='index' collection='ajlbBmsAll' open='('
+							 separator=',' close=')'>
+						#{item}
+					  </foreach>
+				  </if>
+				group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.bjrq, ajxx.ajslrq, ajxx.bmsah-->
+
+			  )
+		group by ajlb_bm, ajlb_mc
+	</select>
+
+
+
+
+
+	<!-- 查询办案单元每类案件“协助办理”数量（检察官助理，书记员） -->
+    <select id="selectByAjblYjXzsl" resultType="java.util.HashMap">
+		select ajlb_bm,
+			   COUNT(ajlb_bm) AS xzsl
+		from (
+			select
+				ajjbxx.ajlb_bm,
+				(select ajlbmc from XT_DM_AJLBBM_TYYW b where b.ajlbbm = AJLB_BM) ajlb_mc,
+		<!--  ajlb_mc-->
+				bmsah
+			from TYYW_GG_AJJBXX_TYYW ajjbxx
+				where cbdw_bm = #{dwbm}
+				  AND sfsc = 'N'
+		          and (ajlb_bm, bmsah) in (
+											select ajlb_bm ,bmsah
+	      								    from TYYW_GG_AJJBXX_TYYW 
+												where sfsc = 'N'
+												  AND bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+												  AND badybm in (
+																select badybm 
+																from TYYW_XT_QX_BADYRYFP_TYYW B
+	 																INNER JOIN XT_ZZJG_RYBM_TYYW R ON B.DWBM = R.DWBM AND B.GH = R.GH
+	 																WHERE R.DWBM = #{dwbm} 
+																	   AND R.GH = #{gh}
+																	   AND ((B.BADYLX = '1' AND (BADYJSBH = '3' or BADYJSBH = '4'))
+																	   OR (B.BADYLX = '2'  AND (BADYJSBH = '3' or BADYJSBH = '4')))
+	  																   AND badybm is not null	
+																)
+	
+	     									union
+	     									
+	     									select aj.ajlb_bm,
+	     										   aj.bmsah
+											from TYYW_GG_AJJBXX_TYYW aj
+												left join YX_SFDA_AJBL b on aj.bmsah = b.bmsah
+												where aj.cbdw_bm = #{dwbm}
+												  and aj.cbrgh = #{gh}
+												  AND aj.sfsc = 'N'
+												  AND aj.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+												  AND b.blfs_bm ='11005'
+												  and (aj.cbxzbm is null or aj.cbxzbm='')
+												  
+											union
+											
+											select aj.ajlb_bm,
+												   aj.bmsah
+											from TYYW_GG_AJJBXX_TYYW aj
+												inner join yx_sfda_cbxz b on aj.cbxzbm = b.cbxzbm
+												where b.dwbm = #{dwbm}
+												  and b.gh =#{gh}
+												  AND aj.sfsc = 'N'
+												  AND aj.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+												  AND b.blfsbm='11005'
+										)
+				and slrq is not null
+				AND bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+				group by ajlb_bm, ajlb_mc, ajjbxx.bjrq, slrq, bmsah
+		)
+		group by ajlb_bm
+	</select>
+
+	<!-- 查询"某个人"每类案所有【办理数量】、每类案件【办理数量在本部门的排名】、【平均办理时间】、【办理时间在本部门的排名】,案件类型对应部门？？ -->
+	<select id="selectbyAjblYjslAll" resultType="java.util.HashMap">
+		SELECT t1.*,
+			   RANK() OVER(partition by t1.ajlb_bm order by t1.pjblsj) AS RANK_blsj,
+			   RANK() OVER(partition by t1.ajlb_bm order by t1.flsl DESC) AS RANK_blsl
+			FROM (
+				  select ajlb_bm,
+			   			 ajlb_mc,
+			   			 COUNT(ajlb_bm) AS flsl,
+			   			 round(AVG(default_bjrq - slrq), 2) AS pjblsj
+					from (
+					      select nvl(ajjbxx.bjrq, sysdate) as default_bjrq,
+					 	  	  ajjbxx.ajlb_bm,
+					      	  (select ajlbmc from XT_DM_AJLBBM_TYYW b where b.ajlbbm = AJLB_BM) ajlb_mc,
+						  	  slrq,
+						  	  bmsah
+			 			  from TYYW_GG_AJJBXX_TYYW ajjbxx
+						  where cbdw_bm = #{dwbm} 
+				  			and ajjbxx.sfsc='N'
+				  			and (ajlb_bm, bmsah) in (
+							<if test='badybmlistAll != null and badybmlistAll.size() > 0'>
+								select ajlb_bm ,bmsah
+									from TYYW_GG_AJJBXX_TYYW
+									where bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+									  and badybm in
+								<foreach item='item' index='index' collection='badybmlistAll' open='('
+										 separator=',' close=')'>
+									#{item}
+								</foreach>
+								union
+							</if>
+
+								select ajlb_bm, bmsah 
+								from TYYW_GG_AJJBXX_TYYW 
+								where cbdw_bm =  #{dwbm}
+								    and cbrgh =#{gh} 
+								    AND bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+								    and (badybm is null or badybm ='')
+								    and (cbxzbm is null or cbxzbm = '')
+								    
+								UNION
+								
+								select a.ajlb_bm,a.bmsah
+								from TYYW_GG_AJJBXX_TYYW a 
+								left join YX_SFDA_AJBL b on a.bmsah=b.bmsah
+								where a.cbdw_bm = #{dwbm}
+								   and a.cbrgh =#{gh}
+							       and (a.cbxzbm is null or a.cbxzbm='')
+								   and a.badybm is null
+								   AND a.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+								   and b.blfs_bm != '11004'
+								group by a.ajlb_bm,a.bmsah
+								
+								union
+								
+								select a.ajlb_bm,a.bmsah
+								from TYYW_GG_AJJBXX_TYYW a 
+								inner join yx_sfda_cbxz b on a.cbxzbm=b.cbxzbm
+								where b.dwbm = #{dwbm}
+						           and b.gh =#{gh}
+						           AND a.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+						           and b.blfsbm != '11004'
+							    group by a.ajlb_bm,a.bmsah
+							)
+						    and slrq is not null
+						    and bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+					      group by ajlb_bm, ajlb_mc, ajjbxx.bjrq, slrq, bmsah
+					      ) group by ajlb_bm, ajlb_mc
+		) t1
+	</select>
+
+
+
+
+
+	<!-- 本部门办案效率指标，查询“某个部门”下所有单个案件类型的平均办理时间，最长时间，最短时间 完成/办结日期在指定时间段内的案件；（只管部门，不区分人） -->
+	<select id="selectEfficiencyOfDep" resultType="java.util.HashMap">
+		<!--select ajlb_bm,
+			   ajlb_mc,
+			   bmpjblsj,
+			   zcsj,
+			   zdsj
+		from (
+			  select ajlb_bm,
+				     ajlb_mc,
+				     round(AVG(default_bjrq - slrq), 2) AS bmpjblsj,
+				     max(round(default_bjrq - slrq, 2)) AS zcsj,
+				     min(round(default_bjrq - slrq, 2)) AS zdsj
+		      from (
+					<choose>
+						<when test="xzsj == 'wcrq'">
+							select nvl(ajjbxx.wcrq, sysdate) as default_bjrq,
+						</when>
+						<otherwise>
+							select nvl(ajjbxx.bjrq, sysdate) as default_bjrq,
+						</otherwise>
+					</choose>
+						   ajjbxx.ajlb_bm,
+						   ajjbxx.ajlb_mc,
+						   ajjbxx.slrq,
+						   ajjbxx.bmsah
+		       		from TYYW_GG_AJJBXX_TYYW ajjbxx
+			   		where ajjbxx.cbdw_bm = #{dwbm}
+				  		and ajjbxx.sfsc = 'N'
+						&lt;!&ndash; and ajjbxx.slrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd') &ndash;&gt;
+						<choose>
+							<when test="xzsj == 'wcrq'">
+								and ajjbxx.wcrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+							</when>
+							<otherwise>
+								and ajjbxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+							</otherwise>
+						</choose>
+				  		and (ajlb_bm, bmsah) in (
+												 select ajlb_bm,
+													    bmsah
+												 from TYYW_GG_AJJBXX_TYYW
+												 where cbdw_bm = #{dwbm}
+													and sfsc = 'N'
+													<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+													and cbrgh in
+														<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+															#{item}
+														</foreach>
+													</if>
+												 group by ajlb_bm,bmsah
+				  								)
+					<choose>
+						<when test="xzsj == 'wcrq'">
+							group by ajlb_bm, ajlb_mc, ajjbxx.wcrq, slrq, bmsah
+						</when>
+						<otherwise>
+							group by ajlb_bm, ajlb_mc, ajjbxx.bjrq, slrq, bmsah
+						</otherwise>
+					</choose>
+
+					union all
+
+					<choose>
+						<when test="xzsj == 'wcrq'">
+							select nvl(ajxx.ajwjrq, sysdate) as default_bjrq,
+						</when>
+						<otherwise>
+							select nvl(ajxx.bjrq, sysdate) as default_bjrq,
+						</otherwise>
+					</choose>
+							ajxx.ajlb_bm,
+							ajxx.ajlb ajlb_mc,
+							ajxx.ajslrq,
+							ajxx.bmsah
+					from YX_SFDA_AJXX ajxx
+					where ajxx.cbdw_bm = #{dwbm}
+						and ajxx.sfsc='N'
+						and ajxx.ajstatus = '1'
+						&lt;!&ndash; and ajxx.ajslrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd') &ndash;&gt;
+						<choose>
+							<when test="xzsj == 'wcrq'">
+								and ajxx.ajwjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+							</when>
+							<otherwise>
+								and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+							</otherwise>
+						</choose>
+						and (ajlb_bm, bmsah) in (
+												 select ajlb_bm,
+														bmsah
+												 from YX_SFDA_AJXX
+												 where cbdw_bm = #{dwbm}
+												 and sfsc = 'N'
+												 and ajstatus = '1'
+												 <if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+													and cbrgh in
+													<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+														#{item}
+													</foreach>
+												 </if>
+												 group by ajlb_bm,bmsah
+												)
+						<choose>
+							<when test="xzsj == 'wcrq'">
+								group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.ajwjrq, ajxx.ajslrq, ajxx.bmsah
+							</when>
+							<otherwise>
+								group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.bjrq, ajxx.ajslrq, ajxx.bmsah
+							</otherwise>
+						</choose>
+			       )
+					group by ajlb_bm, ajlb_mc
+			  )-->
+
+
+
+		select ajlb_bm,
+			   ajlb_mc,
+			   bmpjblsj,
+			   zcsj,
+			   zdsj
+		from (
+			  select ajlb_bm,
+				     ajlb_mc,
+				     round(AVG(default_bjrq - slrq), 2) AS bmpjblsj,
+				     max(round(default_bjrq - slrq, 2)) AS zcsj,
+				     min(round(default_bjrq - slrq, 2)) AS zdsj
+		      from (
+					select (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+								 when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+								 else ajjbxx.wcrq
+							end) default_bjrq,
+						   ajjbxx.ajlb_bm,
+						   ajjbxx.ajlb_mc,
+						   ajjbxx.slrq,
+						   ajjbxx.bmsah
+		       		from TYYW_GG_AJJBXX_TYYW ajjbxx
+			   		where ajjbxx.cbdw_bm = #{dwbm}
+				  	  and ajjbxx.sfsc = 'N'
+					  and (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+							    when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+							    else ajjbxx.wcrq
+						   end) between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+				  	  and (ajlb_bm, bmsah) in (
+												 select ajlb_bm,
+														bmsah
+												 from TYYW_GG_AJJBXX_TYYW
+												 where cbdw_bm = #{dwbm}
+												   and sfsc = 'N'
+												   <if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+												        and cbrgh in
+														<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+															#{item}
+														</foreach>
+													</if>
+												 group by ajlb_bm,bmsah
+				  							  )
+					group by ajlb_bm,
+							 ajlb_mc,
+							 (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+							       when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+							       else ajjbxx.wcrq
+							  end),
+							 slrq, bmsah
+
+
+
+
+					<!--union all
+
+					select ajxx.ajwjrq as default_bjrq,
+						   ajxx.ajlb_bm,
+						   ajxx.ajlb ajlb_mc,
+						   ajxx.ajslrq,
+						   ajxx.bmsah
+					from YX_SFDA_AJXX ajxx
+					where ajxx.cbdw_bm = #{dwbm}
+					  and ajxx.sfsc='N'
+					  and ajxx.ajstatus = '1'
+					  and ajxx.ajwjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+					  and (ajlb_bm, bmsah) in (
+												 select ajlb_bm,
+														bmsah
+												 from YX_SFDA_AJXX
+												 where cbdw_bm = #{dwbm}
+												 and sfsc = 'N'
+												 and ajstatus = '1'
+												 <if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+													and cbrgh in
+													<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+														#{item}
+													</foreach>
+												 </if>
+												 group by ajlb_bm,bmsah
+												)
+					group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.ajwjrq, ajxx.ajslrq, ajxx.bmsah
+
+					union
+
+					select ajxx.bjrq as default_bjrq,
+						   ajxx.ajlb_bm,
+						   ajxx.ajlb ajlb_mc,
+						   ajxx.ajslrq,
+						   ajxx.bmsah
+					from YX_SFDA_AJXX ajxx
+					where ajxx.cbdw_bm = #{dwbm}
+					  and ajxx.sfsc='N'
+					  and ajxx.ajstatus = '1'
+					  and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+					  and (ajlb_bm, bmsah) in (
+												 select ajlb_bm,
+														bmsah
+												 from YX_SFDA_AJXX
+												 where cbdw_bm = #{dwbm}
+												 and sfsc = 'N'
+												 and ajstatus = '1'
+												 <if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+													and cbrgh in
+													<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+														#{item}
+													</foreach>
+												 </if>
+												 group by ajlb_bm,bmsah
+												)
+					group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.bjrq, ajxx.ajslrq, ajxx.bmsah-->
+
+			       )
+			  group by ajlb_bm, ajlb_mc
+			 )
+	</select>
+	
+	
+	<!-- 查询某个人单个案件类型的平均办理时间在本部门下的排名 完成/办结日期在指定时间段内的案件；（区分人和部门） -->
+	<select id="selectAvgTimeRankOfDep" resultType="java.util.HashMap">
+	    <!--select ajlb_bm,
+	    	   pm blsjpm
+	    from(
+			select t.*,
+				   rank() over (partition by ajlb_bm order by PJBLSJ desc) as pm 
+			from(
+				select ajlb_bm,
+					   pjblsj,
+					   cbrgh 
+				from (
+					select ajlb_bm,
+						   ajlb_mc,
+						   cbrgh,
+						   round(AVG(default_bjrq - slrq), 2) AS pjblsj,
+						   max(round(default_bjrq - slrq, 2)) AS zcsj,
+						   min(round(default_bjrq - slrq, 2)) AS zssj
+					from (
+						<choose>
+							<when test="xzsj == 'wcrq'">
+								select nvl(ajjbxx.wcrq, sysdate) as default_bjrq,
+							</when>
+							<otherwise>
+								select nvl(ajjbxx.bjrq, sysdate) as default_bjrq,
+							</otherwise>
+						</choose>
+								ajjbxx.ajlb_bm,
+								ajjbxx.ajlb_mc,
+								slrq,
+								cbrgh,
+								bmsah
+						from TYYW_GG_AJJBXX_TYYW ajjbxx
+							where cbdw_bm = #{dwbm}
+							  	and sfsc = 'N'
+								&lt;!&ndash; and ajjbxx.slrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd') &ndash;&gt;
+								<choose>
+									<when test="xzsj == 'wcrq'">
+										and ajjbxx.wcrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+									</when>
+									<otherwise>
+										and ajjbxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+									</otherwise>
+								</choose>
+							  	and (ajlb_bm, bmsah) in (
+														select ajlb_bm,
+														bmsah
+														from TYYW_GG_AJJBXX_TYYW
+														where cbdw_bm = #{dwbm}
+														and sfsc = 'N'
+														<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+															and cbrgh in
+															<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+																#{item}
+															</foreach>
+														</if>
+														group by ajlb_bm,bmsah
+													  )
+							<choose>
+								<when test="xzsj == 'wcrq'">
+									group by ajlb_bm, ajlb_mc, ajjbxx.wcrq, slrq, bmsah, cbrgh
+								</when>
+								<otherwise>
+									group by ajlb_bm, ajlb_mc, ajjbxx.bjrq, slrq, bmsah, cbrgh
+								</otherwise>
+							</choose>
+
+						union all
+
+						<choose>
+							<when test="xzsj == 'wcrq'">
+								select nvl(ajxx.ajwjrq, sysdate) as default_bjrq,
+							</when>
+							<otherwise>
+								select nvl(ajxx.bjrq, sysdate) as default_bjrq,
+							</otherwise>
+						</choose>
+								ajxx.ajlb_bm,
+								ajxx.ajlb ajlb_mc,
+								ajxx.ajslrq,
+								ajxx.cbrgh,
+								ajxx.bmsah
+						from YX_SFDA_AJXX ajxx
+						where ajxx.cbdw_bm = #{dwbm}
+							and ajxx.sfsc='N'
+							and ajxx.ajstatus = '1'
+							&lt;!&ndash; and ajxx.ajslrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd') &ndash;&gt;
+							<choose>
+								<when test="xzsj == 'wcrq'">
+									and ajxx.ajwjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+								</when>
+								<otherwise>
+									and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+								</otherwise>
+							</choose>
+							and (ajlb_bm, bmsah) in (
+													select ajlb_bm,
+														   bmsah
+													from YX_SFDA_AJXX
+													where cbdw_bm = #{dwbm}
+														and sfsc = 'N'
+														and ajstatus = '1'
+														<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+															and cbrgh in
+															<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+																#{item}
+															</foreach>
+														</if>
+													group by ajlb_bm,bmsah
+												   )
+						<choose>
+							<when test="xzsj == 'wcrq'">
+								group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.ajwjrq, ajxx.ajslrq, ajxx.bmsah, ajxx.cbrgh
+							</when>
+							<otherwise>
+								group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.bjrq, ajxx.ajslrq, ajxx.bmsah, ajxx.cbrgh
+							</otherwise>
+						</choose>
+					)
+				group by ajlb_bm, ajlb_mc,cbrgh
+				)
+			group by ajlb_bm,pjblsj,cbrgh
+			) t
+		)
+		where cbrgh = #{gh}-->
+
+
+
+
+
+		select ajlb_bm,
+	    	   pm blsjpm
+	    from(
+			select t.*,
+				   rank() over (partition by ajlb_bm order by PJBLSJ desc) as pm
+			from(
+				select ajlb_bm,
+					   pjblsj,
+					   cbrgh
+				from (
+					select ajlb_bm,
+						   ajlb_mc,
+						   cbrgh,
+						   round(AVG(default_bjrq - slrq), 2) AS pjblsj
+						   <!--max(round(default_bjrq - slrq, 2)) AS zcsj,
+						   min(round(default_bjrq - slrq, 2)) AS zssj-->
+					from (
+						  select (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+									   when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+									   else ajjbxx.wcrq
+								  end) default_bjrq,
+								 ajjbxx.ajlb_bm,
+								 ajjbxx.ajlb_mc,
+								 slrq,
+								 cbrgh,
+								 bmsah
+						  from TYYW_GG_AJJBXX_TYYW ajjbxx
+						  where cbdw_bm = #{dwbm}
+							and sfsc = 'N'
+							and (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+									  when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+									  else ajjbxx.wcrq
+								 end) between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+							and (ajlb_bm, bmsah) in (
+														select ajlb_bm,
+														bmsah
+														from TYYW_GG_AJJBXX_TYYW
+														where cbdw_bm = #{dwbm}
+														and sfsc = 'N'
+														<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+															and cbrgh in
+															<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+																#{item}
+															</foreach>
+														</if>
+														group by ajlb_bm,bmsah
+													 )
+						  group by  ajlb_bm,
+									ajlb_mc,
+									(case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+										  when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+										  else ajjbxx.wcrq
+									 end),
+									slrq,
+									bmsah,
+									cbrgh
+
+
+
+						  <!--union all
+
+						  select ajxx.ajwjrq as default_bjrq,
+								 ajxx.ajlb_bm,
+								 ajxx.ajlb ajlb_mc,
+								 ajxx.ajslrq,
+								 ajxx.cbrgh,
+								 ajxx.bmsah
+						  from YX_SFDA_AJXX ajxx
+						  where ajxx.cbdw_bm = #{dwbm}
+							and ajxx.sfsc='N'
+							and ajxx.ajstatus = '1'
+							and ajxx.ajwjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+							and (ajlb_bm, bmsah) in (
+													select ajlb_bm,
+														   bmsah
+													from YX_SFDA_AJXX
+													where cbdw_bm = #{dwbm}
+														and sfsc = 'N'
+														and ajstatus = '1'
+														<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+															and cbrgh in
+															<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+																#{item}
+															</foreach>
+														</if>
+													group by ajlb_bm,bmsah
+												   )
+						  group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.ajwjrq, ajxx.ajslrq, ajxx.bmsah, ajxx.cbrgh
+
+						  union
+
+						  select ajxx.bjrq as default_bjrq,
+								 ajxx.ajlb_bm,
+								 ajxx.ajlb ajlb_mc,
+								 ajxx.ajslrq,
+								 ajxx.cbrgh,
+								 ajxx.bmsah
+						  from YX_SFDA_AJXX ajxx
+						  where ajxx.cbdw_bm = #{dwbm}
+							and ajxx.sfsc='N'
+							and ajxx.ajstatus = '1'
+							and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+							and (ajlb_bm, bmsah) in (
+													select ajlb_bm,
+														   bmsah
+													from YX_SFDA_AJXX
+													where cbdw_bm = #{dwbm}
+														and sfsc = 'N'
+														and ajstatus = '1'
+														<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+															and cbrgh in
+															<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+																#{item}
+															</foreach>
+														</if>
+													group by ajlb_bm,bmsah
+												   )
+						  group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.bjrq, ajxx.ajslrq, ajxx.bmsah, ajxx.cbrgh-->
+					)
+				group by ajlb_bm, ajlb_mc,cbrgh
+				)
+			group by ajlb_bm,pjblsj,cbrgh
+			) t
+		)
+		where cbrgh = #{gh}
+	</select>
+	
+	
+	<!-- 本部门办案数量指标，查询“某个部门”下所有 单个案件类型 的平均办案数量（该时间段内受理的案件数）（只管部门，不区分人）-->
+	<select id="selectAvgCountOfDep" resultType="java.util.HashMap">
+		<!--select ajlb_bm,
+	 		   round((round(flsl,2) / decode(rs, 0, 1, rs)),2) as pjbasl
+	  	from (
+	  		select ajlb_bm,
+				   ajlb_mc,
+				   flsl,
+				   (
+					 SELECT count(R.SSR)
+	          		 FROM yx_sfda_dagz R
+	        		 INNER JOIN XT_QX_RYJSFP_TYYW P ON P.GH = R.SSR
+	         		 INNER JOIN XT_QX_JSBM_TYYW J ON J.JSBM = P.JSBM
+	         		 INNER JOIN XT_ZZJG_BMBM_TYYW B ON B.BMBM = J.BMBM AND J.BMBM = P.BMBM
+					   AND B.SFSC = 'N'
+					   AND R.SFSC = 'N'
+					   AND P.DWBM = #{dwbm}
+					   AND B.DWBM = #{dwbm}
+					   AND R.SSRDWBM = #{dwbm}
+					   AND J.DWBM = #{dwbm}
+					   AND B.BMBM = #{bmbm}
+	               ) as rs
+			from (
+				  select ajjbxx.ajlb_bm,
+					     ajjbxx.ajlb_mc,
+						 count(ajlb_bm) flsl
+				  from TYYW_GG_AJJBXX_TYYW ajjbxx
+				  where cbdw_bm = #{dwbm}
+					  AND SFSC = 'N'
+					&lt;!&ndash; and ajjbxx.slrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd') &ndash;&gt;
+					<choose>
+						<when test="xzsj == 'wcrq'">
+							and ajjbxx.wcrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+						</when>
+						<otherwise>
+							and ajjbxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+						</otherwise>
+					</choose>
+					  and (ajlb_bm, bmsah) in (
+												select ajlb_bm,
+													   bmsah
+												from TYYW_GG_AJJBXX_TYYW
+												where cbdw_bm = #{dwbm}
+													and sfsc = 'N'
+													<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+														and cbrgh in
+														<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+															#{item}
+														</foreach>
+													</if>
+												group by ajlb_bm,bmsah
+											   )
+				  group by ajlb_bm, ajlb_mc
+
+				  union all
+
+				  select ajxx.ajlb_bm,
+						 ajxx.ajlb,
+						 count(ajlb_bm) flsl
+				  from YX_SFDA_AJXX ajxx
+				  where ajxx.cbdw_bm = #{dwbm}
+					and ajxx.sfsc='N'
+					and ajxx.ajstatus = '1'
+					&lt;!&ndash; and ajxx.ajslrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd') &ndash;&gt;
+					<choose>
+						<when test="xzsj == 'wcrq'">
+							and ajxx.ajwjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+						</when>
+						<otherwise>
+							and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+						</otherwise>
+					</choose>
+					and (ajlb_bm, bmsah) in (
+											 select ajlb_bm,
+													bmsah
+											 from YX_SFDA_AJXX
+											 where cbdw_bm = #{dwbm}
+												and sfsc = 'N'
+												and ajstatus = '1'
+												<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+													and cbrgh in
+													<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+														#{item}
+													</foreach>
+												</if>
+												group by ajlb_bm,bmsah
+											)
+				  group by ajxx.ajlb_bm, ajxx.ajlb
+				)
+			group by ajlb_bm, ajlb_mc, flsl
+		)-->
+
+
+
+
+		select ajlb_bm,
+	 		   round((flsl / decode(rs, 0, 1, rs)),2) as pjbasl
+	  	from (
+	  		select ajlb_bm,
+				   ajlb_mc,
+				   flsl,
+				   (
+					 SELECT count(distinct R.SSR)
+	          		 FROM yx_sfda_dagz R
+	        		 INNER JOIN XT_QX_RYJSFP_TYYW P ON P.GH = R.SSR
+	         		 INNER JOIN XT_QX_JSBM_TYYW J ON J.JSBM = P.JSBM
+	         		 INNER JOIN XT_ZZJG_BMBM_TYYW B ON B.BMBM = J.BMBM AND J.BMBM = P.BMBM
+					   AND B.SFSC = 'N'
+					   AND R.SFSC = 'N'
+					   AND P.DWBM = #{dwbm}
+					   AND B.DWBM = #{dwbm}
+					   AND R.SSRDWBM = #{dwbm}
+					   AND J.DWBM = #{dwbm}
+					   AND B.BMBM = #{bmbm}
+	               ) as rs
+			from (
+				  select ajjbxx.ajlb_bm,
+					     ajjbxx.ajlb_mc,
+						 count(ajlb_bm) flsl
+				  from TYYW_GG_AJJBXX_TYYW ajjbxx
+				  where cbdw_bm = #{dwbm}
+					AND SFSC = 'N'
+					and (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+							  when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+							  else ajjbxx.wcrq
+						 end) between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+					and (ajlb_bm, bmsah) in (
+												select ajlb_bm,
+													   bmsah
+												from TYYW_GG_AJJBXX_TYYW
+												where cbdw_bm = #{dwbm}
+													and sfsc = 'N'
+													<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+														and cbrgh in
+														<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+															#{item}
+														</foreach>
+													</if>
+												group by ajlb_bm,bmsah
+											)
+				  group by ajlb_bm, ajlb_mc
+
+
+
+				  <!--union all
+
+				  select ajxx.ajlb_bm,
+						 ajxx.ajlb,
+						 count(ajlb_bm) flsl
+				  from YX_SFDA_AJXX ajxx
+				  where ajxx.cbdw_bm = #{dwbm}
+					and ajxx.sfsc='N'
+					and ajxx.ajstatus = '1'
+					and ajxx.ajwjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+					and (ajlb_bm, bmsah) in (
+											 select ajlb_bm,
+													bmsah
+											 from YX_SFDA_AJXX
+											 where cbdw_bm = #{dwbm}
+												and sfsc = 'N'
+												and ajstatus = '1'
+												<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+													and cbrgh in
+													<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+														#{item}
+													</foreach>
+												</if>
+												group by ajlb_bm,bmsah
+											)
+				  group by ajxx.ajlb_bm, ajxx.ajlb
+
+				  union
+
+				  select ajxx.ajlb_bm,
+						 ajxx.ajlb,
+						 count(ajlb_bm) flsl
+				  from YX_SFDA_AJXX ajxx
+				  where ajxx.cbdw_bm = #{dwbm}
+					and ajxx.sfsc='N'
+					and ajxx.ajstatus = '1'
+					and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+					and (ajlb_bm, bmsah) in (
+											 select ajlb_bm,
+													bmsah
+											 from YX_SFDA_AJXX
+											 where cbdw_bm = #{dwbm}
+												and sfsc = 'N'
+												and ajstatus = '1'
+												<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+													and cbrgh in
+													<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+														#{item}
+													</foreach>
+												</if>
+												group by ajlb_bm,bmsah
+											)
+				  group by ajxx.ajlb_bm, ajxx.ajlb-->
+				)
+			group by ajlb_bm, ajlb_mc, flsl
+		)
+	</select>
+	
+	
+	
+	<!-- 本部门办案数量指标，查询“某个部门”下所有 单个案件类型 的最多办案量，最少办案量 受理日期在指定时间段内的案件；（注：只统计参与该类型案件办理的人）-->
+	<select id="selectCountsOfDep" resultType="java.util.HashMap">
+		<!--select ajlb_bm,
+			   max(flsl) as zdbasl,
+			   min(flsl) as zsbasl
+		from(	
+			select ajlb_bm,
+				   ajlb_mc,
+				   flsl
+			from (
+				select
+					  ajjbxx.ajlb_bm,
+					  ajjbxx.ajlb_mc,
+					  count(ajlb_bm) flsl,
+					  cbrgh
+				from TYYW_GG_AJJBXX_TYYW ajjbxx
+				where cbdw_bm = #{dwbm}
+					AND SFSC = 'N'
+					&lt;!&ndash; and ajjbxx.slrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd') &ndash;&gt;
+					<choose>
+						<when test="xzsj == 'wcrq'">
+							and ajjbxx.wcrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+						</when>
+						<otherwise>
+							and ajjbxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+						</otherwise>
+					</choose>
+					and (ajlb_bm, bmsah) in (
+												select ajlb_bm,
+													   bmsah
+												from TYYW_GG_AJJBXX_TYYW
+												where cbdw_bm = #{dwbm}
+													and sfsc = 'N'
+													<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+														and cbrgh in
+														<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+															#{item}
+														</foreach>
+													</if>
+												group by ajlb_bm,bmsah
+											)
+				group by ajlb_bm, ajlb_mc, cbrgh
+
+				union all
+
+				select ajxx.ajlb_bm,
+					   ajxx.ajlb,
+					   count(ajlb_bm) flsl,
+					   cbrgh
+				from YX_SFDA_AJXX ajxx
+				where ajxx.cbdw_bm = #{dwbm}
+					and ajxx.sfsc='N'
+					and ajxx.ajstatus = '1'
+					&lt;!&ndash; and ajxx.ajslrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd') &ndash;&gt;
+					<choose>
+						<when test="xzsj == 'wcrq'">
+							and ajxx.ajwjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+						</when>
+						<otherwise>
+							and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+						</otherwise>
+					</choose>
+					and (ajlb_bm, bmsah) in (
+											select ajlb_bm,
+												   bmsah
+											from YX_SFDA_AJXX
+											where cbdw_bm = #{dwbm}
+												and sfsc = 'N'
+												and ajstatus = '1'
+												<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+													and cbrgh in
+													<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+														#{item}
+													</foreach>
+												</if>
+											group by ajlb_bm,bmsah
+											)
+				group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.cbrgh
+				)
+			group by ajlb_bm, ajlb_mc, flsl
+		)
+		group by ajlb_bm-->
+
+
+
+		select ajlb_bm,
+			   max(flsl) as zdbasl,
+			   min(flsl) as zsbasl
+		from(
+			select ajlb_bm,
+				   ajlb_mc,
+				   flsl
+			from (
+				select ajjbxx.ajlb_bm,
+					   ajjbxx.ajlb_mc,
+					   count(ajlb_bm) flsl,
+					   cbrgh
+				from TYYW_GG_AJJBXX_TYYW ajjbxx
+				where cbdw_bm = #{dwbm}
+				  AND SFSC = 'N'
+				  and (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+						    when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+						    else ajjbxx.wcrq
+					   end) between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+				  and (ajlb_bm, bmsah) in (
+											select ajlb_bm,
+												   bmsah
+											from TYYW_GG_AJJBXX_TYYW
+											where cbdw_bm = #{dwbm}
+												and sfsc = 'N'
+												<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+													and cbrgh in
+													<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+														#{item}
+													</foreach>
+												</if>
+											group by ajlb_bm,bmsah
+										  )
+				group by ajlb_bm, ajlb_mc, cbrgh
+
+
+
+				<!--union all
+
+				select ajxx.ajlb_bm,
+					   ajxx.ajlb,
+					   count(ajlb_bm) flsl,
+					   cbrgh
+				from YX_SFDA_AJXX ajxx
+				where ajxx.cbdw_bm = #{dwbm}
+				  and ajxx.sfsc='N'
+				  and ajxx.ajstatus = '1'
+				  and ajxx.ajwjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+				  and (ajlb_bm, bmsah) in (
+											select ajlb_bm,
+												   bmsah
+											from YX_SFDA_AJXX
+											where cbdw_bm = #{dwbm}
+												and sfsc = 'N'
+												and ajstatus = '1'
+												<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+													and cbrgh in
+													<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+														#{item}
+													</foreach>
+												</if>
+											group by ajlb_bm,bmsah
+											)
+				group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.cbrgh
+
+				union
+
+				select ajxx.ajlb_bm,
+					   ajxx.ajlb,
+					   count(ajlb_bm) flsl,
+					   cbrgh
+				from YX_SFDA_AJXX ajxx
+				where ajxx.cbdw_bm = #{dwbm}
+				  and ajxx.sfsc='N'
+				  and ajxx.ajstatus = '1'
+				  and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+				  and (ajlb_bm, bmsah) in (
+											select ajlb_bm,
+												   bmsah
+											from YX_SFDA_AJXX
+											where cbdw_bm = #{dwbm}
+												and sfsc = 'N'
+												and ajstatus = '1'
+												<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+													and cbrgh in
+													<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+														#{item}
+													</foreach>
+												</if>
+											group by ajlb_bm,bmsah
+											)
+				group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.cbrgh-->
+				)
+			group by ajlb_bm, ajlb_mc, flsl
+		)
+		group by ajlb_bm
+	</select>
+	
+	
+	<!-- 本部门办案数量指标，查询“某个部门”下所有 单个案件类型 办案数量排名（该时间段内受理的案件数）（区分人和部门）-->
+	<select id="selectCountsRankOfDep" resultType="java.util.HashMap">
+		<!--select ajlb_bm,
+			   pm baslpm
+	    from(
+			select t.*,
+				   rank() over (partition by ajlb_bm order by FLSL desc) as pm
+			from(
+				select ajlb_bm,
+					   cbrgh,
+					   ajlb_mc,
+					   COUNT(ajlb_bm) AS flsl
+				from (
+					select ajjbxx.ajlb_bm,
+						   ajjbxx.ajlb_mc,
+						   slrq,
+						   bmsah,
+						   cbrgh
+					from TYYW_GG_AJJBXX_TYYW ajjbxx
+					where cbdw_bm = #{dwbm}
+						  AND SFSC = 'N'
+						&lt;!&ndash; and ajjbxx.slrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd') &ndash;&gt;
+						<choose>
+							<when test="xzsj == 'wcrq'">
+								and ajjbxx.wcrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+							</when>
+							<otherwise>
+								and ajjbxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+							</otherwise>
+						</choose>
+						  and (ajlb_bm, bmsah) in (
+													select ajlb_bm,
+														   bmsah
+													from TYYW_GG_AJJBXX_TYYW
+													where cbdw_bm = #{dwbm}
+														and sfsc = 'N'
+														<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+															and cbrgh in
+															<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+																#{item}
+															</foreach>
+														</if>
+													group by ajlb_bm,bmsah
+												  )
+					group by ajlb_bm, ajlb_mc, slrq, bmsah,cbrgh
+
+					union all
+
+					select ajxx.ajlb_bm,
+						   ajxx.ajlb,
+						   ajxx.ajslrq,
+						   ajxx.bmsah,
+						   ajxx.cbrgh
+					from yx_sfda_ajxx ajxx
+					where ajxx.cbdw_bm = #{dwbm}
+						and ajxx.sfsc='N'
+						and ajxx.ajstatus = '1'
+						&lt;!&ndash; and ajxx.ajslrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd') &ndash;&gt;
+						<choose>
+							<when test="xzsj == 'wcrq'">
+								and ajxx.ajwjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+							</when>
+							<otherwise>
+								and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+							</otherwise>
+						</choose>
+						and (ajlb_bm, bmsah) in (
+												 select ajlb_bm,
+														bmsah
+												 from YX_SFDA_AJXX
+												 where cbdw_bm = #{dwbm}
+													and sfsc = 'N'
+													and ajstatus = '1'
+													<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+														and cbrgh in
+														<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+															#{item}
+														</foreach>
+													</if>
+												 group by ajlb_bm,bmsah
+												)
+					group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.ajslrq, ajxx.bmsah, ajxx.cbrgh
+				)
+			group by ajlb_bm, ajlb_mc,cbrgh
+			) t
+		)
+		where cbrgh = #{gh}-->
+
+
+
+		select ajlb_bm,
+			   pm baslpm
+	    from(
+			select t.*,
+				   rank() over (partition by ajlb_bm order by FLSL desc) as pm
+			from(
+				select ajlb_bm,
+					   ajlb_mc,
+					   cbrgh,
+					   COUNT(ajlb_bm) AS flsl
+				from (
+					select ajjbxx.ajlb_bm,
+						   ajjbxx.ajlb_mc,
+						   cbrgh
+					from TYYW_GG_AJJBXX_TYYW ajjbxx
+					where cbdw_bm = #{dwbm}
+						  AND SFSC = 'N'
+						  and (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+								  	when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+								    else ajjbxx.wcrq
+							   end) between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+						  and (ajlb_bm, bmsah) in (
+													select ajlb_bm,
+														   bmsah
+													from TYYW_GG_AJJBXX_TYYW
+													where cbdw_bm = #{dwbm}
+														and sfsc = 'N'
+														<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+															and cbrgh in
+															<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+																#{item}
+															</foreach>
+														</if>
+													group by ajlb_bm,bmsah
+												  )
+
+
+
+
+					<!--union all
+
+					select ajxx.ajlb_bm,
+						   ajxx.ajlb,
+						   ajxx.ajslrq,
+						   ajxx.bmsah,
+						   ajxx.cbrgh
+					from yx_sfda_ajxx ajxx
+					where ajxx.cbdw_bm = #{dwbm}
+						and ajxx.sfsc='N'
+						and ajxx.ajstatus = '1'
+						and ajxx.ajwjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+						and (ajlb_bm, bmsah) in (
+												 select ajlb_bm,
+														bmsah
+												 from YX_SFDA_AJXX
+												 where cbdw_bm = #{dwbm}
+													and sfsc = 'N'
+													and ajstatus = '1'
+													<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+														and cbrgh in
+														<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+															#{item}
+														</foreach>
+													</if>
+												 group by ajlb_bm,bmsah
+												)
+					group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.ajslrq, ajxx.bmsah, ajxx.cbrgh
+
+					union
+
+					select ajxx.ajlb_bm,
+						   ajxx.ajlb,
+						   ajxx.ajslrq,
+						   ajxx.bmsah,
+						   ajxx.cbrgh
+					from yx_sfda_ajxx ajxx
+					where ajxx.cbdw_bm = #{dwbm}
+						and ajxx.sfsc='N'
+						and ajxx.ajstatus = '1'
+						and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+						and (ajlb_bm, bmsah) in (
+												 select ajlb_bm,
+														bmsah
+												 from YX_SFDA_AJXX
+												 where cbdw_bm = #{dwbm}
+													and sfsc = 'N'
+													and ajstatus = '1'
+													<if test='ajyjGhList != null and ajyjGhList.size() > 0'>
+														and cbrgh in
+														<foreach item='item' index='index' collection='ajyjGhList' open='(' separator=',' close=')'>
+															#{item}
+														</foreach>
+													</if>
+												 group by ajlb_bm,bmsah
+												)
+					group by ajxx.ajlb_bm, ajxx.ajlb, ajxx.ajslrq, ajxx.bmsah, ajxx.cbrgh-->
+				)
+			group by ajlb_bm, ajlb_mc,cbrgh
+			) t
+		)
+		where cbrgh = #{gh}
+	</select>
+	
+	
+	<!-- 办理方式数量 -->
+	<select id="selectbyAjblYjfssl" resultType="java.util.HashMap">
+		SELECT AJLB_BM, 
+			   AJLB_MC,
+			   NVL(ZZLD, 0) ZZLD, 
+			   NVL(ZDBL, 0) ZDBL, 
+			   nvl(ZJBL, 0) ZJBL 
+		FROM (
+			  SELECT * FROM (
+							SELECT
+									NVL(COUNT(BMSAH),0) AS total,
+									BLFS_BM, 
+									AJLB_BM, 
+									ajlb_mc
+							FROM (
+								  SELECT AJJBXX.BMSAH,
+        								BLFS_BM,
+										AJLB_BM, 
+										(select ajlbmc from XT_DM_AJLBBM_TYYW b where b.ajlbbm = AJLB_BM) ajlb_mc
+								  FROM TYYW_GG_AJJBXX_TYYW AJJBXX
+									LEFT JOIN YX_SFDA_AJBL AJLB ON AJLB.BMSAH = AJJBXX.BMSAH
+									WHERE CBDW_BM = #{dwbm} 
+									  and ajjbxx.sfsc='N'
+									  AND ajjbxx.bjrq between to_date('1000-01-01','yyyy-MM-dd') and to_date('3000-12-31','yyyy-MM-dd')
+									  AND CBRGH = #{gh}
+									  AND SLRQ IS NOT NULL
+									  and (AJJBXX.cbxzbm is null or ajjbxx.cbxzbm='')
+									  
+								)
+							GROUP BY BLFS_BM, AJLB_BM, ajlb_mc
+					) pivot (SUM(total) FOR BLFS_BM IN('11006' ZZLD, '11007' ZDBL, '11008' ZJBL))
+		  )
+	</select>
+	
+	
+	<!--添加审批审核数据-->
+	<!--通过单位编码何工号获取所有案件类型审批审核数量-->
+	<!--由于tyyw_gg_ajjbxx表中存在ajlb_bm一样ajlb_mc不同的情况所以才关联tyyw_xt_dm_ajlbbm表查询ajlb_mc-->
+	<select id="getAjblSPSHCountByDwbmAndGh" resultType="java.util.HashMap">
+		select spsh,
+			   ajlb_bm,
+			   bm.ajlbmc ajlb_mc 
+		from(
+			select count(*) spsh,
+				   ajlb_bm 
+		    from(
+					select distinct sp.bmsah,
+						   aj.ajlb_bm 
+				    from tyyw_yx_ws_sp_TYYW sp
+						left join tyyw_gg_ajjbxx_TYYW aj on sp.bmsah = aj.bmsah
+						where sp.dwbm = #{dwbm,jdbcType=CHAR}
+						  and sp.sfsc = 'N'
+						  and aj.cbdw_bm = #{dwbm,jdbcType=CHAR}
+						  and aj.sfsc = 'N'
+						  AND aj.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+						  and sp.sprgh = #{gh,jdbcType=CHAR}
+						  and (aj.cbxzbm is null or aj.cbxzbm = '')
+						  
+					union
+					
+					select aj.bmsah,
+						   aj.ajlb_bm 
+					from Yx_sfda_cbxz cbxz
+						inner join tyyw_gg_ajjbxx_TYYW aj on cbxz.cbxzbm = aj.cbxzbm
+						where cbxz.blfsbm='11004'
+						  and aj.sfsc='N'
+						  AND aj.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+						  and cbxz.dwbm=#{dwbm,jdbcType=CHAR}
+						  and cbxz.gh=#{gh,jdbcType=CHAR}
+						  
+					union
+					
+					select aj.bmsah,
+						   aj.ajlb_bm 
+					from YX_SFDA_AJBL ajbl
+						right join tyyw_gg_ajjbxx_TYYW aj on ajbl.bmsah = aj.bmsah
+						where CBDW_BM = #{dwbm,jdbcType=CHAR} and aj.sfsc='N'
+						  AND CBRGH = #{gh,jdbcType=CHAR}
+						  AND SLRQ IS NOT NULL
+						  and (aj.cbxzbm is null or aj.cbxzbm='')
+						  and ajbl.BLFS_BM = '11004'
+						  AND aj.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+				)
+			group by ajlb_bm
+		) t
+		left join xt_dm_ajlbbm_TYYW bm on t.ajlb_bm = bm.ajlbbm
+		where bm.sfsc = 'N'
+	</select>
+	
+	<!-- 办案业绩详情（二级案件表单）查询 -->
+	<!-- 担任办案组主任检察官办理   部门受案号 -->
+	<select id="selectbyAjblEjZrsah" resultType="java.util.HashMap">
+	    SELECT A.BMSAH
+        FROM TYYW_GG_AJJBXX_TYYW A
+        	INNER JOIN TYYW_XT_QX_BADYRYFP_TYYW B ON A.BADYBM = B.BADYBM
+        	left join YX_SFDA_AJBL ajbl on ajbl.bmsah = a.bmsah
+        	INNER JOIN XT_ZZJG_RYBM_TYYW R ON B.DWBM = R.DWBM AND B.GH = R.GH AND R.SFSC = 'N'
+        		WHERE R.DWBM = #{dwbm,jdbcType=CHAR}
+        		  AND R.GH = #{gh,jdbcType=CHAR}
+		          and a.ajlb_bm = #{ajlbbm,jdbcType=CHAR}
+		          AND a.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+		          AND B.BADYLX = '2'
+		          AND B.BADYJSBH = '1'
+		          AND B.badybm is not null
+		          and (a.cbxzbm is null or a.cbxzbm = '')
+		          
+        union
+        
+        SELECT a.bmsah 
+        FROM TYYW_GG_AJJBXX_TYYW a
+        	left join YX_SFDA_AJBL ajbl on ajbl.bmsah = a.bmsah
+        		WHERE a.cbdw_bm = #{dwbm,jdbcType=CHAR}
+		          AND a.cbrgh = #{gh,jdbcType=CHAR}
+		          AND a.ajlb_bm = #{ajlbbm,jdbcType=CHAR}
+		          AND a.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+			      AND ajbl.blfs_bm ='11001'
+			      and (a.cbxzbm is null or a.cbxzbm = '')
+			      
+	    union
+	    
+	    SELECT a.bmsah 
+	    FROM TYYW_GG_AJJBXX_TYYW a
+        	inner join YX_SFDA_cbxz b on a.cbxzbm = b.cbxzbm
+        		WHERE b.dwbm = #{dwbm}
+		          AND b.gh=#{gh}
+			      AND b.blfsbm ='11001'
+			      AND a.ajlb_bm = #{ajlbbm,jdbcType=CHAR}
+			      AND a.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+	</select>
+	
+	<!-- 担任办案组检察官办理  部门受案号 -->
+	<select id="selectbyAjblEjJcgsah" resultType="java.util.HashMap">
+	 	SELECT A.BMSAH
+        FROM TYYW_GG_AJJBXX_TYYW A
+        	INNER JOIN TYYW_XT_QX_BADYRYFP_TYYW B ON A.BADYBM = B.BADYBM
+        	left join YX_SFDA_AJBL ajbl on ajbl.bmsah = a.bmsah
+        	INNER JOIN XT_ZZJG_RYBM_TYYW R ON B.DWBM = R.DWBM AND B.GH = R.GH AND R.SFSC = 'N'
+        		WHERE R.DWBM = #{dwbm,jdbcType=CHAR}
+        		  AND R.GH = #{gh,jdbcType=CHAR}
+        		  AND a.ajlb_bm = #{ajlbbm,jdbcType=CHAR}
+        		  AND a.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+		          AND B.BADYLX = '2' 
+		          AND B.BADYJSBH = '2'
+		          AND B.badybm is not null
+		          and (a.cbxzbm is null or a.cbxzbm = '')
+		          
+        union
+        
+        SELECT a.bmsah 
+        FROM TYYW_GG_AJJBXX_TYYW a
+        	left join YX_SFDA_AJBL ajbl on ajbl.bmsah = a.bmsah
+        		WHERE a.cbdw_bm = #{dwbm,jdbcType=CHAR}
+		          AND a.cbrgh = #{gh,jdbcType=CHAR}
+		          AND a.ajlb_bm = #{ajlbbm,jdbcType=CHAR}
+		          AND a.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+			      AND ajbl.blfs_bm ='11002'
+			      and (a.cbxzbm is null or a.cbxzbm = '')
+			      
+	    union
+	    
+	    SELECT a.bmsah 
+	    FROM TYYW_GG_AJJBXX_TYYW a
+        	inner join YX_SFDA_cbxz b on a.cbxzbm = b.cbxzbm
+        		WHERE b.dwbm = #{dwbm}
+		          AND b.gh=#{gh}
+			      AND b.blfsbm ='11002'
+			      AND a.ajlb_bm = #{ajlbbm,jdbcType=CHAR}
+			      AND a.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+	</select>
+	
+	<!-- 担任独任检察官办理   部门受案号 -->
+	<select id="selectbyAjblEjDrsah" resultType="java.util.HashMap">
+	    SELECT a.BMSAH
+          FROM TYYW_GG_AJJBXX_TYYW a
+          INNER JOIN TYYW_XT_QX_BADYRYFP_TYYW b ON a.BADYBM = b.BADYBM
+          LEFT JOIN YX_SFDA_AJBL ajbl ON ajbl.BMSAH = a.BMSAH
+          INNER JOIN XT_ZZJG_RYBM_TYYW r ON b.DWBM = r.DWBM AND b.GH = r.GH AND r.SFSC = 'N'
+          WHERE r.DWBM = #{dwbm}
+	        AND r.GH = #{gh}
+	        AND a.AJLB_BM = #{ajlbbm}
+	        AND a.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+            AND ((b.BADYLX = '1' AND b.BADYJSBH = '2') OR b.badybm is null)
+            AND (a.cbxzbm is null or a.cbxzbm = '')
+        
+        UNION
+        
+        SELECT a.BMSAH 
+          FROM TYYW_GG_AJJBXX_TYYW a
+          LEFT JOIN YX_SFDA_AJBL ajbl ON ajbl.BMSAH = a.BMSAH
+          WHERE a.CBDW_BM = #{dwbm}
+            AND a.CBRGH = #{gh}
+            AND a.AJLB_BM = #{ajlbbm}
+            AND a.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+            AND (ajbl.blfs_bm ='11003' OR (ajbl.blfs_bm is null and a.badybm is null))
+            AND (a.cbxzbm is null or a.cbxzbm = '')
+        
+        UNION
+      
+        SELECT a.BMSAH 
+          FROM TYYW_GG_AJJBXX_TYYW a
+          INNER JOIN YX_SFDA_cbxz b ON a.cbxzbm = b.cbxzbm
+          WHERE b.DWBM = #{dwbm}
+            AND b.GH = #{gh}
+            AND a.AJLB_BM = #{ajlbbm}
+            AND a.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+            AND b.blfsbm = '11003'
+	</select>
+	
+	
+	<!-- 查询案件部门受案号,受理日期，完成/办结日期在此时间段内的案件 -->
+	<select id="selectbyAllBmsah" resultType="java.util.HashMap">
+		<!--select bmsah
+		from TYYW_GG_AJJBXX_TYYW ajjbxx
+		where ajjbxx.SFSC = 'N'
+			and ajjbxx.cbdw_bm = #{dwbm}
+			and ajjbxx.cbrgh = #{gh}
+			&lt;!&ndash; and ajjbxx.slrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd') &ndash;&gt;
+			<choose>
+				<when test="xzsj == 'wcrq'">
+					and ajjbxx.wcrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+				</when>
+				<otherwise>
+					and ajjbxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+				</otherwise>
+			</choose>
+		    <if test="ajlbbm != '' and ajlbbm != null">
+				and ajjbxx.ajlb_bm = #{ajlbbm}
+			</if>
+
+
+		union all
+
+		select bmsah
+		from yx_sfda_ajxx ajxx
+		where ajxx.SFSC = 'N'
+			and ajxx.cbdw_bm = #{dwbm}
+			and ajxx.cbrgh = #{gh}
+			and ajxx.ajstatus = '1'
+			&lt;!&ndash; and ajxx.ajslrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd') &ndash;&gt;
+			<choose>
+				<when test="xzsj == 'wcrq'">
+					and ajxx.ajwjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+				</when>
+				<otherwise>
+					and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+				</otherwise>
+			</choose>
+			<if test="ajlbbm != '' and ajlbbm != null">
+				and ajxx.ajlb_bm = #{ajlbbm}
+			</if>-->
+
+
+
+
+		select bmsah
+		from TYYW_GG_AJJBXX_TYYW ajjbxx
+		where ajjbxx.SFSC = 'N'
+		  and ajjbxx.cbdw_bm = #{dwbm}
+		  and ajjbxx.cbrgh = #{gh}
+		  and (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+		            when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+		            else ajjbxx.wcrq
+		       end) between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+		  <if test="ajlbbm != '' and ajlbbm != null">
+		      and ajjbxx.ajlb_bm = #{ajlbbm}
+		  </if>
+
+		union all
+
+		select bmsah
+		from yx_sfda_ajxx ajxx
+		where ajxx.SFSC = 'N'
+		  and ajxx.cbdw_bm = #{dwbm}
+		  and ajxx.cbrgh = #{gh}
+		  and ajxx.ajstatus = '1'
+		  and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+		  <if test="ajlbbm != '' and ajlbbm != null">
+			  and ajxx.ajlb_bm = #{ajlbbm}
+		  </if>
+	</select>
+
+	<!--获取受理案件的部门受案号-->
+	<select id="selectbyAllBmsahOfSl" resultType="java.util.HashMap">
+		select bmsah
+		from TYYW_GG_AJJBXX_TYYW ajjbxx
+		where ajjbxx.SFSC = 'N'
+		  and ajjbxx.cbdw_bm = #{dwbm}
+		  and ajjbxx.cbrgh = #{gh}
+		  and ajjbxx.slrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+		<if test="ajlbbm != '' and ajlbbm != null">
+			and ajjbxx.ajlb_bm = #{ajlbbm}
+		</if>
+
+		union all
+
+		select bmsah
+		from yx_sfda_ajxx ajxx
+		where ajxx.SFSC = 'N'
+		  and ajxx.cbdw_bm = #{dwbm}
+		  and ajxx.cbrgh = #{gh}
+		  and ajxx.ajstatus = '1'
+		  and ajxx.ajslrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+		<if test="ajlbbm != '' and ajlbbm != null">
+			and ajxx.ajlb_bm = #{ajlbbm}
+		</if>
+
+	</select>
+
+
+	
+	<!--  查询所有部门受案号，对应上面的主办，协助 -->
+    <!--添加审批审核数据-->
+    <!--通过单位编码何工号办理方式获取案件类型审批审核部门受案号-->
+    <!--目前暂时不考虑案管办所以要屏蔽掉案件类别编码为1401和1402-->
+    <select id="selectbyAjblEjSYsah" resultType="java.util.HashMap">
+        SELECT bmsah from (
+        	SELECT A.BMSAH,
+        		   ajbl.blfs_bm
+        	FROM TYYW_GG_AJJBXX_TYYW A
+        		INNER JOIN TYYW_XT_QX_BADYRYFP_TYYW B ON A.BADYBM = B.BADYBM
+        		left join YX_SFDA_AJBL ajbl on ajbl.bmsah = a.bmsah
+        		INNER JOIN XT_ZZJG_RYBM_TYYW R ON B.DWBM = R.DWBM AND B.GH = R.GH
+        		WHERE R.DWBM = #{dwbm,jdbcType=CHAR} 
+        		  and a.sfsc='N'
+        		  AND R.GH = #{gh,jdbcType=CHAR}
+        		  AND A.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+        		  and (a.cbxzbm is null or a.cbxzbm = '')
+		        <if test="ajlbbm!=null and ajlbbm!=''">
+		            and a.ajlb_bm = #{ajlbbm,jdbcType=CHAR}
+		        </if>
+		        
+        	union
+        	
+        	SELECT A.BMSAH,
+        		   ajbl.blfs_bm 
+            FROM TYYW_GG_AJJBXX_TYYW a
+        		left join YX_SFDA_AJBL ajbl on ajbl.bmsah = a.bmsah
+        			WHERE a.cbdw_bm = #{dwbm,jdbcType=CHAR} 
+        			  and a.sfsc='N'
+        			  AND a.cbrGH = #{gh,jdbcType=CHAR}
+        			  AND a.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+        			  and (a.cbxzbm is null or a.cbxzbm = '')
+			        <if test="ajlbbm!=null and ajlbbm!=''">
+			            and a.ajlb_bm = #{ajlbbm,jdbcType=CHAR}
+			        </if>
+			        
+        	UNION
+        	
+        	select aj.bmsah,
+        	      '11004' blfs_bm 
+        	from TYYW_GG_AJJBXX_TYYW aj
+        		right join (select distinct sp.bmsah 
+        					from tyyw_yx_ws_sp_TYYW sp 
+        						where sp.sfsc='N' 
+        						  and sp.dwbm = #{dwbm,jdbcType=CHAR}
+					              and sp.sprgh = #{gh,jdbcType=CHAR}
+					        ) t on aj.bmsah = t.bmsah
+        			where aj.sfsc = 'N'
+        			  and aj.cbdw_bm = #{dwbm,jdbcType=CHAR}
+        			  AND aj.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+        			  and (aj.cbxzbm is null or aj.cbxzbm = '')
+			        <choose>
+			            <when test="ajlbbm != '' and ajlbbm != null">
+			                and aj.ajlb_bm = #{ajlbbm,jdbcType=VARCHAR}
+			            </when>
+			            <otherwise>
+			                and aj.ajlb_bm != '1401'
+			                and aj.ajlb_bm != '1402'
+			            </otherwise>
+			        </choose>
+			        
+        	union
+        	
+        	select a.bmsah,
+        	       b.blfsbm blfs_bm 
+        	from TYYW_GG_AJJBXX_TYYW a
+        		inner join yx_sfda_cbxz b on a.cbxzbm=b.cbxzbm
+        			where a.ajlb_bm = #{ajlbbm,jdbcType=CHAR} 
+        			  and b.gh=#{gh,jdbcType=CHAR} 
+        			  and b.dwbm=#{dwbm,jdbcType=CHAR}
+        			  AND a.bjrq between to_date(#{kssj},'yyyy-MM') and to_date(#{jssj},'yyyy-MM')
+        ) t WHERE  1=1
+        <if test="blfsbm != null and blfsbm != ''">
+            and t.blfs_bm= #{blfsbm,jdbcType=VARCHAR}
+        </if>
+    </select>
+	
+	
+	<!--查询办结情况对应表名字段名-->
+    <select id="selectTablenameAndField" resultType="java.util.HashMap">
+    	<if test='ajlbbm != null and ajlbbm.size() > 0'>
+        	select AJLBBM, 
+        	       BZ 
+        	from XT_DM_AJLBBM_TYYW where ajlbbm in
+	        <foreach item='item' index='index' collection='ajlbbm' open='(' separator=',' close=')'>
+	            #{item}
+	        </foreach>
+        </if>
+    </select>
+	
+	
+	<select id="getAllEjblfs" resultType="java.util.HashMap">
+        select a.bmsah, 
+        	   a.blfs, 
+        	   a.blfs_bm blfsbm 
+        from yx_sfda_ajbl a 
+        	inner join tyyw_gg_ajjbxx_TYYW b on a.bmsah=b.bmsah
+        		where (b.cbxzbm is null or b.cbxzbm = '') 
+        		  and a.bmsah in
+		        <foreach item='item' index='index' collection='sahlist' open='(' separator=',' close=')'>
+		            #{item}
+		        </foreach>
+        UNION
+        select b.bmsah, 
+               a.blfs, 
+               a.blfsbm 
+        from YX_SFDA_CBXZ a 
+        	inner join tyyw_gg_ajjbxx_TYYW b on a.cbxzbm=b.cbxzbm 
+        		where b.bmsah IN
+		        <foreach item='item' index='index' collection='sahlist' open='('
+		                 separator=',' close=')'>
+		            #{item}
+		        </foreach>
+        	      and a.dwbm=#{dwbm} 
+        	      and a.gh=#{gh}
+        union
+        select bmsah, 
+        	   '担任独任检察官办理', 
+        	   '11003' 
+       	from tyyw_gg_ajjbxx_TYYW a 
+       		where (a.cbxzbm is null or a.cbxzbm = '') 
+       		  and bmsah in
+	        <foreach item='item' index='index' collection='sahlist' open='('
+	                 separator=',' close=')'>
+	            #{item}
+	        </foreach>
+              and tysah is not null 
+              and BADYBM is null 
+              and a.cbrgh = #{gh}
+        union
+        select bmsah, 
+        	   '担任独任检察官办理', 
+        	   '11003' 
+        from tyyw_gg_ajjbxx_TYYW a 
+        	inner join TYYW_XT_QX_BADYRYFP_TYYW f on a.BADYBM = f.badybm 
+        		where (a.cbxzbm is null or a.cbxzbm = '') 
+        		  and bmsah in
+		        <foreach item='item' index='index' collection='sahlist' open='('
+		                 separator=',' close=')'>
+		            #{item}
+		        </foreach>
+        		  and tysah is not null 
+        		  and f.badylx = '1' 
+        		  and f.badyjsbh = '2' 
+        		  and f.gh = #{gh}
+        union
+        select bmsah, 
+               '担任办案组主任检察官办理', 
+               '11001' 
+        from tyyw_gg_ajjbxx_TYYW a 
+        inner join TYYW_XT_QX_BADYRYFP_TYYW f on a.BADYBM = f.badybm 
+        	where (a.cbxzbm is null or a.cbxzbm = '') 
+        	   and bmsah in
+		        <foreach item='item' index='index' collection='sahlist' open='('
+		                 separator=',' close=')'>
+		            #{item}
+		        </foreach>
+               and tysah is not null 
+               and f.badylx = '2' 
+               and f.badyjsbh = '1' 
+               and f.gh = #{gh}
+        union
+        select a.bmsah, 
+               '担任办案组检察官办理', 
+               '11002' 
+        from tyyw_gg_ajjbxx_TYYW a 
+        	inner join TYYW_XT_QX_BADYRYFP_TYYW f on a.BADYBM = f.badybm 
+        		where (a.cbxzbm is null or a.cbxzbm = '') 
+        		   and bmsah in
+			        <foreach item='item' index='index' collection='sahlist' open='('
+			                 separator=',' close=')'>
+			            #{item}
+			        </foreach>
+                   and tysah is not null 
+                   and f.badylx = '2' 
+                   and f.badyjsbh = '2' 
+                   and f.gh = #{gh}
+        union
+        select a.bmsah, 
+               '参与协助', 
+               '11005' 
+        from tyyw_gg_ajjbxx_TYYW a 
+        	inner join TYYW_XT_QX_BADYRYFP_TYYW f on a.BADYBM = f.badybm 
+        		where (a.cbxzbm is null or a.cbxzbm = '') 
+        		   and bmsah in
+			        <foreach item='item' index='index' collection='sahlist' open='('
+			                 separator=',' close=')'>
+			            #{item}
+			        </foreach>
+                   and tysah is not null 
+                   and (f.badyjsbh = '3' or f.badyjsbh = '4') 
+                   and f.gh = #{gh}
+        union
+        select a.bmsah, 
+        	   '审批审核', 
+        	   '11004' 
+       	from tyyw_gg_ajjbxx_TYYW a 
+       		inner join TYYW_YX_WS_SP_TYYW s on a.bmsah = s.bmsah 
+       			where (a.cbxzbm is null or a.cbxzbm = '') 
+       			  and a.bmsah in
+		        <foreach item='item' index='index' collection='sahlist' open='('
+		                 separator=',' close=')'>
+		            #{item}
+		        </foreach>
+                  and sprgh = #{gh}
+    </select>
+	
+	
+	<!-- 查询案件名称，案件类别名称，办理时限，平均办理时间 -->
+    <select id="selectbyAjblEjsj" resultType="java.util.HashMap">
+        select round(wjrq - slrq,2) as blsx,
+			   to_char(wjrq,'yyyy-MM-dd') wjrq,
+			   ajlb_bm ajlbbm,
+			   ajlb_mc ajlbmc,
+        	   ajmc,
+		       cbrgh,
+		       bmsah,
+			   tysah,
+		       to_char(slrq,'yyyy-MM-dd') slrq
+        from (
+			  select (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+						   when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+		                   else ajjbxx.wcrq
+		              end) wjrq,
+				     ajlb_bm,
+                     ajlb_mc,
+					 ajmc,
+					 cbrgh,
+					 bmsah,
+					 tysah,
+					 slrq
+			  from TYYW_GG_AJJBXX_TYYW ajjbxx
+			  where ajjbxx.sfsc='N'
+			  <if test='sahlist != null and sahlist.size() > 0'>
+				 and ajjbxx.BMSAH in
+				 <foreach item='item' index='index' collection='sahlist' open='('
+						 separator=',' close=')'>
+					#{item}
+				 </foreach>
+			  </if>
+
+			 union all
+
+			 select bjrq as wjrq,
+				    ajlb_bm,
+					ajlb ajlb_mc,
+					ajname ajmc,
+					cbrgh,
+					bmsah,
+		            nvl(tysah,'null') tysah, <!--ys_sfda_ajxx表中tysah没有给值，所以取出来的时候给他一个标识为"null"-->
+					ajslrq slrq
+			 from yx_sfda_ajxx ajxx
+			 where ajxx.SFSC = 'N'
+			   and ajxx.ajstatus = '1'
+				<if test='sahlist != null and sahlist.size() > 0'>
+					and ajxx.BMSAH in
+					<foreach item='item' index='index' collection='sahlist' open='('
+							 separator=',' close=')'>
+						#{item}
+					</foreach>
+				</if>
+        ) t
+        group by wjrq,
+        		 ajlb_bm,
+                 ajlb_mc,
+				 ajmc,
+                 cbrgh,
+                 bmsah,
+		         tysah,
+                 slrq
+    </select>
+	
+	
+	<!-- 查询承办意见，办结情况，制作文书份数 -->
+    <select id="selectbyAjblEjsl" resultType="java.util.HashMap">
+        SELECT (SELECT dbms_lob.substr(cbryj,4000,1) cbryj FROM tyyw_yx_ws_cbryj_TYYW s WHERE s.bmsah = t1.bmsah AND sfsc = 'N' AND rownum = 1) cbryj,
+        		nvl((CASE WHEN t1.ajlb_bm = '0201' THEN
+        		(SELECT sjcljg_mc FROM tyyw_zj_scdb_TYYW t2 WHERE t2.bmsah = t1.bmsah)
+        			WHEN t1.ajlb_bm IN ('0202', '0203', '0209', '0210', '0211', '0215', '0218','0221') THEN
+	        		(SELECT sjcljg_mc FROM tyyw_zj_scdb_TYYW t3
+	        		JOIN tyyw_yx_ag_glaj_TYYW t4 ON t3.bmsah = t4.yaj_bmsah
+	        			WHERE t4.glaj_bmsah = t1.bmsah
+	        		)
+        			WHEN t1.ajlb_bm = '0214' THEN
+        			(SELECT scjg_mc
+        			 FROM tyyw_zj_zchdjd_TYYW t5 WHERE t5.bmsah = t1.bmsah
+        			)
+        			WHEN t1.ajlb_bm = '0220' THEN
+        			(SELECT sjjg_mc
+        			FROM tyyw_zj_sqgajgcllajd_TYYW zjsqgajgcllajd
+        				WHERE zjsqgajgcllajd.bmsah = t1.bmsah
+        			)
+        			WHEN t1.ajlb_bm IN ('0301','0314') THEN
+        			(SELECT sjqk_mc
+        			 FROM tyyw_gs_scqs_TYYW gsscqs
+        				WHERE gsscqs.bmsah = t1.bmsah
+        			)
+        			WHEN t1.ajlb_bm = '0303' THEN
+			        (SELECT escpjg_mc
+			        FROM tyyw_gs_esss_TYYW gsesss
+			        	WHERE gsesss.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm = '0322' THEN
+			        (SELECT sjjg_mc
+			         FROM tyyw_gs_hzzs_TYYW gshzzs
+			        	WHERE gshzzs.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm = '0319' THEN
+			        (SELECT
+			        	   sjqk_mc
+			        FROM tyyw_gs_scqs_TYYW gsscqc
+			        	JOIN tyyw_yx_ag_glaj_TYYW agglaj ON gsscqc.bmsah = agglaj.yaj_bmsah
+			        	WHERE agglaj.glaj_bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm IN ('0304', '0305', '0311', '0325', '0326') THEN
+        			(SELECT SJCLQK_MC
+        			FROM tyyw_gg_dwfzxx_TYYW ggdwfzxx
+        			WHERE ggdwfzxx.bmsah = t1.bmsah
+        			)
+        			WHEN t1.ajlb_bm IN ('0315', '0316') THEN
+			        (SELECT scclqk_mc
+			        FROM tyyw_gs_mswfsdsqtb_TYYW gsmswfsdsqtb
+			        	WHERE gsmswfsdsqtb.bmsah = t1.bmsah
+			        )
+<!--          		WHEN t1.ajlb_bm = '0305' THEN
+         			(SELECT scjg_mc
+         			FROM tyyw_gs_spjdcxks gsspjdcxks
+         				WHERE gsspjdcxks.bmsah = t1.bmsah) -->
+        			WHEN t1.ajlb_bm = '0320' THEN
+			        (SELECT scjg_mc
+			        FROM tyyw_gs_zwfzyspjtbsc_TYYW gszwfzyspjtbsc
+			        	WHERE gszwfzyspjtbsc.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm IN ('0409', '0509') THEN
+			        (SELECT ccjlscjg_mc
+			        FROM tyyw_ziz_ccjlsc_TYYW zizccjlsc
+			        	WHERE zizccjlsc.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm IN ('0403', '0411', '0503', '0511') THEN
+			        (SELECT zjcljg_mc
+			        FROM tyyw_ziz_lazc_TYYW zizlazc
+			        	WHERE zizlazc.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm = '0702' THEN
+			        (SELECT jaqk_mc
+			        FROM tyyw_mx_spcxjd_TYYW mxspcxjd
+			        	WHERE mxspcxjd.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm = '0701' THEN
+			        (SELECT jaclqk_mc
+			        FROM tyyw_mx_msxzjd_tyyw mxmsxzjd
+			        	WHERE mxmsxzjd.bmsah = t1.bmsah
+			        )
+			        WHEN t1.ajlb_bm = '0703' THEN
+			        (SELECT jaqk_mc
+			        FROM tyyw_mx_zxhdjd_tyyw mxzxhdjd
+			        	WHERE mxzxhdjd.bmsah = t1.bmsah
+			        )
+			        WHEN t1.ajlb_bm = '0704' THEN
+			        (SELECT jaqk_mc
+			        FROM tyyw_mx_bdlxzzjd_tyyw mxbdlxzzjd
+			        	WHERE mxbdlxzzjd.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm = '0707' THEN
+			        (SELECT jaqk_mc
+			        FROM tyyw_mx_fcjz_tyyw mxfcjz
+			        	WHERE mxfcjz.bmsah = t1.bmsah
+			        )
+       			    WHEN t1.ajlb_bm = '0706' THEN
+			        (SELECT jaqk_mc
+			        FROM tyyw_mx_gjjd_TYYW mxgjjd
+			        	WHERE mxgjjd.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm = '0705' THEN
+			        (SELECT jaqk_mc
+			        FROM tyyw_mx_zcqs_tyyw mxzcqs
+			        	WHERE mxzcqs.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm = '0803' THEN
+			        (SELECT jacljg_mc
+			        FROM tyyw_kg_jczjdqk_tyyw kgjczdqk
+			        	WHERE kgjczdqk.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm = '0907' THEN
+			        (SELECT sccljg_mc
+			        FROM tyyw_ss_xzpckyaj_tyyw ssxzpckyaj
+			        	WHERE ssxzpckyaj.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm IN ('0904', '0905') THEN
+			        (SELECT sccljg_mc
+			        FROM tyyw_ss_xspc_TYYW ssxspc
+			        	WHERE ssxspc.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm = '0906' THEN
+			        (SELECT sccljg_mc
+			         FROM tyyw_ss_pcjd_TYYW sspcjd
+			        	WHERE sspcjd.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm = '0901' THEN
+			        (SELECT blqk_mc
+			        FROM tyyw_ss_xsssfc_TYYW ssxsssfc
+			        	WHERE ssxsssfc.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm = '0902' THEN
+			        (SELECT lafcjg_mc
+			        FROM tyyw_ss_xsssbasc_TYYW ssxsssbasc
+			        	WHERE ssxsssbasc.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm IN ('0903', '0909') THEN
+			        (SELECT sczscpqk_mc
+			        FROM tyyw_ss_xsssfcks_TYYW ssxsssfcks
+			        	WHERE ssxsssfcks.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm = '0913' THEN
+			        (SELECT zspjqk_mc
+			        FROM tyyw_gg_dwfzxx_TYYW ggdwfzxx
+			        	WHERE ggdwfzxx.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm = '1609' THEN
+			        (SELECT tqjxjsscyj_mc
+			        FROM tyyw_zxjc_jjtqscqk_TYYW zxjcjjtqscqk
+			        	WHERE zxjcjjtqscqk.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm = '1608' THEN
+			        (SELECT tqjrscyj_mc
+			        FROM tyyw_zxjc_jjtqjrscqk_TYYW zxjcjjtqjrscqk
+			        	WHERE zxjcjjtqjrscqk.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm = '1614' THEN
+			        (SELECT scyj_mc
+			        FROM tyyw_zxjc_tqjwsjscqk_TYYW zxjctqjwsjscqk
+			        	WHERE zxjctqjwsjscqk.bmsah = t1.bmsah
+			        )
+        			WHEN t1.ajlb_bm = '1601' THEN
+			        (SELECT sjcljg_mc
+			        FROM tyyw_zxjc_dbqk_TYYW zxjcdbqk
+			        	WHERE zxjcdbqk.bmsah = t1.bmsah
+			        )
+			        WHEN t1.ajlb_bm = '1602' THEN
+			        (SELECT sjjg_mc
+			        FROM tyyw_zxjc_byxblqk_TYYW zxjcbyxblqk
+			        	WHERE zxjcbyxblqk.bmsah = t1.bmsah
+			        )
+        ELSE
+        (SELECT bjqk from yx_sfda_ajbl ajbl where ajbl.bmsah =t1.bmsah) END),'') bjqk,
+<!--         (SELECT SUM(ws_num) ws_num
+        		FROM (SELECT COUNT(*) ws_num
+        			  FROM yx_ws_sl_tyyw s
+        				WHERE s.bmsah IN
+				        <foreach item='item' index='index' collection='sahlist' open='('
+				                 separator=',' close=')'>
+				            #{item}
+				        </foreach>
+        			      AND sfsc = 'N'
+        	 UNION
+        	 SELECT COUNT(*)
+        	 FROM yx_fj
+        		WHERE wbid IN
+		        <foreach item='item' index='index' collection='sahlist' open='('
+		                 separator=',' close=')'>
+		            #{item}
+		        </foreach>
+         		)) ws_num,  -->
+	        t1.bmsah,
+	        t1.ajlb_bm
+        FROM tyyw_gg_ajjbxx_TYYW t1
+        	where t1.sfsc='N'
+			<if test='sahlist != null and sahlist.size() > 0'>
+		     and t1.bmsah in
+		     <foreach item='item' index='index' collection='sahlist' open='(' separator=',' close=')'>
+		         #{item}
+		     </foreach>
+		    </if>
+    </select>
+	
+	<!--文书数量-->
+	<select id="countFjAndWS" resultType="java.util.HashMap">
+        select count(bmsah) wssl,
+			   bmsah
+          from( 
+				select bmsah
+				from yx_ws_sl_tyyw s
+				where sfsc = 'N'
+					<if test='sahlist != null and sahlist.size() > 0'>
+					and s.bmsah in
+						<foreach item='item' index='index' collection='sahlist' open='(' separator=',' close=')'>
+						 #{item}
+						</foreach>
+					</if>
+
+				union all
+
+				select wbid as bmsah
+				from yx_fj
+				<if test='sahlist != null and sahlist.size() > 0'>
+				where wbid in
+					<foreach item='item' index='index' collection='sahlist' open='(' separator=',' close=')'>
+					 #{item}
+					</foreach>
+				</if>
+		      ) t
+		        group by t.bmsah
+    </select>
+	
+	
+	<!-- 根据部门受案号查询案件详情 -->
+	<select id="selectAjxqByBmsah" resultType="java.util.HashMap">
+		SELECT
+			    nvl((CASE
+					 WHEN t1.ajlb_bm = '0201' 
+					 THEN (SELECT sjcljg_mc 
+					 	   FROM tyyw_zj_scdb_TYYW t2 
+					 	   WHERE t2.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm IN ('0202', '0203', '0209', '0210', '0211', '0215','0218','0211') 
+					 THEN (SELECT substr(sjcljg_mc, 100)
+						   FROM tyyw_zj_scdb_TYYW t3
+						   JOIN tyyw_yx_ag_glaj_TYYW t4
+		                   ON t3.bmsah = t4.yaj_bmsah
+						   WHERE t4.glaj_bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0214' 
+					 THEN (SELECT scjg_mc
+						   FROM tyyw_zj_zchdjd_TYYW t5 
+						   WHERE t5.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0220'
+					 THEN (SELECT sjjg_mc
+						   FROM tyyw_zj_sqgajgcllajd_TYYW zjsqgajgcllajd
+						   WHERE zjsqgajgcllajd.bmsah = t1.bmsah)
+				     WHEN t1.ajlb_bm IN ('0301','0314')
+					 THEN (SELECT sjqk_mc 
+					 	   FROM tyyw_gs_scqs_TYYW gsscqs
+						   WHERE gsscqs.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0303' 
+					 THEN (SELECT escpjg_mc
+						   FROM tyyw_gs_esss_TYYW gsesss
+						   WHERE gsesss.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0322'
+					 THEN (SELECT sjjg_mc
+						   FROM tyyw_gs_hzzs_TYYW gshzzs
+						   WHERE gshzzs.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0319' 
+					 THEN (SELECT substr(gsscqc.sjqk_mc, 100)
+						   FROM tyyw_gs_scqs_TYYW gsscqc
+						   JOIN tyyw_yx_ag_glaj_TYYW agglaj
+						   ON gsscqc.bmsah = agglaj.yaj_bmsah
+						   WHERE agglaj.glaj_bmsah = t1.bmsah)
+				 	 WHEN t1.ajlb_bm IN ('0303', '0304','0305', '0311', '0325', '0326')
+				 	 THEN (SELECT zspjqk_mc
+						   FROM tyyw_gg_dwfzxx_TYYW ggdwfzxx
+						   WHERE ggdwfzxx.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm IN ('0315', '0316')
+					 THEN (SELECT scclqk_mc
+						   FROM tyyw_gs_mswfsdsqtb_TYYW gsmswfsdsqtb
+					   	   WHERE gsmswfsdsqtb.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0305' 
+					 THEN (SELECT scjg_mc
+						   FROM TYYW_GS_SPJDCXKS_TYYW gsspjdcxks
+						   WHERE gsspjdcxks.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0320'
+					 THEN (SELECT scjg_mc
+						   FROM TYYW_GS_ZWFZYSPJTBSC_TYYW gszwfzyspjtbsc
+						   WHERE gszwfzyspjtbsc.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm IN ('0409', '0509')
+					 THEN (SELECT ccjlscjg_mc
+						   FROM TYYW_ZIZ_CCJLSC_TYYW zizccjlsc
+						   WHERE zizccjlsc.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm IN ('0403', '0411', '0503','0511') 
+					 THEN (SELECT zjcljg_mc
+						   FROM TYYW_ZIZ_LAZC_TYYW zizlazc
+						   WHERE zizlazc.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0702' 
+					 THEN (SELECT jaqk_mc
+						   FROM TYYW_MX_SPCXJD_TYYW mxspcxjd
+						   WHERE mxspcxjd.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0701' 
+					 THEN (SELECT jaclqk_mc
+						   FROM TYYW_MX_MSXZJD_TYYW mxmsxzjd
+						   WHERE mxmsxzjd.bmsah = t1.bmsah)
+				     WHEN t1.ajlb_bm = '0703' 
+				     THEN (SELECT jaqk_mc
+						   FROM TYYW_MX_ZXHDJD_TYYW mxzxhdjd
+						   WHERE mxzxhdjd.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0704' 
+					 THEN (SELECT jaqk_mc
+					 	   FROM TYYW_MX_BDLXZZJD_TYYW mxbdlxzzjd
+						   WHERE mxbdlxzzjd.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0707'
+					 THEN (SELECT jaqk_mc
+						   FROM TYYW_MX_FCJZ_TYYW mxfcjz
+						   WHERE mxfcjz.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0706'
+					 THEN (SELECT jaqk_mc
+						   FROM TYYW_MX_GJJD_TYYW mxgjjd
+						   WHERE mxgjjd.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0705' 
+					 THEN (SELECT jaqk_mc
+						   FROM TYYW_MX_ZCQS_TYYW mxzcqs
+						   WHERE mxzcqs.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0803' 
+					 THEN (SELECT jacljg_mc
+						   FROM TYYW_KG_JCZJDQK_TYYW kgjczdqk
+						   WHERE kgjczdqk.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0907' 
+					 THEN (SELECT sccljg_mc
+						   FROM TYYW_SS_XZPCKYAJ_TYYW ssxzpckyaj
+						   WHERE ssxzpckyaj.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm IN ('0904', '0905')
+					 THEN (SELECT sccljg_mc 
+					 	   FROM TYYW_SS_XSPC_TYYW ssxspc
+						   WHERE ssxspc.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0906' 
+					 THEN (SELECT sccljg_mc
+						   FROM TYYW_SS_PCJD_TYYW sspcjd
+					 	   WHERE sspcjd.bmsah = t1.bmsah)
+				     WHEN t1.ajlb_bm = '0901' 
+				     THEN (SELECT blqk_mc 
+				     	   FROM TYYW_SS_XSSSFC_TYYW ssxsssfc
+						   WHERE ssxsssfc.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0902' 
+					 THEN (SELECT lafcjg_mc
+						   FROM TYYW_SS_XSSSBASC_TYYW ssxsssbasc
+						   WHERE ssxsssbasc.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm IN ('0903', '0909') 
+					 THEN (SELECT sczscpqk_mc
+					       FROM TYYW_SS_XSSSFCKS_TYYW ssxsssfcks
+						   WHERE ssxsssfcks.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '0913' 
+					 THEN (SELECT zspjqk_mc
+						   FROM TYYW_GG_DWFZXX_TYYW ggdwfzxx
+						   WHERE ggdwfzxx.bmsah = t1.bmsah)
+				     WHEN t1.ajlb_bm = '1609' 
+				     THEN (SELECT tqjxjsscyj_mc
+						   FROM TYYW_ZXJC_JJTQSCQK_TYYW zxjcjjtqscqk
+						   WHERE zxjcjjtqscqk.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '1608' 
+					 THEN (SELECT tqjrscyj_mc
+						   FROM TYYW_ZXJC_JJTQJRSCQK_TYYW zxjcjjtqjrscqk
+						   WHERE zxjcjjtqjrscqk.bmsah = t1.bmsah)
+		             WHEN t1.ajlb_bm = '1614' 
+		             THEN (SELECT scyj_mc
+						   FROM TYYW_ZXJC_TQJWSJSCQK_TYYW zxjctqjwsjscqk
+						   WHERE zxjctqjwsjscqk.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '1601' 
+					 THEN (SELECT sjcljg_mc
+						   FROM TYYW_ZXJC_DBQK_TYYW zxjcdbqk
+						   WHERE zxjcdbqk.bmsah = t1.bmsah)
+					 WHEN t1.ajlb_bm = '1602' 
+					 THEN (SELECT sjjg_mc
+					       FROM TYYW_ZXJC_BYXBLQK_TYYW zxjcbyxblqk
+						   WHERE zxjcbyxblqk.bmsah = t1.bmsah)
+					 ELSE (SELECT bjqk 
+					 	   FROM YX_SFDA_AJBL ajbl 
+					 	   WHERE ajbl.bmsah =t1.bmsah) END),' ') bjqk, <!-- 办结情况 -->
+			   
+			   t1.bmsah bmsah, <!-- 部门受案号 -->
+			   t1.ajlb_bm ajlbbm,<!-- 案件类别编码 -->
+			   nvl(t1.ajmc, ' ') ajmc, <!-- 案件名称 -->
+			   nvl(t1.ajlb_mc, ' ') ajlbmc,<!-- 案件类别 -->
+       		   nvl(t1.cbdw_mc, ' ') cbdwmc, <!-- 承办单位 -->
+			   to_char((case when t1.ajlb_bm = '0201' then t1.bjrq
+							 when t1.ajlb_bm = '0301' then t1.bjrq
+							 else t1.wcrq
+						end),'yyyy-MM-dd') as wjrq,
+       		   to_char(t1.slrq,'yyyy-MM-dd') slrq,  <!-- 受理日期 -->
+       		   nvl(t1.aqzy, ' ') aqzy <!-- 案情摘要 -->
+		FROM TYYW_GG_AJJBXX_TYYW t1 
+		WHERE t1.bmsah = #{bmsah}
+
+        union all
+
+        select
+               ajxx.bjqk bjqk,
+               ajxx.bmsah bmsah,
+               ajxx.ajlb_bm ajlbbm,
+               ajxx.ajname ajmc,
+               ajxx.ajlb ajlbmc,
+               ajxx.cbdw_mc cbdwmc,
+			   to_char(ajxx.bjrq,'yyyy-MM-dd') as wjrq,
+               to_char(ajxx.ajslrq,'yyyy-MM-dd') slrq,  <!-- 受理日期 -->
+               nvl(ajxx.aqzy, ' ') aqzy <!-- 案情摘要 -->
+        from yx_sfda_ajxx ajxx
+        where ajxx.bmsah = #{bmsah}
+
+	</select>
+	
+	<!--根据部门受案号查询办案单元编码-->
+    <select id="selectBadyByBmsah" resultType="java.util.HashMap">
+        select a.badybm 
+        from TYYW_GG_AJJBXX_TYYW a
+        inner join TYYW_XT_QX_BADYRYFP_TYYW b 
+        on a.badybm=b.badybm 
+        where bmsah=#{bmsah} 
+        group by a.badybm
+    </select>
+	
+	<!--如果办案单元编码不为空，则根据办案单元编码查询办案人员-->
+    <select id="selectBaryByBadybm" resultType="java.util.HashMap">
+		select t1.*
+		from(
+			select t.*,
+                   row_number() over (partition by t.xm order by t.xm desc) aa
+			from(
+				select a.mc xm,
+                       decode(a.xb,'1','男','0','女') xb,
+                       b.badybm,
+                       b.badyjsmc sflb,
+                       d.bmmc szbm
+				from XT_ZZJG_RYBM_TYYW a
+				inner join "TYYW_XT_QX_BADYRYFP_TYYW" b on a.gh = b.gh and a.dwbm = b.dwbm
+        	    inner join xt_qx_ryjsfp_tyyw c on a.gh=c.gh and a.dwbm=c.dwbm
+        	    inner join XT_ZZJG_BMBM_TYYW d on d.dwbm = c.dwbm and d.bmbm = c.bmbm
+        	    where badybm IN
+                <foreach item='item' index='index' collection='badybm' open='(' separator=',' close=')'>
+                    #{item}
+                </foreach>
+        		) t
+        	 ) t1
+        where aa = 1
+	</select>
+	
+	<!--根据部门受案号查询承办人员-->
+    <select id="selectCbryByBmsah" resultType="java.util.HashMap">
+       select ajjbxx.cbr xm,
+              ajjbxx.cbrgh gh,
+              ajjbxx.cbdw_bm dwbm
+       from TYYW_GG_AJJBXX_TYYW ajjbxx
+       where ajjbxx.bmsah = #{bmsah}
+
+       union all
+
+       select ajxx.cbr xm,
+              ajxx.cbrgh gh,
+              ajxx.cbdw_bm
+       from yx_sfda_ajxx ajxx
+       where ajxx.bmsah = #{bmsah}
+	</select>
+
+	<!--根据部门受案号和统一受案号查询协同办案人员,之前是查的nzrgh和nzrxm-->
+	<select id="selectXtbaryByBmsahAndTysah" resultType="java.util.HashMap">
+		select distinct t.ssrgh gh,
+					    t.ssrxm xm,
+					    t.dwbm
+		from YX_WS_SL_TYYW t
+		where t.bmsah = #{bmsah}
+		  and t.tysah = #{tysah}
+		  and t.sfsc = 'N'
+	</select>
+
+	<!--查询案管部门人员-->
+	<select id="selectAgryByDwbm" resultType="java.util.HashMap">
+		select t.dwbm, t.bmbm,t.gh
+		from XT_QX_RYJSFP_TYYW t
+		inner join XT_ZZJG_RYBM_TYYW r on r.dwbm = t.dwbm and r.gh = t.gh
+		where t.dwbm = #{dwbm}
+		  and r.sfsc = 'N'
+		  and t.bmbm = (
+						select b.bmbm
+						from XT_ZZJG_BMBM_TYYW b
+						where b.dwbm = #{dwbm}
+						  and b.sfsc = 'N'
+						  and (b.bmjc like '%案管%' or b.bmjc like '%业管%')
+						)
+	</select>
+
+	<!-- 根据部门受案号查询嫌疑人详情 -->
+	<select id="selectXyrxxByBmsah" resultType="java.util.HashMap">
+		SELECT bmsah,
+			   nvl(xm,' ') xm,
+			   nvl(xb_mc,' ') xb,
+			   nvl(zw,' ') zw,
+			   nvl(zj_mc,' ') zj,
+			   nvl(zy_mc,' ') zy
+		FROM TYYW_GG_XYRJBXX_TYYW
+		WHERE sfsc = 'N'
+		   and bmsah = #{bmsah}
+	</select>
+	<!-- ********************************************** 司法档案模块的案件信息查询【end】  **********************************************  -->
+	
+	<!-- 新增案件办理  yx_sfda_ajxx表-->
+	<insert id="addAjblToAjxx" parameterType="java.util.Map">
+		insert into YX_SFDA_AJXX (
+								  AJID,
+								  DA_ID,
+								  AJNAME,
+								  BMSAH,
+								  CBDW_BM,
+								  CBDW_MC,
+								  AJLB,
+								  AJLB_BM,
+								  CBRGH,
+								  CBR,
+								  AJSLRQ,
+								  <choose>
+									  <when test="dqrq != null">
+										  DQRQ,
+									  </when>
+									  <otherwise></otherwise>
+								  </choose>
+								  BJRQ,
+								<choose>
+									<when test="ajwjrq != null">
+										AJWJRQ,
+									</when>
+									<otherwise></otherwise>
+								</choose>
+								  AQZY,
+								  CBBM_BM,
+								  CBBM_MC,
+								  AJSTATUS,
+								  BZ,
+								  BJQK,
+								  CBRYJ
+								 )
+						   values(
+						          #{id},
+						          #{did},
+						          #{ajmc},
+						          #{bmsah},
+						          #{cbdwbm},
+						          #{cbdwmc},
+						          #{ajlb},
+						          #{ajlbbm},
+						          #{cbrgh},
+						          #{cbr},
+						          #{ajslrq},
+								<choose>
+									<when test="dqrq != null">
+										#{dqrq},
+									</when>
+									<otherwise></otherwise>
+								</choose>
+						          #{bjrq},
+								<choose>
+									<when test="ajwjrq != null">
+										#{ajwjrq},
+									</when>
+									<otherwise></otherwise>
+								</choose>
+						          #{aqzy},
+						          #{cbbmbm},
+						          #{cbbmmc},
+						          #{ajzt},
+						          #{fz},
+						          #{bjqk},
+						          #{cbryj}
+						         )
+	</insert>
+	
+	<!-- 展示新增列表数据:YX_SFDA_AJXX -->
+	<select id="selectALLNewAjbl" resultType="java.util.HashMap">
+		select t.ajid,
+			   t.da_id,
+			   t.ajname,
+			   t.bmsah,
+			   t.cbdw_bm,
+			   t.cbdw_mc,
+			   t.ajlb,
+			   t.ajlb_bm,
+		       t.cbrgh,
+		       t.cbr,
+		       to_char(t.ajslrq,'yyyy-MM-dd') ajslrq,
+		       t.blksrq,
+		       nvl(t.dqrq,'') dqrq,
+		       to_char(t.bjrq,'yyyy-MM-dd') bjrq,
+		       nvl(t.ajwjrq,'') ajwjrq,
+		       t.cbxz,
+		       t.cbxzbm,
+		       t.aqzy,
+		       t.cbbm_bm,
+		       t.cbbm_mc,
+		       t.ajstatus,
+		       (trunc(t.bjrq)-trunc(t.blksrq)) blsx,
+		       to_char(t.CREATETIME,'yyyy-MM-dd') lrrq,
+		       t.bz,
+		       t.bjqk,
+		       t.cbryj
+		from YX_SFDA_AJXX t
+		where 1=1
+		<if test="did != '' and did != null">
+			and t.da_id = #{did}
+		</if>
+		<if test="ajId != '' and ajId != null">
+			and instr(#{ajId},t.ajid) > 0
+		</if>
+		<if test="ajStatus != '' and ajStatus != null">
+			and t.ajstatus = #{ajStatus}
+		</if>
+	    order by t.MODIFYTIME desc,t.CREATETIME desc
+	</select>
+	
+	<!-- 根据案件id(也可以根据bmsah)删除新增列表中的案件 ajxx表 -->
+    <delete id="deleteAjxx" parameterType="java.util.Map">
+    	delete from YX_SFDA_AJXX where ajid = #{ajid,jdbcType=VARCHAR}
+    </delete>
+    
+    <delete id="deleteAjblFj" parameterType="java.util.Map">
+    	delete from YX_FJ where wbid = #{ajid,jdbcType=VARCHAR}
+    </delete>	
+	
+	<!-- 根据部门受案号修改案件办理：YX_SFDA_AJXX表 -->
+	<update id="updateAjxxByBmsah" parameterType="java.util.Map">
+		update YX_SFDA_AJXX
+		<set>
+			AJNAME = #{ajmc},
+			AJLB = #{ajlb},
+			AJLB_BM = #{ajlbbm},
+			AJSLRQ = #{ajslrq},
+			<choose>
+				<when test="dqrq != null">
+					DQRQ = #{dqrq},
+				</when>
+				<otherwise>
+					DQRQ = '',
+				</otherwise>
+			</choose>
+		    BJRQ = #{bjrq},
+			<choose>
+				<when test="ajwjrq != null">
+					AJWJRQ = #{ajwjrq},
+				</when>
+				<otherwise>
+					AJWJRQ = '',
+				</otherwise>
+			</choose>
+		    AQZY = #{aqzy},
+			MODIFYTIME = #{zhgxsj},
+			BZ = #{fz},
+			BJQK = #{bjqk},
+			CBRYJ = #{cbryj}
+		</set>
+		where AJID = #{ajId}
+	</update>
+	
+	<!--根据部门映射编码获取案件类别编码-->
+    <select id="selectAjlbByywbm" resultType="java.util.HashMap">
+		select b.ajlbbm,b.ajlbmc
+		from XT_DM_AJLBBM_TYYW b
+		where b.ywbm in (
+		                select distinct a.ywbm
+		                from XT_ZZJG_BMLBYWFP_TYYW a
+		                where a.bmlbbm in 
+		                <foreach item='item' index='index' collection='ywbm' open='(' separator=',' close=')'>
+	            			#{item}
+	        			</foreach>
+		               )
+		order by b.ajlbbm  
+	</select>
+	
+	<!-- 查询承办小组 -->
+	<select id="selectCbxz" resultType="java.util.HashMap">
+		select id,
+			   daid,
+			   dwbm,
+			   gh,
+			   cbxzbm,
+			   cbxzmc,
+			   blfs,
+			   blfsbm
+		from YX_SFDA_CBXZ
+		where DAID = #{daId}
+		order by CJSJ desc
+	</select>
+	
+	<!-- 新增承办小组 -->
+	<insert id="addCbxz" parameterType="java.util.Map">
+		insert into YX_SFDA_CBXZ(
+								 ID,
+								 DWBM,
+								 GH,
+								 BLFS,
+								 BLFSBM,
+								 DAID,
+								 CBXZMC,
+								 CBXZBM
+								)
+						  values(
+						         #{id},
+						         #{dwbm},
+						         #{gh},
+						         #{blfs},
+						         #{blfsbm},
+						         #{daId},
+						         #{cbxzmc},
+						         #{cbxzbm}
+						  		)
+	</insert>
+	
+	<!-- 删除承办小组 -->
+	<delete id="deleteCbxz" parameterType="java.util.Map">
+    	delete from YX_SFDA_CBXZ 
+    	where ID = #{id,jdbcType=VARCHAR}
+    </delete>
+
+	<!--根据档案id查询承办小组-->
+    <select id="getCbxz" resultType="java.util.HashMap">
+		select cbxzbm,
+			   cbxzmc
+		from YX_SFDA_CBXZ
+		where DAID = #{daId}
+		order by CJSJ desc
+	</select>
+
+	<select id="getAjslOfAjxx" resultType="java.lang.Integer">
+		select count(*) slOfAjxx
+		from yx_sfda_ajxx
+		where da_id = #{daId}
+			and sfsc = 'N'
+			and ajstatus = '1'
+	</select>
+
+	<!--获取所有案件类别编码-->
+	<select id="getAllAjlbbm" resultType="java.util.HashMap">
+		select ajlbbm
+		from XT_DM_AJLBBM_TYYW t
+		group by ajlbbm
+	</select>
+
+	<select id="getAjsByBmsahs" resultType="java.util.HashMap">
+		select  t.bmsah,
+				t.tysah,
+				t.ajmc,
+				t.ajlb_mc,
+				t.cbr,
+				t.cbbm_mc,
+				nvl(t.slrq,'') slrq,
+				nvl(t.wcrq,'') wcrq,
+				nvl(t.bjrq,'') bjrq
+		from tyyw_gg_ajjbxx_tyyw t
+		where t.bmsah = #{bmsah}
+
+	</select>
+
+    
+</mapper>

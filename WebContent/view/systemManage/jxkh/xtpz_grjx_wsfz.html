@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>系统配置-个人绩效-文书分数配置界面</title>
+</head>
+<body>
+<div>
+    <div>
+        <div id="query_param_div_wsfz">
+            <a id="add_btn_wsfz" class="add_btn" href="javascript:void(0)" style="margin:5px;">添加文书类型</a>
+        </div>
+        <div>
+            <table id="xt_grjx_wsfz_talbe"></table>
+        </div>
+    </div>
+</div>
+<div id="grjx_wsfz_edit_div" style="display: none;">
+    <form id="grjx_wsfz_form" method="post">
+        <div>
+            <div style="margin-left: 10px;margin-top: 10px">
+                <input id="grjx_wsfz_id" name="id" type="hidden">
+                <span style="font-size: 14px;margin-left: 5px">所属部门：</span>
+                <input id="grjx_wsfz_ssbm" name="ssbm" style="width: 250px;height: 32px;"/>
+            </div>
+
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px;margin-left: 5px">文书编号：</span>
+                <input id="grjx_wsfz_wsNum" name="wsNum" style="width: 250px;height: 32px;"/>
+            </div>
+
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px;margin-left: 5px">文书名称：</span>
+                <input id="grjx_wsfz_wsName" name="wsName" style="width: 250px;height: 32px;"/>
+            </div>
+
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px;margin-left: 5px">对应分值：</span>
+                <input id="grjx_wsfz_fz" name="fz" style="width: 250px;height: 32px;"/>
+            </div>
+
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px;">备注/说明：</span>
+                <input name="remarks" id="grjx_wsfz_remarks" style="width: 250px;height: 70px;"/>
+            </div>
+
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px;margin-left: 33px">序号：</span>
+                <input name="xh" id="grjx_wsfz_xh" style="width: 250px;height: 32px;"/>
+            </div>
+
+            <!--<div style="margin-left: 200px;margin-top: 10px">
+                <a id="save_btn_wsfz" href="javascript:void(0)" style="margin:15px;">保存</a>
+                <a id="cancel_btn_wsfz" href="javascript:void(0)" style="margin:15px;">取消</a>
+            </div>-->
+
+            <div class="xiadivbt">
+                <input type="button" id="cancel_btn_wsfz" value="取消" style="background: #fff; border: 1px solid #c1c1c1; color: #666;"/>
+                <input type="button" id="save_btn_wsfz" value="保存" style="margin-right: 10px;" />
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+<script src="../../../js/zhyw/xtgl/xtpz_grjx_wsfz.js" charset="utf-8"></script>
+</html>

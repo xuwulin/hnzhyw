@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.cases.mapper.AjywlxtjMapper">
+
+	<resultMap id="AjywlxtjMap" type="Ajywlx">
+		<result property="jdb" column="jdb" javaType="java.lang.Integer"></result>
+		<result property="zj" column="zj" javaType="java.lang.Integer"></result>
+		<result property="gs" column="gs" javaType="java.lang.Integer"></result>
+		<result property="ft" column="ft" javaType="java.lang.Integer"></result>
+		<result property="fd" column="fd" javaType="java.lang.Integer"></result>
+		<result property="js" column="js" javaType="java.lang.Integer"></result>
+		<result property="mx" column="mx" javaType="java.lang.Integer"></result>
+		<result property="kg" column="kg" javaType="java.lang.Integer"></result>
+		<result property="ss" column="ss" javaType="java.lang.Integer"></result>
+		<result property="yf" column="yf" javaType="java.lang.Integer"></result>
+		<result property="jwb" column="jwb" javaType="java.lang.Integer"></result>
+		<result property="fhb" column="fhb" javaType="java.lang.Integer"></result>
+		<result property="jj" column="jj" javaType="java.lang.Integer"></result>
+		<result property="ag" column="ag" javaType="java.lang.Integer"></result>
+		<result property="tj" column="tj" javaType="java.lang.Integer"></result>
+	</resultMap>
+
+	<select id="getMountOfAj" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_AJYWLXTJ.PROC_GETCOUNT(
+          		#{p_cbdwbm,mode=IN,jdbcType=VARCHAR},	
+          		#{p_cbrgh,mode=IN,jdbcType=VARCHAR},
+          		#{p_kssj,mode=IN,jdbcType=VARCHAR},
+          		#{p_jssj,mode=IN,jdbcType=VARCHAR},
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=AjywlxtjMap},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>  
+	</select>
+	
+	
+</mapper>

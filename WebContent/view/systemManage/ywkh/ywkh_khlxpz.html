@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>业务考核-考核单位配置</title>
+    <!--页面css--->
+    <link rel="stylesheet" type="text/css" href="../../../css/xtpz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/xtpz_rygl.css" />
+    <link rel="stylesheet" type="text/css"href="../../../js/plugin/easyui/themes/bootstrap/easyui.css">
+    <link rel="stylesheet" type="text/css"href="../../../js/plugin/easyui/themes/icon.css">
+    <!--<link type="text/css" rel="stylesheet"href="../../../js/plugin/easyui/themes/default/easyui.css" />-->
+    <link rel="stylesheet" href="../../../css/zTreeStyle/ztreedemo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css" />
+    <style>
+
+        /*.left_ul li:nth-of-type(9) a{*/
+			/*background-color:#0876D5;*/
+			/*color:#fff;*/
+			/*border: 1px solid #0876D5;*/
+			/*cursor:pointer;*/
+		/*}*/
+    </style>
+    <!--页面通用js-->
+    <script type="text/javascript" src="../../../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../js/plugin/easyui/jquery.easyui.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+    <script type="text/javascript" src="../../../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../../../js/zhyw/utils/common.js"></script>
+</head>
+<body>
+    <div class="xtpz">
+        <!--<div class="xtpz_top">当前位置 : 系统配置</div>-->
+        <!--<div class="xtpz_content">-->
+            <!--<div class="content_left">-->
+                <!--<div class="left_tree"></div>-->
+            <!--</div>-->
+
+            <!--<div class="content_right">-->
+                <!--<div class="right_top">-->
+                    <!--<img src="../../../image/icon_sd.png" style="float: left;margin: 17px 12px 0px 12px; ">考核类型配置-->
+                <!--</div>-->
+
+                <div class="right_btnk" style="width:97%">
+                    <!--<ul class="right_ul">-->
+                        <!--<li class="right_li" id="lxlb" style="width:105px;">考核类型列表</li>-->
+                        <!--&lt;!&ndash;<li id='addKhlx' style="width:105px;">添加考核类型</li>&ndash;&gt;-->
+                    <!--</ul>-->
+
+                    <div class="right_com_khlx">
+                        <div id="khlxToolbar" style="width: 100%; height: 30px;padding: 10px;">
+                            <span style="float: left;font-size: 14px;margin-top: 3px;">业务类型:</span>
+                            <!-- 类型树 -->
+                            <div style="float:left;height: 20px;margin-top: 2px; position: relative; margin-left: 10px;width: 18%; border-radius: 4px;">
+                                <input id="comboboxlx" type="text"  style="border: none; width: 100%" />                       
+                                <div id="menuContent2" style="display: none; position: absolute; z-index: 2;">
+                                    <ul id="treeDemo2_khlx" class="ztree" style="margin-top: 0; width:262px; background-color: #fff"></ul>
+                                </div>
+                            </div>
+                            <!-- 类型树 --><input type="hidden" id="qxYwkhKhlx">
+                            <a id="khlxReload" href="javascript:void(0)" onclick="clearLoad();" style="margin-left: 10px;">重新加载</a>
+
+                            <a id='addKhlx' class="addKhlxIcon" style="margin-left: 10px;">添加考核类型</a>
+                        </div>
+                        <table id="ywkhKhlxTable" style="width: 100%;"></table>
+                    </div>
+
+                    <div class="right_coml_khlx" style="display: none">
+                        <div style="width: 100%; float: left;height:500px;">
+                            <div style="width: 700px; float: left;margin-top: 50px;height:100%;">
+                                <div class="right_list">
+									<span>
+										<div class="list_1">业务类型:</div>
+									</span>
+                                    <!-- 单位树 -->
+                                    <div style="float:left;height: 30px; position: relative;width: 400px; border-radius: 4px;">
+                                     <input id="comboboxlxs" type="text"  style="border: none;height: 30px; width: 100%" />     
+                                        <div id="menuContent1" style="display: none; position: absolute; z-index: 2;top:31px;width:399px;">
+                                            <ul id="treeDemo1" class="ztree" style="margin-top: 0; width: 100%; background-color: #fff;padding:0;"></ul>
+                                        </div>
+                                    </div>
+                                    <!-- 单位树 -->
+                                    <input type="hidden" id="ywkhKhdwDwbm" name="ywkhKhdwDwbm">
+                                    <!--<input type="hidden" id="ywkhKhdwId" name="ywkhKhdwId">-->
+                                </div>
+                              <div class="right_list">
+									<span>
+										<div class="list_1">考核类型名称:</div>
+									</span>
+                                    <input id="ywkhkhlx" >
+                                </div>
+                                <div class="right_list">
+									<span>
+										<div class="list_1" id="ywkh_khlx_qz">权重值（%）:</div>
+									</span>
+                                    <input id="ywkhKhlxQz"/>
+                                </div>
+                                 <div class="right_list">
+									<span>
+										<div class="list_1" id="khlx">考核类型编码:</div>
+									</span>
+                                    <input id="ywkhkhlxbm" readonly="readonly" />
+                                </div>
+                                
+                                <div class="right_list">
+                                    <button id="addfgld_khlx" onclick="addOrModifyYwlxKhlx();" class="fgld_btn" >新增</button>
+                                    <button id="updatefgld_khlx" onclick="updateYwkhKhlx()" class="fgld_btn">修改</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div style="width: 28%; float: left"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+<!--本页面js-->
+<script src="../../../js/zhyw/ywkh/ywkh_khlxpz.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(".left_tree").load("../left_menu.html");
+</script>
+</html>

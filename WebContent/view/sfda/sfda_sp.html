@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>司法档案-档案审批页面</title>
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/bootstrap/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/icon.css">
+
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/constant.js"></script>
+
+    <style>
+        .judicialfilesmanage {
+            margin: 0 20px;
+        }
+
+        .judicialfilesmanage_tilte {
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            font-size: 12px;
+            color: #666666;
+            float: left
+        }
+
+        .judicialfilesmanage_one {
+            width: 100%;
+            border-radius: 4px;
+            background: white;
+            float: left;
+            border: 1px solid #efefef;
+            box-shadow: 0 0 0.5px 0 #ccc;
+            margin-top:5px
+        }
+
+        .judicialfilesmanage_two span {
+            font-size: 14px;
+            color: #333333;
+            float: left;
+            width: 60px;
+            line-height: 32px
+        }
+
+        .judicialfilesmanage_two input {
+            float: left;
+            padding: 0 0 0 6px;
+            height: 28px;
+            margin-left: 8px
+        }
+
+        .judicialfilesmanage .r_table thead {
+            background: #d8ecff;
+            height: 31px;
+            line-height: 31px;
+            text-align: left;
+            color: #134671
+        }
+
+        .judicialfilesmanage .r_table tbody tr {
+            cursor: pointer;
+            text-align: left;
+            height: 31px;
+            line-height: 31px;
+        }
+
+        .judicialfilesmanage .r_table tbody tr td {
+            border-top: 1px solid #c2e3fd
+        }
+
+        /*         .judicail_table::-webkit-scrollbar-thumb,#xsbl div.xsbl_left_autosy > ul::-webkit-scrollbar-thumb,#xsbl div.xsbl_left_-bottomsy > div.xsbl_digxsys::-webkit-scrollbar-thumb,#xsbl div.xsbl_left_-bottomsy > div.xsbl_digxsys::-webkit-scrollbar-thumb { */
+        /*             background-color: #cee2f3; */
+        /*             height: 40px; */
+        /*             outline-offset: -2px; */
+        /*             outline: 2px solid #fff; */
+        /*             border: 1px solid #fff; */
+        /*             -webkit-border-radius: 6px; */
+        /*         } */
+        .judicialfilesmanage_two select {
+            float: left;
+            padding: 5px;
+            height: 32px;
+            margin-left: 8px
+        }
+
+        /*!*---滚动条大小--*!*/
+        /*         .judicail_table::-webkit-scrollbar,#xsbl div.xsbl_left_autosy > ul::-webkit-scrollbar,#xsbl div.xsbl_left_-bottomsy > div.xsbl_digxsys::-webkit-scrollbar,#xsbl div.xsbl_left_-bottomsy > div.xsbl_digxsys::-webkit-scrollbar { */
+        /*             width: 10px; */
+        /*             height: 10px; */
+        /*         } */
+
+        /*IE滚动条样式*/
+
+        /*         #xsbl div.xsbl_left_topsy,#xsbl div.xsbl_left_autosy > ul,#xsbl div.xsbl_left_-bottomsy > div.xsbl_digxsys,#xsbl div.xsbl_left_-bottomsy > div.xsbl_digxsys{ */
+        /*             scrollbar-arrow-color: #cee2f3; */
+        /*             scrollbar-face-color: #cee2f3; */
+        /*             scrollbar-shadow-color: #cee2f3; */
+        /*         } */
+        .judicail_table table {
+            font-size: 14px;
+        }
+
+        .ju_btn {
+            display: inline-block;
+            width: 80px;
+            height: 32px;
+            background: #176ea5;
+            border-radius: 4px;
+            text-align: center;
+            line-height: 32px;
+            color: white;
+            font-size: 13px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .ju_btn_white {
+            display: inline-block;
+            width: 80px;
+            height: 32px;
+            background: #fff;
+            border-radius: 4px;
+            text-align: center;
+            line-height: 32px;
+            color: #000;
+            font-size: 13px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .ju_btn_white:hover {
+            background: #ccc;
+        }
+
+        .ju_btn:hover {
+            background: #0587d9;
+        }
+
+        .judicia_one {
+            width: 100%;
+            height: 600px;
+            margin-top: 10px;
+            float: left;
+        }
+
+        .judicia_left {
+            width: 20%;
+            height: 600px;
+            border-radius: 4px;
+            background: white;
+            float: left;
+            border: 1px solid #efefef;
+            box-shadow: 0 0 0.5px 0 #ccc
+        }
+
+        .judicia_right {
+            width: 79%;
+            margin-left: calc(1% - 4px);
+            height: 600px;
+            border-radius: 4px;
+            background: white;
+            float: left;
+            border: 1px solid #efefef;
+            box-shadow: 0 0 0.5px 0 #ccc
+        }
+
+        .judicia_left ul {
+            margin: 0 auto;
+            padding: 8px 0 0 0;
+        }
+
+        .judicia_left ul li {
+            list-style-type: none;
+            margin-left: 20px;
+            padding-bottom: 8px;
+        }
+
+        .judicia_left_tree {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            padding-left: 20px;
+            padding-top: 20px;
+            font-size: 14px;
+            color: #333333;
+        }
+
+        .judicia_left_tree span {
+            margin-left: 4px;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .judicia_right_left {
+                width: 35%;
+                height: 100%;
+                background: #d8ecff;
+                float: left;
+            }
+
+            .judicia_right_right {
+                width: calc(100% - 30px - 35%);
+                height: 100%;
+                float: left;
+                margin-left: 30px;
+            }
+
+            .judicia_right_com1 {
+                width: 100%;
+                float: left;
+                height: 45px;
+                margin-top: 5px;
+                font-size: 14px;
+            }
+        }
+
+        .judicia_right_left {
+            width: 30%;
+            height: 100%;
+            background: #d8ecff;
+            float: left;
+        }
+
+        .judicia_right_right {
+            width: 65%;
+            height: 100%;
+            float: left;
+            margin-left: 30px;
+        }
+
+        .judicia_right_com1 {
+            width: 100%;
+            float: left;
+            height: 40px;
+            line-height: 40px;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        @media screen and (min-width: 1025px) {
+            .judicia_right_left {
+                width: 30%;
+                height: 100%;
+                background: #d8ecff;
+                float: left;
+            }
+
+            .judicia_right_right {
+                width: calc(100% - 30px - 30%);
+                height: 100%;
+                float: left;
+                margin-left: 30px;
+            }
+
+            .judicia_right_com1 {
+                width: 100%;
+                float: left;
+                height: 40px;
+                line-height: 40px;
+                margin-top: 5px;
+                font-size: 14px;
+            }
+        }
+
+        .ju_table {
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .ju_table tr {
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .judicia_right_com {
+            width: 100%;
+            height: 30px;
+            border-bottom: 1px solid #b2d4ea;
+            float: left;
+            margin-top: 20px;
+        }
+
+        .judicia_right_com img {
+            float: left;
+        }
+
+        .judicia_right_com span {
+            font-size: 16px;
+            color: #0574d3;
+            float: left;
+            margin-left: 8px;
+            line-height: 22px;
+        }
+
+        .judicia_right_com2 {
+            width: 100%;
+            float: left;
+            height: 100px;
+            margin-top: 5px;
+        }
+
+        .judicia_right_com3 {
+            width: 100%;
+            float: left;
+            height: 100px;
+            margin-top: 15px;
+        }
+
+        .judicia_right_com1 span {
+            float: left;
+            margin-right: 30px;
+        }
+
+        .judicia_right_com3 ul li {
+            width: 54px;
+            float: left;
+            list-style-type: none;
+            margin-left: 30px;
+            text-align: center;
+        }
+
+        .judicia_right_com3 ul {
+            float: left;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .judicia_right_com3 ul li img {
+            float: left;
+            margin-left: 5px;
+        }
+
+        .judicia_right_calc {
+            height: 96%;
+        }
+
+        .judicialfilesmanage_two_input2 {
+            width: 57%;
+        }
+
+        .judicia_right_left_div {
+            width: 95%;
+        }
+
+        .judicia_right_left_div1 {
+            width: 95%;
+        }
+    </style>
+</head>
+<body style="background: #efeef4; margin: 0 auto; padding: 0; font-family: 微软雅黑">
+<div id="judicialfilesmanage" class="judicialfilesmanage">
+    <div class="judicialfilesmanage_tilte">
+        <span style="font-size:14px">当前位置:待办事项审批</span>
+        <div style="float:right;">
+            <button style="outline: none;cursor: pointer;background-color: #fff; width: 70px;height:32px; border: 1px solid #c1c1c1; border-radius: 5px; margin-top: 10px;margin-left:5px;" id="go_back_index">
+                <img src="../../image/fh.png" style="float: left; margin: 3.5px -5px 0 6px;">
+                <span style="display: inline-block; float: right; color: #095EDA;margin-top:3px;margin-right:6px;">返回</span>
+            </button>
+        </div>
+    </div>
+    <div class="judicialfilesmanage_one">
+        <div class="judicialfilesmanage_two" style="height: 13px;"></div>
+        <div class="judicail_table" style="margin: 0 20px;">
+            <table class="r_table"
+                   style="width: 100%; border: 1px solid #cae3fd;" cellpadding="0"
+                   cellspacing="0">
+                <tbody id='splc'>
+                <tr id="splctr1"
+                    style="background: #d8ecff; height: 31px; line-height: 31px; text-align: left; color: #134671">
+                    <td style="width: 40px"></td>
+                    <td>单位名称</td>
+                    <td>部门名称</td>
+                    <td>处理人</td>
+                    <td>处理意见</td>
+                    <td>处理时间</td>
+                    <td>处理结果</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="div_spyj" class="judicialfilesmanage_two" style="margin: 20px 20px; height: 32px">
+            <span>处理意见</span>
+            <input id="spyj" class="judicialfilesmanage_two_input2" type="text" style="width: calc(100% - 80px); line-height: 26px">
+        </div>
+        <div style='margin-right: 21px; overflow: hidden; margin-bottom: 10px;' id="shengpidivid">
+            <a id="button_agree" class="ju_btn" style="float: right; margin-left: 35px" onclick="addspyj(1)">同意</a>
+            <a id="button_refuse" class="ju_btn_white" style="float: right; margin-left: 10px" onclick="addspyj(2)">退回</a>
+            <a id="button_read" class="ju_btn" style="float: right; margin-left: 35px" onclick="addspyj(3)">设为已读</a>
+            <a id="button_recall" class="ju_btn" style="float: right; margin-left: 35px" onclick="addspyj(3)">撤回</a>
+        </div>
+    </div>
+
+
+</div>
+
+
+</body>
+<script>
+    //先隐藏撤回按钮，以后有已办事务时加入此功能
+    $('#button_recall').hide();
+
+    function min_width() {
+        $('.wrapper').css('min-width', '1200px')
+    };
+    function min_width2() {
+        $('.wrapper').css('min-width', '1200px')
+    };
+    function ifenone() {
+        $('.back_beiji').css('display', 'none')
+    };
+    function ifeblick() {
+        $('.back_beiji').css('display', 'block')
+    };
+    var params = getRequest();
+
+    var wbid = params.wbid; // 如果是办案业绩，拿到的wbid是案件的id,多条案件之间用,连接
+    var tjnf = params.nf;
+    var ssr = params.ssr;
+    var ssrdwbm = params.ssrdwbm;
+    var spzt = params.spzt;
+    var clnr = params.clnr;
+    var splx = params.splx;
+    var jdlx = params.jdlx;
+    var cljs = params.cljs;
+    var kssj = params.kssj;
+    var jssj = params.jssj;
+    var tjnf = params.nf; // 档案添加年份
+
+    var lcmbarray = [];//流程模板数组
+    var lcmb = null;//流程模板
+    var spymtype = pdymtype(spzt, cljs);
+    var currentUserInfo = {
+        spymtype: spymtype
+    }; //给子页面传递的参数列表
+    var selectshowbutton = selectShowButton(spzt, cljs);
+
+    //被审批人的单位名称、被审批人部门名称、审批人单位名称、审批人部门名称
+    var bsprdwmc = params.bspdwmc;
+    var bsprbmmc = params.bspbmmc;
+    var sprdwmc = params.sprdwmc;
+    var sprbmmc = params.sprbmmc;
+    var bsprdwbm = params.bspdwbm;
+    var bsprbmbm = params.bspbmbm;
+    var sprdwbm = params.sprdwbm;
+    var sprbmbm = params.sprbmbm;
+
+    // 获取档案归总表的信息
+    var daInfo = getFileInfo(ssrdwbm, ssr, kssj, jssj, tjnf);
+    var daId = daInfo.data.id; // 当前档案的档案id
+
+    if("12"==splx){
+        jdlx = "1200";
+    }
+
+    //获取流程模板
+    $.ajax({
+        url: rootPath + "/service/sp/getmb",
+        type: 'post',
+        async: false,
+        data: {
+            'jdlx': jdlx,
+            "jdzt": '',
+            "lclx": ''
+        },
+        dataType: 'json',
+        success: function (data1) {
+            lcmbarray = data1;
+        }
+    });
+
+    //判断应该选择展示哪些按钮
+    function selectShowButton(spzt, cljs) {
+        if (spzt == '1') {
+            if (cljs == 'AG' || cljs == 'RSB') {
+                return '2';//展示两个按钮，同意、退回
+            }
+            if (cljs == 'CJR' || cljs == 'FQR') {
+                return '1';//展示一个按钮
+            }
+        } else {
+            return '0';//隐藏所有按钮
+        }
+    }
+
+    //判断页面类型
+    function pdymtype(spzt, cljs) {
+        if (spzt == '1') {//待审批状态
+            if (cljs == 'RSB') {//处理角色是人事部
+                return '1';
+            } else if (cljs == 'AG') {//处理角色是案管
+                return '2';
+            } else if (cljs == 'CJR') {//处理角色是创建人
+                return '3';
+            } else {
+                return '4';
+            }
+        } else {
+            return '4';
+        }
+    }
+
+    //选择隐藏按钮
+    if (selectshowbutton == '0') {
+        $("#button_agree").hide();
+        $("#button_refuse").hide();
+        $("#judicialfilesmanage_one").css("height", "230px");
+        $("#div_spyj").hide();
+        $("#button_read").hide();
+    } else if (selectshowbutton == '1') {
+        $("#button_agree").hide();
+        $("#button_refuse").hide();
+        $("#div_spyj").hide();
+        $("#judicialfilesmanage_one").css("height", "230px");
+    } else {
+        $("#button_read").hide();
+    }
+    //判断是否隐藏撤回按钮
+    $.ajax({
+        url: rootPath + "/service/sp/getjdlx",
+        type: 'post',
+        async: false,
+        data: {
+            spstid: wbid,
+            splx: splx
+        },
+        dataType: 'json',
+        success: function (data1) {
+            if (!data1 || "0"==data1|| lcmbarray.jdlcList[0].jdlx != data1) {
+                $('#button_recall').hide();
+            }
+        }
+    });
+
+    //退回审核事件
+    $('#button_recall').on('click', function () {
+        $.ajax({
+            url: rootPath + "/service/sp/recall",
+            type: 'post',
+            async: false,
+            data: {
+                spstid: wbid,
+                splx: splx
+            },
+            dataType: 'json',
+            success: function (data1) {
+                if (data1 == '1') {
+                    top.msgAlertInfo("成功撤回");
+                    //$.messager.alert("提示", "成功撤回", "info");
+                    $('#button_recall').hide();
+                } else {
+                    top.msgAlertInfo("撤回失败");
+                    //$.messager.alert("提示", "撤回失败", "info");
+                }
+            }
+        });
+    });
+
+    // //审批状态为1则是同意,退回 3为设为已读,重新发起审批
+    // $(function(){
+    // 	if(spzt=='1'&&cljs=='CJR'){
+    // 		$("#button_agree").hide();
+    // 		$("#button_refuse").hide();
+    // 		$("#div_spyj").hide();
+    // 		$("#shengpidivid").html('');
+    // 	}
+    // });
+    //构建下拉数据
+    // $.getJSON('service/tree/zzjgtree', function(res) {
+    // 	var result = [];
+    // 	result.push(res);
+    // 	$('#spr').combotree({
+    // 		data : result,
+    // 		onHidePanel: isSelectPerson
+    // 	});
+    // });
+
+    function isSelectPerson() {
+        // 	var t = $('#spr').combotree('tree');
+        // 	var node = t.tree('getSelected');
+        // 	if (!node || node.valueSelect) {
+        // 		return;
+        // 	}
+
+        // 	$('#spr').combotree("showPanel");
+        // 	$('#spr').combotree("clear");
+    }
+
+    //审批方法同意为1,退回为2
+    function addspyj(type) {;
+        var lx = "2";
+        var spyj = $("#spyj").val();
+
+        if ("3" != type) {  //type的值说明：1、同意，2、不同意（退回）
+            if("12" == splx){
+                lcmb = lcmbarray.jdlcList[0];
+            }else{
+                if ('1' == type) {
+                    lcmb = lcmbarray.jdlcList[0];
+                }
+                if ('2' == type) {
+                    lcmb = lcmbarray.jdlcList[1];
+                }
+            }
+
+
+            var dwbm = ssrdwbm;
+            var gh = ssr;
+            var bmbm = "";
+
+            if(splx&&"12"==splx){
+                //先判定复选框是否选中
+                var sfdaBayjSpChecked = $('#sfda_bayj_sp_ckbox').prop('checked');//$("input[type='checkbox']").is(':checked');
+                var lczz = true; //流程终止【看前台页面是否有选中“选择下一审核人”】
+                //判断是否选择审批人以及准备审批人数据
+                if(sfdaBayjSpChecked){
+                    lczz = false;
+                    var sprObj = getCombotreeSprObj("sfda_bayj_spr_select");
+                    dwbm = sprObj.sprdwbm;
+                    gh = sprObj.sprgh;
+                    bmbm = sprObj.sprbmbm;
+                    var lcid = getRequest().lcid;
+                }
+                specialAudit(lcmb.jdlx,lcmb.lcjd,splx,dwbm,bmbm,gh,wbid,spyj,clnr,lcid,lczz,type);
+            }else{
+                commonAudit(dwbm,gh,type,spyj,lcmb);
+            }
+
+        } else {
+            top.msgProgressTip("正在处理……");
+            $.ajax({
+                url: rootPath + '/service/sp/setread',
+                type: 'post',
+                async: false,
+                data: {
+                    spstid: wbid,
+                    splx: splx
+                },
+                dataType: 'json',
+                success: function (data) {
+                    top.msgProgressTipClose();
+                    if (data.status == '1') {
+                        top.msgAlertInfo("标记成功");
+                        //$.messager.alert("提示","标记成功", "info");
+                        $("#button_read").hide();
+                        updatesplc(1);
+                    } else if (data.status == '0') {
+                        top.msgAlertError("标记失败");
+                        //$.messager.alert("提示","标记失败", "error");
+                    }
+                    document.getElementById('iframe').contentWindow.location.reload(true);
+                }
+            });
+
+        }
+
+    }
+    function updatesplc(ty) {
+        $.ajax({
+            url: rootPath + "/service/sfdasp/showsplc",
+            type: 'post',
+            async: false,
+            data: {
+                'wbid': getRequest().wbid,
+                'splx': splx,
+                'lcid': getRequest().lcid
+            },
+            dataType: 'json',
+            success: function (data) {
+                $('#splc').empty();
+                $('#splc').append(" <tr  id='splctr1' style=" + "'" + "background: #d8ecff;height: 31px;line-height: 31px;text-align: left;color: #134671" + "'" + "><td style=" + "'" + "width: 40px" + "'" + "></td><td>单位名称</td><td>部门名称</td><td>处理人</td><td>处理意见</td><td>处理时间</td><td>处理结果</td></tr>");
+                for (var i = data.length - 1; i >= 0; i--)
+                    addRow(data[i]);
+            }
+        });
+    }
+
+    $.ajax({
+        url: rootPath + "/service/sfdasp/showsplc",
+        type: 'post',
+        async: false,
+        data: {
+            'wbid': getRequest().wbid,
+            'splx': splx,
+            'lcid': getRequest().lcid
+        },
+        dataType: 'json',
+        success: function (data) {
+
+            for (var i = data.length - 1; i >= 0; i--)
+                addRow(data[i]);
+        }
+    });
+
+    function addRow(object) {
+        var sj = (object.spsj).split('-');
+        var spyj;
+        if (typeof (object.spyj) == "undefined") {
+            spyj = "";
+        } else {
+            var data = object.spyj;
+            var ss = data.split("fqrspyj");
+            if (ss.length > 1) {
+                spyj = "";
+            } else {
+                spyj = object.spyj;
+            }
+        }
+
+        $("#splctr1").after(
+            "<tr><td></td><td>" + object.spdwmc + "</td>" + "<td>"
+            + object.spbmmc + "</td>" + "<td>" + object.sprmc
+            + "</td>" + "<td>" + spyj + "</td>" + "<td>" + sj[0]
+            + "." + sj[1] + "." + sj[2] + "</td>" + "<td>"
+            + object.spzt + "</td>" + "</tr>");
+
+    }
+    var height_a = document.documentElement.clientHeight + 30;
+
+    if ("12" === getRequest().splx) {//办案业绩
+        $("#div_spyj").after("<div style='margin-left: 20px;' id='sfda_ajxx_xzspr_div'>"
+            +"<input type='checkbox' checked='true' id='sfda_bayj_sp_ckbox'/>选择下一审核人："
+            +"<input id='sfda_bayj_spr_select' name='sfda_bayj_spr_select' style='width: 230px;height:26px;'/>"
+            +"<br/><span style='font-size:14px;'>注：勾选下一审核人表示流程尚未结束。</span>"
+            +"</div>");
+        getAllRyOfDwBmTree("sfda_bayj_spr_select",null,null,null,null,"2");	//审批人下拉树【全院】
+
+        $("#judicialfilesmanage").append("<iframe src='" + rootPath + "/view/sfda/sfda_bayj.html?wbid=" + wbid
+            + "&daId=" + daId
+            + "&nf=" + tjnf
+            + "&ssr=" + ssr
+            + "&ssrdwbm=" + ssrdwbm
+            + "&kssj=" + getRequest().kssj
+            + "&jssj=" + getRequest().jssj
+            + "&splx=" + getRequest().splx
+            + "&lcid=" + getRequest().lcid
+            + "&spym=" + getRequest().spym
+            + "&sfsp=1' width='100%' style='height:" + height_a + "px;margin-top: 10px;' id='iframe' frameborder='0'>"
+            + "</iframe>");
+    } else if("16" === getRequest().splx){//责任追究，dalx=2
+        $("#judicialfilesmanage").append("<iframe src='" + rootPath + "/view/sfda/sfda_da.html?dalx=2&wbid=" + wbid
+            + "&daId=" + daId
+            + "&ssr=" + ssr
+            + "&ssrdwbm=" + ssrdwbm
+            + "&tjnf=" + tjnf
+            + "&kssj=" + getRequest().kssj
+            + "&jssj=" + getRequest().jssj
+            + "&splx=" + getRequest().splx
+            + "&lcid=" + getRequest().lcid
+            + "&spym=" + getRequest().spym
+            + "&sfsp=1' width='100%' style='height:" + height_a + "px;margin-top: 10px;' id='iframe' frameborder='0'>"
+            + "</iframe>");
+    }else if("17" === getRequest().splx){//接受监督，dalx=5
+        $("#judicialfilesmanage").append("<iframe src='" + rootPath + "/view/sfda/sfda_da.html?dalx=5&wbid=" + wbid
+            + "&daId=" + daId
+            + "&ssr=" + ssr
+            + "&ssrdwbm=" + ssrdwbm
+            + "&tjnf=" + tjnf
+            + "&kssj=" + getRequest().kssj
+            + "&jssj=" + getRequest().jssj
+            + "&splx=" + getRequest().splx
+            + "&lcid=" + getRequest().lcid
+            + "&spym=" + getRequest().spym
+            + "&sfsp=1' width='100%' style='height:" + height_a + "px;margin-top: 10px;' id='iframe' frameborder='0'>"
+            + "</iframe>");
+    }else if("15" === getRequest().splx){//业务研修，dalx=3
+        $("#judicialfilesmanage").append("<iframe src='" + rootPath + "/view/sfda/sfda_da.html?dalx=3&wbid=" + wbid
+            + "&daId=" + daId
+            + "&ssr=" + ssr
+            + "&ssrdwbm=" + ssrdwbm
+            + "&tjnf=" + tjnf
+            + "&kssj=" + getRequest().kssj
+            + "&jssj=" + getRequest().jssj
+            + "&splx=" + getRequest().splx
+            + "&lcid=" + getRequest().lcid
+            + "&spym=" + getRequest().spym
+            + "&sfsp=1' width='100%' style='height:" + height_a + "px;margin-top: 10px;' id='iframe' frameborder='0'>"
+            + "</iframe>");
+    }else if("14" === getRequest().splx){//其他情况 dalx=4
+        $("#judicialfilesmanage").append("<iframe src='" + rootPath + "/view/sfda/sfda_da.html?dalx=4&wbid=" + wbid
+            + "&daId=" + daId
+            + "&ssr=" + ssr
+            + "&ssrdwbm=" + ssrdwbm
+            + "&tjnf=" + tjnf
+            + "&kssj=" + getRequest().kssj
+            + "&jssj=" + getRequest().jssj
+            + "&splx=" + getRequest().splx
+            + "&lcid=" + getRequest().lcid
+            + "&spym=" + getRequest().spym
+            + "&sfsp=1' width='100%' style='height:" + height_a + "px;margin-top: 10px;' id='iframe' frameborder='0'>"
+            + "</iframe>");
+    } else if ("4" === getRequest().splx) { // 荣誉奖励 dalx=1
+        $("#judicialfilesmanage").append("<iframe src='" + rootPath + "/view/sfda/sfda_da.html?dalx=1&wbid=" + wbid
+            + "&daId=" + daId
+            + "&ssr=" + ssr
+            + "&ssrdwbm=" + ssrdwbm
+            + "&tjnf=" + tjnf
+            + "&kssj=" + getRequest().kssj
+            + "&jssj=" + getRequest().jssj
+            + "&splx=" + getRequest().splx
+            + "&lcid=" + getRequest().lcid
+            + "&spym=" + getRequest().spym
+            + "&sfsp=1' width='100%' style='height:" + height_a + "px;margin-top: 10px;' id='iframe' frameborder='0'>"
+            + "</iframe>");
+    } else {//个人基本信息页面
+        $("#judicialfilesmanage").append("<iframe src='" + rootPath + "/view/sfda/sfda_grjbxx.html?wbid=" + wbid
+            + "&daId=" + daId
+            + "&nf=" + tjnf
+            + "&ssr=" + ssr
+            + "&ssrdwbm=" + ssrdwbm
+            + "&splx=" + getRequest().splx
+            + "&lcid=" + getRequest().lcid
+            + "&spym=" + getRequest().spym
+            + "&sfsp=1' width='100%' style='height:" + height_a + "px;margin-top: 10px;' id='iframe' frameborder='0'>"
+            + "</iframe>");
+    }
+
+    $("#iframe").on('load', function () {
+        resizeParentIframe();
+        $($("#iframe").contents().find("#sqhc")).css("display", "none");
+        $($("#iframe").contents().find("#fqgsBtn")).css("display", "none");
+        $($("#iframe").contents().find("#qxgsBtn")).css("display", "none");
+        // 		console.info("examineapprove.html: " + thisheight);
+    });
+
+    function dagzfc() {// 司法档案封存
+        $.ajax({
+            url: rootPath + "/service/jcgSfdaCx/dagzfc",
+            type: 'post',
+            async: false,
+            data: {
+                'gdid': params.wbid,
+                'dwbm': params.ssrdwbm,
+                'gh': params.ssr
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data == -1) {
+                    top.msgAlertInfo("封存失败！");
+                }
+            }
+        });
+    }
+
+    $("#go_back_index").on("click",goBackPage);//返回
+
+
+    function commonAudit(dwbm,gh,type,spyj,lcmb){
+        var sprdwbm = (type == '2' ? dwbm : '');
+        var sprgh = (type == '2' ? gh : '');
+
+        $.ajax({
+            url: rootPath + '/service/sp/selectNewSpslByLcid',
+            type: 'post',
+            dataType: 'json',
+            async: 'false',
+            data: {
+                lcid: getRequest().lcid
+            },
+            success: function (data) {
+                if (data[0].jdlx == lcmb.jdlx) {
+                    top.msgProgressTip("正在处理……");
+
+                    $.ajax({
+                        url: rootPath + '/service/sp/audit',
+                        type: 'post',
+                        async: false,
+                        data: {
+                            jdlx: lcmb.jdlx,
+                            lcjd: lcmb.lcjd,
+                            sprdwbm: sprdwbm,
+                            sprgh: sprgh,
+                            spstid: wbid,
+                            spyj: spyj,
+                            clnr: clnr,
+                            lcid: getRequest().lcid
+                        },
+                        dataType: 'json',
+                        success: function (resultMap) {
+                            top.msgProgressTipClose();
+                            var status = resultMap.status;
+                            if (type == '1') {
+                                if (status == 1) {
+                                    top.msgAlertInfo("审批成功");
+                                    //$.messager.alert("提示", "审批成功", "info");
+                                    if (splx == '7') {
+                                        dagzfc();
+                                    }
+                                    $("#button_agree").hide();
+                                    $("#button_refuse").hide();
+                                    $("#div_spyj").hide();
+                                    updatesplc(1);
+
+                                } else if (status == 0) {
+                                    top.msgAlertWarning("审批失败");
+                                    //$.messager.alert("提示", "审批失败", "warning");
+                                }
+                            } else if (type == '2') {
+                                if (status == 1) {
+                                    top.msgAlertInfo("退回操作成功");
+                                    //$.messager.alert("提示", "退回操作成功", "info");
+                                    $("#button_agree").hide();
+                                    $("#button_refuse").hide();
+                                    $("#div_spyj").hide();
+                                    updatesplc(0);
+
+                                } else if (status == 0) {
+                                    top.msgAlertWarning("退回操作失败");
+                                    //$.messager.alert("提示", "退回操作失败", "warning");
+                                }
+                            }
+                            document.getElementById('iframe').contentWindow.location.reload(true);
+                        },
+                        error: function (data) {
+                            top.msgAlertError("操作失败，内部错误");
+                            //$.messager.alert("提示", "操作失败，内部错误", "error");
+                        }
+                    });
+                } else {
+                    top.msgProgressTip("该业务已经处理完成");
+                    //window.location.reload();
+                }
+            }
+
+        });
+    }
+
+
+    function specialAudit(jdlx,lcjd,splx,sprdwbm,sprbmbm,sprgh,spstid,spyj,clnr,lcid,lczz,type){
+        $.ajax({
+            type : 'post',
+            url : rootPath + '/service/sp/sfdaAjAudit',
+            data: {
+                jdlx: jdlx,
+                lcjd: lcjd,
+                splx : splx,
+                sprdwbm: sprdwbm,
+                sprbmbm : sprbmbm,
+                sprgh: sprgh,
+                spstid: spstid,
+                spyj: spyj,
+                clnr: clnr,
+                lcid: lcid,
+                lczz : lczz,
+                spSign : type //审批标识【1、同意， 2、不同意】
+            },
+            dataType: 'json',
+            success: function (result) {
+                if(result&&"1"==result.spztSign){
+                    top.msgAlertInfo("操作成功！");
+                    $("#button_agree").hide();
+                    $("#button_refuse").hide();
+                    $("#div_spyj").hide();
+                    $("#sfda_ajxx_xzspr_div").hide();
+                    updatesplc(1);
+                }
+                document.getElementById('iframe').contentWindow.location.reload(true);
+            }
+        });
+    }
+    /*     $("#sfda_bayj_sp_ckbox").click(function(){;
+            var sfdaBayjSpCkbox = $('#sfda_bayj_sp_ckbox').prop('checked');
+            if(!sfdaBayjSpCkbox){
+                $("#sfda_bayj_spr_select").hide();
+            }
+        }); */
+
+    resizeParentIframe();
+</script>
+</html>

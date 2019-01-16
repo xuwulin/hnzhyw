@@ -1,0 +1,279 @@
+*{
+	margin:0;
+	padding:0;
+}
+.xtpz{
+	width:98%;
+	height:900px;
+	margin:0 auto;
+}
+.xtpz_top{
+	width:100%;
+	height:50px;
+	font-size:14px;
+	color:#666;
+	line-height: 50px;
+}
+.xtpz_content{
+	width:100%;
+}
+.content_left{
+	width:15%;
+	height:850px;
+	background-color:#fff;
+	border-radius:5px;
+	float:left;
+	border: 1px solid #E3E2E8;
+	
+}
+.content_right{
+	width:84%;
+	height:850px;
+	background-color:#fff;
+	border-radius:5px;
+	float:right;
+	border: 1px solid #E3E2E8;
+}
+.left_ul{
+	width: 94%;
+    margin: 0 auto;
+}
+.left_ul li{
+	background-color:#eaf3fd;
+    margin-top: 10px;
+    line-height: 40px;
+    color: #666;
+    text-align: center;
+    list-style: none;
+    height: 40px;
+    font-size: 14px;
+	
+}
+.left_ul li a{
+	width:100%;
+	height:100%;
+	color:#666;
+	text-decoration: blink;
+    display: inline-block;
+    border-radius: 3px;
+	border: 1px solid #c1c1c1;
+}
+
+.left_ul li a:hover{
+	background-color:#0876D5;
+	color:#fff;
+	border: 1px solid #0876D5;
+	cursor:pointer;
+}
+.xtpzli{
+	background-color:#0876D5;
+	color:#fff !important;
+	border: 1px solid #0876D5 !important;
+}
+.right_top{
+	width:100%;
+	height:50px;
+	background-color:#F4F4F4;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	line-height: 50px;
+}
+/*.tree{*/
+	/*float: left;*/
+    /*width: 20%;*/
+    /*height: 700px;*/
+    /*background-color: #F4F4F4;*/
+    /*border: 1px solid #EEEEEE;*/
+/*}*/
+.tree_ul li{
+    margin-top: 15px;
+    list-style: none;
+	
+}
+.tree_ul li img{
+	float: left;
+    margin: 2px 10px 0 15px;
+}
+.right_rig{
+	float: left;
+	width: 78%;
+	height: 690px;
+	margin-top: 20px;
+}
+.right_list{
+    height: 50px;
+    width: 88%;
+    float: left;
+}
+.right_list>span{
+	float: left;
+    height: 32px;
+    display: inline-block;
+    width: 26%;
+}
+.right_list>input{
+    border-radius: 5px;
+    border: 1px solid #c1c1c1;
+    width: 400px;
+    height: 28px;
+}
+.list_1{
+	float: right;
+    line-height: 32px;
+    margin-right: 10px;
+}
+.list_2{
+	float: left;
+    width: 45%;
+    height: 32px;
+    line-height: 32px;
+}
+.right_btnk{
+	margin-top: 10px;
+    margin-left: 1.3%;
+    float: left;
+    width: 76%;
+/*     height: 500px; */
+}
+.right_ul{
+	width:100%;
+	height:45px;
+	margin:0 auto;
+	border-bottom:1px solid #c1c1c1;
+}
+.right_ul li{
+	width: 70px;
+    height: 29px;
+    list-style: none;
+    float: left;
+    margin: 15px 30px 0 0;
+    text-align: center;
+    color:#666;
+    font-size: 15px;
+    font-weight: 700;
+    cursor:pointer;
+}
+.right_li{
+	  border-bottom: 3px solid #0876D5;
+	  color:#0876D5  !important;
+}
+
+.right_com{
+	width:100%;
+	height:500px;
+	margin:0 auto;
+}
+/* table{
+	 border:1px solid #E6EBF1;
+	  width:100%;
+}
+table tr{
+	 width:100%;
+}
+table tr td{
+	 width:25%;
+	 text-align: center;
+	 height: 35px;
+}
+table tr th{
+	 width:25%;
+	 height: 35px;
+	 
+} */
+
+.right_coml{
+	    overflow: hidden;
+	width:100%;
+/* 	height:500px; */
+	margin:0 auto;
+	display: none;
+}
+.stingls{
+	width:100%;
+	height:50px;
+	margin-top: 30px;
+}
+.stingls input{
+	width: 210px;
+    height: 28px;
+}
+.stingls button{
+	margin-left: 30px;
+    width: 80px;
+    height: 32px;
+    border: 1px solid #0876D5;
+    background: #0876D5;
+    color: #fff;
+    border-radius: 3px;
+}
+.photo{
+	width:200px;
+	height:300px;
+	float:right;
+	margin-right: 5%;
+}
+.photo_s{
+	width:200px;
+	height:200px;
+	background:#c9c9c9;
+}
+.photo>button{
+	width: 80px;
+    height: 28px;
+    background: #fff;
+    border: 1px solid #c1c1c1;
+    border-radius: 3px;
+    margin: 10px 0 0 60px;
+}
+.xz_but{
+	cursor: pointer;
+	width: 150px !important;
+    height: 32px !important;
+    background-color: #0876d5 !important;
+    margin-left: 300px;
+    border: 1px solid #0876d5;
+    border-radius: 3px;
+    color: #fff;
+	
+}
+.fgld_btn{
+	cursor: pointer;
+    width: 150px !important;
+    height: 32px !important;
+    background-color: #0876d5 !important;
+    margin-left: 174px;
+    border: 1px solid #0876d5;
+    border-radius: 3px;
+    color: #fff;
+    display: inline;
+}
+
+.zbrs_cx{
+	cursor: pointer;
+    width: 50px;
+    height: 21px;
+    border: 1px solid #0876d5;
+    background: #0876d5;
+    color: white;
+    border-radius: 3px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

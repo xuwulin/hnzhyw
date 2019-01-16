@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>系统管理-系统配置管理页面</title>
+
+<!-- <link rel="stylesheet" type="text/css" href="../../css/xtpz.css" /> -->
+<link href="../../../css/card.css" rel="stylesheet">
+<link href="../../../css/bounced.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../../../css/xtpz_jsgl.css" />
+<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/bootstrap/easyui.css" />
+<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/icon.css" />
+<script type="text/javascript" src="../../../js/plugin/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="../../../js/plugin/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../../../js/zhyw/utils/common.js"></script>
+<script type="text/javascript" src="../../../js/zhyw/utils/constant.js"></script>
+<style>
+.textbo {
+	width: 200px;
+	height: 25px;
+	border: 1px solid #aaa;
+	border-radius: 5px;
+}
+
+.textbutton {
+	cursor: pointer;
+	width: 80px;
+	height : 35px;
+	border : 1px solid #aaa;
+	border-radius :5px;
+	background : #0876d5 !important;
+	color : white;
+	outline: none;
+	height: 35px;
+	border: 1px solid #aaa;
+	border-radius: 5px;
+	background: #0081c2 !important;
+	color: white;
+}
+
+.filediv {
+    margin: auto;
+	width: 80%;
+}
+.filediv>ul{
+    width: 100%;
+}
+.right_com {
+    margin-top: 30px;
+    width: 45%;
+    height: 300px;
+    float: left;
+    border: 1px solid #ccc;
+    margin-left: 3.3%;
+    border-radius: 5px;
+}
+.com_title{
+    margin: 0 auto;
+    width: 90%;
+    height: 45px;
+    border-bottom: 1px solid #c1c1c1;
+    margin-bottom: 20px;
+}
+.com_title>span{
+    font-size: 18px;
+    margin: 10px 0 0 10px;
+    float: left;
+}
+.left_ul li:nth-of-type(3) a{
+	background-color:#0876D5;
+	color:#fff;
+	border: 1px solid #0876D5;
+	cursor:pointer;
+}
+</style>
+</head>
+<body>
+	<div class="xtpz">
+		<div class="xtpz_top">当前位置 : 系统配置</div>
+		<div class="xtpz_content">
+			<div class="content_left">
+				<!-- <ul class="left_ul">
+					<li><a href="../system/xtpz_fgld.html">分管领导配置管理</a></li>
+					<li><a href="../department/xtpz.html">部门管理</a></li>
+					<li><a href="../role/xtpz_jsgl.html">角色管理</a></li>
+					<li><a href="../person/xtpz_rygl.html">人员管理</a></li>
+					<li id="xtpzgl"><a href="../system/xtpz_filepath.html" class="xtpzli">系统配置管理</a></li>
+					<li><a href="../quartz/xt_quartz_pz.html" >同步任务配置管理</a></li>
+					<li><a href="../ywlx/ywlxfp.html">业务类型/业务类型分配管理</a></li>
+					<li><a href="../jxkh/xtpz_ywkhzbgl.html">个人绩效-考核指标配置</a></li>
+					<li><a href="../jchc/xtpz_hcpz.html">个人绩效-交叉核查配置</a></li>
+					<li><a href="../bmzdpz/xtpz_bmzdpz.html">部门审批人配置</a></li>
+					<li><a href="../ywkh/ywkh_khdwpz.html">业务考核-考核单位配置</a></li>
+					<li><a href="../ywkh/ywkh_khlxpz.html" >业务考核-考核类型配置</a></li>
+					<li><a href="../zbrs/zbrs.html">业务考核-在编人数配置</a></li>
+					<li><a href="../ywgz/xtpz_ywgzpzgl.html">业务考核-考核指标管理</a></li>
+					<li><a href="../dataDict/data_dict.html">数据字典管理</a></li>
+					<li><a href="../logging/xtgl_logging.html">日志管理</a></li>
+				</ul> -->
+				<div class="left_tree"></div>
+			</div>
+			<div class="content_right">
+				<div class="right_top">
+					<img src="../../../image/icon_sd.png"
+						style="float: left; margin: 17px 12px 0px 12px;">系统配置管理
+				</div>
+				<div class="right_com" >
+				    <div class="com_title"><span>个人绩效等级评定设置</span></div>
+					<div class="filediv" id="djpd">
+					<ul id="djpdul">
+					                            
+					</ul></br> </br> 
+				    <input id="djpdqd" class="textbutton" type="button"value="确定" onclick="updateDjpd()">
+					</div>
+				</div>
+				
+				<div class="right_com" >
+				    <div class="com_title"><span>系统文件路径设置</span></div>
+					<div class="filediv" >
+						<span>当前上传文件存放路径:</span><span id="curentfilepath"></span> </br> </br> 
+						<span id="xgscwjlj">修改上传文件路径:</span>
+						<input name="filepath" type="text" id="filepath" class='textbo'> </br> </br>
+						<input class="textbutton"type="button" value="确定" onclick="updatefilepath()">
+					</div>
+				</div>
+
+				<div class="right_com" >
+				    <div class="com_title"><span>档案变更及核查期限设置</span></div>
+					<div class="filediv">
+						<span>当前档案变更及核查期限:</span><span id="curenthcqx"></span> </br> </br> 
+						<span id="xghcqx">修改档案变更及核查期限:</span> <input type="number" id="hcqx"class='textbo'></input> </br> </br> 
+							<input id="hcqxqd" class="textbutton" type="button"value="确定" onclick="updateHcqx()">
+					</div>
+				</div>
+				
+				<div class="right_com" style="display:none">
+				    <div class="com_title"><span>档案公示期限设置</span></div>
+					<div class="filediv">
+						<span>当前档案公示期限:</span><span id="curentgsqx"></span> </br> </br> 
+						<span id="xggsqx">修改档案公示期限:</span> <input type="number" id="gsqx"class='textbo'></input> </br> </br> 
+							<input class="textbutton" type="button"value="确定" onclick="updateGsqx()">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	
+	$(".left_tree").load("../left_menu.html");
+	
+	$.get(rootPath + '/service/xtfj/select', function(data) {
+		$("#curentfilepath").text(data);
+	});
+	function updatefilepath() {
+		var fp = $("#filepath").val();
+//		console.log(fp);
+		var data = {
+			path : fp
+		};
+		$.post(rootPath + '/service/xtfj/insert', data, function(data) {
+			$("#curentfilepath").text(fp);
+			top.msgAlertWarning("修改成功");
+		});
+	}
+	if (top.currentUserInfo.dwjb != 2) {
+		var c = $(".content_right").children();
+		
+//		console.log(c[2]);
+		c[2].remove();
+		$("#hcqx").css("display", "none");
+		$("#xghcqx").css("display", "none");
+		$("#hcqxqd").css("display", "none");
+		$("#djpdqd").css("display", "none");
+	}
+
+	function updateHcqx() {
+		var hcqx = $("#hcqx").val();
+		var gxr = top.currentUserInfo.mc;
+		if(hcqx==null||hcqx==""||typeof (hcqx) == 'undefined'){
+			top.msgAlertError("请先设置档案核查及变更期限！");
+		}else{
+			if(hcqx<=0){
+				top.msgAlertError("档案核查及变更期限必须大于0天！");
+				return;
+			}
+		}
+		var data = {
+			hcqx : hcqx,
+			gxr : gxr
+		};
+		$.post(rootPath + '/service/hcqx/setHcqx', data, function(dd) {
+			if (dd.set) {
+				$("#curenthcqx").text(hcqx + "天");
+				top.msgAlertWarning("修改成功");
+				$("#hcqx").val("");
+			} else {
+				top.msgAlertWarning("修改失败");
+			}
+		}, 'json');
+
+	}
+	$.get(rootPath + '/service/hcqx/getHcqx', function(dd) {
+//		console.log(dd);
+		for(var i=0;i<dd.length;i++){
+			if(dd[i].qxlx == 1 || dd[i].qxlx == "1"){		//核查期限
+				$("#curenthcqx").text(dd[i].hcqx + "天");
+			}
+			if(dd[i].qxlx == 2 || dd[i].qxlx == "2"){		//公示期限
+				$("#curentgsqx").text(dd[i].hcqx + "天");
+			}
+		}
+	}, 'json');
+
+	$.get(rootPath + '/service/djpd/select', function(dd) {
+		var data = dd.djpdxx;
+		for(var i=0;i<data.length;i++){
+			$("#djpdul").append("<li><span id='you"+i+"'>"+data[i].pdjbmc+":</span><input style='display:none' id='pdjb"+i+"' value='"+data[i].pdjb+"'> <input type='number' id='youin"+i+"' style='width:50px' value="+data[i].djdfsdxx+" class='textbo'></input>到<input type='number' id='youin2"+i+"' style='width:50px' value="+data[i].djdfsdsx+" class='textbo'>分</li>");
+		}
+	}, 'json');
+	
+	function updateDjpd(){
+		var children = $("#djpdul").children();
+		var data = "";
+		for(var i=0;i<children.length;i++){
+				var xia = $("#youin2"+i).val();
+				var xia2 = $("#youin"+i).val();
+				var shang = $("#youin"+(i-1)).val();
+			if(i != 0){
+				if(""==xia ||""==shang || xia >= shang || xia2 > xia){
+					top.msgAlertWarning("信息输入有误");
+					return;
+				}
+			}else if(i == (children.length-1)){
+				if("" == xia2){
+					top.msgAlertWarning("信息输入有误");
+				}
+			}else{
+				if(""==xia){
+					top.msgAlertWarning("信息输入有误");
+					return;
+				}
+			}
+			data =data + $("#pdjb"+i).val()+","+$("#youin"+i).val()+","+$("#youin2"+i).val()+"and";
+ 		}
+//		console.log(data);
+		var ss = {
+				dat:data
+		};
+		$.post(rootPath + '/service/djpd/update',ss,function(ss){
+			if(ss.b){
+				top.msgAlertWarning("修改成功");
+			}else{
+				top.msgAlertWarning("修改失败");
+			}
+		},'json');
+	}
+	
+	
+	function updateGsqx() {
+		var gsqx = $("#gsqx").val();
+		var gxr = top.currentUserInfo.mc;
+		var data = {
+			gsqx : gsqx,
+			gxr : gxr
+		};
+		$.post(rootPath + '/service/hcqx/setGsqx', data, function(dd) {
+			if (dd.set) {
+				$("#curentgsqx").text(gsqx + "天");
+				top.msgAlertWarning("修改成功");
+				$("#gsqx").val("");
+			} else {
+				top.msgAlertWarning("修改失败");
+			}
+		}, 'json');
+
+	}
+	
+	
+</script>
+</html>

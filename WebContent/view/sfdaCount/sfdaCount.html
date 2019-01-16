@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>司法档案-统计信息页面</title>
+	<link rel="stylesheet" href="../../css/zTreeStyle/ztreedemo.css" type="text/css"/>
+    <link rel="stylesheet" href="../../css/zTreeStyle/zTreeStyle.css" type="text/css"/>
+	
+	<script type="text/javascript" src="../../js/plugin/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/zhyw/utils/common.js"></script>
+	<script type="text/javascript" src="../../js/zhyw/utils/constant.js"></script>
+	<script type="text/javascript" src="../../js/plugin/echarts-all.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../js/plugin/echarts.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../js/zhyw/macarons.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+	<script type="text/javascript" src="../../js/plugin/ztree/ztreemodel.js"></script>
+</head>
+<body>
+	<!-- 司法档案统计信息（司法档案个数、文化程度等）处  start -->
+		<div id="show_sfda_tj_div" style="border-radius: 5px; overflow: hidden; background-color: #fff;">
+			<div> 
+				<p id="show_sfda_tj_div_p_title">
+					
+				</p>
+				<br/>
+				<p id="show_sfda_tj_div_p_year" style="display:none;margin-left:60px;">
+					年份：<select id="sfda_tj_year"></select>
+				</p>
+				<div id="show_sfda_tj_div_zzt" style="height:400px"></div>
+			</div>
+			
+			<div> 
+				<div id = "sfda_whcd_count_div" style="display:none;">
+					<p id="show_sfda_whcd_count">
+						
+					</p>
+					<!-- <p id="show_sfda_whcd_count_p_dwmc" style="margin-left:60px;">
+						<span>单位名称：</span>
+						<div style="margin-left:30px;height: 25px; position: relative; width: 180px; border: 1px solid #c1c1c1; border-radius: 4px;background: #fff;">
+		                    <input id="citySel" type="text" readonly style="border: none; width: 90%; height: 25px; margin-left: 3px;"/>
+		                    <a id="menuBtn" href="#" onclick="showMenu(); return false;" class="a_style" style="height: 25px; line-height: 25px; background: url('../../js/plugin/easyui/themes/bootstrap/images/combo_arrow.png') no-repeat center center; background-color: #F2F2F2"></a>
+		                    <div id="menuContent" style="display: none; position: absolute; z-index: 110;">
+		                        <ul id="treeDemo" class="ztree" style="margin-top: 0; width: 200px; background-color: #fff ; "></ul>
+		                    </div>
+	                	</div>
+					</p> -->
+					<p id="show_sfda_whcd_count_p_year" style="display:none;margin-left:60px;">
+						年份：<select id="show_sfda_whcd_count_year"></select>
+					</p>
+				</div>
+				<div id="show_sfda_whcd_count_zzt" style="height:400px"></div>
+			</div>
+			
+			<div> 
+				<p id="show_sfda_ryzr_count_p_title">
+					
+				</p>
+				<!-- <p id="show_sfda_ryzr_count_p_dwmc">
+					单位名称：<select>
+								<option>460000</option>
+								<option>460100</option>
+						   </select>
+				</p> -->
+				<br/>
+				<p id="show_sfda_ryzr_count_p_year" style="display:none;margin-left:60px;">
+					年份：<select id="show_sfda_ryzr_count_year">
+						</select>
+				</p>
+				<div id="show_sfda_ryzr_count_zzt" style="height:400px"></div>
+			</div>
+		</div>
+		
+		<!-- 司法档案统计信息（司法档案个数、文化程度等）处  end -->
+</body>
+
+<script type="text/javascript" src="../../js/zhyw/sfdaCount/sfdaCount.js" charset="utf-8"></script>
+<script type="text/javascript">
+	resizeParentIframe();
+</script>
+</html>

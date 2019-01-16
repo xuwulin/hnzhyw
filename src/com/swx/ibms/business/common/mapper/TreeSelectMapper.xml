@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- author 李佳 -->
+<!-- 左边菜单下拉框查询 -->
+<mapper namespace="com.swx.ibms.business.common.mapper.TreeSelectMapper">
+
+	<resultMap id="treeSelectMap" type="TreeSelect">   <!-- 单位结果集 -->
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="dwmc" column="dwmc" javaType="java.lang.String"></result>
+	</resultMap>
+	<resultMap id="departmentMap" type="Department">   <!-- 部门结果集 -->
+		<result property="bmbm" column="bmbm" javaType="java.lang.String"></result>
+		<result property="bmmc" column="bmmc" javaType="java.lang.String"></result>
+	</resultMap>
+	<resultMap id="roleMap" type="Role">               <!-- 角色结果集 -->
+		<result property="jsbm" column="jsbm" javaType="java.lang.String"></result>
+		<result property="jsmc" column="jsmc" javaType="java.lang.String"></result>
+	</resultMap>
+	<resultMap id="personMap" type="Person">           <!-- 人员结果集 -->
+		<result property="gh" column="gh" javaType="java.lang.String"></result>
+		<result property="mc" column="mc" javaType="java.lang.String"></result>
+	</resultMap>
+
+
+	<resultMap id="allDepartmentMap" type="com.swx.ibms.business.rbac.bean.BMBM">
+		<result property="bmxh" column="bmxh" javaType="java.lang.Integer"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="bmbm" column="bmbm" javaType="java.lang.String"></result>
+		<result property="fbmbm" column="fbmbm" javaType="java.lang.String"></result>
+		<result property="dwmc" column="dwmc" javaType="java.lang.String"></result>
+		<result property="dwjc" column="dwjc" javaType="java.lang.String"></result>
+		<result property="bmmc" column="bmmc" javaType="java.lang.String"></result>
+		<result property="bmjc" column="bmjc" javaType="java.lang.String"></result>
+		<result property="type" column="type" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<!-- 查询出所有检察院 -->
+	<select id="allJcy" parameterType="java.util.Map" statementType="CALLABLE">
+		{call pkg_zhyw_sfda.select_allJcy(
+		#{Y,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=treeSelectMap}
+
+		)}
+	</select>
+
+	<!-- 根据单位编码获取所有子单位编码 -->
+	<select id="zDwbm" parameterType="java.util.Map" statementType="CALLABLE">
+		{call pkg_zhyw_sfda.select_zdwbm(
+		#{Y,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=treeSelectMap},
+		#{fdwbm,mode=IN,jdbcType=VARCHAR}
+		)}
+	</select>
+
+	<!-- 根据检查院编码查询出所有部门的编码和名称 -->
+	<select id="department" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		{call pkg_zhyw_sfda.select_department(
+		#{Y,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=departmentMap},
+		#{dwbm,mode=IN,jdbcType=VARCHAR}
+		)}
+	</select>
+
+	<!-- 根据单位、部门编码查询出所有角色的编码和名称 -->
+	<select id="role" parameterType="java.util.Map" statementType="CALLABLE">
+		{call pkg_zhyw_sfda.select_role(
+		#{Y,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=roleMap},
+		#{dwbm,mode=IN,jdbcType=VARCHAR},
+		#{bmbm,mode=IN,jdbcType=VARCHAR}
+		)}
+	</select>
+
+	<!-- 根据角色、单位、部门编码查询出的所有人员的工号和名称 -->
+	<select id="person" parameterType="java.util.Map" statementType="CALLABLE">
+		{call pkg_zhyw_sfda.select_person(
+		#{Y,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=personMap},
+		#{dwbm,mode=IN,jdbcType=VARCHAR},
+		#{bmbm,mode=IN,jdbcType=VARCHAR},
+		#{jsbm,mode=IN,jdbcType=VARCHAR}
+		)}
+	</select>
+
+	<!--树状展示,根据单位、部门、部门编码和工号查询直接领导 -->
+	<select id="selectzjld" parameterType="java.util.Map" statementType="CALLABLE">
+		{call pkg_zhyw_sfda.select_zjld(
+			#{p_zjld,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=personMap},
+			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+			#{p_gh,mode=IN,jdbcType=VARCHAR}
+		)}
+	</select>
+
+	<!-- 根据单位编码和部门编码获取部门名称 -->
+	<select id="getBmmcByBmbm" resultType="java.lang.String">
+		select bmmc from xt_zzjg_bmbm_tyyw
+		where dwbm = #{dwbm} and bmbm = #{bmbm}
+		union all
+		select bmbm from xt_zzjg_bmbm
+		where dwbm = #{dwbm} and bmbm = #{bmbm}
+	</select>
+
+	<!-- 通过单位编码和工号获取姓名 -->
+	<select id="getNameByGh" resultType="java.lang.String">
+		select mc from xt_zzjg_rybm_tyyw
+		where dwbm = #{dwbm} and gh = #{gh} and sftz = 'N'
+		union all
+		select mc from xt_zzjg_rybm
+		where dwbm = #{dwbm} and gh = #{gh}
+	</select>
+
+	<!-- 通过单位编码和角色编码获取角色名称 -->
+	<select id="getJsmcByJsbm" resultType="java.lang.String">
+		select jsmc from xt_qx_jsbm_tyyw
+		where dwbm = #{dwbm} and bmbm = #{bmbm} and jsbm = #{jsbm}
+		union all 
+		select jsmc from xt_zzjg_jsbm
+		where dwbm = #{dwbm} and bmbm = #{bmbm} and jsbm = #{jsbm}
+	</select>
+
+	<!-- 根据单位编码、部门编码、角色编码获取人员角色分配信息 -->
+	<select id="getFpJl" resultType="java.util.Map">
+		select * from xt_qx_ryjsfp_tyyw
+		where dwbm = #{dwbm} and bmbm = #{bmbm} and jsbm = #{jsbm}
+		union all
+		select * from xt_zzjg_ryjsfp
+		where dwbm = #{dwbm} and bmbm = #{bmbm} and jsbm = #{jsbm}
+	</select>
+
+	<!-- 通过单位编码和工号获取其人员分配信息 -->
+	<select id="getFpJl2" resultType = "java.util.Map">
+		select * from xt_qx_ryjsfp_tyyw
+		where dwbm = #{dwbm} and gh = #{gh}
+		order by bmbm
+	</select>
+
+	<!-- 通过单位编码和部门映射获取部门编码信息 -->
+	<select id="getBmbmList" resultType="BMBM">
+		select *  from xt_zzjg_bmbm_tyyw
+		where dwbm = #{dwbm} and bmys = #{bmys}
+		union all
+		select * from xt_zzjg_bmbm
+		where dwbm = #{dwbm} and bmys =#{bmys}
+	</select>
+
+	<!-- 通过单位编码和部门编码查询该部门的分管领导信息 -->
+	<select id="getFgld" resultType="java.util.Map">
+		select * from xt_fgld
+		where dwbm = #{dwbm} and bmbm like '%${bmbm}%'
+	</select>
+
+	<select id="getAllBmbmByDw" parameterType="java.util.Map" statementType="CALLABLE">
+		 <![CDATA[
+ 		{call PKG_DEPARTMENT.pro_selectList(
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+ 			#{p_sfsc,mode=IN,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=allDepartmentMap}
+  		)}
+  		]]>
+	</select>
+
+	<select id="getAllBmByDwBmbm" parameterType="java.util.Map" statementType="CALLABLE">
+		 <![CDATA[
+ 		{call PKG_DEPARTMENT.pro_getBmByDwBmbm(
+ 			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+ 			#{p_fbmbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=allDepartmentMap}
+  		)}
+  		]]>
+	</select>
+
+	<!-- 查询所有的业务类型信息 -->
+	<select id="getAllYwbm" resultType="java.util.Map">
+		<!-- select ywbm,
+			   ywmc,
+			   ywjc,
+			   xh,
+			   bz 
+		from XT_DM_YWBM_TYYW t 
+			where t.sfsc = 'N' 
+			order by t.ywbm  -->
+		select t.ywbm,
+	           t.ywmc,
+	           t.ywjc,
+	           t.xh,
+	           t.bz
+		from XT_DM_YWBM_TYYW t
+		inner join XT_DM_AJLBBM_TYYW l on l.sfsc = 'N' and l.ywbm = t.ywbm
+		       where t.sfsc = 'N'
+		       group by t.ywbm,t.ywmc,t.ywjc,t.xh,t.bz
+		       order by t.ywbm
+	</select>
+
+	<!-- 查询所有的业务类型对应的案件类型信息 -->
+	<select id="getAllAjlbByYwbm" resultType="java.util.Map">
+		select ywbm,
+			   ajlbbm,
+			   ajlbmc,
+			   ajsljc,
+			   xh,
+			   bz
+		from XT_DM_AJLBBM_TYYW t
+		<if test="ywbm != null and ywbm != '' ">
+			where t.ywbm = #{ywbm}
+			  and t.sfsc = 'N'
+			group by ywbm,ajlbbm,ajlbmc,ajsljc,xh,bz
+			order by ywbm,ajlbbm
+		</if>
+	</select>
+
+	<!-- 获取所有单位信息 -->
+	<select id="getAllDwbmByDw" resultType="DWBM" parameterType="java.util.Map">
+		SELECT dwbm,
+		       dwjb,
+		       fdwbm,
+		       dwmc,
+		       dwjc
+		FROM XT_ZZJG_DWBM_TYYW t 
+		  WHERE SFSC = 'N' 
+		    AND FDWBM = #{dwbm}
+		group by dwbm,
+		           dwjb,
+		           fdwbm,
+		           dwmc,
+		           dwjc
+		Order by dwjb,dwbm
+	</select>
+
+	<!--查询统一业务/综合业务的所有部门信息-->
+	<select id="getAllXtBmInfo" resultType="BMBM" parameterType="java.util.Map">
+		select t.* from (
+		 select distinct dwbm,
+						 bmbm,
+						 fbmbm,
+						 bmmc,
+						 bmjc,
+						 bmys,
+						 bmahjc,
+						 bmwhjc,
+						 sflsjg,
+						 sfcbbm,
+						 bmxh,
+						 bz,
+						 sfsc,
+						 '1' type
+		 from xt_zzjg_bmbm_tyyw b
+		 union
+		  select distinct dwbm,
+						  bmbm,
+						  fbmbm,
+						  bmmc,
+						  bmjc,
+						  bmys,
+						  bmahjc,
+						  bmwhjc,
+						  sflsjg,
+						  sfcbbm,
+						  bmxh,
+						  bz,
+						  sfsc,
+						  '2' type
+		 from xt_zzjg_bmbm b
+		 ) t  where t.sfsc = 'N'
+				  and t.dwbm = #{dwbm}
+				<choose>
+					<when test="fbmbm !=null and fbmbm != '' ">
+						and t.fbmbm = #{fbmbm}
+					</when>
+					<otherwise>
+						and t.fbmbm is null
+					</otherwise>
+				</choose>
+			   group by dwbm,
+                        bmbm,
+                        fbmbm,
+                        bmmc,
+                        bmjc,
+                        bmys,
+                        bmahjc,
+                        bmwhjc,
+                        sflsjg,
+                        sfcbbm,
+                        bmxh,
+                        bz,
+                        sfsc,
+                        type
+            order by t.type,t.bmxh,bmbm
+
+	</select>
+
+
+	<select id="getAllXtRyInfo" resultType="java.util.Map" >
+		select * from (
+				SELECT distinct d.dwmc,
+							    r.dwbm,
+								d.dwjc,
+								d.dwjb,
+								d.fdwbm,
+								b.bmys,
+								b.bmbm,
+								b.bmmc,
+							    b.bmjc,
+								j.jsbm,
+								j.jsmc,
+								r.mc,
+								r.dlbm,
+							    r.gh,
+								r.gzzh,
+								b.bmxh,
+								j.jsxh,
+								p.ryxh,
+								r.sftz,
+								'1' type
+				  FROM xt_zzjg_rybm_tyyw r
+					 INNER JOIN xt_qx_ryjsfp_tyyw p ON p.dwbm=r.dwbm AND p.gh = r.gh
+					 INNER JOIN xt_qx_jsbm_tyyw j   ON j.dwbm=r.dwbm AND j.jsbm = p.jsbm
+					 INNER JOIN xt_zzjg_bmbm_tyyw b ON j.bmbm = p.bmbm AND b.dwbm=r.dwbm AND b.bmbm = j.bmbm
+					 INNER JOIN xt_zzjg_dwbm_tyyw d ON r.dwbm=d.dwbm AND b.dwbm=d.dwbm AND j.dwbm=d.dwbm
+					 WHERE r.sfsc = 'N' and b.sfsc = 'N' and d.sfsc = 'N' and r.sftz = 'N'
+				  UNION
+				  SELECT distinct d.dwmc,
+								  r.dwbm,
+								  d.dwjc,
+								  d.dwjb,
+								  d.fdwbm,
+								  b.bmys,
+								  b.bmbm,
+								  b.bmmc,
+								  b.bmjc,
+								  j.jsbm,
+								  j.jsmc,
+								  r.mc,
+								  r.dlbm,
+								  r.gh,
+								  r.gzzh,
+								  b.bmxh,
+								  j.jsxh,
+								  p.ryxh,
+								  r.sftz,
+								  '2' type
+				  FROM xt_zzjg_rybm r
+					 INNER JOIN xt_zzjg_ryjsfp p ON p.dwbm=r.dwbm AND p.gh = r.gh
+					 INNER JOIN xt_zzjg_jsbm j   ON j.dwbm=r.dwbm AND j.jsbm = p.jsbm
+					 INNER JOIN xt_zzjg_bmbm b ON j.bmbm = p.bmbm AND b.dwbm=r.dwbm AND b.bmbm = j.bmbm
+					 INNER JOIN xt_zzjg_dwbm_tyyw d ON r.dwbm=d.dwbm AND b.dwbm=d.dwbm AND j.dwbm=d.dwbm
+					 WHERE r.sfsc = 'N' and b.sfsc = 'N' and d.sfsc = 'N' AND j.sfsc = 'N' and r.sftz = 'N'
+				  union
+				  SELECT distinct d.dwmc,
+								  r.dwbm,
+								  d.dwjc,
+								  d.dwjb,
+								  d.fdwbm,
+								  b.bmys,
+								  b.bmbm,
+								  b.bmmc,
+								  b.bmjc,
+								  j.jsbm,
+								  j.jsmc,
+								  r.mc,
+								  r.dlbm,
+								  r.gh,
+								  r.gzzh,
+								  b.bmxh,
+								  j.jsxh,
+								  p.ryxh,
+								  r.sftz,
+								  '2' type
+				  FROM xt_zzjg_rybm r
+				  INNER JOIN xt_zzjg_ryjsfp p ON p.dwbm=r.dwbm AND p.gh = r.gh
+				  INNER JOIN xt_qx_jsbm_tyyw j   ON j.dwbm=r.dwbm AND j.jsbm = p.jsbm
+				  INNER JOIN xt_zzjg_bmbm_tyyw b ON j.bmbm = p.bmbm AND b.dwbm=r.dwbm AND b.bmbm = j.bmbm
+				  INNER JOIN xt_zzjg_dwbm_tyyw d ON r.dwbm=d.dwbm AND b.dwbm=d.dwbm AND j.dwbm=d.dwbm
+				  WHERE r.sfsc = 'N' and b.sfsc = 'N' and d.sfsc = 'N' and r.sftz = 'N'
+			) t where 1=1
+				<if test="dwbm!=null and dwbm !='' ">
+				  and t.dwbm = #{dwbm}
+				</if>
+				<if test="bmbm!=null and bmbm !='' ">
+				  and t.bmbm in(#{bmbm})
+				</if>
+				<if test="jsbm!=null and jsbm !='' ">
+				  and t.jsbm = #{jsbm}
+				</if>
+				<if test="dlbm!=null and dlbm !='' ">
+				  and t.dlbm like concat(#{dlbm},'%') or t.mc like concat(#{dlbm},'%')
+				</if>
+			GROUP BY  t.dwmc,
+					  t.dwbm,
+					  t.dwjc,
+					  t.dwjb,
+					  t.fdwbm,
+					  t.bmys,
+					  t.bmbm,
+					  t.bmmc,
+					  t.bmjc,
+					  t.jsbm,
+					  t.jsmc,
+					  t.mc,
+					  t.dlbm,
+					  t.gh,
+					  t.gzzh,
+					  t.bmxh,
+					  t.jsxh,
+					  t.ryxh,
+		              t.sftz,
+					  t.type
+			order by t.dwjb,t.type,t.dwbm,t.bmbm,t.bmxh,t.jsbm,t.jsxh,t.ryxh
+
+	</select>
+
+
+	<select id="getAllXtBmJs" resultType="java.util.Map">
+		select * from (
+			select distinct dwbm,
+							bmbm,
+							jsbm,
+							jsmc,
+							jsxh,
+							spjsbm,
+							'' description,
+		                    '1' type
+			from xt_qx_jsbm_tyyw
+			union
+			select distinct dwbm,
+							bmbm,
+							jsbm,
+							jsmc,
+							jsxh,
+							spjsbm,
+							description,
+		                    '2' type
+			from XT_ZZJG_JSBM  where sfsc = 'N'
+		) t where 1=1
+			<if test=" dwbm !=null and dwbm !='' ">
+			  and t.dwbm = #{dwbm}
+			</if>
+			<if test=" bmbm !=null and bmbm !='' ">
+		      and t.bmbm = #{bmbm}
+			</if>
+		group by dwbm,
+				 bmbm,
+				 jsbm,
+				 jsmc,
+				 jsxh,
+				 spjsbm,
+				 description,
+				 type
+		order by type,jsxh
+
+	</select>
+
+
+	<select id="getDwBmByParamDwFbm" resultType="java.util.Map">
+		SELECT * FROM (
+                     SELECT r.dwbm
+                            ,d.dwjb
+                            ,d.dwmc
+                            ,d.dwjc
+                            ,b.bmbm
+                            ,b.fbmbm
+                            ,b.bmmc
+                            ,b.bmjc
+                            /* ,f.jsbm
+                              ,r.dlbm
+                              ,r.mc
+                              ,r.gh
+                              ,r.gzzh*/
+                            ,b.bmxh
+                            /*-- ,f.ryxh*/
+                            ,'1' TYPE
+                        FROM xt_zzjg_rybm_tyyw r
+                             INNER JOIN xt_qx_ryjsfp_tyyw f ON f.dwbm = r.dwbm and f.gh = r.gh
+                             INNER JOIN xt_zzjg_bmbm_tyyw b ON b.dwbm = r.dwbm and b.dwbm = f.dwbm and b.bmbm = f.bmbm
+                             INNER JOIN xt_zzjg_dwbm_tyyw d ON r.dwbm = d.dwbm and d.dwbm = b.dwbm and d.dwbm = f.dwbm
+                         where r.sfsc = 'N' and r.sftz = 'N' and b.sfsc = 'N' and d.sfsc = 'N'
+                         union
+                         SELECT r.dwbm
+                                ,d.dwjb
+                                ,d.dwmc
+                                ,d.dwjc
+                                ,b.bmbm
+                                ,b.fbmbm
+                                ,b.bmmc
+                                ,b.bmjc
+                                /*,f.jsbm
+                                 ,r.dlbm
+                                 ,r.mc
+                                 ,r.gh
+                                 ,r.gzzh*/
+                                 ,b.bmxh
+                                 /*-- ,f.ryxh*/
+                                 ,'2' TYPE
+                        FROM  xt_zzjg_rybm r
+                              INNER JOIN xt_zzjg_ryjsfp f ON f.dwbm = r.dwbm and f.gh = r.gh
+                              INNER JOIN xt_zzjg_bmbm b ON  b.dwbm = r.dwbm and b.dwbm = f.dwbm and b.bmbm = f.bmbm
+                              INNER JOIN xt_zzjg_dwbm_tyyw d ON r.dwbm = d.dwbm and d.dwbm = b.dwbm and d.dwbm = f.dwbm
+                         WHERE r.sfsc = 'N' AND r.sftz = 'N' AND d.sfsc = 'N' AND b.sfsc = 'N'
+                        ) t WHERE t.dwbm = #{dwbm}
+							<choose>
+								<when test="fbmbm !=null and fbmbm != '' ">
+									AND t.fbmbm = #{fbmbm}
+								</when>
+								<otherwise>
+									AND t.fbmbm IS NULL
+								</otherwise>
+							</choose>
+                        group by    t.dwbm
+                                   ,t.dwjb
+                                   ,t.dwmc
+                                   ,t.dwjc
+                                   ,t.bmbm
+                                   ,t.fbmbm
+                                   ,t.bmmc
+                                   ,t.bmjc
+                                  /* ,t.jsbm
+                                   ,t.dlbm
+                                   ,t.mc
+                                   ,t.gh
+                                   ,t.gzzh*/
+                                   ,t.bmxh
+                                   /*--,t.ryxh*/
+                                   ,t.type
+                       ORDER BY t.type,t.dwjb,t.bmxh,t.bmbm
+	</select>
+
+
+	<select id="getFbmByParamDwGhFbm" resultType="java.util.Map">
+		SELECT * FROM (
+				SELECT r.dwbm
+					,d.dwjb
+					,d.dwmc
+					,d.dwjc
+					,b.bmbm
+					,b.fbmbm
+					,b.bmmc
+					,b.bmjc
+					,r.gh
+					/* ,f.jsbm
+					,r.dlbm
+					,r.mc
+					,r.gzzh*/
+					,b.bmxh
+					/*-- ,f.ryxh*/
+					,'1' TYPE
+				FROM xt_zzjg_rybm_tyyw r
+				INNER JOIN xt_qx_ryjsfp_tyyw f ON f.dwbm = r.dwbm and f.gh = r.gh
+				INNER JOIN xt_zzjg_bmbm_tyyw b ON b.dwbm = r.dwbm and b.dwbm = f.dwbm and b.bmbm = f.bmbm
+				INNER JOIN xt_zzjg_dwbm_tyyw d ON r.dwbm = d.dwbm and d.dwbm = b.dwbm and d.dwbm = f.dwbm
+				where r.sfsc = 'N' and r.sftz = 'N' and b.sfsc = 'N' and d.sfsc = 'N'
+				union
+				SELECT r.dwbm
+					,d.dwjb
+					,d.dwmc
+					,d.dwjc
+					,b.bmbm
+					,b.fbmbm
+					,b.bmmc
+					,b.bmjc
+					,r.gh
+					/*,f.jsbm
+					,r.dlbm
+					,r.mc
+					,r.gzzh*/
+					,b.bmxh
+					/*-- ,f.ryxh*/
+					,'2' TYPE
+				FROM  xt_zzjg_rybm r
+				INNER JOIN xt_zzjg_ryjsfp f ON f.dwbm = r.dwbm and f.gh = r.gh
+				INNER JOIN xt_zzjg_bmbm b ON  b.dwbm = r.dwbm and b.dwbm = f.dwbm and b.bmbm = f.bmbm
+				INNER JOIN xt_zzjg_dwbm_tyyw d ON r.dwbm = d.dwbm and d.dwbm = b.dwbm and d.dwbm = f.dwbm
+				WHERE r.sfsc = 'N' AND r.sftz = 'N' AND d.sfsc = 'N' AND b.sfsc = 'N'
+		) t WHERE t.dwbm = #{dwbm}
+			<if test=" gh!=null and gh !='' ">
+				AND t.gh = #{gh}
+			</if>
+			<choose>
+				<when test="fbmbm !=null and fbmbm != '' ">
+					AND t.fbmbm = #{fbmbm}
+				</when>
+				<otherwise>
+					AND t.fbmbm IS NULL
+				</otherwise>
+			</choose>
+		group by    t.dwbm
+					,t.dwjb
+					,t.dwmc
+					,t.dwjc
+					,t.bmbm
+					,t.fbmbm
+					,t.bmmc
+					,t.bmjc
+					/* ,t.jsbm
+					,t.dlbm
+					,t.mc
+					,t.gh
+					,t.gzzh*/
+					,t.bmxh
+					/*--,t.ryxh*/
+					,t.type
+		ORDER BY t.type,t.dwjb,t.bmxh,t.bmbm
+
+	</select>
+
+
+</mapper>

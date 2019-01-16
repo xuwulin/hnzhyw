@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swx.ibms.business.performance.mapper.YxGrjxAjtjMapper" >
+
+    <resultMap id="BaseResultMap" type="com.swx.ibms.business.performance.bean.YxGrjxAjtj" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="KHID" property="khid" jdbcType="VARCHAR" />
+        <result column="KHFZID" property="khfzid" jdbcType="VARCHAR" />
+        <result column="ZXMBM" property="zxmbm" jdbcType="VARCHAR" />
+        <result column="BMSAH" property="bmsah" jdbcType="VARCHAR" />
+        <result column="TYSAH" property="tysah" jdbcType="VARCHAR" />
+        <result column="AJMC" property="ajmc" jdbcType="VARCHAR" />
+        <result column="AJLBMC" property="ajlbmc" jdbcType="VARCHAR" />
+        <result column="CBR" property="cbr" jdbcType="VARCHAR" />
+        <result column="CBBM" property="cbbm" jdbcType="VARCHAR" />
+        <result column="SLRQ" property="slrq" jdbcType="TIMESTAMP" />
+        <result column="WCRQ" property="wcrq" jdbcType="TIMESTAMP" />
+        <result column="BJRQ" property="bjrq" jdbcType="TIMESTAMP" />
+        <result column="CREATEDATE" property="createdate" jdbcType="TIMESTAMP" />
+        <result column="UPDATEDATE" property="updatedate" jdbcType="TIMESTAMP" />
+        <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+        <result column="XH" property="xh" jdbcType="DECIMAL" />
+        <result column="STATUS" property="status" jdbcType="CHAR" />
+        <result column="AQZY" property="aqzy" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, KHID, KHFZID, ZXMBM, BMSAH, TYSAH, AJMC, AJLBMC, CBR, CBBM, SLRQ, WCRQ, BJRQ, 
+        CREATEDATE, UPDATEDATE, REMARKS, XH, STATUS, AQZY
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from YX_GRJX_AJTJ
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from YX_GRJX_AJTJ
+        where ID = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByKhid" parameterType="java.lang.String">
+        delete from YX_GRJX_AJTJ
+        where KHID = #{khid,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.swx.ibms.business.performance.bean.YxGrjxAjtj" >
+        insert into YX_GRJX_AJTJ (ID, KHID, KHFZID, 
+            ZXMBM, BMSAH, TYSAH, 
+            AJMC, AJLBMC, CBR, 
+            CBBM, SLRQ, WCRQ, 
+            BJRQ, CREATEDATE, UPDATEDATE, 
+            REMARKS, XH, STATUS)
+        values (#{id,jdbcType=VARCHAR}, #{khid,jdbcType=VARCHAR}, #{khfzid,jdbcType=VARCHAR}, 
+            #{zxmbm,jdbcType=VARCHAR}, #{bmsah,jdbcType=VARCHAR}, #{tysah,jdbcType=VARCHAR}, 
+            #{ajmc,jdbcType=VARCHAR}, #{ajlbmc,jdbcType=VARCHAR}, #{cbr,jdbcType=VARCHAR}, 
+            #{cbbm,jdbcType=VARCHAR}, #{slrq,jdbcType=TIMESTAMP}, #{wcrq,jdbcType=TIMESTAMP}, 
+            #{bjrq,jdbcType=TIMESTAMP}, #{createdate,jdbcType=TIMESTAMP}, #{updatedate,jdbcType=TIMESTAMP}, 
+            #{remarks,jdbcType=VARCHAR}, #{xh,jdbcType=DECIMAL}, #{status,jdbcType=CHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.swx.ibms.business.performance.bean.YxGrjxAjtj" >
+        insert into YX_GRJX_AJTJ
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null and id != '' " >
+                ID,
+            </if>
+            <if test="khid != null and khid != '' " >
+                KHID,
+            </if>
+            <if test="khfzid != null and khfzid != '' " >
+                KHFZID,
+            </if>
+            <if test="zxmbm != null and zxmbm != '' " >
+                ZXMBM,
+            </if>
+            <if test="bmsah != null and bmsah != '' " >
+                BMSAH,
+            </if>
+            <if test="tysah != null and tysah != '' " >
+                TYSAH,
+            </if>
+            <if test="ajmc != null and ajmc != '' " >
+                AJMC,
+            </if>
+            <if test="ajlbmc != null and ajlbmc != '' " >
+                AJLBMC,
+            </if>
+            <if test="cbr != null and cbr != '' " >
+                CBR,
+            </if>
+            <if test="cbbm != null and cbbm != '' " >
+                CBBM,
+            </if>
+            <if test="slrq != null and slrq != '' " >
+                SLRQ,
+            </if>
+            <if test="wcrq != null and wcrq != '' " >
+                WCRQ,
+            </if>
+            <if test="bjrq != null and bjrq != '' " >
+                BJRQ,
+            </if>
+            <if test="createdate != null and createdate != '' " >
+                CREATEDATE,
+            </if>
+            <if test="updatedate != null and updatedate != '' " >
+                UPDATEDATE,
+            </if>
+            <if test="remarks != null and remarks != '' " >
+                REMARKS,
+            </if>
+            <if test="xh != null and xh != '' " >
+                XH,
+            </if>
+            <if test="status != null and status != '' " >
+                STATUS,
+            </if>
+            <if test="aqzy != null and aqzy != '' " >
+                AQZY,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null and id != '' " >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="khid != null and khid != '' " >
+                #{khid,jdbcType=VARCHAR},
+            </if>
+            <if test="khfzid != null and khfzid != '' " >
+                #{khfzid,jdbcType=VARCHAR},
+            </if>
+            <if test="zxmbm != null and zxmbm != '' " >
+                #{zxmbm,jdbcType=VARCHAR},
+            </if>
+            <if test="bmsah != null and bmsah != '' " >
+                #{bmsah,jdbcType=VARCHAR},
+            </if>
+            <if test="tysah != null and tysah != '' " >
+                #{tysah,jdbcType=VARCHAR},
+            </if>
+            <if test="ajmc != null and ajmc != '' " >
+                #{ajmc,jdbcType=VARCHAR},
+            </if>
+            <if test="ajlbmc != null and ajlbmc != '' " >
+                #{ajlbmc,jdbcType=VARCHAR},
+            </if>
+            <if test="cbr != null and cbr != '' " >
+                #{cbr,jdbcType=VARCHAR},
+            </if>
+            <if test="cbbm != null and cbbm != '' " >
+                #{cbbm,jdbcType=VARCHAR},
+            </if>
+            <if test="slrq != null and slrq != '' " >
+                #{slrq,jdbcType=TIMESTAMP},
+            </if>
+            <if test="wcrq != null and wcrq != '' " >
+                #{wcrq,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bjrq != null and bjrq != '' " >
+                #{bjrq,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdate != null and createdate != '' " >
+                #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedate != null and updatedate != '' " >
+                #{updatedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null and remarks != '' " >
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="xh != null and xh != '' " >
+                #{xh,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null and status != '' " >
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="aqzy != null and aqzy != '' " >
+                #{aqzy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.swx.ibms.business.performance.bean.YxGrjxAjtj" >
+        update YX_GRJX_AJTJ
+        <set >
+            <if test="khid != null" >
+                KHID = #{khid,jdbcType=VARCHAR},
+            </if>
+            <if test="khfzid != null" >
+                KHFZID = #{khfzid,jdbcType=VARCHAR},
+            </if>
+            <if test="zxmbm != null" >
+                ZXMBM = #{zxmbm,jdbcType=VARCHAR},
+            </if>
+            <if test="bmsah != null" >
+                BMSAH = #{bmsah,jdbcType=VARCHAR},
+            </if>
+            <if test="tysah != null" >
+                TYSAH = #{tysah,jdbcType=VARCHAR},
+            </if>
+            <if test="ajmc != null" >
+                AJMC = #{ajmc,jdbcType=VARCHAR},
+            </if>
+            <if test="ajlbmc != null" >
+                AJLBMC = #{ajlbmc,jdbcType=VARCHAR},
+            </if>
+            <if test="cbr != null" >
+                CBR = #{cbr,jdbcType=VARCHAR},
+            </if>
+            <if test="cbbm != null" >
+                CBBM = #{cbbm,jdbcType=VARCHAR},
+            </if>
+            <if test="slrq != null" >
+                SLRQ = #{slrq,jdbcType=TIMESTAMP},
+            </if>
+            <if test="wcrq != null" >
+                WCRQ = #{wcrq,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bjrq != null" >
+                BJRQ = #{bjrq,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdate != null" >
+                CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedate != null" >
+                UPDATEDATE = #{updatedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                REMARKS = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="xh != null" >
+                XH = #{xh,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null" >
+                STATUS = #{status,jdbcType=CHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.swx.ibms.business.performance.bean.YxGrjxAjtj" >
+        update YX_GRJX_AJTJ
+        set KHID = #{khid,jdbcType=VARCHAR},
+            KHFZID = #{khfzid,jdbcType=VARCHAR},
+            ZXMBM = #{zxmbm,jdbcType=VARCHAR},
+            BMSAH = #{bmsah,jdbcType=VARCHAR},
+            TYSAH = #{tysah,jdbcType=VARCHAR},
+            AJMC = #{ajmc,jdbcType=VARCHAR},
+            AJLBMC = #{ajlbmc,jdbcType=VARCHAR},
+            CBR = #{cbr,jdbcType=VARCHAR},
+            CBBM = #{cbbm,jdbcType=VARCHAR},
+            SLRQ = #{slrq,jdbcType=TIMESTAMP},
+            WCRQ = #{wcrq,jdbcType=TIMESTAMP},
+            BJRQ = #{bjrq,jdbcType=TIMESTAMP},
+            CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+            UPDATEDATE = #{updatedate,jdbcType=TIMESTAMP},
+            REMARKS = #{remarks,jdbcType=VARCHAR},
+            XH = #{xh,jdbcType=DECIMAL},
+            STATUS = #{status,jdbcType=CHAR}
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <!--根据考核id和子项目编码获取 从办结案件的下拉树中选择案件添加到统计表 的案件-->
+    <select id="getGrjxAjtjList" resultType="com.swx.ibms.business.performance.bean.YxGrjxAjtj">
+        select
+            ID, KHID, KHFZID, ZXMBM, BMSAH, TYSAH, AJMC, AJLBMC, CBR, CBBM,
+            to_date(to_char(SLRQ,'yyyy-MM-dd'),'yyyy-MM-dd') slrq,
+            to_date(to_char(WCRQ,'yyyy-MM-dd'),'yyyy-MM-dd') wcrq,
+            to_date(to_char(BJRQ,'yyyy-MM-dd'),'yyyy-MM-dd') bjrq,
+            to_date(to_char(CREATEDATE,'yyyy-MM-dd'),'yyyy-MM-dd') createdate,
+            to_date(to_char(UPDATEDATE,'yyyy-MM-dd'),'yyyy-MM-dd') updatedate,
+            REMARKS, XH, STATUS, AQZY
+        from YX_GRJX_AJTJ
+        where khid = #{khid}
+          and zxmbm = #{zxmbm}
+    </select>
+    
+    <select id="selectByBmsah" resultType="java.lang.Integer">
+        select count(*)
+        from YX_GRJX_AJTJ
+        where bmsah = #{bmsah}
+          and tysah = #{tysah}
+          and khid = #{khid}
+          and khfzid = #{khfzid}
+          and zxmbm = #{zxmbm}
+    </select>
+
+</mapper>

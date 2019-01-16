@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swx.ibms.business.performance.mapper.YxGrjxGsxxMapper" >
+
+    <resultMap id="BaseResultMap" type="com.swx.ibms.business.performance.bean.YxGrjxGsxx" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="JXKHID" property="jxkhid" jdbcType="VARCHAR" />
+        <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+        <result column="KSRQ" property="ksrq" jdbcType="TIMESTAMP" />
+        <result column="JSRQ" property="jsrq" jdbcType="TIMESTAMP" />
+        <result column="CREATEBY" property="createby" jdbcType="VARCHAR" />
+        <result column="CREATEDATE" property="createdate" jdbcType="TIMESTAMP" />
+        <result column="UPDATEBY" property="updateby" jdbcType="VARCHAR" />
+        <result column="UPDATEDATE" property="updatedate" jdbcType="TIMESTAMP" />
+        <result column="DELFLAG" property="delflag" jdbcType="CHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, JXKHID, REMARKS, KSRQ, JSRQ, CREATEBY, CREATEDATE, UPDATEBY, UPDATEDATE, DELFLAG
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from YX_GRJX_GSXX
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByOtherKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from YX_GRJX_GSXX
+        where JXKHID = #{jxkhid,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByParams" resultMap="BaseResultMap" parameterType="com.swx.ibms.business.performance.bean.YxGrjxGsxx" >
+        select
+        <include refid="Base_Column_List" />
+        from YX_GRJX_GSXX
+        where DELFLAG = 'N'
+           and JXKHID = #{JXKHID,jdbcType=VARCHAR}
+        <if test="CREATEBY !=null and CREATEBY !='' ">
+           and CREATEBY = #{CREATEBY,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from YX_GRJX_GSXX
+        where DELFLAG = 'N'
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from YX_GRJX_GSXX
+        where ID = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.swx.ibms.business.performance.bean.YxGrjxGsxx" >
+        insert into YX_GRJX_GSXX (ID, JXKHID, REMARKS, 
+            KSRQ, JSRQ, CREATEBY, 
+            CREATEDATE, UPDATEBY, UPDATEDATE, 
+            DELFLAG)
+        values (#{id,jdbcType=VARCHAR}, #{jxkhid,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
+            #{ksrq,jdbcType=TIMESTAMP}, #{jsrq,jdbcType=TIMESTAMP}, #{createby,jdbcType=VARCHAR}, 
+            #{createdate,jdbcType=TIMESTAMP}, #{updateby,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, 
+            #{delflag,jdbcType=CHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.swx.ibms.business.performance.bean.YxGrjxGsxx" >
+        insert into YX_GRJX_GSXX
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null and id !='' " >
+                ID,
+            </if>
+            <if test="jxkhid != null and jxkhid!='' " >
+                JXKHID,
+            </if>
+            <if test="remarks != null and remarks!='' " >
+                REMARKS,
+            </if>
+            <if test="ksrq != null and ksrq !='' " >
+                KSRQ,
+            </if>
+            <if test="jsrq != null and jsrq !='' " >
+                JSRQ,
+            </if>
+            <if test="createby != null and createby !='' " >
+                CREATEBY,
+            </if>
+            <if test="createdate != null and createdate !='' " >
+                CREATEDATE,
+            </if>
+            <if test="updateby != null and updateby !='' " >
+                UPDATEBY,
+            </if>
+            <if test="updatedate != null and updatedate !='' " >
+                UPDATEDATE,
+            </if>
+            <if test="delflag != null and delflag !='' " >
+                DELFLAG,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null and id !='' " >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="jxkhid != null and jxkhid !='' " >
+                #{jxkhid,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null and remarks !='' " >
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="ksrq != null and ksrq !='' " >
+                #{ksrq,jdbcType=TIMESTAMP},
+            </if>
+            <if test="jsrq != null and jsrq !='' " >
+                #{jsrq,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createby != null and createby !='' " >
+                #{createby,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null and createdate !='' " >
+                #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateby != null and updateby !='' " >
+                #{updateby,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedate != null and updatedate !='' " >
+                #{updatedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delflag != null and delflag !='' " >
+                #{delflag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.swx.ibms.business.performance.bean.YxGrjxGsxx" >
+        update YX_GRJX_GSXX
+        <set >
+            <if test="jxkhid != null and jxkhid !='' " >
+                JXKHID = #{jxkhid,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null and remarks !='' " >
+                REMARKS = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="ksrq != null and ksrq !='' " >
+                KSRQ = #{ksrq,jdbcType=TIMESTAMP},
+            </if>
+            <if test="jsrq != null and jsrq !='' " >
+                JSRQ = #{jsrq,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createby != null and createby !='' " >
+                CREATEBY = #{createby,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null and createdate !='' " >
+                CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateby != null and updateby !='' " >
+                UPDATEBY = #{updateby,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedate != null and updatedate !='' " >
+                UPDATEDATE = #{updatedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delflag != null and delflag !='' " >
+                DELFLAG = #{delflag,jdbcType=CHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.swx.ibms.business.performance.bean.YxGrjxGsxx" >
+        update YX_GRJX_GSXX
+        set JXKHID = #{jxkhid,jdbcType=VARCHAR},
+            REMARKS = #{remarks,jdbcType=VARCHAR},
+            KSRQ = #{ksrq,jdbcType=TIMESTAMP},
+            JSRQ = #{jsrq,jdbcType=TIMESTAMP},
+            CREATEBY = #{createby,jdbcType=VARCHAR},
+            CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+            UPDATEBY = #{updateby,jdbcType=VARCHAR},
+            UPDATEDATE = #{updatedate,jdbcType=TIMESTAMP},
+            DELFLAG = #{delflag,jdbcType=CHAR}
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

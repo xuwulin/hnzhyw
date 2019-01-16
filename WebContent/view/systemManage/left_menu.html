@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>左边菜单界面</title>
+<!-- 
+	添加左边的树的注意事项：
+	1、在页面left_menu.html中加入对应树的<li></li>以及跳转链接
+	2、在新加入的链接所对应的页面加入样式（
+		.left_ul li:nth-of-type(1) a{
+			background-color:#0876D5;
+			color:#fff;
+			border: 1px solid #0876D5;
+			cursor:pointer;
+		}
+	）；其中:nth-of-type()中的数字跟<li></li>的顺序必须一致。
+	eg:分管领导配置管理所对应的CSS为:
+		.left_ul li:nth-of-type(1) a{
+			background-color:#0876D5;
+			color:#fff;
+			border: 1px solid #0876D5;
+			cursor:pointer;
+		}
+	3、引入左边树界面，建一个class为"left_tree"的div,$(".left_tree").load("../left_menu.html");
+ -->
+</head>
+<body>
+	<div>
+		<ul class="left_ul">
+			<li><a href="../system/xtpz_fgld.html">分管领导配置管理</a><input type="hidden" id="left_menu_1" value="1"/></li>
+			<!--<li><a href="../department/xtpz.html">部门管理</a></li>-->
+			<li><a href="../person/xtpz_zzjg_manage.html">组织机构管理</a></li>
+			<!--<li><a href="../person/xtpz_rygl.html">人员管理</a></li>-->
+			<li id="xtpzgl"><a href="../system/xtpz_filepath.html">系统配置管理</a></li>
+			<li><a href="../quartz/xt_quartz_pz.html">同步任务配置管理</a></li>
+			<li><a href="../ywlx/ywlxfp.html">业务类型/业务类型分配管理</a></li>
+			<li><a href="../jxkh/xtpz_ywkhzbgl.html">个人绩效考核配置</a></li>
+			<!--<li><a href="../jchc/xtpz_hcpz.html">个人绩效-交叉核查配置</a></li>-->
+			<li><a href="../bmzdpz/xtpz_bmzdpz.html">人员功能配置</a></li>
+			<li><a href="../ywkh/ywkh_khdwpz.html">业务考核配置</a></li>
+			<!--<li><a href="../ywkh/ywkh_khlxpz.html">业务考核-考核类型配置</a></li>-->
+			<!--<li><a href="../zbrs/zbrs.html">业务考核-在编人数配置</a></li>-->
+			<!--<li><a href="../ywgz/xtpz_ywgzpzgl.html">业务考核-考核指标管理</a></li>-->
+			<li><a href="../dataDict/data_dict.html">数据字典管理</a></li>
+			<li><a href="../logging/xtgl_logging.html">日志管理</a></li>
+		</ul>
+	</div>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swx.ibms.business.archives.mapper.SfdaRyjnMapper">
+	<!-- 司法档案下荣誉技能信息 -->
+	<resultMap id="sfdaRyjnResultMap" type="SfdaRyjn">
+		<result column="id" property="id" javaType="java.lang.String" />
+		<result column="rymc" property="rymc" javaType="java.lang.String" />
+		<result column="hjsj" property="hjsj" javaType="java.lang.String" />
+		<result column="bjdw" property="bjdw" javaType="java.lang.String" />
+		<result column="hjsy" property="hjsy" javaType="java.lang.String" />
+		<result column="hjqtqk" property="hjqtqk" javaType="java.lang.String" />
+		<result column="did" property="gdid" javaType="java.lang.String" />
+		<result column="hjdjbm" property="hjdjbm" javaType="java.lang.String" />
+		<result column="hjdj" property="hjdj" javaType="java.lang.String" />
+		<result column="sfsc" property="sfsc" jdbcType="CHAR" />
+		<result column="zhgxbm" property="zhgxbm" jdbcType="CHAR" />
+		<result column="zhgxr" property="zhgxr" jdbcType="CHAR" />
+		<result column="zhgxsj" property="zhgxsj" javaType="java.lang.String" />
+		<result column="status" property="status" javaType="java.lang.String" />
+	</resultMap>
+	
+	<!-- 展示荣誉技能（根据档案id） -->
+	<select id="getSfdaRyjnPageList" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_SFDA_RYJN.pro_getSfdaRyjnPageList( 
+ 			#{p_gdid,mode=IN,jdbcType=VARCHAR},
+  		    #{p_start,mode=IN,jdbcType=INTEGER},
+  		    #{p_end,mode=IN,jdbcType=INTEGER},
+  		    #{p_total,mode=OUT,jdbcType=INTEGER},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sfdaRyjnResultMap}
+  		)} 
+  		]]>
+	</select>
+	
+	<!-- 新增荣誉技能  -->
+	<insert id="addSfdaRyjn" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_SFDA_RYJN.pro_addSfdaRyjn(
+          		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_rymc,mode=IN,jdbcType=VARCHAR},
+          		#{p_hjsj,mode=IN,jdbcType=VARCHAR},
+          		#{p_bjdw,mode=IN,jdbcType=VARCHAR},
+          		#{p_hjsy,mode=IN,jdbcType=VARCHAR},
+          		#{p_hjqtqk,mode=IN,jdbcType=VARCHAR},
+          		#{p_gdid,mode=IN,jdbcType=VARCHAR},
+          		#{p_hjdjbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_hjdj,mode=IN,jdbcType=VARCHAR},
+          		#{p_sfsc,mode=IN,jdbcType=CHAR},
+          		#{p_zhgxbm,mode=IN,jdbcType=CHAR},
+          		#{p_zhgxr,mode=IN,jdbcType=CHAR},
+          		#{p_zhgxsj,mode=IN,jdbcType=VARCHAR},
+          		#{Y,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</insert>
+	
+	<!-- 修改荣誉技能 -->
+	<update id="updateSfdaRyjn" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_SFDA_RYJN.pro_updateSfdaRyjn(
+        		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_rymc,mode=IN,jdbcType=VARCHAR},
+          		#{p_hjsj,mode=IN,jdbcType=VARCHAR},
+          		#{p_bjdw,mode=IN,jdbcType=VARCHAR},
+          		#{p_hjsy,mode=IN,jdbcType=VARCHAR},
+          		#{p_hjqtqk,mode=IN,jdbcType=VARCHAR},
+          		#{p_hjdj,mode=IN,jdbcType=VARCHAR},
+          		#{p_zhgxbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_zhgxr,mode=IN,jdbcType=VARCHAR},
+          		#{p_zhgxsj,mode=IN,jdbcType=VARCHAR},
+          		#{Y,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+	
+	<!-- 删除荣誉技能 -->
+	<delete id="deleteSfdaRyjn" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_SFDA_RYJN.pro_deleteSfdaRyjn(
+          		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{Y,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</delete>
+	
+	
+	
+	<!-- 逻辑删除荣誉，根据id -->
+	<!-- <update id="updateSfscById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_SFDA_AJXX.pro_updateStatusByDaId( 
+  		    #{p_id,mode=IN,jdbcType=VARCHAR},
+  		    #{p_sfsc,mode=IN,jdbcType=CHAR},
+  		)} 
+  		]]>
+	</update> -->
+
+	<!-- 根据id查询单条司法档案下的荣誉技能 -->
+		<!-- <select id="getSfdaRyjnById" parameterType="java.util.Map" statementType="CALLABLE">
+			<![CDATA[
+	 		{call PKG_SFDA_RYJN.pro_getSfdaRyjnById( 
+	  		    #{p_id,mode=IN,jdbcType=VARCHAR},
+	  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sfdaRyjnMap}
+	  		)} 
+	  		]]>
+		</select> -->
+	
+	<!-- 根据单位编码，部门编码获取已经创建档案的工号和名称 -->
+	<select id="getAllGhAndMc" resultType="java.util.HashMap">
+		SELECT r.gh,
+			   r.mc
+  		FROM xt_zzjg_rybm_tyyw r
+ 		INNER JOIN xt_qx_ryjsfp_tyyw p ON p.dwbm=r.dwbm AND p.gh = r.gh
+ 		INNER JOIN xt_qx_jsbm_tyyw j   ON j.dwbm=r.dwbm AND j.jsbm = p.jsbm
+ 		INNER JOIN xt_zzjg_bmbm_tyyw b ON j.bmbm = p.bmbm AND b.dwbm=r.dwbm AND b.bmbm = j.bmbm
+ 		INNER JOIN xt_zzjg_dwbm_tyyw d ON r.dwbm=d.dwbm AND b.dwbm=d.dwbm AND j.dwbm=d.dwbm
+ 		INNER JOIN YX_SFDA_DAGZ da ON da.ssrdwbm = r.dwbm AND da.ssr = r.gh
+        WHERE r.sfsc = 'N'
+        	AND R.sftz = 'N'
+            AND b.sfsc = 'N'
+            AND d.sfsc = 'N'
+            AND da.sfsc = 'N'
+            and da.sffc = '0'
+            AND da.kssj = #{kssj}
+            AND da.jssj = #{jssj}
+            AND r.dwbm = #{dwbm}
+            AND b.bmbm = #{bmbm}
+        ORDER BY d.dwjb,r.dwbm,b.bmbm,j.jsbm,p.ryxh,r.gh
+	</select>
+	
+	<select id="getAllDaid" resultType="java.lang.String">
+		SELECT ID
+		FROM YX_SFDA_DAGZ t
+		WHERE t.SSRDWBM = #{dwbm}
+			AND t.SSR = #{gh}
+			AND t.kssj = #{kssj}
+			AND t.jssj = #{jssj}
+			AND t.sffc = '0'
+			AND t.sfsc = 'N'
+	</select>
+	
+	<select id="getCounts" resultType="java.util.HashMap">
+		select sum(ryjlsl) ryjlsl,
+       		   sum(zrzjsl) zrzjsl,
+       	       sum(jsjdsl) jsjdsl,
+       		   sum(ywyxsl) ywyxsl,
+       		   sum(qtqksl) qtqksl
+		from(
+    		select nvl(count(*),0) ryjlsl,nvl(null,0) zrzjsl,nvl(null,0) jsjdsl,nvl(null,0) ywyxsl,nvl(null,0) qtqksl from yx_sfda_ryjn a where a.did = #{did}
+    		union all
+    		select nvl(null,0) ryjlsl,nvl(count(*),0) zrzjsl,nvl(null,0) jsjdsl,nvl(null,0) ywyxsl,nvl(null,0) qtqksl from yx_sfda_zrzj b where b.did = #{did}
+    		union all
+    		select nvl(null,0) ryjlsl,nvl(null,0) zrzjsl,nvl(count(*),0) jsjdsl,nvl(null,0) ywyxsl,nvl(null,0) qtqksl from yx_sfda_jdqk c where c.did = #{did}
+    		union all
+    		select nvl(null,0) ryjlsl,nvl(null,0) zrzjsl,nvl(null,0) jsjdsl,nvl(count(*),0) ywyxsl,nvl(null,0) qtqksl from yx_sfda_zycs d where d.did = #{did}
+    		union all
+    		select nvl(null,0) ryjlsl,nvl(null,0) zrzjsl,nvl(null,0) jsjdsl,nvl(null,0) ywyxsl,nvl(count(*),0) qtqksl from yx_sfda_qtqk e where e.did = #{did}
+			) t1
+	
+	
+	</select>
+
+	<select id="serachRyjnByType" resultMap="sfdaRyjnResultMap">
+		select * from yx_sfda_ryjn
+		where DID = #{daid}
+		  and SFSC = 'N'
+		  and HJSJ between #{kssj} and #{jssj}
+	</select>
+
+</mapper>

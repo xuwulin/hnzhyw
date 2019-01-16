@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.appraisal.mapper.YwlxkhMapper">
+	<!-- 业务类型考核结果集 -->
+	<resultMap id="YwlxkhMapa" type="Ywlxkh">
+	    <result property="ywlxkhfzid" column="id" javaType="java.lang.String"></result>
+	    <result property="ywlxkhid" column="ywlxkhid" javaType="java.lang.String"></result>
+		<result property="dwkhzt" column="dwkhzt" javaType="java.lang.String"></result>
+		<result property="lxkhzt" column="lxkhzt" javaType="java.lang.String"></result>
+		<result property="khlx" column="khlx" javaType="java.lang.String"></result>
+		<result property="khmc" column="khmc" javaType="java.lang.String"></result>
+		<result property="zbkpgl" column="zbkpgl" javaType="java.lang.String"></result>
+		<result property="zbkpdf" column="zbkpdf" javaType="java.lang.String"></result>
+		<result property="zbkpbt" column="zbkpbt" javaType="java.lang.String"></result>
+		<result property="spsftg" column="spsftg" javaType="java.lang.String"></result>
+		<result property="zpjdf" column="zpjdf" javaType="java.lang.String"></result>
+		<result property="zjcf" column="zjcf" javaType="java.lang.String"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="dwjb" column="dwjb" javaType="java.lang.String"></result>
+		<result property="kssj" column="kssj" javaType="java.util.Date"></result>
+		<result property="jssj" column="jssj" javaType="java.util.Date"></result>
+	</resultMap>
+	<!-- 业务工作评分材料信息结果集 -->
+	<resultMap id="YWGZPFCLMapa" type="YWGZPFCL">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="ywlxkhfzid" column="ywlxkhfzid" javaType="java.lang.String"></result>
+		<result property="zbxbm" column="zbxbm" javaType="java.lang.String"></result>
+		<result property="lx" column="lx" javaType="java.lang.String"></result>
+		<result property="bz" column="bz" javaType="java.lang.String"></result>
+		<result property="fjxx" column="fjxx" javaType="java.lang.String"></result>
+	</resultMap>
+	<!-- 业务类型考核最高基础分结果集 -->
+	<resultMap id="YwlxkhZgjcfMapa" type="YwlxkhZgjcf">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="year" column="year" javaType="java.lang.String"></result>
+		<result property="khlx" column="khlx" javaType="java.lang.String"></result>
+		<result property="dwjb" column="dwjb" javaType="java.lang.String"></result>
+		<result property="xmbm" column="xmbm" javaType="java.lang.String"></result>
+		<result property="zgjcf" column="zgjcf" javaType="java.lang.Double"></result>
+	</resultMap>
+	<!-- 业务工作总览查询实体类 -->
+	<resultMap id="Ywgzzltbmap" type="Ywgzzltb">
+		<result property="khid" column="khid" javaType="java.lang.String"></result>
+		<result property="ywlxkhid" column="ywlxkhid" javaType="java.lang.String"></result>
+		<result property="dwkhzt" column="dwkhzt" javaType="java.lang.String"></result>
+		<result property="lxkhzt" column="lxkhzt" javaType="java.lang.String"></result>
+		<result property="khfzid" column="khfzid" javaType="java.lang.String"></result>
+		<result property="year" column="year" javaType="java.lang.String"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="dwmc" column="dwmc" javaType="java.lang.String"></result>
+		<result property="khlx" column="khlx" javaType="java.lang.String"></result>
+		<result property="khmc" column="khmc" javaType="java.lang.String"></result>
+		<result property="khf" column="khf" javaType="double"></result>
+		<result property="khrdw" column="khrdw" javaType="java.lang.String"></result>
+		<result property="khrbm" column="khrbm" javaType="java.lang.String"></result>
+		<result property="khrgh" column="khrgh" javaType="java.lang.String"></result>
+		<result property="yyzt" column="yyzt" javaType="java.lang.String"></result>
+		<result property="gbsj" column="gbsj" javaType="java.lang.String"></result>
+		<result property="yysjqx" column="yysjqx" javaType="java.lang.String"></result>
+		<result property="dwjb" column="dwjb" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<!-- 业务考核首页查询信息结果集 -->
+	<resultMap id="ywkhSycxMap" type="java.util.Map">
+		<result property="khid" column="khid" javaType="java.lang.String"></result>
+		<result property="ywlxkhid" column="ywlxkhid" javaType="java.lang.String"></result>
+		<result property="dwkhzt" column="dwkhzt" javaType="java.lang.String"></result>
+		<result property="lxkhzt" column="lxkhzt" javaType="java.lang.String"></result>
+		<result property="khfzid" column="khfzid" javaType="java.lang.String"></result>
+		<result property="year" column="year" javaType="java.lang.String"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="dwmc" column="dwmc" javaType="java.lang.String"></result>
+		<result property="khlx" column="khlx" javaType="java.lang.String"></result>
+		<result property="khmc" column="khmc" javaType="java.lang.String"></result>
+		<result property="khf" column="khf" javaType="double"></result>
+		<result property="khrdw" column="khrdw" javaType="java.lang.String"></result>
+		<result property="khrbm" column="khrbm" javaType="java.lang.String"></result>
+		<result property="khrgh" column="khrgh" javaType="java.lang.String"></result>
+		<result property="yyzt" column="yyzt" javaType="java.lang.String"></result>
+		<result property="gbsj" column="gbsj" javaType="java.lang.String"></result>
+		<result property="yysjqx" column="yysjqx" javaType="java.lang.String"></result>
+		<result property="dwjb" column="dwjb" javaType="java.lang.String"></result>
+		<result property="ywmc" column="ywmc" javaType="java.lang.String"></result>
+		<result property="ywlx" column="ywlx" javaType="java.lang.String"></result>
+		<result property="fdwbm" column="fdwbm" javaType="java.lang.String"></result>
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="startDate" column="start_date" javaType="java.lang.String"></result>
+		<result property="endDate" column="end_date" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<!-- 部门映射对应的业务类型结果集 -->
+	<resultMap id="ywgzBmysYwlxMap" type="java.util.Map">
+		<result property="ywbm" column="ywbm" javaType="java.lang.String"></result>
+		<result property="bmlbbm" column="bmlbbm" javaType="java.lang.String"></result>
+		<result property="ywmc" column="ywmc" javaType="java.lang.String"></result>
+		<result property="ywjc" column="ywjc" javaType="java.lang.String"></result>
+		<result property="bmmc" column="bmmc" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<!-- 业务工作评分材料信息结果集 -->
+	<resultMap id="nullMap" type="java.util.Map">
+
+	</resultMap>
+	<!-- 得打业务类型分值信息 -->
+	<select id="selectYwlxkh" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.selectywlxkh(
+          		#{p_khlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},	
+          		#{p_year,mode=IN,jdbcType=VARCHAR},	 
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=YwlxkhMapa}
+          		)} 
+    	]]>
+	</select>
+	<!-- 得到业务工作评分材料信息 -->
+	<select id="getcl" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.proc_ywgz_getcl(
+          		#{p_ywlxkhfzid,mode=IN,jdbcType=VARCHAR},
+          		#{p_lx,mode=IN,jdbcType=VARCHAR},	
+          		#{p_zbxbm,mode=IN,jdbcType=VARCHAR},	 
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=YWGZPFCLMapa}
+          		)} 
+    	]]>
+	</select>
+		<!-- 得到业务工作评分材料信息 -->
+	<select id="getcl2" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_YWLXKH.proc_ywgz_getcl2(
+          		#{p_ywlxkhfzid,mode=IN,jdbcType=VARCHAR},
+          		#{p_lx,mode=IN,jdbcType=VARCHAR},
+          		#{p_zbxbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=YWGZPFCLMapa}
+          		)}
+    	]]>
+	</select>
+
+	<!-- 更新或插入业务工作评分材料信息 -->
+	<update id="upDatePfcl" parameterType="java.util.Map" statementType="CALLABLE">
+	<![CDATA[
+	            {call PKG_YWLXKH.proc_updatepfcl(
+          		#{p_ywlxkhfzid,mode=IN,jdbcType=VARCHAR},
+          		#{p_lx,mode=IN,jdbcType=VARCHAR},	
+          		#{p_zbxbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_fjxx,mode=IN,jdbcType=CLOB},	 
+          		#{p_bz,mode=IN,jdbcType=VARCHAR}
+          		)}  
+	]]>
+	</update>
+	
+	
+	<!-- 更新业务考核分值的信息 -->
+	<update id="updateYwlxkhfz" parameterType="java.util.Map" statementType="CALLABLE">
+	<![CDATA[
+	            {call PKG_YWLXKH.proc_updateywlxkhfz(
+          		#{p_ywlxkhid,mode=IN,jdbcType=VARCHAR},
+          		#{p_khlx,mode=IN,jdbcType=VARCHAR},	
+          		#{p_ywzf,mode=IN,jdbcType=DOUBLE},
+          		#{p_zbkpgl,mode=IN,jdbcType=CLOB},	 
+          		#{p_zbkpdf,mode=IN,jdbcType=CLOB}
+          		)}  
+	]]>
+	</update>
+	
+	<!-- 更新或插入最高基础分 -->
+    <update id="updateZgjcf" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.proc_updatezgjcf(
+          		#{p_year,mode=IN,jdbcType=VARCHAR},
+          		#{p_khlx,mode=IN,jdbcType=VARCHAR},	
+          		#{p_dwjb,mode=IN,jdbcType=VARCHAR},	
+          		#{p_xmbm,mode=IN,jdbcType=VARCHAR}, 
+          		#{p_jcf,mode=IN,jdbcType=DOUBLE}
+          		)} 
+    	]]>
+	</update>
+	<!-- 查询最高基础分list -->
+	<select id="selectZgjcf" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.proc_selectzgjcf(
+          		#{p_year,mode=IN,jdbcType=VARCHAR},
+          		#{p_khlx,mode=IN,jdbcType=VARCHAR},	
+          		#{p_dwjb,mode=IN,jdbcType=VARCHAR},	 
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=YwlxkhZgjcfMapa}
+          		)} 
+    	]]>
+	</select>
+	
+	<!-- 查询基础分和最高评价分 -->
+	<select id="selectKpglZbkpdfZgpjf" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.proc_select_kpgl_zbkpdf_zgpjf(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_year,mode=IN,jdbcType=VARCHAR},	
+          		#{p_khlx,mode=IN,jdbcType=VARCHAR},	
+          		#{p_dwjb,mode=IN,jdbcType=VARCHAR},
+          		#{p_zbkpgl,mode=OUT,jdbcType=VARCHAR}, 
+          		#{p_zbkpdf,mode=OUT,jdbcType=VARCHAR},
+          		#{p_zgpjf,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</select>
+	
+	
+	<!-- 根据考核分值id查询基础分和最高评价分 -->
+	<select id="getKpglZbkpdfZgpjf" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.proc_get_kpgl_zbkpdf_zgpjf(
+          		#{p_khfzid,mode=IN,jdbcType=VARCHAR},
+          		#{p_zbkpgl,mode=OUT,jdbcType=VARCHAR}, 
+          		#{p_zbkpdf,mode=OUT,jdbcType=VARCHAR},
+          		#{p_dwbm,mode=OUT,jdbcType=VARCHAR},
+          		#{p_kssj,mode=OUT,jdbcType=DATE},
+          		#{p_jssj,mode=OUT,jdbcType=DATE},
+          		#{p_year,mode=OUT,jdbcType=VARCHAR},
+          		#{p_zgpjf,mode=OUT,jdbcType=VARCHAR}
+          	)} 
+    	]]>
+	</select>
+	
+	<!-- 算出评价得分后，对yx_ywgz_ywlxkhfz进行更新 -->
+	<update id="pjdfUpdateYwlxkhfz" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.proc_pjdf_update_ywlxkhfz(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_year,mode=IN,jdbcType=VARCHAR},	
+          		#{p_khlx,mode=IN,jdbcType=VARCHAR},	
+          		#{p_zbkpgl,mode=IN,jdbcType=CLOB}, 
+          		#{p_zbkpdf,mode=IN,jdbcType=CLOB}, 
+          		#{p_zpjdf,mode=IN,jdbcType=DOUBLE},
+          		#{p_khf,mode=IN,jdbcType=DOUBLE}
+          		)} 
+    	]]>
+	</update>
+	<!-- 通过单位级别和单位编码的前两位查出该省的此单位级别的单位信息 -->
+	<select id="dwjbDwtwoDwbm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.proc_dwjb_dwtwo_dwbm(
+          		#{p_dwjb,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwtwo,mode=IN,jdbcType=VARCHAR},	
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=DwbmMap}
+          		)} 
+    	]]>
+	</select>
+	
+	<!-- 查询考核总览 -->
+	<select id="getkhzl" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.proc_s_ywgzzl(
+          		#{p_year,mode=IN,jdbcType=VARCHAR},
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},	
+          		#{p_khlx,mode=IN,jdbcType=VARCHAR},	
+          		#{p_sfby,mode=IN,jdbcType=VARCHAR},	
+          		#{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=Ywgzzltbmap}
+          		)} 
+    	]]>
+	</select>
+	
+	
+	<!-- 业务工作条件查询 -->
+	<select id="selectDwkhByDwbmAndYear" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.proc_select_dwkh(
+          		#{p_year,mode=IN,jdbcType=VARCHAR},
+          		#{p_dlrdwbm,mode=IN,jdbcType=VARCHAR},	
+          		#{p_cxdwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_zt,mode=IN,jdbcType=VARCHAR},	
+          		#{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=Ywgzzltbmap}
+          		)} 
+    	]]>
+	</select>
+	
+	
+	<resultMap id="hashMap" type="java.util.Map"/>
+	<!-- 根据业务工作分值id查询业务工作分值信息  -->
+	<select id="selectYwkhfzById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.pro_get_rjbasl(
+          		#{p_khfzid,mode=IN,jdbcType=VARCHAR},
+          		#{p_zbrs,mode=OUT,jdbcType=INTEGER},	
+          		#{p_zbkpdf,mode=OUT,jdbcType=VARCHAR},
+          		#{p_maxjcf,mode=OUT,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</select>
+	
+	
+	
+	<!-- 根据业务类型考核分值表id修改业务类型考核分值表指标考评得分p_zbkpdf (pro_updateZbkpdfById) -->
+	<update id="updateZbkpdfById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.pro_updateZbkpdfById(
+          		#{p_khfzid,mode=IN,jdbcType=VARCHAR},
+          		#{p_zbkpdf,mode=IN,jdbcType=VARCHAR},
+          		#{p_zjcf,mode=IN,jdbcType=DOUBLE},
+          		#{p_zpjf,mode=IN,jdbcType=DOUBLE},
+          		#{p_khf,mode=IN,jdbcType=DOUBLE}, 
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}	
+          		)} 
+    	]]>
+	</update>
+	
+	<!-- 根据考核活动id修改考核活动表、业务类型考核表的状态 -->
+	<update id="updateGbZtById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.pro_updateGbZtById(
+          		#{p_khid,mode=IN,jdbcType=VARCHAR},
+          		#{p_mc,mode=IN,jdbcType=VARCHAR},
+          		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}	
+          		)} 
+    	]]>
+	</update>
+	
+	<resultMap id="selectKhlxHashMap" type="java.util.Map"/>
+	<!-- 根据登录人的单位编码、部门编码查询其所有的业务考核类型 -->
+	<select id="selectKhlxByDwbmAndBmbm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.pro_selectKhlxByDwbmAndBmbm(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_bmbmSql,mode=IN,jdbcType=VARCHAR},	
+          		#{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=selectKhlxHashMap}
+          		)} 
+    	]]>
+	</select>
+	
+	
+	
+	<resultMap id="getAgJsBmMap" type="java.util.Map"/>
+	<!-- 查询案管的角色编码 -->
+	<select id="getJsbmByDwbmAndGh" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.pro_getJsbmByDwbmAndGh(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},	
+          		#{p_cur,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=getAgJsBmMap}
+          		)} 
+    	]]>
+	</select>
+	
+	<!-- 根据分值id查询基础分和最高评价分-->
+	<select id="selectKpglZbkpdfZgpjfById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.proc_selectKpglAndFzById(
+          		#{p_khfzid,mode=IN,jdbcType=VARCHAR},
+          		#{p_zbkpgl,mode=OUT,jdbcType=VARCHAR}, 
+          		#{p_zbkpdf,mode=OUT,jdbcType=VARCHAR},
+          		#{p_zgpjf,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</select>
+	
+	<!-- <resultMap id="getFzInfoMap" type="java.util.Map"/> -->
+	<!-- 根据业务考核分值id查询分值信息 -->
+	<select id="getYwkhfzById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.pro_getYwkhfzById(
+          		#{p_khfzid,mode=IN,jdbcType=VARCHAR},
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=YwlxkhMapa}
+          		)} 
+    	]]>
+	</select>
+
+	<!-- 根据单位编码、业务类型、时间段查询、是否公示查询检察院业务考核 -->
+	<select id="getYwkhDwkh" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_YWLXKH.pro_getYwkhDwkh2(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_ywlxStr,mode=IN,jdbcType=VARCHAR},
+          		#{p_startDate,mode=IN,jdbcType=DATE},
+          		#{p_endDate,mode=IN,jdbcType=DATE},
+          		#{p_zt,mode=IN,jdbcType=VARCHAR},
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ywkhSycxMap}
+          		)}
+    	]]>
+	</select>
+
+	<!-- 根据单位编码、业务类型、时间段查询、是否公示查询检察院业务考核 -->
+	<select id="getYwkhDwkh2" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_YWLXKH.pro_getYwkhDwkh3(
+          		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_ywlxStr,mode=IN,jdbcType=VARCHAR},
+          		#{p_startDate,mode=IN,jdbcType=DATE},
+          		#{p_endDate,mode=IN,jdbcType=DATE},
+          		#{p_zt,mode=IN,jdbcType=VARCHAR},
+          		#{p_mc,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ywkhSycxMap}
+          		)}
+    	]]>
+	</select>
+
+
+
+	<!-- 根据单位编码、业务类型、时间段查询、是否公示查询检察院业务考核 -->
+	<select id="isZdkhr" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_YWLXKH.pro_isZdkhr(
+          		#{p_startDate,mode=IN,jdbcType=DATE},
+          		#{p_endDate,mode=IN,jdbcType=DATE},
+          		#{p_mc,mode=IN,jdbcType=VARCHAR},
+          		#{p_gh,mode=IN,jdbcType=VARCHAR},
+          		#{p_num,mode=OUT,jdbcType=INTEGER}
+          		)}
+    	]]>
+	</select>
+
+
+
+	<!-- 根据部门映射获取业务类型 -->
+	<select id="getYwlxByBmys" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_YWLXKH.pro_getYwbmBybmys(
+          		#{p_bmys,mode=IN,jdbcType=VARCHAR},
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ywgzBmysYwlxMap}
+          		)} 
+    	]]>
+	</select>
+	
+	
+	<!-- 根据考核id、业务部门类型字符串（多个以逗号隔开）查询检察院业务考核[业务考核total页面数据] -->
+	<select id="getYwkhByIdAndYwlx" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_YWLXKH.pro_getYwkhByIdAndYwlx2(
+          		#{p_khid,mode=IN,jdbcType=VARCHAR},
+          		#{p_ywlxStr,mode=IN,jdbcType=VARCHAR},
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ywkhSycxMap}
+          		)}
+    	]]>
+	</select>
+	
+	<!-- 根据考核id、业务部门类型字符串（多个以逗号隔开）查询检察院业务考核[业务考核total页面数据] -->
+	<select id="getYwkhByywkhIdAndYwlx" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+        	{call PKG_YWLXKH.pro_getYwkhByywkhIdAndYwlx(
+          		#{p_ywlxkhid,mode=IN,jdbcType=VARCHAR},
+          		#{p_ywlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_khlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ywkhSycxMap}
+          		)}
+    	]]>
+    	
+	</select>
+	
+	
+	<!-- 查询当前考核项目是否以指定审核人 -->
+   <select  id="selectkhspr"   parameterType="java.util.Map"    statementType="CALLABLE">
+	<![CDATA[
+	{call PKG_YWLXKH.PROC_GET_KHSPR(
+				#{P_ID,mode=IN,jdbcType=VARCHAR},
+	            #{P_COUNT,mode=OUT,jdbcType=VARCHAR},
+                #{P_ERRMSG,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]> 
+   </select>
+
+
+   <!-- 更新业务类型考核分值表的数据[根据考核分值id]-->
+	<update id="modifyYwlxkhfz" parameterType="java.util.Map" statementType="CALLABLE">
+	<![CDATA[ 
+	{call PKG_YWLXKH.pro_modifyYwlxkhfz(
+          #{p_khfzid,mode=IN,jdbcType=VARCHAR},
+          #{p_ywzf,mode=IN,jdbcType=DOUBLE},
+          #{p_zbkpgl,mode=IN,jdbcType=CLOB},	 
+          #{p_zbkpdf,mode=IN,jdbcType=CLOB},
+          #{p_msg,mode=OUT,jdbcType=VARCHAR}
+     )}  
+	]]>
+	</update>
+   
+   <!-- 更新业务类型状态[根据考核类型id]-->
+	<update id="modifyKhlxZtById" parameterType="java.util.Map" statementType="CALLABLE">
+	<![CDATA[
+	    	{call PKG_YWLXKH.pro_modify_khlxZtById(
+          		#{p_khlxid,mode=IN,jdbcType=VARCHAR},
+          		#{p_errMsg,mode=OUT,jdbcType=VARCHAR}
+         	)}  
+	]]>
+	</update>
+
+
+	<!-- 部门映射对应的业务类型结果集 -->
+	<resultMap id="khrMcGhMap" type="java.util.Map">
+		<result property="khrmc" column="khrmc" javaType="java.lang.String"></result>
+		<result property="khrgh" column="khrgh" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<!-- 查询当前考核项目是否以指定审核人 -->
+	<select  id="getKhrMcGh"   parameterType="java.util.Map"    statementType="CALLABLE">
+		<![CDATA[
+		{call PKG_YWLXKH.PROC_GET_KHRMCGH(
+				#{p_id,mode=IN,jdbcType=VARCHAR},
+                #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=khrMcGhMap}
+         )}
+        ]]>
+	</select>
+
+    <!-- 部门映射对应的业务类型结果集 -->
+    <resultMap id="khSjMap" type="java.util.Map">
+        <result property="dict_type_value" column="dict_type_value" javaType="java.lang.String"></result>
+        <result property="dict_type" column="dict_type" javaType="java.lang.String"></result>
+    </resultMap>
+
+	<!-- 查询当前考核项目是否以指定审核人 -->
+	<select  id="getKhSj"   parameterType="java.util.Map"    statementType="CALLABLE">
+		<![CDATA[
+		{call PKG_DATA_DICT.pro_get_dataDict2(
+			#{p_sign,mode=IN,jdbcType=VARCHAR},
+           #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=khSjMap}
+         )}
+        ]]>
+	</select>
+
+	<!-- 部门映射对应的业务类型结果集 -->
+	<resultMap id="dqDwMap" type="java.util.Map">
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<!-- 查询当前考核项目是否以指定审核人 -->
+	<select  id="getDqDw"   parameterType="java.util.Map"    statementType="CALLABLE">
+		<![CDATA[
+		{call PKG_YWLXKH.PROC_GET_DQDW(
+				#{p_id,mode=IN,jdbcType=VARCHAR},
+                #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=dqDwMap}
+         )}
+        ]]>
+	</select>
+	
+	<!--根据业务考核类型id查询异议说明 -->
+	<select  id="getyysmbyid"   parameterType="java.util.Map"    statementType="CALLABLE">
+		<![CDATA[
+		{call PKG_YWLXKH.PROC_GET_YYSMBYID(
+				#{p_id,mode=IN,jdbcType=VARCHAR},
+                #{p_yysm,mode=OUT,jdbcType=VARCHAR},
+                #{p_yyfj,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]>
+	</select>
+
+	<!-- 查询当前考核项目是否以指定审核人 -->
+	<select  id="getNextOneGh"   parameterType="java.util.Map"    statementType="CALLABLE">
+		<![CDATA[
+		{call PKG_YWLXKH.PROC_GET_NEXTONEGH(
+				#{p_wbid,mode=IN,jdbcType=VARCHAR},
+				#{p_cljs,mode=IN,jdbcType=VARCHAR},
+				#{p_gh,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]>
+	</select>
+
+	<!-- 查询当前考核项目是否以指定审核人 -->
+	<select  id="getOneMessage"   parameterType="java.util.Map"    statementType="CALLABLE">
+		<![CDATA[
+		{call PKG_YWLXKH.PROC_GET_ONEMESSAGE(
+				#{p_wbid,mode=IN,jdbcType=VARCHAR},
+				#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=nullMap}
+         )}
+        ]]>
+	</select>
+
+
+	<!-- 部门映射对应的业务类型结果集 -->
+	<resultMap id="ndkhxxMap" type="java.util.Map">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="khid" column="khid" javaType="java.lang.String"></result>
+		<result property="ywlxkhid" column="ywlxkhid" javaType="java.lang.String"></result>
+		<result property="khlx" column="khlx" javaType="java.lang.String"></result>
+		<result property="zbkpgl" column="ZBKPGL" javaType="java.lang.String"></result>
+		<result property="zbkpdf" column="ZBKPDF" javaType="java.lang.String"></result>
+		<result property="zpjdf" column="ZPJDF" javaType="java.lang.String"></result>
+		<result property="ywzf" column="YWZF" javaType="java.lang.String"></result>
+		<result property="khf" column="KHF" javaType="java.lang.String"></result>
+		<result property="khdw" column="KHDW" javaType="java.lang.String"></result>
+		<result property="startDate" column="START_DATE" javaType="java.util.Date"></result>
+		<result property="endDate" column="END_DATE" javaType="java.util.Date"></result>
+		<result property="dict_type_value" column="dict_type_value" javaType="java.lang.String"></result>
+	</resultMap>
+	<!-- 查询考核信息，分数 -->
+	<select  id="dcndkh"   parameterType="java.util.Map"    statementType="CALLABLE">
+		<![CDATA[
+		{call PKG_YWKH.pro_gethzxx(
+				#{p_kwdwbm,mode=IN,jdbcType=VARCHAR},
+				#{p_khlx,mode=IN,jdbcType=VARCHAR},
+				#{p_stardate,mode=IN,jdbcType=VARCHAR},
+				#{p_end_date,mode=IN,jdbcType=VARCHAR},
+				#{p_errmsg,mode=OUT,jdbcType=VARCHAR},
+				#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ndkhxxMap}
+         )}
+        ]]>
+	</select>
+
+	<!-- 更新业务类型异议信息[根据考核类型id]-->
+	<update id="updateywlxkhById" parameterType="java.util.Map" statementType="CALLABLE">
+		  <![CDATA[
+		    	{call PKG_YWLXKH.PROC_UPDATE_YWLXKH(
+	          		#{P_ID,mode=IN,jdbcType=VARCHAR},
+	          		#{P_YYRMC,mode=IN,jdbcType=VARCHAR},
+	          		#{P_YYRGH,mode=IN,jdbcType=VARCHAR},
+	          		#{P_YYSPRMC,mode=IN,jdbcType=VARCHAR},
+	          		#{P_YYSPRGH,mode=IN,jdbcType=VARCHAR},
+	          		#{P_YYSM,mode=IN,jdbcType=VARCHAR},
+	          		#{P_YYFJ,mode=IN,jdbcType=VARCHAR},		          		
+	          		#{P_ERRMSG,mode=OUT,jdbcType=VARCHAR}
+	         	)}  
+			]]>
+	</update>
+	
+	
+	<!--////////////////////////////////////////////////////////////////2018年新增部分\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+	
+	<!-- 根据分值id获取业务考核分值信息 -->
+	<select id="getYwkhfzInfoById" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT l.dwbm,
+               l.dwjb,
+               l.kssj kssj,
+               l.jssj jssj,
+               l.ywlx,
+               f.*
+		FROM YX_YWGZ_YWLXKHFZ f 
+		INNER JOIN YX_YWGZ_YWLXKH l ON l.SFSC = 'N' AND l.ID = f.ywlxkhid
+		WHERE f.SFSC = 'N'
+		     AND f.ID = #{id}
+	</select>
+	
+	<!-- 查询最高基础分表是否有该考核子项目的记录信息 -->
+	<select id="getZgjcfCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		SELECT NVL(COUNT(*),0) 
+		FROM YX_YWGZ_ZGJCF 
+			WHERE DWJB = #{dwjb} 
+			  AND KHLX = #{khlx}
+			  AND XMBM = #{xmbm}
+			  AND KSSJ = #{kssj}
+			  AND JSSJ = #{jssj}
+	</select>
+	
+	<!-- 查询某考核类型某考核子项目的信息 -->
+<!-- 	<select id="getZgjcfTableInfo" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		SELECT * 
+		FROM YX_YWGZ_ZGJCF 
+			WHERE DWJB = #{dwjb} 
+			  AND KHLX = #{khlx}
+			  AND XMBM = #{xmbm}
+			  AND KSSJ = #{kssj}
+			  AND JSSJ = #{jssj}
+	</select> -->
+	
+	<!--  -->
+	<insert id="addZgjcfTableInfo" parameterType="java.util.HashMap">
+		INSERT INTO YX_YWGZ_ZGJCF (ID,
+								   YEAR,
+								   KHLX,
+								   DWJB,
+								   XMBM,
+								   ZGJCF,
+								   CJSJ,
+								   KSSJ,
+								   JSSJ)
+			VALUES (#{id},
+				    #{year},
+				    #{khlx},
+				    #{dwjb},
+				    #{xmbm},
+				    #{zgjcf},
+				    #{cjsj},
+				    #{kssj},
+				    #{jssj}
+					)
+	</insert>
+	
+	<!-- 根据单位级别、考核类型、项目编码、开始日期、结束日期修改最高基础分 -->
+	<update id="modifyZgjcfTableInfo" parameterType="java.util.HashMap">
+		UPDATE YX_YWGZ_ZGJCF SET ZGJCF = #{zgjcf} 
+			WHERE DWJB = #{dwjb}
+			  AND KHLX = #{khlx}
+			  AND XMBM = #{xmbm}
+			  AND KSSJ = #{kssj}
+			  AND JSSJ = #{jssj}
+	</update>
+	
+	
+</mapper>

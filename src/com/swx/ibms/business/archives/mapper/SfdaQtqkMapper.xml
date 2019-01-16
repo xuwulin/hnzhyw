@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swx.ibms.business.archives.mapper.SfdaQtqkMapper">
+	<!-- 司法档案下荣誉技能信息 -->
+	<resultMap id="sfdaQtqkResultMap" type="com.swx.ibms.business.archives.bean.SfdaQtqk">
+		<result column="id" property="id" javaType="java.lang.String" />
+		<result column="lrbm" property="lrbm" javaType="java.lang.String" />
+		<result column="lrr" property="lrr" javaType="java.lang.String" />
+		<result column="lrsj" property="lrsj" javaType="java.lang.String" />
+		<result column="lrnr" property="lrnr" javaType="java.lang.String" />
+		<result column="did" property="gdid" javaType="java.lang.String" />
+		<result column="sfsc" property="sfsc" jdbcType="CHAR" />
+		<result column="zhgxbm" property="zhgxbm" jdbcType="CHAR" />
+		<result column="zhgxr" property="zhgxr" jdbcType="CHAR" />
+		<result column="zhgxsj" property="zhgxsj" javaType="java.lang.String" />
+		<result column="status" property="status" javaType="java.lang.String" />
+	</resultMap>
+	
+	<!-- 展示司法档案下的其他情况信息 -->
+	<select id="getSfdaQtqkPageList" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_SFDA_QTQK.pro_getSfdaQtqkPageList( 
+ 			#{p_gdid,mode=IN,jdbcType=VARCHAR},
+  		    #{p_start,mode=IN,jdbcType=INTEGER},
+  		    #{p_end,mode=IN,jdbcType=INTEGER},
+  		    #{p_total,mode=OUT,jdbcType=INTEGER},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sfdaQtqkResultMap}
+  		)} 
+  		]]>
+	</select>
+	
+	<!-- 添加司法档案下的其他情况信息  -->
+	<insert id="addSfdaQtqk" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_SFDA_QTQK.pro_addSfdaQtqk(
+          		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_lrbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_lrr,mode=IN,jdbcType=VARCHAR},
+          		#{p_lrsj,mode=IN,jdbcType=VARCHAR},
+          		#{p_lrnr,mode=IN,jdbcType=VARCHAR},
+          		#{p_gdid,mode=IN,jdbcType=VARCHAR},
+          		#{p_sfsc,mode=IN,jdbcType=CHAR},
+          		#{p_zhgxbm,mode=IN,jdbcType=CHAR},
+          		#{p_zhgxr,mode=IN,jdbcType=CHAR},
+          		#{p_zhgxsj,mode=IN,jdbcType=VARCHAR},
+          		#{Y,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</insert>
+	
+	<!-- 修改司法档案下的其他情况信息 -->
+	<update id="updateSfdaQtqk" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_SFDA_QTQK.pro_updateSfdaQtqk(
+        		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_lrbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_lrr,mode=IN,jdbcType=VARCHAR},
+          		#{p_lrsj,mode=IN,jdbcType=VARCHAR},
+          		#{p_lrnr,mode=IN,jdbcType=VARCHAR},
+          		#{p_zhgxbm,mode=IN,jdbcType=CHAR},
+          		#{p_zhgxr,mode=IN,jdbcType=CHAR},
+          		#{p_zhgxsj,mode=IN,jdbcType=VARCHAR},
+          		#{Y,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+	
+	<!-- 删除司法档案下的其他情况信息 -->
+	<delete id="deleteSfdaQtqk" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_SFDA_QTQK.pro_deleteSfdaQtqk(
+          		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{Y,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</delete>
+	
+	
+	
+	
+	
+	<!-- 根据id查询单条司法档案下的其他情况 -->
+	<!-- <select id="getSfdaQtqkById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_SFDA_QTQK.pro_getSfdaQtqkById( 
+  		    #{p_id,mode=IN,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sfdaRyjnMap}
+  		)} 
+  		]]>
+	</select> -->
+	
+	
+	
+	<!-- 逻辑删除其他情况，根据id -->
+	<!-- <update id="updateSfscById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_SFDA_QTQK.pro_updateSfscById( 
+  		    #{p_id,mode=IN,jdbcType=VARCHAR},
+  		    #{p_sfsc,mode=IN,jdbcType=CHAR},
+  		)} 
+  		]]>
+	</update> -->
+
+	<select id="serachQtqkByType" resultMap="sfdaQtqkResultMap">
+		select * from yx_sfda_qtqk
+		where DID = #{daid}
+		  and SFSC = 'N'
+		  and LRSJ between #{kssj} and #{jssj}
+	</select>
+
+</mapper>

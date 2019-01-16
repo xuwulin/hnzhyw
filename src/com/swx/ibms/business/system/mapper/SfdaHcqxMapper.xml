@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.system.mapper.SfdaHcqxMapper">
+<select id="getHcqx" resultType="Hcqx"> 
+select * from XT_SFDA_HCQX t
+</select>
+<update id="setHcqx">
+update XT_SFDA_HCQX t set t.hcqx = #{hcqx},t.gxr=#{gxr},t.gxsj=sysdate where t.qxlx = 1
+</update>
+<update id="setGsqx">
+update XT_SFDA_HCQX t set t.hcqx = #{gsqx},t.gxr=#{gxr},t.gxsj=sysdate where t.qxlx = 2
+</update>
+</mapper>

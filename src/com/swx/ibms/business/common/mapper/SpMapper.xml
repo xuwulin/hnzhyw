@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.common.mapper.SpMapper">
+
+	<resultMap id="SplcslMap" type="Splcsl">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="spdw" column="spdw" javaType="java.lang.String"></result>
+		<result property="spbm" column="spbm" javaType="java.lang.String"></result>
+		<result property="spr" column="spr" javaType="java.lang.String"></result>
+		<result property="spyj" column="spyj" javaType="java.lang.String"></result>
+		<result property="splx" column="splx" javaType="java.lang.String"></result>
+		<result property="spzt" column="spzt" javaType="java.lang.String"></result>
+		<result property="spstid" column="spstid" javaType="java.lang.String"></result>
+		<result property="spsj" column="spsj" javaType="java.sql.Date"></result>
+		<result property="xh" column="xh" javaType="java.lang.String"></result>
+		<result property="cljs" column="cljs" javaType="java.lang.String"></result>
+		<result property="lcjd" column="lcjd" javaType="java.lang.String"></result>
+		<result property="jdlx" column="jdlx" javaType="java.lang.String"></result>
+		<result property="lcid" column="lcid" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<resultMap id="Splc1Map" type="Splc">
+		<result property="spzt" column="spzt" javaType="java.lang.String"></result>
+		<result property="lcid" column="lcid" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<resultMap id="JdlcMap1" type="Jdlc">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="jdlx" column="jdlx" javaType="java.lang.String"></result>
+		<result property="lcjd" column="lcjd" javaType="java.lang.String"></result>
+		<result property="xyjd" column="xyjd" javaType="java.lang.String"></result>
+		<result property="xycljs" column="xycljs" javaType="java.lang.String"></result>
+		<result property="xyclbm" column="xyclbm" javaType="java.lang.String"></result>
+		<result property="xycldw" column="xycldw" javaType="java.lang.String"></result>
+		<result property="jdzt" column="jsmc" javaType="java.lang.String"></result>
+		<result property="sm" column="sm" javaType="java.lang.String"></result>
+		<result property="xycldwlx" column="xycldwlx" javaType="java.lang.String"></result>
+		<result property="lclx" column="lclx" javaType="java.lang.String"></result>
+		<result property="ztbg" column="ztbg" javaType="java.lang.String"></result>
+		<result property="cljsxz" column="cljsxz" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<!-- 部门映射结果集 -->
+	<resultMap id="BmysMap" type="java.lang.String">
+		<result property="bmys" column="bmys"></result>
+	</resultMap>
+
+	<!-- 查询最新的审批流程实例 -->
+	<select id="selectSpsl" parameterType="java.util.Map"
+			statementType="CALLABLE">
+        <![CDATA[  
+        {call pkg_sp.select_spsl(#{p_spdw,mode=IN,jdbcType=VARCHAR}, 
+                             #{p_spbm,mode=IN,jdbcType=VARCHAR},
+                             #{p_spr ,mode=IN,jdbcType=VARCHAR},
+                             #{p_spstid,mode=IN,jdbcType=VARCHAR},
+                             #{p_splx,mode=IN,jdbcType=VARCHAR},
+                             #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=SplcslMap}
+         )}
+        ]]>
+	</select>
+
+	<!-- 通过流程ID查询最新的审批流程实例 -->
+	<select id="selectSpslByLcid" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        {call pkg_sp.select_spsl_by_lcid(
+        					 #{p_lcid,mode=IN,jdbcType=VARCHAR},
+        					 #{p_errmsg,mode=OUT,jdbcType=VARCHAR},
+                             #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=SplcslMap}
+         )}
+        ]]>
+	</select>
+
+	<!-- 第一次增加审批实例 -->
+	<insert id="addSpslFirst" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[  
+        {call pkg_sp.add_spsl_first(#{p_spdw,mode=IN,jdbcType=VARCHAR}, 
+                             #{p_spbm,mode=IN,jdbcType=VARCHAR},
+                             #{p_spr ,mode=IN,jdbcType=VARCHAR},
+                             #{p_spyj ,mode=IN,jdbcType=VARCHAR},
+                             #{p_splx ,mode=IN,jdbcType=VARCHAR},
+                             #{p_spzt ,mode=IN,jdbcType=VARCHAR},
+                             #{p_spstid ,mode=IN,jdbcType=VARCHAR},
+                             #{p_cljs ,mode=IN,jdbcType=VARCHAR},
+                             #{p_lcjd ,mode=IN,jdbcType=VARCHAR},
+                             #{p_jdlx ,mode=IN,jdbcType=VARCHAR},
+                             #{p_cljsxz ,mode=IN,jdbcType=VARCHAR},
+                             #{p_lcid ,mode=OUT,jdbcType=VARCHAR},
+                             #{Y,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]>
+	</insert>
+
+	<!-- 增加审批实例 -->
+	<insert id="addSpsl" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[  
+        {call pkg_sp.add_spsl(#{p_spdw,mode=IN,jdbcType=VARCHAR}, 
+                             #{p_spbm,mode=IN,jdbcType=VARCHAR},
+                             #{p_spr ,mode=IN,jdbcType=VARCHAR},
+                             #{p_spyj ,mode=IN,jdbcType=VARCHAR},
+                             #{p_splx ,mode=IN,jdbcType=VARCHAR},
+                             #{p_spzt ,mode=IN,jdbcType=VARCHAR},
+                             #{p_spstid ,mode=IN,jdbcType=VARCHAR},
+                             #{p_cljs ,mode=IN,jdbcType=VARCHAR},
+                             #{p_lcjd ,mode=IN,jdbcType=VARCHAR},
+                             #{p_jdlx ,mode=IN,jdbcType=VARCHAR},
+                             #{p_lcid ,mode=IN,jdbcType=VARCHAR},
+                             #{p_cljsxz ,mode=IN,jdbcType=VARCHAR},
+                             #{Y,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]>
+	</insert>
+
+	<!--更改审批实例  -->
+	<update id="updateSpsl" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[  
+        {call pkg_sp.update_spsl(#{p_spdw,mode=IN,jdbcType=VARCHAR}, 
+                             #{p_spbm,mode=IN,jdbcType=VARCHAR},
+                             #{p_spr ,mode=IN,jdbcType=VARCHAR},
+                             #{p_spyj ,mode=IN,jdbcType=VARCHAR},
+                             #{p_splx ,mode=IN,jdbcType=VARCHAR},
+                             #{p_spzt ,mode=IN,jdbcType=VARCHAR},
+                             #{p_spstid ,mode=IN,jdbcType=VARCHAR},
+                             #{p_cljs ,mode=IN,jdbcType=VARCHAR},
+                             #{p_lcjd ,mode=IN,jdbcType=VARCHAR},
+                             #{p_jdlx ,mode=IN,jdbcType=VARCHAR},
+                             #{Y,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]>
+	</update>
+
+	<!-- 通过jdlx在YX_SFDA_JDLC查数据 -->
+	<select id="selectJdlc1" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[  
+        {call pkg_sp.select_jdlc1(
+        	#{p_jdlx,mode=IN,jdbcType=VARCHAR}, 
+            #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=JdlcMap1}
+         )}
+        ]]>
+	</select>
+
+	<!-- 通过jdlx,lcjd在YX_SFDA_JDLC查数据 -->
+	<select id="selectJdlc2" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[  
+        {call pkg_sp.select_jdlc2(
+        	  #{p_jdlx,mode=IN,jdbcType=VARCHAR}, 
+		      #{p_lcjd,mode=IN,jdbcType=VARCHAR}, 
+		  	  #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=JdlcMap1}
+         )}
+        ]]>
+	</select>
+
+	<!-- 根据单位编码、工号、年份、月份将月度考核信息置为已审批完成状态 -->
+	<update id="setAudit" parameterType="java.util.Map"	statementType="CALLABLE">
+		<![CDATA[ 
+        {call pkg_sp.proce_setaudit(#{p_spstid,mode=IN,jdbcType=VARCHAR}, 
+      							  	#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]>
+	</update>
+
+	<!-- 根据审批实体ID修改档案归总状态 -->
+	<update id="updateGszt" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[ 
+        {call pkg_sp.proce_updategszt(#{p_spstid,mode=IN,jdbcType=VARCHAR}, 
+      							  	#{p_zt,mode=IN,jdbcType=VARCHAR},
+      							  	#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]>
+	</update>
+
+	<!-- 根据月度考核ID查询这个月度考核的业务类型和名称 -->
+	<select id="getYwlxByYdkhid" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        {call pkg_sp.proc_getywlxbyydkhid(#{p_ydkhid,mode=IN,jdbcType=VARCHAR},
+        								  #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=YwlxmcMap}, 
+      							  		  #{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]>
+	</select>
+
+	<!-- 根据业务编码查询业务简称 -->
+	<select id="getYwmcByYwbm" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        {call pkg_sp.proc_getywmcbyywbm(#{p_ywbm,mode=IN,jdbcType=VARCHAR},
+        								#{p_ywmc,mode=OUT,jdbcType=VARCHAR}, 
+      							  		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]>
+	</select>
+
+	<!-- 根据部门映射编码查询业务编码 -->
+	<select id="getYwlxByBmys" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        {call pkg_sp.proc_getywlxbybmys(#{p_bmlbbm,mode=IN,jdbcType=VARCHAR},
+        								#{p_ywbm,mode=OUT,jdbcType=VARCHAR}, 
+      							  		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]>
+	</select>
+	<!-- 根据单位编码和工号获取部门映射编码 -->
+	<select id="getBmysByGh" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        {call pkg_sp.proc_getbmysbygh(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+        							  #{p_gh,mode=IN,jdbcType=VARCHAR},
+        							  #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=BmysMap},  
+      							  	  #{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]>
+	</select>
+
+	<!-- 根据审批实体ID和审批类型获取所有审批实例 -->
+	<select id = "getAllBySplx" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        {call pkg_sp.proc_getallbysplx(#{p_spstid,mode=IN,jdbcType=VARCHAR},
+        							   #{p_splx,mode=IN,jdbcType=VARCHAR},
+        							   #{p_sign,mode=OUT,jdbcType=VARCHAR},
+        							   #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=SplcslMap}
+         )}
+        ]]>
+	</select>
+
+	<select id="getSpztByWbidAndSplx" resultType="java.lang.String">
+		SELECT T.SPZT
+		FROM (
+			  SELECT *
+			  FROM YX_SFDA_SPLCSL
+			  WHERE SPSTID = #{spstid}
+				AND SPLX = #{splx}
+			  ORDER BY XH DESC
+		) T
+		WHERE ROWNUM = 1
+	</select>
+
+	<select id="getSpxxByWbidAndSplx" parameterType="java.util.HashMap" resultMap="SplcslMap">
+		SELECT * FROM YX_SFDA_SPLCSL WHERE SPSTID = #{spstid} AND SPLX = #{splx} ORDER BY XH DESC
+	</select>
+
+	<!-- 根据审批流程实例id删除该条信息 -->
+	<delete id="deleteSpslById" parameterType="java.util.Map" statementType="CALLABLE" >
+		<![CDATA[  
+        {call pkg_sp.proc_deletespslbyid(#{p_id,mode=IN,jdbcType=VARCHAR},
+        								 #{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]>
+	</delete>
+
+	<!-- 根据审批流程实例ID修改部分数据 -->
+	<update id="updateSpslById" parameterType="java.util.Map" statementType="CALLABLE" >
+		<![CDATA[  
+        {call pkg_sp.proc_updatespslbyid(#{p_id,mode=IN,jdbcType=VARCHAR},
+        							     #{p_spdw,mode=IN,jdbcType=VARCHAR},
+        							     #{p_spbm,mode=IN,jdbcType=VARCHAR},
+        							     #{p_spr,mode=IN,jdbcType=VARCHAR},
+        							     #{p_spyj,mode=IN,jdbcType=VARCHAR},
+        							     #{p_splx,mode=IN,jdbcType=VARCHAR},
+        							     #{p_spzt,mode=IN,jdbcType=VARCHAR},
+        							     #{p_spstid,mode=IN,jdbcType=VARCHAR},
+        							     #{p_spsj,mode=IN,jdbcType=DATE},
+        							     #{p_xh,mode=IN,jdbcType=VARCHAR},
+        							     #{p_cljs,mode=IN,jdbcType=VARCHAR},
+        							     #{p_lcjd,mode=IN,jdbcType=VARCHAR},
+        							     #{p_jdlx,mode=IN,jdbcType=VARCHAR},
+        								 #{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+         )}
+        ]]>
+	</update>
+	<!-- 根据审批类型和归档id查询审批是否通过 -->
+	<update id="isSptg" parameterType="java.util.Map" statementType="CALLABLE" >
+		<![CDATA[  
+        {call pkg_sp.proc_issptg(#{p_spstid,mode=IN,jdbcType=VARCHAR},
+        					     #{p_splx,mode=IN,jdbcType=VARCHAR},
+        					     #{p_lcid,mode=IN,jdbcType=VARCHAR},
+        						 #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=Splc1Map}
+         )}
+        ]]>
+	</update>
+
+	<!-- 获取审批流程的发起记录 -->
+	<select id="getFqr" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        {call pkg_sp.proc_getfqr(#{p_lcid,mode=IN,jdbcType=VARCHAR},
+        					     #{p_errmsg,mode=OUT,jdbcType=VARCHAR},
+        						 #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=SplcslMap}
+         )}
+        ]]>
+	</select>
+
+
+	<!-- 获取审批流程的发起记录 -->
+	<select id="getSpById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        {call pkg_sp.pro_getSpById(
+        		#{p_spid,mode=IN,jdbcType=VARCHAR},
+        		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=SplcslMap}
+         )}
+        ]]>
+	</select>
+
+	<!-- 通过部门映射获取部门编码 -->
+	<select id="getBmbmByBmys" parameterType="java.util.Map" statementType="CALLABLE">
+     	<![CDATA[
+     	{call pkg_sp.proc_getbmbmbybmys(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+     							   #{p_bmys,mode=IN,jdbcType=VARCHAR},
+     							   #{p_errmsg,mode=OUT,jdbcType=VARCHAR},
+     							   #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=BmbmMap}
+     	)}
+     	]]>
+     
+     </select>
+
+	<!-- 通过审批实体ID和审批类型获取上一个审批流程实例的审批状态 -->
+	<select id="getPreviousLcslBySpstid" parameterType="java.util.Map" statementType="CALLABLE">
+     	<![CDATA[
+     	{call pkg_sp.proc_getpresplcsl(
+     								#{p_spstid,mode=IN,jdbcType=VARCHAR},
+     							   	#{p_splx,mode=IN,jdbcType=VARCHAR},
+     							   	#{p_errmsg,mode=OUT,jdbcType=VARCHAR},
+     							   	#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=SplcslMap}
+     	)}
+     	]]>
+     
+     </select>
+
+	<!-- 通过单位编码和部门编码获取部门映射 -->
+	<select id="getBmysByBmbm" parameterType="java.util.Map" statementType="CALLABLE">
+     	<![CDATA[
+     	{call pkg_sp.proc_getbmysbybmbm(
+     								#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+     							   	#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+     							   	#{p_errmsg,mode=OUT,jdbcType=VARCHAR},
+     							   	#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=BmbmMap}
+     	)}
+     	]]>
+     </select>
+
+	<!-- 通过单位编码和工号获取部门编码 -->
+	<select id="getBmbmByGh" parameterType="java.util.Map" statementType="CALLABLE">
+     	<![CDATA[
+     	{call pkg_sp.proc_getbmbmbygh(
+     								#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+     							   	#{p_gh,mode=IN,jdbcType=VARCHAR},
+     							   	#{p_errmsg,mode=OUT,jdbcType=VARCHAR},
+     							   	#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=FpMap}
+     	)}
+     	]]>
+     </select>
+
+	<!-- 通过审批实体id和审批类型查询发起记录信息 -->
+	<select id="getFqjlBySpstidAndSplx" resultType="Splcsl">
+		select t1.* from (
+			select t.*,rownum rn from 
+				(select * from yx_sfda_splcsl 
+				 where spstid = #{spstid} and splx = #{splx} and spzt = '0'
+				 order by xh desc)t
+			)t1
+		where t1.rn = '1'
+	</select>
+
+	<select id="getLartestSpxx" resultType="Splcsl" parameterType="java.util.HashMap">
+		select * from YX_SFDA_SPLCSL where spstid = #{spstid} and splx = #{splx} order by xh desc 		
+	</select>
+
+	<update id="modifySplcslById" parameterType="java.util.HashMap">
+		UPDATE YX_SFDA_SPLCSL SET
+		spzt = #{spzt}
+		<if test="spyj !=null and spyj !='' ">
+			,spyj = #{spyj}
+		</if>
+		<if test="cljs !=null and cljs !='' ">
+			, cljs = #{cljs}
+		</if>
+		where id = #{spId}
+	</update>
+
+
+</mapper>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.rbac.mapper.BmlbywfpMapper">
+
+	<resultMap id="ywlxfpMap" type="com.swx.ibms.business.rbac.bean.Bmlbywfp">
+		<result property="id" column="id" javaType="java.lang.Integer"></result>
+		<result property="bmlbbm" column="bmlbbm" javaType="java.lang.String"></result>
+		<result property="ywbm" column="ywbm" javaType="java.lang.String"></result>
+		<result property="ywmc" column="ywmc" javaType="java.lang.String"></result>
+		<result property="ywjc" column="ywjc" javaType="java.lang.String"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="dwmc" column="dwmc" javaType="java.lang.String"></result>
+		<result property="type" column="type" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	
+	<!-- 分页查询全部业务类型分配信息 -->
+	<select id="ywfpSelectPageList" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_bmlbywfp.pro_getPageListByTj( 
+  		    #{p_ywbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_bmlbbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_type,mode=IN,jdbcType=VARCHAR},
+  		    #{p_start,mode=IN,jdbcType=VARCHAR},
+  		    #{p_end,mode=IN,jdbcType=VARCHAR},
+  		    #{p_total,mode=OUT,jdbcType=VARCHAR},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ywlxfpMap}
+  		)} 
+  		]]>
+	</select>
+
+	<!-- 根据id查询单条信息 -->
+	<select id="getYwfpListById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_bmlbywfp.pro_getListById( 
+  		    #{p_id,mode=IN,jdbcType=INTEGER},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=ywlxfpMap}
+  		)} 
+  		]]>
+	</select>
+
+	<!-- 根据id修改单条信息 -->
+	<update id="modifyYwfpById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_bmlbywfp.pro_modifyById( 
+  		    #{p_id,mode=IN,jdbcType=INTEGER},
+  		    #{p_bmlbbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_ywbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR}, 
+  		    #{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+  		)} 
+  		]]>
+	</update>
+	
+	<!-- 根据id删除单条信息 -->
+	<delete id="delYwfpById" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_bmlbywfp.pro_deleteById( 
+  		    #{p_id,mode=IN,jdbcType=INTEGER},
+  		    #{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+  		)} 
+  		]]>
+	</delete>
+	
+	<!-- 添加信息 -->
+	<insert id="addYwfp" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call pkg_bmlbywfp.pro_addBmlbywfp( 
+  		    #{p_bmlbbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_ywbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+  		    #{p_id,mode=OUT,jdbcType=VARCHAR}, 
+  		    #{p_errmsg,mode=OUT,jdbcType=VARCHAR}
+  		)} 
+  		]]>
+	</insert>
+	
+	
+</mapper>

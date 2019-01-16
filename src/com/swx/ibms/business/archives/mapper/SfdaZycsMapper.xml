@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swx.ibms.business.archives.mapper.SfdaZycsMapper">
+	<!-- 司法档案下职业操守 -->
+	<resultMap id="sfdaZycsResultMap" type="com.swx.ibms.business.archives.bean.SfdaZycs">
+		<result column="id" property="id" javaType="java.lang.String" />
+		<result column="xmmc" property="xmmc" javaType="java.lang.String" />
+		<result column="xmlx" property="xmlx" javaType="java.lang.String" />
+		<result column="ywsj" property="ywsj" javaType="java.lang.String" />
+		<result column="ywdd" property="ywdd" javaType="java.lang.String" />
+		<result column="zzbm" property="zzbm" javaType="java.lang.String" />
+		<result column="spbm" property="spbm" javaType="java.lang.String" />
+		<result column="zynr" property="zynr" javaType="java.lang.String" />
+		<result column="zysh" property="zysh" javaType="java.lang.String" />
+		<result column="yjcg" property="yjcg" javaType="java.lang.String" />
+		<result column="ywqtqk" property="ywqtqk" javaType="java.lang.String" />
+		<result column="did" property="gdid" javaType="java.lang.String" />
+		<result column="sfsc" property="sfsc" jdbcType="CHAR" />
+		<result column="kssj" property="kssj" javaType="java.lang.String" />
+		<result column="jssj" property="jssj" javaType="java.lang.String" />
+		<result column="zhgxbm" property="zhgxbm" jdbcType="CHAR" />
+		<result column="zhgxr" property="zhgxr" jdbcType="CHAR" />
+		<result column="zhgxsj" property="zhgxsj" javaType="java.lang.String" />
+		<result column="status" property="status" javaType="java.lang.String" />
+	</resultMap>
+	
+	<!-- 展示职业操守（根据档案id） -->
+	<select id="getSfdaZycsPageList" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+ 		{call PKG_SFDA_ZYCS.pro_getSfdaZycsPageList( 
+ 			#{p_gdid,mode=IN,jdbcType=VARCHAR},
+  		    #{p_start,mode=IN,jdbcType=INTEGER},
+  		    #{p_end,mode=IN,jdbcType=INTEGER},
+  		    #{p_total,mode=OUT,jdbcType=INTEGER},
+  		    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sfdaZycsResultMap}
+  		)} 
+  		]]>
+	</select>
+	
+	<!-- 新增职业操守  -->
+	<insert id="addSfdaZycs" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_SFDA_ZYCS.pro_addSfdaZycs(
+          		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_xmmc,mode=IN,jdbcType=VARCHAR},
+          		#{p_xmlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_ywsj,mode=IN,jdbcType=VARCHAR},
+          		#{p_ywdd,mode=IN,jdbcType=VARCHAR},
+          		#{p_zzbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_spbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_zynr,mode=IN,jdbcType=VARCHAR},
+          		#{p_zysh,mode=IN,jdbcType=VARCHAR},
+          		#{p_yjcg,mode=IN,jdbcType=VARCHAR},
+          		#{p_ywqtqk,mode=IN,jdbcType=VARCHAR},
+          		#{p_gdid,mode=IN,jdbcType=VARCHAR},
+          		#{p_sfsc,mode=IN,jdbcType=CHAR},
+          		#{p_kssj,mode=IN,jdbcType=VARCHAR},
+          		#{p_jssj,mode=IN,jdbcType=VARCHAR},
+          		#{p_zhgxbm,mode=IN,jdbcType=CHAR},
+          		#{p_zhgxr,mode=IN,jdbcType=CHAR},
+          		#{p_zhgxsj,mode=IN,jdbcType=VARCHAR},
+          		#{Y,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</insert>
+	
+	<!-- 修改职业操守 -->
+	<update id="updateSfdaZycs" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_SFDA_ZYCS.pro_updateSfdaZycs(
+        		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{p_xmmc,mode=IN,jdbcType=VARCHAR},
+          		#{p_xmlx,mode=IN,jdbcType=VARCHAR},
+          		#{p_ywdd,mode=IN,jdbcType=VARCHAR},
+          		#{p_zzbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_spbm,mode=IN,jdbcType=VARCHAR},
+          		#{p_zynr,mode=IN,jdbcType=VARCHAR},
+          		#{p_zysh,mode=IN,jdbcType=VARCHAR},
+          		#{p_yjcg,mode=IN,jdbcType=VARCHAR},
+          		#{p_ywqtqk,mode=IN,jdbcType=VARCHAR},
+          		#{p_kssj,mode=IN,jdbcType=VARCHAR},
+          		#{p_jssj,mode=IN,jdbcType=VARCHAR},
+          		#{p_zhgxbm,mode=IN,jdbcType=CHAR},
+          		#{p_zhgxr,mode=IN,jdbcType=CHAR},
+          		#{p_zhgxsj,mode=IN,jdbcType=VARCHAR},
+          		#{Y,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</update>
+	
+	<!-- 删除职业操守 -->
+	<delete id="deleteSfdaZycs" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+        	{call PKG_SFDA_ZYCS.pro_deleteSfdaZycs(
+          		#{p_id,mode=IN,jdbcType=VARCHAR},
+          		#{Y,mode=OUT,jdbcType=VARCHAR}
+          		)} 
+    	]]>
+	</delete>
+
+	<select id="serachZycsByType" resultMap="sfdaZycsResultMap">
+		select * from yx_sfda_zycs
+		where DID = #{daid}
+		  and SFSC = 'N'
+		  and KSSJ between #{kssj} and #{jssj}
+	</select>
+
+</mapper>

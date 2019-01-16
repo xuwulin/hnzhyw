@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>系统管理-人员管理页面</title>
+	<link rel="stylesheet" type="text/css" href="../../../css/xtpz.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/xtpz_rygl.css" />
+	<!-- <link rel="stylesheet" href="css/zTreeStyle/ztreedemo.css"type="text/css" />   -->
+	<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/bootstrap/easyui.css" />
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css" />
+	<!-- <link rel="stylesheet" type="text/css"href="../../js/easyui/themes/icon.css" /> -->
+
+	<script type="text/javascript" src="../../../js/plugin/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../js/zhyw/utils/constant.js"></script>
+	<script type="text/javascript" src="../../../js/zhyw/utils/common.js"></script>
+	<script type="text/javascript" src="../../../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+	<script type="text/javascript" src="../../../js/plugin/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+<style type="text/css">
+/* ul.ztree {
+    margin-top: 10px;
+    border:none; 
+    background: #f0f6e4;
+    width: 94%; 
+    height: 100%; 
+    overflow-y: auto; 
+    overflow-x: auto;
+} */
+
+.left_ul li:nth-of-type(1) a{
+	background-color:#0876D5;
+	color:#fff;
+	border: 1px solid #0876D5;
+	cursor:pointer;
+}
+</style>
+</head>
+<body>
+	<div class="xtpz">
+		<div class="xtpz_top">当前位置 : 系统配置</div>
+		<div class="xtpz_content">
+			<div class="content_left">
+				<!-- <ul class="left_ul">
+					<li><a href="xtpz_fgld.html" class="xtpzli">分管领导配置管理</a></li>
+					<li><a href="../department/xtpz.html">部门管理</a></li>
+					<li><a href="../role/xtpz_jsgl.html">角色管理</a></li>
+					<li><a href="../person/xtpz_rygl.html">人员管理</a></li>
+					<li id="xtpzgl"><a href="xtpz_filepath.html">系统配置管理</a></li>
+					<li><a href="../quartz/xt_quartz_pz.html" >同步任务配置管理</a></li>
+					<li><a href="../ywlx/ywlxfp.html">业务类型/业务类型分配管理</a></li>
+					<li><a href="../jxkh/xtpz_ywkhzbgl.html">个人绩效-考核指标配置</a></li>
+					<li><a href="../jchc/xtpz_hcpz.html">个人绩效-交叉核查配置</a></li>
+					<li><a href="../bmzdpz/xtpz_bmzdpz.html">部门审批人配置</a></li>
+					<li><a href="../ywkh/ywkh_khdwpz.html">业务考核-考核单位配置</a></li>
+					<li><a href="../ywkh/ywkh_khlxpz.html" >业务考核-考核类型配置</a></li>
+					<li><a href="../zbrs/zbrs.html">业务考核-在编人数配置</a></li>
+					<li><a href="../ywgz/xtpz_ywgzpzgl.html">业务考核-考核指标管理</a></li>
+					<li><a href="../dataDict/data_dict.html">数据字典管理</a></li>
+					<li><a href="../logging/xtgl_logging.html">日志管理</a></li>
+				</ul> -->
+				<div class="left_tree"></div>
+			</div>
+			<div class="content_right">
+				<div class="right_top">
+					<img src="../../../image/icon_sd.png"
+						style="float: left; margin: 17px 12px 0px 12px;">分管领导管理
+				</div>
+				<div class="right_btnk" style="width:97%">
+					<ul class="right_ul">
+						<li class="right_li" id="afterxz">分管列表</li>
+						<li id="xinzeng">新增</li>
+					</ul>
+					<div class="right_com">
+						<div style="width: 100%; height: 20px"></div>
+						<table id="dg"></table>
+					</div>
+					<div class="right_coml">
+						<div style="width: 100%; float: left">
+							<div style="width: 700px; float: left;margin-top: 50px;">
+								<div class="right_list">
+									<span>
+										<div class="list_1">分管领导:</div>
+									</span> <input id="fgld" name="fgld" value="">
+								</div>
+								<div class="right_list">
+									<span>
+										<div class="list_1">分管部门:</div>
+									</span> <input id="fgbm" name="fgbm" value="">
+								</div>
+								<div class="right_list">
+								    <button id="addfgld" onclick="getValues()" class="fgld_btn">新增</button>
+								    <button id="updatefgld" onclick="updateFgld()" class="fgld_btn">修改</button>
+							    </div>
+							</div>
+						</div>
+						<div style="width: 28%; float: left"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(".left_tree").load("../left_menu.html");
+	
+	$("#xinzeng").click(function() {
+		$("#update").val("新增");
+	});
+	$(".left_ul li a").click(function() {
+		$("#xinzeng").text("新增");
+		$('.xtpzli').removeClass('xtpzli');
+		$(this).addClass('xtpzli');
+	});
+	$(".right_ul li:last").click(function() {
+		$("#addfgld").css("display","inline");
+		$("#updatefgld").css("display","none");
+		$("#xinzeng").text("新增");
+		$('.right_li').removeClass('right_li');
+		$(this).addClass('right_li');
+		$('.right_com').css('display', ' none')
+		$('.right_coml').css('display', ' block')
+		$('#fgbm').combobox('clear');
+		$('#fgld').combobox('clear');
+	})
+	$(".right_ul li:first").click(function() {
+		$('#dg').datagrid('reload');
+		$("#xinzeng").text("新增");
+		$('#fgbm').combobox('clear');
+		$('#fgld').combobox('clear');
+		$('.right_li').removeClass('right_li');
+		$(this).addClass('right_li');
+		$('.right_coml').css('display', ' none')
+		$('.right_com').css('display', ' block')
+
+	})
+</script>
+<script type="text/javascript" src="../../../js/zhyw/xtgl/xtpz_fgld.js"></script>
+<script>
+	$(".textbox-text").attr("disabled", "disabled");
+</script>
+</html>

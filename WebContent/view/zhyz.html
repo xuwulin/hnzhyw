@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>海南省人民检察院综合业务管理系统-登录页面</title>
+    <link rel="stylesheet" type="text/css" href="../js/plugin/easyui/themes/bootstrap/easyui.css">
+    <link type="text/css" rel="stylesheet" href="../css/login.css">
+    <link type="text/css" rel="stylesheet" href="../js/plugin/easyui/themes/default/easyui.css"/>
+    <link rel="stylesheet" href="../css/zTreeStyle/ztreedemo.css" type="text/css"/>
+    <link rel="stylesheet" href="../css/zTreeStyle/zTreeStyle.css" type="text/css"/>
+
+    <script type="text/javascript" src="../js/plugin/easyui/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/constant.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/common.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/plugin/easyui/jquery.easyui.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+    <style>
+        .login_input3 {
+
+            width: 61%;
+            height: 38px;
+            position: relative;
+            float: right;
+            cursor: pointer;
+        }
+
+        .login_input3 span {
+	        display: inline-block;
+            position: absolute;
+            top: 0;
+           /* left: 42%; */
+            font-weight: bold;
+            color: wheat;
+            letter-spacing: 5px;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            line-height: 38px;
+        }
+    </style>
+    <SCRIPT type="text/javascript">
+        var isShowMenu = false;
+        var ztreedata = {
+            dwbm: "",
+            name: ""
+        }
+        var setting = {
+            data: {
+                key: {
+                    name: "text"
+                }
+            },
+            view: {
+                showIcon: false,
+                dblClickExpand: false,
+                selectedMulti: false
+            },
+            callback: {
+                beforeClick: beforeClick,
+                onClick: onClick
+            }
+        };
+
+        function beforeClick(treeId, treeNode) {
+            var check = (treeNode && treeNode.valueSelect);
+            if (check)
+                hideMenu();
+            return check;
+        }
+
+        function onClick(e, treeId, treeNode) {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo"), nodes = zTree
+                .getSelectedNodes();
+            v = "";
+            var name = nodes[0].text;
+            var dwbm = nodes[0].id;
+            ztreedata.name = name;
+            ztreedata.dwbm = dwbm;
+            v = name;
+            var cityObj = $("#citySel");
+            cityObj.attr("value", v);
+        }
+
+        function showMenu() {
+            if (isShowMenu == false) {
+                isShowMenu = true;
+                var cityObj = $("#citySel");
+                var cityOffset = $("#citySel").offset();
+                $("#menuContent").fadeIn("fast");
+                $("body").bind("mousedown", onBodyDown);
+            } else
+                hideMenu();
+        }
+
+        function hideMenu() {
+            isShowMenu = false;
+            $("#menuContent").fadeOut("fast");
+            $("body").unbind("mousedown", onBodyDown);
+        }
+
+        function onBodyDown(event) {
+            if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(
+                    event.target).parents("#menuContent").length > 0)) {
+                hideMenu();
+            }
+        }
+    </SCRIPT>
+    <script src="../js/zhyw/utils/base64.js"></script>
+</head>
+<body>
+<div id="action2" style="display:none;">
+    <p class="msg" style="margin-top: 20px;margin-left: 20px">正在读取页面...</p>
+    <!--<div>-->
+        <!--<input type="button" onclick="testButton4()" value="查看访问地址">-->
+        <!--<input type="button" onclick="testButton5()" value="查看获取参数">-->
+        <!--<input type="button" onclick="testButton6()" value="查看本方系统ID">-->
+        <!--<input type="button" onclick="testButton7()" value="查看消息系统地址">-->
+    <!--</div>-->
+</div>
+<div id="action1" style="display: block;">
+    <img src="../image/bj.png" alt=""
+         style="position: absolute; left: 0; top: 0; z-index: -1; width: 100%; height: 100%; min-width: 1000px; ">
+    <div class="login">
+        <div class="login_all">
+            <div class="login2">
+                <img src="../image/logo.png" style="width: 100%; height: 100%;">
+            </div>
+            <div class="login1">
+                <div class="login1_input">
+                    <div>
+                        <span>请选择单位:</span>
+                    </div>
+                    <div style="height: 32px; position: relative; width: 60%; border: 1px solid #c1c1c1; border-radius: 4px;">
+                        <input id="citySel" type="text" readonly style="border: none; width: 90%"/>
+                        <a id="menuBtn" href="#" onclick="showMenu(); return false;" class="a_style"
+                           style="background: url('../js/plugin/easyui/themes/bootstrap/images/combo_arrow.png') no-repeat center center; background-color: #F2F2F2"></a>
+                        <div id="menuContent" style="display: none; position: absolute; z-index: 2;">
+                            <ul id="treeDemo" class="ztree"
+                                style="margin-top: 0; width: 250%; background-color: #fff"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="login1_input">
+                    <div>
+                        <span>请输入用户名:</span>
+                    </div>
+                    <input id="yhtext" type="text">
+                </div>
+                <div class="login1_input">
+                    <div>
+                        <span>请输入密码:</span>
+                    </div>
+                    <input id="mmtext" type="password">
+                </div>
+                <!--<div>-->
+                    <!--<input type="button" onclick="testButton4()" value="查看访问地址">-->
+                    <!--<input type="button" onclick="testButton5()" value="获取参数">-->
+                    <!--<input type="button" onclick="testButton6()" value="查看本方系统ID">-->
+                    <!--<input type="button" onclick="testButton7()" value="查看消息系统地址">-->
+                <!--</div>-->
+                <div class="login1_input2">
+                    <span class="msg" style="color: red"></span>
+                </div>
+                <div class="login_input3" id="loginbt">
+                    <img src="../image/dl_an.png" style="width: 100%; height: 100%;">
+                    <span id="dlbt">绑定账号</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script type="text/javascript">
+    //获取消息平台传来的所有参数
+    var obj = {};
+    //消息平台里，我们系统的ID（这个由消息平台提供，要消息平台先配置，然后我们再配置到我们的配置文件中）
+    var const_zhyz_sys_id = '';
+    //消息平台的地址
+    var const_zhyz_xxptdz = '';
+
+    $(function () {
+        //加载单位树
+        loadDwTree();
+
+        //获取消息平台地址和我们系统对应消息平台的ID
+        $.post(rootPath + '/service/login/getXxptdzAndsysID', {}, function (result) {
+            //给我方系统ID赋值
+            const_zhyz_sys_id = result.split(",")[0];
+            //给消息平台地址赋值
+            const_zhyz_xxptdz = result.split(",")[1];
+            //输出获取到的数值
+            console.log("消息系统本方对应ID：  " + const_zhyz_sys_id);
+            console.log("消息系统地址：  " + const_zhyz_xxptdz);
+            //获取get请求的地址
+            var URL = document.URL;
+            //输出地址
+            console.log("消息访问地址：  " + URL);
+
+            //获取发送来的参数
+            var csAllValue = URL.split("\?")[1];
+            //截取所有参数
+            var csValues = csAllValue.split("\&");
+            //将参数名称和参数值用obj进行接收
+            for (var i in csValues) {
+                obj[csValues[i].split("\=")[0]] = csValues[i].split("\=")[1];
+            }
+
+            //选项（根据不同情况选择不同选项）
+            var chooseOneNum = 0;
+            if (obj['message_id']) {
+                //判断参数：message_id：打开待办事项
+                chooseOneNum = 2;
+            } else if (obj['token']) {
+                // token：打开系统index页面
+                chooseOneNum = 3
+            } else {
+                // 进行系统用户绑定
+                chooseOneNum = 1
+            }
+
+            //根据不同情况进行不同处理
+            switch (chooseOneNum) {
+                //用户绑定
+                case 1:
+                    hideHtml();
+                    break;
+                //当消息平台发送message_id和token时，打开待办事项
+                case 2:
+                    //打印获取到的所有参数
+                    console.log(obj)
+                    //通过ajax的post方式传参数到消息平台
+                    $.ajax({
+                        type: 'POST',
+                        data: JSON.stringify({"message_id": obj.message_id, "token": obj.token}),
+                        url: const_zhyz_xxptdz + '/interface/getmessage',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        success: function (data) {
+                            //获取到的返回参数
+                            console.log(data)
+                            //当状态为0时表示没有错误
+                            if (data.errno == 0) {
+                                //信息
+                                var xx = data.data;
+                                //message_source为我方传给消息平台的数据
+                                var message_source = JSON.parse(xx.message_source);
+                                //用ryxx获取message_source里的人员信息
+                                var ryxx = {};
+                                //判断是否有被推送人标识（就是判断是发给谁的消息，）
+                                if (message_source.btsrbs) {
+                                    //解码被推送人信息
+                                    ryxx.bs = base64decode(message_source.btsrbs);
+                                    //获取被推送人的用户名
+                                    ryxx.yhm = unescape(message_source.yhm);
+                                } else {
+                                    //解码人员信息
+                                    var rybm = base64decode(xx.ex_user_cert);
+                                    //获取人员信息标识
+                                    ryxx.bs = rybm.ex_user_id
+                                    //获取人员用户名
+                                    ryxx.yhm = rybm.user_name
+                                }
+                                //通过我方系统的方法进行人员验证
+                                $.post(rootPath + '/service/login/ymtz', ryxx, function (result) {
+                                    //当然返回为true时，通过验证
+                                    if (result == 'true') {
+                                        //判断地址，根据地址不同跳转不同界面
+                                        if (message_source.address.indexOf("view") == -1) {
+                                            location.href = rootPath + message_source.address + message_source.params;
+                                        } else {
+                                            //由于我方页面为嵌套页面，所以都需要先跳转index界面
+                                            location.href = rootPath + '/index.html?URL=' + base64encode(rootPath + message_source.address + message_source.params);
+                                        }
+                                    } else {
+                                        //未找到用户信息
+                                        $(".msg").text("未找到用户信息");
+                                    }
+                                })
+                            } else {
+                                //返回消息系统的错误，给用户
+                                $(".msg").text(data.errmsg);
+                            }
+                        },
+                        error: function (err) {
+                            //消息报错，和上方绑定报错，相同
+                            console.log(err)
+                            $(".msg").text("访问消息系统查找消息发生错误！");
+                        }
+                    });
+                    break;
+                case 3:
+                    //输出获取到的值
+                    console.log("获取的参数： " + obj)
+                    //通过ajsx的post方式到消息平台进行数据查询
+                    $.ajax({
+                        type: 'POST',
+                        data: JSON.stringify({
+                            'sys_id': const_zhyz_sys_id,
+                            'token': obj.token
+                        }),
+                        url: const_zhyz_xxptdz + '/interface/mutual_trust',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        success: function (data) {
+                            //打印数据结果集
+                            console.log(data)
+                            //当消息平台返回的数据是准确无误时
+                            if (data.errno == 0 && data.data && data.data.ex_user_cert) {
+                                //获取我方传给消息平台的人员信息
+                                var ry = JSON.parse(base64decode(data.data.ex_user_cert));
+                                //建个实体接收数据
+                                var ryxx = {};
+                                //用户唯一 标识 ，包含了用户的单位编码和工号
+                                ryxx.bs = ry.ex_user_id
+                                //用户名，由于乱码原因，需要先进行转码
+                                ryxx.yhm = unescape(ry.user_name);
+                                //通过我们系统的方法进行验证，是否是我方的人员
+                                $.post(rootPath + '/service/login/ymtz', ryxx, function (result) {
+                                    //打印数据结果
+                                    console.log(result)
+                                    //当返回数据未true时（字符串），表示该用户通过验证，可以登录本方系统
+                                    if (result == 'true') {
+                                        location.href = rootPath + '/index.html';
+                                    } else {
+                                        //未找到用户信息
+                                        $(".msg").text("未找到用户信息");
+                                    }
+                                })
+                                //当在消息平台没有找到指定的用户信息时，可能是消息平台进行绑定，我们需要显示绑定页面
+                            } else {
+                                hideHtml();
+                            }
+                        },
+                        error: function (err) {
+                            //报错可能有多种情况：1.消息系统发来的数据有误，导致后台代码报错。2.我们系统代码有误，后台代码报错。3.地址有误，找不到消息平台的地址。
+                            //4.消息平台有误，我方访问不了
+                            $(".msg").text("访问消息系统查找用户发生错误！");
+                            console.log(err)
+                        }
+                    });
+                    break;
+                default:
+                    //当类型都不是的时候，表示获取的数据不同
+                    $(".msg").text("未获取到指定信息");
+                    break;
+            }
+
+        })
+
+        //按下键盘的enter按键事件
+        keyDown();
+    });
+
+    $("#loginbt").bind("click", function () {
+        //登录海南平台系统的方法
+        denglu();
+    });
+
+    //按下键盘的enter按键事件
+    function keyDown() {
+        document.onkeydown = function (e) {
+            var ev = document.all ? window.event : e;
+            if (ev.keyCode == 13) {
+                denglu();
+            }
+        }
+    }
+
+    //账号绑定（用的登录功能）
+    function denglu() {
+        //登录人单位编码
+        var dwtext = ztreedata.dwbm;
+        //登录人用户名
+        var yhtext = $("#yhtext").val().trim();
+        //登录人密码
+        var mmtext = $("#mmtext").val().trim();
+
+        if (dwtext == "") {
+            $(".msg").text("请选择单位！");
+            return;
+        }
+        if (yhtext == "") {
+            $(".msg").text("请输入用户名");
+            return;
+        }
+        if (mmtext == "") {
+            $(".msg").text("请输入密码");
+            return;
+        }
+        //进行用户验证
+        $.ajax({
+            url: rootPath + "/service/login/yhyz",
+            type: 'post',
+            async: false,
+            data: {
+                "dwbm": dwtext,
+                "yhm": yhtext,
+                "kl": mmtext,
+            },
+            dataType: 'json',
+            success: function (returnMap) {
+                //当返回map的errno为1时是密码或者信息错误
+                if (returnMap.status == 1) {
+                    $(".msg").text(returnMap.msg);
+                } else {
+                    //组装用户信息
+                    var user_cert = '{' +
+                        '"user_id":' + '"' + obj.user_id + '"' +
+                        ',"user_name":' + '"' + escape(yhtext) + '"' +
+                        ',"ex_user_id":' + '"' + returnMap.data + '"' +
+                        '}';
+                    //用户信息加密
+                    user_cert = base64encode(user_cert);
+                    //传送用户信息给消息系统
+                    $.ajax({
+                        type: 'POST',
+                        data: JSON.stringify({
+                            "user_id": obj.user_id,
+                            "user_name": yhtext,
+                            "ex_user_id": returnMap,
+                            "sys_id": const_zhyz_sys_id,
+                            "ex_user_cert": user_cert
+                        }),
+                        url: const_zhyz_xxptdz + '/interface/account_binding',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        success: function (data) {
+                            if (data.errno == 0) {
+                                $(".msg").text(data.data);
+                            } else {
+                                $(".msg").text(data.errmsg);
+                            }
+                        },
+                        error: function (err) {
+                            console.log(err)
+                        }
+                    });
+                }
+            },
+            error: function () {
+                $(".msg").text("绑定失败，请重试");
+            }
+        });
+    }
+
+    function jsonp(setting) {
+        setting.data = setting.data || {}
+        setting.key = setting.key || 'callback'
+        setting.callback = setting.callback || function () {
+        }
+        setting.data[setting.key] = '__onGetData__'
+
+        window.__onGetData__ = function (data) {
+            setting.callback(data);
+        }
+        var script = document.createElement('script')
+        var query = []
+        for (var key in setting.data) {
+            query.push(key + '=' + encodeURIComponent(setting.data[key]))
+        }
+        script.src = setting.url + '?' + query.join('&')
+        document.head.appendChild(script)
+        document.head.removeChild(script)
+    }
+
+
+
+    // function testButton4() {
+    //
+    //     ts(document.URL);
+    // }
+    //
+    // function testButton5() {
+    //     ts(JSON.stringify(obj));
+    // }
+    //
+    // function testButton6() {
+    //     ts(const_zhyz_sys_id);
+    // }
+    //
+    // function testButton7() {
+    //     ts(const_zhyz_xxptdz);
+    // }
+
+
+    function ts(info) {
+        $.messager.alert("提示", info, "info");
+    }
+
+    function setMessages() {
+        $.post("http://192.168.2.188:88/loginbind.aspx?user_id=123123123", {
+            txtDw: '海南省院',
+            hddwbm: '460000',
+            txtUserName: '测试',
+            txtPwd: '11111111',
+            btnLogin: '授权并绑定'
+        }, function (result) {
+            console.log(result)
+        })
+    }
+
+    function loadDwTree() {
+        //加载单位选择列表
+        $.getJSON('../service/tree/dwtree?dwbm=' + sdwbm + '&showall=true',
+            function (res) {
+                var result = [];
+                result.push(res);
+                $(document).ready(function () {
+                    $.fn.zTree.init($("#treeDemo"), setting, result);
+                });
+                $(".textbox-text").css("padding-top", '1px');
+            });
+    }
+function hideHtml() {
+    //隐藏提示语
+    $("#action2").hide();
+    //显示绑定页面
+    $("#action1").show();
+
+}
+
+</script>
+</html>

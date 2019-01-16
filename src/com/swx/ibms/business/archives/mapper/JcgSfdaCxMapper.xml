@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swx.ibms.business.archives.mapper.JcgSfdaCxMapper">
+	<!-- author:朱春雨 -->
+
+	<!-- 检察官司法档案查询结果集 -->
+	<resultMap id="jcgSfdaCxMap" type="JcgSfdaCx">
+		<result property="gh" column="gh" javaType="java.lang.String"></result>
+		<result property="mc" column="mc" javaType="java.lang.String"></result>
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="sfgs" column="sfgs" javaType="java.lang.String"></result>
+		<result property="spzt" column="spzt" javaType="java.lang.String"></result>
+		<result property="kssj" column="kssj" javaType="java.lang.String"></result>
+		<result property="jssj" column="jssj" javaType="java.lang.String"></result>
+		<result property="rycount" column="rycount" javaType="java.lang.Integer"></result>
+		<result property="sfcount" column="sfcount" javaType="java.lang.Integer"></result>
+		<result property="jdcount" column="jdcount" javaType="java.lang.Integer"></result>
+		<result property="zycount" column="zycount" javaType="java.lang.Integer"></result>
+		<result property="qtcount" column="qtcount" javaType="java.lang.Integer"></result>
+		<result property="zbajcount" column="zbajcount" javaType="java.lang.Integer"></result>
+		<result property="cbajcount" column="cbajcount" javaType="java.lang.Integer"></result>
+	</resultMap>
+	
+	<!-- -->
+	<resultMap id="gsMap" type="GS">
+		<result property="clnr" column="clnr" javaType="java.lang.String"></result>
+		<result property="ssr" column="ssr" javaType="java.lang.String"></result>
+		<result property="tjnf" column="tjnf" javaType="java.lang.String"></result>
+		<result property="fqsj" column="fqsj" javaType="java.lang.String"></result>
+		<result property="ssrdwbm" column="ssrdwbm" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<resultMap id="bmbmsMap" type="bmysbm">
+		<result property="bmys" column="bmys" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<resultMap id="bmysbmMap" type="bmysbm">
+		<result property="dwbm" column="dwbm" javaType="java.lang.String"></result>
+		<result property="fbmbm" column="fbmbm" javaType="java.lang.String"></result>
+		<result property="bmbm" column="bmbm" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	<!-- 档案实体类 -->
+	<resultMap id="sfdaObjMap" type="com.swx.ibms.business.archives.bean.DAGZ">
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="cjrdwbm" column="cjrdwbm" javaType="java.lang.String"></result>
+		<result property="cjr" column="cjr" javaType="java.lang.String"></result>
+		<result property="ssrdwbm" column="ssrdwbm" javaType="java.lang.String"></result>
+		<result property="ssr" column="ssr" javaType="java.lang.String"></result>
+		<result property="tjnf" column="tjnf" javaType="java.lang.String"></result>
+		<result property="kssj" column="kssj" javaType="java.lang.String"></result>
+		<result property="jssj" column="jssj" javaType="java.lang.String"></result>
+		<result property="sfgs" column="sfgs" javaType="java.lang.String"></result>
+		<result property="gsxx" column="gsxx" javaType="java.lang.String"></result>
+		<result property="sffc" column="sffc" javaType="java.lang.String"></result>
+		<result property="fcsj" column="fcsj" javaType="java.util.Date"></result>
+		<result property="fcly" column="fcly" javaType="java.lang.String"></result>
+		<result property="sfgd" column="sfgd" javaType="java.lang.String"></result>
+	</resultMap>
+	
+	
+	
+	<!-- 通过spstid、splx来查询档案最新spzt -->
+	<select id="daspZxSpzt" parameterType="java.util.Map" statementType="CALLABLE">   <!-- 检查官司法档案查询 -->
+		{call pkg_select.dasp_zx_spzt(
+		#{p_spstid,mode=IN,jdbcType=VARCHAR},
+		#{p_splx,mode=IN,jdbcType=VARCHAR},
+		#{p_spzt,mode=OUT,jdbcType=VARCHAR}
+		)}
+	</select>
+	
+	<!-- 通过单位和部门找部门映射 -->
+	<select id="selectBmBmys" parameterType="java.util.Map" statementType="CALLABLE">   <!-- 检查官司法档案查询 -->
+		{call pkg_select.select_dwbm_bmys(
+		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+		#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=bmbmsMap}
+		)}
+	</select>
+	<!-- 通过单位和部门映射找部门 -->
+	<select id="selectBmysBm" parameterType="java.util.Map" statementType="CALLABLE">   <!-- 检查官司法档案查询 -->
+		{call pkg_select.select_dwbmys_bm(
+			#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+			#{p_bmys,mode=IN,jdbcType=VARCHAR},
+			#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=bmysbmMap}
+		)}
+	</select>
+	
+	<!-- 档案归总封存-->
+	<update id="dagzFc" parameterType="java.util.Map" statementType="CALLABLE" >
+		{call pkg_select.dagz_fc(
+		      #{p_id,mode=IN,jdbcType=VARCHAR},
+		      #{p_sffc,mode=IN,jdbcType=VARCHAR}
+	    )} 
+	</update>
+	
+	<!-- 档案归总查询-->
+	<select id="jcgSfdaCx" parameterType="java.util.Map" statementType="CALLABLE">   <!-- 检查官司法档案查询 -->
+		{call pkg_select.select_dagzdata(
+			#{p_sfgs,mode=IN,jdbcType=VARCHAR},
+			#{p_sffc,mode=IN,jdbcType=VARCHAR},
+			#{p_sfgd,mode=IN,jdbcType=VARCHAR},
+			#{p_ssrdwbm,mode=IN,jdbcType=VARCHAR},
+			#{p_dlrdwbm,mode=IN,jdbcType=VARCHAR},
+			#{p_dlr,mode=IN,jdbcType=VARCHAR},
+			#{p_ssr,mode=IN,jdbcType=VARCHAR},
+			#{p_qx,mode=IN,jdbcType=VARCHAR},
+			#{p_bmbm,mode=IN,jdbcType=VARCHAR},
+			#{p_kssj,mode=IN,jdbcType=VARCHAR},
+			#{p_jssj,mode=IN,jdbcType=VARCHAR},
+			#{cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=jcgSfdaCxMap},
+			#{p_count,mode=OUT,jdbcType=VARCHAR},
+			#{p_top,mode=IN,jdbcType=VARCHAR},
+			#{p_bottom,mode=IN,jdbcType=VARCHAR}
+		)}
+	</select>
+	
+	<!--<select id="jcgSfdaCxBs" parameterType="java.util.Map" statementType="CALLABLE" 
+		resultMap="jcgSfdaCxMap"> {call pkg_select.select_zjdagzdata( #{sfgs,mode=IN,jdbcType=VARCHAR}, 
+		#{tjnf,mode=IN,jdbcType=VARCHAR}, #{ssrdwbm,mode=IN,jdbcType=VARCHAR}, #{cjrdwbm,mode=IN,jdbcType=VARCHAR}, 
+		#{cjr,mode=IN,jdbcType=VARCHAR}, #{ssrmc,mode=IN,jdbcType=VARCHAR}, #{Y,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=jcgSfdaCxMap} 
+		)} </select> -->
+		
+	<update id="gs" parameterType="java.util.Map" statementType="CALLABLE"> <!-- 公示 -->
+		{call pkg_select.update_gs(
+			#{gdid,mode=IN,jdbcType=VARCHAR},
+			#{fqrbm,mode=IN,jdbcType=VARCHAR},
+			#{fqrdwbm,mode=IN,jdbcType=VARCHAR},
+			#{clnr,mode=IN,jdbcType=VARCHAR},
+			#{Y,mode=OUT,jdbcType=VARCHAR},
+			#{gsxx,mode=IN,jdbcType=VARCHAR}
+		)}
+	</update>
+	
+	<!-- 取消公示 -->
+	<update id="qxgs" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[  
+         	{call pkg_select.update_qxgs(  
+         		#{p_gdid,mode=IN,jdbcType=VARCHAR},
+         		#{p_gsxx,mode=IN,jdbcType=VARCHAR},
+         		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}                                 
+         		)}  
+    	]]>
+	</update>
+	
+	<select id="show_gs" parameterType="java.util.Map" statementType="CALLABLE">
+		{call pkg_select.show_gs(
+			#{dwbm,mode=IN,jdbcType=VARCHAR},
+			#{sffc,mode=IN,jdbcType=VARCHAR},
+			#{begin,mode=IN,jdbcType=VARCHAR},
+			#{end,mode=IN,jdbcType=VARCHAR},
+			#{cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=gsMap}
+		)}
+	</select>
+
+	<select id="showGsOfIndex" resultType="java.util.Map">
+		select a.*,
+			   (
+				select r1.mc mc
+				from XT_ZZJG_RYBM_tyyw r1
+				where r1.dwbm = a.dwbm
+				  and r1.gh = a.gh
+				union
+				select r2.mc mc
+				from xt_zzjg_rybm r2
+				where r2.dwbm = a.dwbm
+				  and r2.gh = a.gh
+			   ) mc
+		from(
+			select t1.id id,
+				   t1.ssrdwbm dwbm,
+				   t1.ssr gh,
+				   to_number(t1.tjnf) year,
+				   to_date(t1.kssj,'yyyy-MM') ksrq,
+				   to_date(t1.jssj,'yyyy-MM') jsrq,
+				   t1.sfgs sfgs,
+				   t2.kssj gs_kssj,
+				   t2.jssj gs_jssj,
+				   t2.czsj czsj,
+				   t1.sffc sffc,
+				   t1.sfgd sfgd,
+				   null zpjdf,
+				   null pdjbmc,
+				   '1' type --司法档案公示
+			from YX_SFDA_DAGZ t1
+			inner join yx_sfda_gsjl t2 on t1.id = t2.dagzid
+			where t1.sfgs = '1'
+			  and t2.czlx = '1'
+			  and t1.sfsc = 'N'
+			  and t2.dwbm = #{dwbm}
+			  and sysdate between t2.kssj and t2.jssj
+
+			union all
+
+			select t3.id id,
+				   t3.dwbm dwbm,
+				   t3.gh gh,
+				   t3.year year,
+				   t3.ksrq ksrq,
+				   t3.jsrq jsrq,
+				   t3.sfgs sfgs,
+				   t5.ksrq gs_kssj,
+				   t5.jsrq gs_jssj,
+				   t5.updatedate czsj,
+				   null sffc,
+				   null sfgd,
+				   t4.zpjdf,
+				   t4.pdjbmc,
+				   '2' type --个人绩效公示
+			from YX_GRJX_YDKH t3
+			inner join YX_GRJX_YWKHFZ t4 on t3.id = t4.ydkhid
+			inner join yx_grjx_gsxx t5 on t3.id = t5.jxkhid
+			where t3.sfgs = '1'
+			  and t5.DELFLAG = 'N'
+			  and t3.dwbm = #{dwbm}
+			  and sysdate between t5.ksrq and t5.jsrq
+		) a
+		order by czsj desc
+	</select>
+	
+	<!-- 将公示信息加入公示栏 -->
+	 <insert id="addGstoGsl" parameterType="java.util.Map" statementType="CALLABLE">
+	 	<![CDATA[  
+         	{call pkg_select.addgstogsl(  
+         		#{p_fqrbm,mode=IN,jdbcType=VARCHAR},
+         		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+         		#{p_dagzid,mode=IN,jdbcType=VARCHAR},
+         		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}                                 
+         		)}  
+    	]]>
+	 </insert>
+	 		
+	 <!-- 将公示信息从公示栏删除 -->		
+	 <delete id="deleteGsfromGsl" parameterType="java.util.Map" statementType="CALLABLE">
+	 	<![CDATA[  
+         	{call pkg_select.deletegsfromgsl(  
+         		#{p_dagzid,mode=IN,jdbcType=VARCHAR},
+         		#{p_errmsg,mode=OUT,jdbcType=VARCHAR}                                 
+         		)}  
+    	]]>
+	 </delete>
+
+
+	<insert id="addGsjl">
+		insert into YX_SFDA_GSJL(id,
+								dagzid,
+								dwbm,
+								czrgh,
+								czsj,
+								czlx,
+								kssj,
+								jssj,
+								gsxx
+						) values(
+								sys_guid(),
+								#{dagzid},
+								#{dwbm},
+								#{czrgh},
+								sysdate,
+								#{czlx},
+								sysdate,
+								#{gsJzsj},
+								#{gsxx}
+								)
+	</insert>
+
+	<update id="updatedagzgsxx">
+		update YX_SFDA_DAGZ t set t.gsxx = #{gsxx},t.SFGS = #{gszt} where t.id = #{dagzid}
+	</update>
+
+	<!-- 分管领导通过gh和dwbm查询分管部门  -->
+	<select id="cxFgBm" resultType="Fgld">
+		select id,dwbm,ldgh,bmbm,cjr,cjsj 
+		from XT_FGLD
+			where 1 = 1
+			<if test="dlrdwbm!='' and dlrdwbm!=null">
+				and dwbm = #{dlrdwbm}
+			</if>
+			<if test="dlr!='' and dlr!=null">
+				and ldgh = #{dlr}
+			</if>
+	</select>
+
+	<update id="updateGsJzsj">
+		update yx_sfda_gs t set t.gsjzsj = #{gsJzsj} where t.dagzid = #{spstid} 
+	</update>
+	
+	
+	<!-- /*********************************************  改写的司法档案首页查询SQL  ******************************************************/ -->
+	<!-- 查询某位检察官的档案 -->
+	<select id="getSfdaByDaParams" resultType="DAGZ">
+		select id,
+		       ssrdwbm as dwbm,
+		       ssr as gh,
+		       kssj,
+		       jssj,
+		       sfgs,
+		       sffc,
+		       tjnf
+		from yx_sfda_dagz 
+		     where ssrdwbm = #{dwbm}
+		        and ssr = #{gh} 
+		        <if test="sffc!='' and sffc!=null"> <!-- 默认查询未封存，即：封存状态为'0' -->
+					and sffc = #{sffc}
+				</if> 
+				
+		        <if test="sfgs!='' and sfgs!=null">
+					and sfgs = #{sfgs}
+				</if>
+				 
+		        <if test="kssj!='' and kssj!=null">
+		        	and to_date(kssj,'yyyy-MM') >= to_date(#{kssj},'yyyy-MM') 
+				</if>
+				
+				<if test="jssj!='' and jssj!=null">
+		        	and to_date(jssj,'yyyy-MM') >= to_date(#{jssj},'yyyy-MM') 
+				</if>
+		     order by cjsj desc
+		
+	</select>
+	
+	<!-- 档案的审批信息 -->
+	<!-- <select id="getSfdaSpztByDaId" resultType="java.util.Map">
+		SELECT * 
+		FROM YX_SFDA_SPLCSL S 
+			WHERE SPSTID = #{daid} 
+			  AND SPLX = '2'
+			  AND XH = (SELECT MAX(XH) XH FROM YX_SFDA_SPLCSL T WHERE SPSTID =#{daid} AND SPLX = '2') 
+			order by xh desc,spsj desc 
+	</select> -->
+	
+	<!-- 某档案对应的荣誉技能总数 -->
+<!-- 	<select id="getSfdaRyjnByDaId" resultType="java.util.Map">
+		 
+	</select> -->
+	
+	<!-- 某档案对应的司法责任总数 -->
+	
+	
+	<!-- 某档案对应的责任追究总数 【原司法责任】-->
+	
+	
+	<!-- 某档案对应的监督情况总数 -->
+	
+	
+	<!-- 某档案对应的业务研修总数 【原职业操守】-->
+	
+	
+	<!-- 某档案对应的其他档案总数-->
+
+	<select id="getDaByDG" parameterType="java.util.Map"
+		statementType="CALLABLE">
+		{call pkg_select.getDaByDG(
+		#{p_sfgs,mode=IN,jdbcType=VARCHAR},
+		#{p_sffc,mode=IN,jdbcType=VARCHAR},
+		#{p_sfgd,mode=IN,jdbcType=VARCHAR},
+		#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+		#{p_gh,mode=IN,jdbcType=VARCHAR},
+		#{p_kssj,mode=IN,jdbcType=VARCHAR},
+		#{p_jssj,mode=IN,jdbcType=VARCHAR},
+		#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sfdaObjMap}
+		)}
+	</select>
+
+	<select id="getFileInfo" resultMap="sfdaObjMap">
+		select *
+		from yx_sfda_dagz
+		where ssrdwbm = #{dwbm}
+		  and ssr = #{gh}
+		  and kssj = #{kssj}
+		  and jssj = #{jssj}
+		  and sfsc = 'N'
+		  and sffc = '0'
+	</select>
+
+	<select id="queryArchivesByCondition" resultType="java.util.HashMap">
+		select a.*
+		from (
+		SELECT ROW_NUMBER() OVER (PARTITION BY t.ssrdwbm, t.ssr ORDER BY t.cjsj) RK,
+		(select r1.mc mc
+		from XT_ZZJG_RYBM_tyyw r1
+		where r1.dwbm = t.ssrdwbm
+		and r1.gh = t.ssr
+		union
+		select r2.mc mc
+		from xt_zzjg_rybm r2
+		where r2.dwbm = t.ssrdwbm
+		and r2.gh = t.ssr
+		) mc,
+		t.*
+		FROM YX_SFDA_DAGZ t
+		<if test="bmbm != null and bmbm.size() > 0">
+			inner join xt_qx_ryjsfp_tyyw t2 on t.ssrdwbm = t2.dwbm and t.ssr = t2.gh
+		</if>
+		where t.sfsc = 'N'
+		and t.ssrdwbm = #{dwbm}
+		<if test="gh != '' and gh != null">
+			and t.ssr = #{gh}
+		</if>
+		<if test="sffc != '' and sffc != null">
+			and t.sffc = #{sffc}
+		</if>
+		<if test="sfgs != '' and sfgs != null">
+			and t.sfgs = #{sfgs}
+		</if>
+		<if test="sfgd != '' and sfgd != null">
+			and t.sfgd = #{sfgd}
+		</if>
+		<if test="kssj != '' and kssj != null">
+			and to_date(t.kssj, 'yyyy-MM') &gt;= to_date(#{kssj}, 'yyyy-MM')
+		</if>
+		<if test="jssj != '' and jssj != null">
+			and to_date(t.jssj, 'yyyy-MM') &lt;= to_date(#{jssj}, 'yyyy-MM')
+		</if>
+		<if test="bmbm != null and bmbm.size() > 0">
+			and t2.bmbm in
+			<foreach item='item' index='index' collection='bmbm' open='(' separator=',' close=')'>
+				#{item}
+			</foreach>
+		</if>
+
+		union
+
+		SELECT ROW_NUMBER() OVER (PARTITION BY t.ssrdwbm, t.ssr ORDER BY t.cjsj) RK,
+		(select r1.mc mc
+		from XT_ZZJG_RYBM_tyyw r1
+		where r1.dwbm = t.ssrdwbm
+		and r1.gh = t.ssr
+		union
+		select r2.mc mc
+		from xt_zzjg_rybm r2
+		where r2.dwbm = t.ssrdwbm
+		and r2.gh = t.ssr
+		) mc,
+		t.*
+		FROM YX_SFDA_DAGZ t
+		<if test="bmbm != null and bmbm.size() > 0">
+			inner join xt_zzjg_ryjsfp t2 on t.ssrdwbm = t2.dwbm and t.ssr = t2.gh
+		</if>
+		where t.sfsc = 'N'
+		and t.ssrdwbm = #{dwbm}
+		<if test="gh != '' and gh != null">
+			and t.ssr = #{gh}
+		</if>
+		<if test="sffc != '' and sffc != null">
+			and t.sffc = #{sffc}
+		</if>
+		<if test="sfgs != '' and sfgs != null">
+			and t.sfgs = #{sfgs}
+		</if>
+		<if test="sfgd != '' and sfgd != null">
+			and t.sfgd = #{sfgd}
+		</if>
+		<if test="kssj != '' and kssj != null">
+			and to_date(t.kssj, 'yyyy-MM') &gt;= to_date(#{kssj}, 'yyyy-MM')
+		</if>
+		<if test="jssj != '' and jssj != null">
+			and to_date(t.jssj, 'yyyy-MM') &lt;= to_date(#{jssj}, 'yyyy-MM')
+		</if>
+		<if test="bmbm != null and bmbm.size() > 0">
+			and t2.bmbm in
+			<foreach item='item' index='index' collection='bmbm' open='(' separator=',' close=')'>
+				#{item}
+			</foreach>
+		</if>
+		) a
+		where a.rk = '1'
+		<if test="mc != '' and mc != null">
+			and a.mc = #{mc}
+		</if>
+		order by a.cjsj desc
+	</select>
+
+	
+</mapper>

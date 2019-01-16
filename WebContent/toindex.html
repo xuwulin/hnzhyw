@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" name="" content="IE=edge,chrome=1" />
+	<title>海南省综合业务管理平台</title>
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
+	<link rel="stylesheet" type="text/css"
+		  href="js/plugin/easyui/themes/default/easyui.css">
+	<script type="text/javascript" src="js/zhyw/utils/common.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/zhyw/utils/constant.js"></script>
+	<script type="text/javascript" src="js/plugin/easyui/jquery.min.js"></script>
+	<script type="text/javascript"
+			src="js/plugin/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript"
+			src="js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body>
+<div class="wrapper">
+	<!--头-->
+	<div class="header">
+		<div class="logo">
+			<div class="exit" onclick="exit();">退出登录</div>
+		</div>
+		<!--导航-->
+		<div class="navigation">
+			<ul>
+				<li id="liIndex" onclick="sx(1, this);" class="button_dh"
+					style="background-image: url(image/sy.png); background-position: 30px 50%; padding-left: 60px; cursor: pointer;">首页</li>
+				<li id="liCx" onclick="sx(2, this);"
+					style="background-image: url(image/glda.png); cursor: pointer;">检察官司法档案管理</li>
+				<li onclick="sx(3, this);"
+					style="background-image: url(image/jcggrjxkh.png); cursor: pointer;">检察官个人绩效考核</li>
+				<li id="liYw" onclick="sx(4, this);"
+					style="background-image: url(image/gzkh.png); cursor: pointer;">检察院业务工作考核</li>
+				<!-- 						<li id="ajwtfk"  onclick="sx(5, this);" style="display:none;background-image: url(image/ajwtfk.png);cursor:pointer;">案件问题反馈</li> -->
+				<li id="liGl" onclick="sx(6, this);"
+					style="background-image: url(image/pz.png); cursor: pointer;">系统设置</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="back_beiji"></div>
+</body>
+<script type="text/javascript">
+    $('.logo').css("display","none");
+    $('.header').css("height","41");
+    function min_width() {
+        $('.wrapper').css('min-width', '1200px')
+    };
+    function min_width2() {
+        $('.wrapper').css('min-width', '1200px')
+    };
+    function ifenone() {
+        $('.back_beiji').css('display', 'none')
+    };
+    function ifeblick() {
+        $('.back_beiji').css('display', 'block')
+    };
+    function getQueryString(name){
+        var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)","i");
+        var r=window.location.search.substr(1).match(reg);
+        if(r!=null) return unescape(r[2]);return null;
+    }
+    var key=getQueryString("key");
+    if (key!= null) {
+        $.ajax({
+            url : rootPath + "/service/login/zddl",
+            type : 'post',
+            async : false,
+            data:{
+                "key" : key
+            },
+            dataType : 'json',
+            success : function(data) {
+                denglu(data.dwmc,data.dwbm,data.yhm,data.kl,'2');
+            },
+            error:function() {
+                location.href = rootPath + "/login.html";
+            }
+        });
+    }else{
+        location.href = rootPath + "/login.html";
+    }
+    function denglu(dwmc,dwbm,yhm,kl,type) {
+        $.ajax({
+            url : rootPath + "/service/login/pt",
+            type : 'post',
+            async : false,
+            data : {
+                "dwmc" : dwmc,
+                "dwbm" : dwbm,
+                "yhm" : yhm,
+                "kl" : kl,
+                "type" : type
+            },
+            dataType : 'json',
+            success : function(returnMap) {
+                if (returnMap.status == 1) {
+                    location.href = "index.html?type=lygxt";
+                } else if (returnMap.status == 0) {
+                    location.href = rootPath + "/login.html";
+                }
+            },
+            error : function() {
+                location.href = rootPath + "/login.html";
+            }
+        });
+    };
+    var currentUserInfo = {};
+
+    function sx(param, li) {
+
+        $(".button_dh").removeClass("button_dh");
+        $(li).addClass("button_dh");
+
+        // 	    	$("#iframe").css({height:"0px"});
+
+        if (param == 1) {
+            $("#iframe").attr("src", "view/main.html");
+        } else if (param == 2) {
+            var dwbm = currentUserInfo.dwbm;
+            var gh = currentUserInfo.gh;
+            $("#iframe").attr("src", "view/sfda/sfda_cx.html?dwbm=" + dwbm + "&gh=" + gh);
+        } else if (param == 3) {
+            $("#iframe").attr("src", "view/grjx/zhyw_grjx.html");
+        } else if (param == 4) {
+            $("#iframe").attr("src", "view/ywgzkh/zhyw_ywgzkh.html");
+        } else if (param == 5) {
+            $("#iframe").attr("src", "view/zhyw_ajwtfk.html");
+        } else if (param == 6) {
+            $("#iframe").attr("src", "view/systemManage/department/xtpz.html");
+        }
+    }
+    function exit() {
+        $.post(rootPath + "/service/login/logout", function() {
+            location.href = rootPath + "/login.html";
+        });
+    }
+    function msgProgressTip(info) {
+        $.messager.progress({
+            msg : info
+        });
+    }
+
+    function msgProgressTipClose() {
+        $.messager.progress('close');
+    }
+
+    function msgAlertInfo(info) {
+        $.messager.alert("提示", info, "info");
+    }
+    function msgAlertError(info) {
+        $.messager.alert("提示", info, "error");
+    }
+    function msgAlertWarning(info) {
+        $.messager.alert("提示", info, "warning");
+    }
+</script>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link href="../css/card.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../js/plugin/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../js/plugin/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/bounced.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/jxkh.css">
+    <link rel="stylesheet" type="text/css" href="../css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../css/zTreeStyle/ztreedemo.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/zTreeStyle/zTreeStyle.css"/>
+    <link rel="stylesheet" type="text/css" href="../js/plugin/easyui/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="../js/plugin/easyui/themes/icon.css"/>
+
+    <script type="text/javascript" src="../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../js/plugin/echarts-all.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/zhyw/macarons.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/history.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+</head>
+<style>
+    .pant_yl > button {
+        cursor: pointer;
+        margin-top: 10px;
+        width: 60px;
+        height: 30px;
+        border: 1px solid #0575d2;
+        border-radius: 3px;
+        background: #0575d2;
+        color: white;
+        margin-right: 5px;
+    }
+
+    .pant_sc > button {
+        cursor: pointer;
+        margin-top: 10px;
+        width: 60px;
+        height: 30px;
+        border: 1px solid #0575d2;
+        border-radius: 3px;
+        background: #0575d2;
+        color: white;
+        margin-right: 10px;
+    }
+</style>
+<body>
+<div class="personal">
+    <div class="al_botton">
+        <div class="al_botton_1">
+            <div
+                    style="background: url('../image/grjx.png') no-repeat; width: 22px; height: 22px; float: left; margin: 15px 5px 0 20px;"></div>
+            <span
+                    style="color: #1874dc; display: inline-block; margin-top: 14px">个人绩效</span>
+            <div style="margin-right: 20px; float: right; font-size: 14px;" id="sfsy">
+                <div class="pant_yl" style="float: left;">
+                    <button onclick="scan()">预览</button>
+                    <button onclick="edit()">编辑</button>
+                </div>
+                <div class="pant_sc" style="float: right;">
+                    <button onclick="addRow()">插入加行</button>
+                    <button onclick="removeit()">删除行</button>
+                </div>
+            </div>
+        </div>
+        <div style="width: 100%;">
+            <table id="dg" class="tab_le" data-options="nowrap:false"></table>
+            <div class="but_last">
+                <button id=goback style="margin-left: 20px;cursor: pointer;">返回</button>
+                <button id="i_button" style="cursor: pointer;"
+                        onclick="save_data()">确认
+                </button>
+
+            </div>
+        </div>
+
+
+        <div id="addfile" class="bounced" style="display: none">
+            <div class="bounced_all" style="height: 250px">
+                <div class="bounced_tot">
+                    <span>添加文件</span>
+                    <div class="tot_img" onclick="closeDetail()"></div>
+                </div>
+                <div class="xiadivbt1">
+                    <form id="addfileform" method="post" enctype="multipart/form-data">
+                        <input id="upfile3" type="text" style="width:300px" name="file">
+                        <input type="button" value="提交" onclick="SubmitForm()">
+                        </br>
+                        <span>现有附件说明:</span><span id="wjms"></span>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="../js/zhyw/khzb.js"></script>
+<script type="text/javascript">
+
+    $('#upfile3').filebox({
+        buttonText: '选择文件',
+        buttonAlign: 'left'
+    })
+</script>
+</html>

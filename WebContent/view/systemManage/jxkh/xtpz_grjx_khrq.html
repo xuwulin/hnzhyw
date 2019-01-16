@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人绩效考核日期配置界面</title>
+</head>
+<body>
+<div>
+    <div>
+        <div id="query_param_div">
+            <a id="add_btn_khrq" class="add_btn" href="javascript:void(0)" style="margin:5px;">添加考核日期</a>
+        </div>
+        <div>
+            <table id="xt_grjx_khrq_talbe"></table>
+        </div>
+    </div>
+</div>
+<div id="grjx_khrq_edit_div" style="display: none;">
+    <form id="grjx_khrq_form" method="post">
+        <div>
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px;">考核开始日期：</span>
+                <input id="grjx_khrq_id" name="id" type="hidden">
+                <input id="grjx_khrq_ksrq" name="ksrq" style="width: 250px !important; height: 32px !important;"/>
+            </div>
+
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px;">考核结束日期：</span>
+                <input id="grjx_khrq_jsrq" name="jsrq" style="width: 250px !important; height: 32px !important;"/>
+            </div>
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px;">考核最后期限：</span>
+                <input id="grjx_khrq_deadline" name="deadline" style="width: 250px !important; height: 32px !important;"/>
+            </div>
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px;margin-left: 22px">备注/说明：</span>
+                <input name="remarks" id="grjx_khrq_remarks" style="width: 250px !important; height: 70px !important;"/>
+            </div>
+
+            <div style="margin-left: 10px;margin-top: 10px">
+                <span style="font-size: 14px; margin-left: 55px">序号：</span>
+                <input name="xh" id="grjx_khrq_xh" style="width: 250px !important; height: 32px !important;"/>
+            </div>
+
+            <!--<div style="margin-left: 200px;margin-top: 10px">
+                <a id="save_btn_khrq" href="javascript:void(0)" style="margin:15px;">保存</a>
+                <a id="cancel_btn_khrq" href="javascript:void(0)" style="margin:15px;">取消</a>
+            </div>-->
+
+            <div class="xiadivbt">
+                <input type="button" id="cancel_btn_khrq" value="取消" style="background: #fff; border: 1px solid #c1c1c1; color: #666;"/>
+                <input type="button" id="save_btn_khrq" value="保存" style="margin-right: 10px;" />
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+<script src="../../../js/zhyw/xtgl/xtpz_grjx_khrq.js" charset="utf-8"></script>
+</html>

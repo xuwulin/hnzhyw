@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>系统配置-业务工作指标页面</title>
+
+<link href="../../../css/card.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="../../../css/bounced.css" />
+<link rel="stylesheet" type="text/css" href="../../../css/jxkh.css">
+<link rel="stylesheet" type="text/css" href="../../../css/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../../css/zTreeStyle/ztreedemo.css" />
+<link rel="stylesheet" type="text/css" href="../../../css/zTreeStyle/zTreeStyle.css" />
+<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/bootstrap/easyui.css" />
+<link rel="stylesheet" type="text/css" href="../../../js/plugin/easyui/themes/icon.css" />
+	
+<script type="text/javascript" src="../../../js/plugin/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="../../../js/plugin/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../../../js/plugin/echarts-all.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../js/zhyw/macarons.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../js/zhyw/utils/history.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../js/zhyw/utils/constant.js"></script>
+<script type="text/javascript" src="../../../js/zhyw/utils/common.js"></script>
+<script type="text/javascript" src="../../../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+</head>
+<style>
+.fhButton{
+    margin-top: 10px;
+    width: 60px;
+    height: 30px;
+    border: 1px solid #0575d2;
+    border-radius: 3px;
+    background: #0575d2;
+    color: white;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.pant_yl>button {
+	margin-top: 10px;
+	width: 60px;
+	height: 30px;
+	border: 1px solid #0575d2;
+	border-radius: 3px;
+	background: #0575d2;
+	color: white;
+	margin-right: 5px;
+	cursor: pointer;
+}
+
+.pant_sc>button {
+	margin-top: 10px;
+	width: 60px;
+	height: 30px;
+	border: 1px solid #0575d2;
+	border-radius: 3px;
+	background: #0575d2;
+	color: white;
+	margin-right: 5px;
+	cursor: pointer;
+}
+.submitfilebt{
+    float:left;
+    width: 60px;
+    height: 30px;
+    border: 1px solid #0575d2;
+    border-radius: 3px;
+    background: #0575d2;
+    color: white;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.addfilebt{
+	 margin-top: 5px;
+	 margin-bottom: 5px;
+    width: 73px;
+    height: 20px;
+    border: 1px solid #0575d2;
+    border-radius: 3px;
+    background: #0575d2;
+    color: white;
+    margin-right: 5px;
+    cursor: pointer;
+}
+#addfileform>span{
+    margin-left: 47px;
+    float: left;
+}
+.xiadivbt1{
+    overflow: hidden;
+    margin-top: 20px;
+    height: 50px;
+}
+</style>
+<body style="height:10000px;">
+	<div class="personal">
+		<div class="al_botton">
+			<div class="al_botton_1">
+				<div
+					style="background: url('../../../image/grjx.png') no-repeat; width: 22px; height: 22px; float: left; margin: 15px 5px 0 20px;"></div>
+				<span
+					style="color: #1874dc; display: inline-block; margin-top: 14px">业务考评</span>
+				<div style="margin-right: 20px; float: right; font-size: 14px;">
+					<div id="ywlxDiv" style="float:left; margin-top: 10px; margin-right:15px; display:none">
+						<!-- <span>状态:</span>
+						<select id="ywkhKhzbStatus" class="easyui-combobox" name="ywkhKhzbStatus" style="width: 100px; height: 23px; border: 1px solid #c1c1c1;">
+						</select> -->
+						<span style="margin-left:5px;">所属年份:</span>
+						<select id="ywkhKhzbYear" class="easyui-combobox" name="ywkhKhzbYear" style="width: 120px; height: 23px; border: 1px solid #c1c1c1;">
+						</select>
+						<span style="margin-right:5px;margin-left:10px;">业务类型:</span>
+						<label style="margin-right:10px">
+							<select id="khlxselect" class="easyui-combobox" style="width:160px;">
+							</select>
+						</label>
+						<span>适用院:</span>
+					    <label>
+                    		<input id="sylxsy" TYPE="checkbox"   style="margin:6px" checked="checked"/>分市院
+                    	</label>
+                    	<label>
+                    		<input id="sylxjcy" TYPE="checkbox"   style="margin:6px" checked="checked"/>县区院
+                    	</label>
+					</div>
+					<div class="pant_yl" style="float: left;">
+						<button id="goback" class="fhButton" onclick="goBackPage();" style="background: #fff; color: #0575d2;">返回</button>
+						<button class="yc_yl" id="scan" onclick="scan();" style="display:none">预览</button>
+						<button style="display:none;" id="edit" class="yc_yl" onclick="edit()">编辑</button>
+					</div>
+					<div id="scDiv" class="pant_sc" style="float: right; margin-left: 4px; display:none">
+						<button class="yc_yl" id="addRow" onclick="addRow()">插入加行</button>
+						<button class="yc_yl" id="removeit" onclick="removeit()">删除行</button>
+						<button id="i_button" style="cursor: pointer;"onclick="save_data()">保存</button>
+					</div>
+				</div>
+			</div>
+			<div style="width: 100%;">
+				<table id="dg" class="tab_le" data-options="nowrap:false"></table>
+
+			</div>
+			<div id="addfile" class="bounced" style="display: none">
+				<div class="bounced_all" style="height: 300px;width:420px">
+					<div class="bounced_tot">
+						<span>上传附件</span>
+						<div class="tot_img" onclick="closeDetail()"></div>
+					</div>
+					<div class="xiadivbt1">
+						<form id="addfileform" method="post" enctype="multipart/form-data">
+							<input id="upfile3" type="text" style="width: 280px; height: 29px;" name="file">
+							<input class="submitfilebt" type="button" value="提交" onclick="SubmitForm()" >
+						</form> 
+					</div>
+					<div style="width:100%;float:left">
+							<span style="float:left;margin-left: 10px;">现有附件说明:</span>
+							<textarea  disabled="disabled"id="wjms" style="width:223px;height:120px;resize:none;"></textarea>
+				    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript" src="../../../js/zhyw/xtgl/ywgzpz.js"></script>
+<script type="text/javascript">
+$('#upfile3').filebox({    
+    buttonText: '选择文件', 
+    buttonAlign: 'left' 
+})
+</script>
+</html>

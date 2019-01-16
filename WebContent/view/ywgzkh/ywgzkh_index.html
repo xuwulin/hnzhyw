@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>业务工作考核首页</title>
+    <link rel="stylesheet" type="text/css" href="../../js/plugin/easyui/themes/bootstrap/easyui.css">
+    <link type="text/css" rel="stylesheet" href="../../js/plugin/easyui/themes/default/easyui.css"/>
+    <link rel="stylesheet" href="../../css/zTreeStyle/ztreedemo.css" type="text/css"/>
+    <link rel="stylesheet" href="../../css/zTreeStyle/zTreeStyle.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/ywgzkh_index.css"/>
+
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../js/plugin/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../js/plugin/echarts-all.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/plugin/echarts.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/plugin/ztree/jquery.ztree.core.min.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/common.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/utils/constant.js"></script>
+    <script type="text/javascript" src="../../js/zhyw/service/UserService.js"></script>
+
+    <style>
+        .title_logo {
+            width: 1060px;
+            height: 46px;
+            margin: auto;
+        }
+    </style>
+
+</head>
+<body style="min-height:10000px;font-family: 微软雅黑">
+
+<div style="width: 100%; height: 80px;"></div>
+
+<div class="title_logo">
+    <div style="border: 0.5px solid #c1c1c1; margin-top: 22px; width: 328px; float: left"></div>
+    <div style="float: left;">
+        <div style="width: 46px; height: 46px; margin-left: 34px; background: url('../../image/cx.png') no-repeat; float: left"></div>
+        <div style="font-size: 24px; color: #333; margin-left: 22px; line-height: 46px;; float: left;">
+            检察院业务工作考核查询
+        </div>
+    </div>
+    <div style="border: 0.5px solid #c1c1c1; margin-top: 22px; width: 327px; float: left; margin-left: 34px"></div>
+</div>
+
+<div class="tops">
+    <div class="tops_1">
+        <div style="float:left;margin-left: 166px;">
+            <span style="float: left;line-height:32px;font-size: 14px;color: #333;">单位：</span>
+            <input id="ywgzCxDwbm" style="width: 254px;height: 32px;line-height:32px;"/>
+        </div>
+        <div style="float:left;margin-left: 10px;">
+            <span style=" color: #333; font-size: 14px;">起始时间：</span>
+            <input id="ywgzqxStartDate" data-options='editable:false' style="width: 100px; height: 30px; margin-left: 5px;"> -
+            <input id="ywgzqxEndDate" data-options='editable:false' style="width: 100px; height: 30px; margin-left: 5px;">
+        </div>
+
+        <div style="float:left; margin-left: 10px">
+            <span>是否公示：</span>
+            <input id="ywgzkhGbZt" type="text" style="width: 110px;height: 33px;margin-right: 10px;"/>
+        </div>
+
+        <!-- <input type="checkbox">
+        <span>对比模式:</span> -->
+
+        <button onclick="ywgzTjCx()" style="margin-left: 10px;outline:none;width: 75px;height: 34px; border: 1px solid #0575d2;border-radius: 5px;background: #2A9BD7;color: #fff;font-size: 16px;cursor: pointer">查询</button>
+    </div>
+    <div class="tops_2">
+        <!-- <button id="ywgzkh_count_fzinfo">计算分值</button> -->
+        <div>
+            <button class="tops_2_1" id="ywgzkh_a_del" style="display:none;">删除业务考核</button>
+        </div>
+        <button class="tops_2_1" id="ywgzkhCjndkhBt" style="display:none;" onclick="bounced_a()">创建年度考核</button>
+        <button class="tops_2_3" id="ywgzkhzdkhr"  style="display:none; margin-top:10px;">指定考核人</button>
+        <button class="tops_2_3" id="ywgzkhhzdykhBt" style="display:none;">汇总对院考核</button>
+        <button class="tops_2_2" id="ywgzkhCkby" style="display:none;" onclick="getNowYwkhByDwbmAndYear();">查看本院考核信息</button>
+        <button class="tops_2_2" id="ywgzkhGb" style="width:65px;display:none;">公示</button>
+    </div>
+
+</div>
+<div id="cxcontent" class="content" style="margin-left: 90px">
+    <div style="color: #333; font-size: 14px;margin-left: 90px;">当前同步数据的最后日期是：2018年6月13日 19:00:00</div>
+</div>
+<!--汇总对院考核弹框 -->
+<div class="ywgzkhhzbounced"style="display: none;">
+    <div class="bounced_all" style="width:680px; height:500px;">
+        <div class="bounced_tot">
+            <span>汇总对院考核</span>
+            <div class="tot_img"  id="qx" ></div>
+        </div>
+        <div class="xiadivbt1" style="margin-top: 40px;">
+            <span style=" color: #333; font-size: 14px;margin-left: 90px;">选择起始年月:</span>
+            <input id="startDates" data-options='editable:false' style="width: 100px; height: 30px; margin-left: 5px;"> -
+            <input id="endDates" data-options='editable:false' style="width: 100px; height: 30px; margin-left: 5px;">
+            <span style="color:red">*</span>
+        </div>
+        <div class="xiadivbt1" style="margin-top: 40px;">
+            <span style=" height:28px; color: #333; font-size: 14px;margin-left: 90px;">选择汇总单位:</span>
+            <input type="text" id="ywkhhzDwbm" name="ywkhhzDwbm"/>
+        </div>
+        <div class="xiadivbt1" style="margin-top: 40px;">
+            <span style=" height:28px; color: #333; font-size: 14px;margin-left: 90px;">选择考核类型:</span>
+            <input type="text" id="ywkhhzkhlx" name="ywkhhzkhlx"/>
+        </div>
+        <div class="xiadivbt1" style="margin-top: 40px;">
+            <!-- <span style=" height:28px; color: #333; font-size: 14px;margin-left: 90px;">默认导出盘符：D盘</span> -->
+        </div>
+        <div class="xiadivbt">
+            <input class="xiadivbt_1" type="button" id="hzkhqx" value="取消"/>
+            <input class="xiadivbt_2" type="button" id="hzkhqr" value="确定"/>
+        </div>
+    </div>
+</div>
+<!-- 汇总对院考核弹框结束 -->
+<!--  指定考核人开始-->
+<div class="ywgzkhzdkhrbounced" style="display: none;">
+    <div class="bounced_all" style="width:680px; height:350px;">
+        <div class="bounced_tot">
+            <span>指定考核人</span>
+            <div class="tot_img"  id="zdkhrqx" ></div>
+        </div>
+        <div class="xiadivbt1" style="margin-top: 40px;">
+            <span style=" height:28px; color: #333; font-size: 14px;margin-left: 90px;margin-right: 17px;">指定考核单位:</span>
+            <input type="text" id="ywkhzdkhdw" name="ywkhzdkhdw"  style="width:336px;height:30px;"  />
+            <input type="hidden" id="ywlxkhid" />
+        </div>
+        <div class="xiadivbt1" style="margin-top: 20px;">
+            <span style=" height:28px; color: #333; font-size: 14px;margin-left: 90px;margin-right: 17px;">指定考核类型:</span>
+            <input type="text" id="ywkhzdkhlx" name="ywkhzdkhlx"   style="width:336px;height:30px;" />
+        </div>
+        <div class="xiadivbt1">
+            <span style=" height:28px; color: #333; font-size: 14px;margin-left: 90px;">指定考核人员:</span>
+            <div style=" float:right;margin-right:145px;">
+                <input type="text" id="xzYwkhSpr" name="xzYwkhSpr" style="width:336px;height:30px;border:1px solid #c1c1c1; border-radius: 4px;line-height:30px;outline: none;"/>
+                <!-- <a id="menuYwgzkhBtn" href="#" onclick="showYwgzkhMenu();" class="a_style"
+                   style="background: url('../../js/plugin/easyui/themes/bootstrap/images/combo_arrow.png') no-repeat center center; background-color: #F2F2F2"></a>
+                <div id="menuYwgzkhContent" class="menuContent" style="display: none; position: absolute;">
+                    <ul id="treeYwgzkhDemo" class="ztree" style="width: 338px; background-color: #fff;margin-top: 2px; "></ul>
+                </div> -->
+            </div>
+        </div>
+        <div class="xiadivbt">
+            <input class="xiadivbt_1" type="button"  id="khrqx"   value="取消"/>
+            <input class="xiadivbt_2" type="button"  id="khrqr"    value="确定"/>
+        </div>
+    </div>
+</div>
+<!--指定考核人结束  -->
+<!--    弹框 -->
+<div class="ywgzkh_bounced" style="display: none;">
+    <div class="bounced_all" style="width:680px; height:400px;">
+        <div class="bounced_tot">
+            <span id="bounced_tot_span">创建年度考核</span>
+            <div class="tot_img" onclick="bounced_b()"></div>
+        </div>
+        <!--<div class="xiadivbt1" style="margin-top: 40px;">
+            <span style=" color: #333; font-size: 14px;margin-left: 90px;">年度:</span>
+            <select id="ywgzkhYear" class="easyui-combobox" style="height: 30px;width: 300px; font-size: 14px;color: #666;">
+            </select>
+        </div>-->
+        <div class="xiadivbt1" style="margin-top: 40px;">
+            <span style=" color: #333; font-size: 14px;margin-left: 90px;">选择起始年月:</span>
+            <!-- data-options='editable:false' -->
+            <input id="startDate" style="width: 100px; height: 30px; margin-left: 5px;"> -
+            <input id="endDate" style="width: 100px; height: 30px; margin-left: 5px;">
+            <span style="color:red">*</span>
+        </div>
+        <div class="xiadivbt1" style="margin-top: 40px;">
+            <span style=" height:28px; color: #333; font-size: 14px;margin-left: 90px;">参与业务考核的单位:</span>
+            <input type="text" id="ywkhDwbm" name="ywkhDwbm"/>
+        </div>
+        <div class="xiadivbt1" style="margin-top: 40px;">
+            <span style=" height:28px; color: #333; font-size: 14px;margin-left: 90px;">业务考核-考核指标项:</span>
+            <input type="text" id="ywkhZbx" name="ywkhZbx"/>
+        </div>
+        <div class="xiadivbt">
+            <input class="xiadivbt_1" type="button" onclick="bounced_b();" value="取消"/>
+            <input id="cjywkh_sure_btn" class="xiadivbt_2" type="button" onclick="addNdYwgzkh();" value="确定"/>
+            <input id="delywkh_sure_btn" class="xiadivbt_2" type="button" style="display:none;" value="确定"/>
+        </div>
+    </div>
+</div>
+
+</body>
+<!-- 控制按钮的js -->
+<script type="text/javascript" src="../../js/zhyw/ywgzkh/ywgzkh_index_an.js"></script>
+<!-- 控制首页饼状图显示的js -->
+<script type="text/javascript" src="../../js/zhyw/ywgzkh/ywgzkh_index.js"></script>
+<!--指定考核人 -->
+<script type="text/javascript" src="../../js/zhyw/ywgzkh/ywgzkh_czdkhr.js"></script>
+<script type="text/javascript">
+    resizeParentIframe();
+
+    $("#ywgzkh_count_fzinfo").click(function(){
+        var fzId = "C391CC4902C34537B616BA351F9D8E0A";
+        var ywlx = "02";
+        $.ajax({
+            type: "post",
+            url: rootPath + "/service/ywlxkh/countPjdf",
+            async: false,
+            data: {
+                khfzid : fzId,
+                khlx : ywlx
+            },
+            dataType: 'json',
+            success: function (result) {
+
+            }
+        });
+    });
+
+</script>
+</html>
