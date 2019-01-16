@@ -866,12 +866,16 @@ function getBmbmSelectTree(id,dwbm,treeId,treeText,param_width,param_height,para
  * @param treeText 树的文本
  * @returns 部门角色人员树
  */
-function getAllRyOfDwBmTree(id,dwbm,gh,treeId,treeText,paramType){
+function getAllRyOfDwBmTree(id,dwbm,gh,treeId,treeText,paramType, paramMultiple){
     var url = rootPath + "/service/tree/getAllRyOfDwBmTree";
     var last_id = "";
     var type = "1";
     if(checkStrReturnEmpty(paramType)&&type!==checkStrReturnEmpty(paramType)){
         type = checkStrReturnEmpty(paramType);
+    }
+    var multipleFlag = false;
+    if (checkStrReturnEmpty(paramMultiple)&&paramMultiple) {
+        multipleFlag = paramMultiple;
     }
     //获取部门的信息,并设置默认值，默认选中第一个  eg:id=grjxRyType
     $("#"+id).combotree({
@@ -889,7 +893,7 @@ function getAllRyOfDwBmTree(id,dwbm,gh,treeId,treeText,paramType){
         // cascadeCheck:true,  //cascadeCheck：为true时，当选择父级的复选框时，孩子节点会自动被选择。否则不选择；
         editable : false,
         onlyLeafCheck:true,  //只在子节点上显示checkbox
-        // multiple :true,  //可以复选
+        multiple :multipleFlag,  //可以复选
         lines : true,  //出现虚线连接树
         animate : true,
         required : true,

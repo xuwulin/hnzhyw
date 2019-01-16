@@ -934,7 +934,7 @@ if(top.currentUserInfo){
     dlr_gh = top.currentUserInfo.gh;
 }
 
-getAllRyOfDwBmTree(input_id,dlr_dwbm,dlr_gh,null,null,"2");//getAllRyOfDwBmTree(input_id,dwbm,gh,null,null);
+getAllRyOfDwBmTree(input_id,dlr_dwbm,dlr_gh,null,null,"2",true);//getAllRyOfDwBmTree(input_id,dwbm,gh,null,null);
 
 // 设置可复选
 // $('#selectPerson').combotree({
