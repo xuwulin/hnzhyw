@@ -237,12 +237,21 @@ $(function (){
      * 合并单元格：在数据加载成功后执行
      */
     var mergeCells = function () {
+
         var rowDatas = $('#rebuild_table').datagrid('getRows');//getRows:返回当前页的所有行。
         var rowspan = 1;//统计跨行数
+        var slajzlTemp = 0; //受理案件总数临时变量
+        var bjajzlTemp = 0; //办结案件总数临时变量
+
         for (var i = 0; i < rowDatas.length; i = i + rowspan) {
-            rowspan = 1
+
+            rowspan = 1;
             var startRowNum = i;//起始行号
             var startRow = rowDatas[i];//起始行数据
+
+            slajzlTemp+=rowDatas[i].SLAJSL;
+            bjajzlTemp+=rowDatas[i].BJAJSL;
+
             for (var j = startRowNum + 1; j < rowDatas.length; j++) {
                 var currentRow = rowDatas[j];//当前行数据
                 if (startRow.AJLB_BM == currentRow.AJLB_BM) {
@@ -254,6 +263,11 @@ $(function (){
             }
             toMergeCells(startRowNum, rowspan, $('#rebuild_table'));
         }
+
+        //赋值给前台
+        $(".bayj_ajtj_div table tbody tr:eq(1) td:eq(1)").text(slajzlTemp);
+        $(".bayj_ajtj_div table tbody tr:eq(2) td:eq(1)").text(bjajzlTemp);
+
         //重新计算本页面的高度
         resizeParentIframe();
     }

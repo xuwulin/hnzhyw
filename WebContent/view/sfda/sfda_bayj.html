@@ -189,6 +189,8 @@
         #fjxzwj span.textbox-invalid{
             border-color: #4B97D8;
         }
+        .bayj_ajtj_div table tr th, table tr td { border:1px solid #d4d4d4; padding:6px 6px;}
+        .bayj_ajtj_div table {min-height: 25px; line-height: 25px; text-align: center; border-collapse: collapse; }
     </style>
     <link href="../../css/bounced.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../../css/easyui.css"/>
@@ -303,12 +305,29 @@
                             <div class="table_ssan_gdtys1">
                                 <div id="bayi_count_query" style="min-height: 40px;height:auto;padding:10px;">
                                     <input type="text" id="departList" class="combo" style="width: 100px;margin-left:10px;">
-                                    <label style="font-size: 14px;color: #0674D3;display: inline-block;">选择时间：</label>
+                                    <label style="font-size: 14px;color: #0674D3;display: inline-block;">完成/办结日期：</label>
                                     <!--<input type="text" id="wcOrBjsj" name="wcOrBjsj" class="combo" style="height: 30px;width: 120px;margin-left:10px;">-->
                                     <input type="text" id="ajkssj" name="ajkssj" class="textbo" style="height: 30px;"> -
                                     <input type="text" id="ajjssj" name="ajjkssj" class="textbo" style="height: 30px;">
-                                    <button id="searchAjOfTjlb" class="archives_search" style="height:30px;margin-right:62%;float: right">查询</button>
-                                </div>
+                                    <button id="searchAjOfTjlb" class="archives_search" style="height:30px;margin-right:68%;float: right">查询</button>
+                                    <br/><br/>
+                                    <div class="bayj_ajtj_div" style="font-weight: bold;font-size: 16px;" >
+                                        <table>
+                                            <tr>
+                                                <td rowspan="3">案件信息统计</td>
+                                            </tr>
+                                            <tr>
+                                                <td>受理案件总数（件）</td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td>完成/办结案件总数（件）</td>
+                                                <td>0</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                </div><br/>
                                 <!-- 非案管案件办理：统计列表的表格datagrid展示 -->
                                 <span id="ajblSpan">
 									<table id="rebuild_table"></table>
@@ -329,7 +348,7 @@
 
                             <div id="exportToExcel-toolbar" style="min-height: 30px;height:auto;padding:10px;">
                                 <button id="exportToExcel" class="archives_search" onclick="exportCaseDetailsToExcel();"
-                                        style="height:30px;margin-left:5px; float: left">导出为excel</button>
+                                        style="height:30px;margin-left:5px; float: left">导出为Excel</button>
                             </div>
                             <div class="table_ssan_gdtys2">
 
