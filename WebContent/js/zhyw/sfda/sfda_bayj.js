@@ -333,6 +333,7 @@ $(function (){
     function showxqlbDatagrid(ajlbbm, gh, dwbm, bmbm, page, rows, kssj, jssj, type){
         $("#xqlb_table").datagrid({
             url : rootPath + "/service/ajxxcx/selectAjblEJ",
+            // height: 500,
             singleSelect: true,//只允许选择一行
             striped: true,//是否显示斑马线效果。
             loadMsg: '正在处理，请稍后。。。',
@@ -345,7 +346,7 @@ $(function (){
             fitColumns : true,//真正的自动展开/收缩列的大小，以适应网格的宽度，防止水平滚动。列比较少的时候最好为true
             border : true,//定义是否显示面板边框。
             nowrap: true,
-            remoteSort: false,
+            remoteSort: true,// 使用服务器端排序
             queryParams: {//在请求远程数据的时候发送额外的参数。
                 gh: gh,
                 dwbm: dwbm,
@@ -369,7 +370,7 @@ $(function (){
                     formatter: function (value, row, index) {
                         return "<span title='"+ value +"'>" + value + "</span>";
                     },
-                    sorter: function(a,b) {
+                    /*sorter: function(a,b) {
                         var arr = [];
                         arr.push(a);
                         arr.push(b);
@@ -378,13 +379,13 @@ $(function (){
                             res = a1.localeCompare(a2, 'zh-CN'); // 中文排序
                         });
                         return res;
-                    }
+                    }*/
                 },
                 {field : 'SLRQ',title : '<b>受理时间</b>',width : 90,align : 'center',sortable: true,
                     formatter: function (value, row, index) {
                         return "<span title='"+ value +"'>" + value + "</span>";
                     },
-                    sorter: function(a,b) {
+                    /*sorter: function(a,b) {
                         a = a.split('-');
                         b = b.split('-');
                         if (a[0] == b[0]){
@@ -397,7 +398,7 @@ $(function (){
                             return (a[0] > b[0] ? 1 : -1);
                         }
 
-                    }
+                    }*/
                 },
                 {field : 'WJRQ',title : '<b>完成/办结时间</b>',width : 90,align : 'center',sortable: true,
                     formatter: function (value, row, index) {
@@ -408,7 +409,7 @@ $(function (){
                             return "<span style='color: red'>" + res + "</span>";
                         }
                     },
-                    sorter: function(a,b) {
+                    /*sorter: function(a,b) {
                         a = a.split('-');
                         b = b.split('-');
                         if (a[0] == b[0]){
@@ -420,10 +421,9 @@ $(function (){
                         } else {
                             return (a[0] > b[0] ? 1 : -1);
                         }
-
-                    }
+                    }*/
                 },
-                {field : 'BLSX',title : '<b>办理时限/天</b>',width : 60,align : 'center',sortable: true,
+                {field : 'BLSX',title : '<b>办理时限/天</b>',width : 60,align : 'center',
                     formatter: function (value, row, index) {
                         if (value != null && typeof (value) != 'undefined') {
                             return "<span title='"+ value +"'>" + value + "</span>";
@@ -432,10 +432,6 @@ $(function (){
                             return "<span style='color: red'>" + res + "</span>";
                         }
                     },
-                    sorter: function(a,b) {
-                        return (a > b ? 1 : -1);
-
-                    }
                 },
                 {field : 'WSSL',title : '<b>附件数量</b>',width : 50,align : 'center',
                     formatter : function(value, row, index) {

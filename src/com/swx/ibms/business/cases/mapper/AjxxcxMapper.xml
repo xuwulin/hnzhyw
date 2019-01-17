@@ -2003,101 +2003,93 @@
 	
 	<!-- 查询案件部门受案号,受理日期，完成/办结日期在此时间段内的案件 -->
 	<select id="selectbyAllBmsah" resultType="java.util.HashMap">
-		<!--select bmsah
-		from TYYW_GG_AJJBXX_TYYW ajjbxx
-		where ajjbxx.SFSC = 'N'
-			and ajjbxx.cbdw_bm = #{dwbm}
-			and ajjbxx.cbrgh = #{gh}
-			&lt;!&ndash; and ajjbxx.slrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd') &ndash;&gt;
-			<choose>
-				<when test="xzsj == 'wcrq'">
-					and ajjbxx.wcrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
-				</when>
-				<otherwise>
-					and ajjbxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
-				</otherwise>
-			</choose>
-		    <if test="ajlbbm != '' and ajlbbm != null">
+		select bmsah
+		from (
+			select ajjbxx.bmsah,
+				   ajjbxx.ajlb_mc ajlbmc,
+		           ajjbxx.slrq,
+				   (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+					     when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+					     else ajjbxx.wcrq
+				   end) wjrq
+			from TYYW_GG_AJJBXX_TYYW ajjbxx
+			where ajjbxx.SFSC = 'N'
+			  and ajjbxx.cbdw_bm = #{dwbm}
+			  and ajjbxx.cbrgh = #{gh}
+			  and (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+			            when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+			            else ajjbxx.wcrq
+			       end) between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+			<if test="ajlbbm != '' and ajlbbm != null">
 				and ajjbxx.ajlb_bm = #{ajlbbm}
 			</if>
 
+			union all
 
-		union all
-
-		select bmsah
-		from yx_sfda_ajxx ajxx
-		where ajxx.SFSC = 'N'
+			select ajxx.bmsah,
+				   ajxx.ajlb ajlbmc,
+				   ajxx.ajslrq slrq,
+				   ajxx.bjrq wjrq
+			from yx_sfda_ajxx ajxx
+			where ajxx.SFSC = 'N'
 			and ajxx.cbdw_bm = #{dwbm}
 			and ajxx.cbrgh = #{gh}
 			and ajxx.ajstatus = '1'
-			&lt;!&ndash; and ajxx.ajslrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd') &ndash;&gt;
-			<choose>
-				<when test="xzsj == 'wcrq'">
-					and ajxx.ajwjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
-				</when>
-				<otherwise>
-					and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
-				</otherwise>
-			</choose>
+			and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
 			<if test="ajlbbm != '' and ajlbbm != null">
 				and ajxx.ajlb_bm = #{ajlbbm}
-			</if>-->
-
-
-
-
-		select bmsah
-		from TYYW_GG_AJJBXX_TYYW ajjbxx
-		where ajjbxx.SFSC = 'N'
-		  and ajjbxx.cbdw_bm = #{dwbm}
-		  and ajjbxx.cbrgh = #{gh}
-		  and (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
-		            when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
-		            else ajjbxx.wcrq
-		       end) between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
-		  <if test="ajlbbm != '' and ajlbbm != null">
-		      and ajjbxx.ajlb_bm = #{ajlbbm}
-		  </if>
-
-		union all
-
-		select bmsah
-		from yx_sfda_ajxx ajxx
-		where ajxx.SFSC = 'N'
-		  and ajxx.cbdw_bm = #{dwbm}
-		  and ajxx.cbrgh = #{gh}
-		  and ajxx.ajstatus = '1'
-		  and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
-		  <if test="ajlbbm != '' and ajlbbm != null">
-			  and ajxx.ajlb_bm = #{ajlbbm}
-		  </if>
+			</if>
+		)
+		<if test="sort != '' and sort != null">
+			order by ${sort}
+			<if test="order != '' and order != null">
+				${order}
+			</if>
+		</if>
 	</select>
 
 	<!--获取受理案件的部门受案号-->
 	<select id="selectbyAllBmsahOfSl" resultType="java.util.HashMap">
 		select bmsah
-		from TYYW_GG_AJJBXX_TYYW ajjbxx
-		where ajjbxx.SFSC = 'N'
-		  and ajjbxx.cbdw_bm = #{dwbm}
-		  and ajjbxx.cbrgh = #{gh}
-		  and ajjbxx.slrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
-		<if test="ajlbbm != '' and ajlbbm != null">
-			and ajjbxx.ajlb_bm = #{ajlbbm}
+		from (
+			select ajjbxx.bmsah,
+		    ajjbxx.ajlb_mc ajlbmc,
+			ajjbxx.slrq,
+			(case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+				  when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+				  else ajjbxx.wcrq
+			 end) wjrq
+			from TYYW_GG_AJJBXX_TYYW ajjbxx
+			where ajjbxx.SFSC = 'N'
+			  and ajjbxx.cbdw_bm = #{dwbm}
+			  and ajjbxx.cbrgh = #{gh}
+			  and ajjbxx.slrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+			<if test="ajlbbm != '' and ajlbbm != null">
+				and ajjbxx.ajlb_bm = #{ajlbbm}
+			</if>
+
+			union all
+
+			select ajxx.bmsah,
+				   ajxx.ajlb ajlbmc,
+				   ajxx.ajslrq slrq,
+				   ajxx.bjrq wjrq
+			from yx_sfda_ajxx ajxx
+			where ajxx.SFSC = 'N'
+			  and ajxx.cbdw_bm = #{dwbm}
+			  and ajxx.cbrgh = #{gh}
+			  and ajxx.ajstatus = '1'
+			  and ajxx.ajslrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
+			<if test="ajlbbm != '' and ajlbbm != null">
+				and ajxx.ajlb_bm = #{ajlbbm}
+			</if>
+		)
+		<if test="sort != '' and sort != null">
+			order by ${sort}
+			<if test="order != '' and order != null">
+				${order}
+			</if>
 		</if>
-
-		union all
-
-		select bmsah
-		from yx_sfda_ajxx ajxx
-		where ajxx.SFSC = 'N'
-		  and ajxx.cbdw_bm = #{dwbm}
-		  and ajxx.cbrgh = #{gh}
-		  and ajxx.ajstatus = '1'
-		  and ajxx.ajslrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
-		<if test="ajlbbm != '' and ajlbbm != null">
-			and ajxx.ajlb_bm = #{ajlbbm}
-		</if>
-
 	</select>
 
 
@@ -2312,66 +2304,74 @@
 	
 	<!-- 查询案件名称，案件类别名称，办理时限，平均办理时间 -->
     <select id="selectbyAjblEjsj" resultType="java.util.HashMap">
-        select round(wjrq - slrq,2) as blsx,
-			   to_char(wjrq,'yyyy-MM-dd') wjrq,
-			   ajlb_bm ajlbbm,
-			   ajlb_mc ajlbmc,
-        	   ajmc,
-		       cbrgh,
-		       bmsah,
-			   tysah,
-		       to_char(slrq,'yyyy-MM-dd') slrq
-        from (
-			  select (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
-						   when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
-		                   else ajjbxx.wcrq
-		              end) wjrq,
-				     ajlb_bm,
-                     ajlb_mc,
-					 ajmc,
-					 cbrgh,
-					 bmsah,
-					 tysah,
-					 slrq
-			  from TYYW_GG_AJJBXX_TYYW ajjbxx
-			  where ajjbxx.sfsc='N'
-			  <if test='sahlist != null and sahlist.size() > 0'>
-				 and ajjbxx.BMSAH in
-				 <foreach item='item' index='index' collection='sahlist' open='('
+        select * from (
+			select round(wjrq - slrq,2) as blsx,
+					to_char(wjrq,'yyyy-MM-dd') wjrq,
+					ajlb_bm ajlbbm,
+					ajlb_mc ajlbmc,
+					ajmc,
+					cbrgh,
+					bmsah,
+					tysah,
+					to_char(slrq,'yyyy-MM-dd') slrq
+			from (
+			select (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
+						 when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
+						 else ajjbxx.wcrq
+					end) wjrq,
+					ajlb_bm,
+					ajlb_mc,
+					ajmc,
+					cbrgh,
+					bmsah,
+					tysah,
+					slrq
+			from TYYW_GG_AJJBXX_TYYW ajjbxx
+			where ajjbxx.sfsc='N'
+			<if test='sahlist != null and sahlist.size() > 0'>
+				and ajjbxx.BMSAH in
+				<foreach item='item' index='index' collection='sahlist' open='('
 						 separator=',' close=')'>
 					#{item}
-				 </foreach>
-			  </if>
+				</foreach>
+			</if>
 
-			 union all
+			union all
 
-			 select bjrq as wjrq,
-				    ajlb_bm,
+			select bjrq as wjrq,
+					ajlb_bm,
 					ajlb ajlb_mc,
 					ajname ajmc,
 					cbrgh,
 					bmsah,
-		            nvl(tysah,'null') tysah, <!--ys_sfda_ajxx表中tysah没有给值，所以取出来的时候给他一个标识为"null"-->
+					nvl(tysah,'null') tysah, <!--ys_sfda_ajxx表中tysah没有给值，所以取出来的时候给他一个标识为"null"-->
 					ajslrq slrq
-			 from yx_sfda_ajxx ajxx
-			 where ajxx.SFSC = 'N'
-			   and ajxx.ajstatus = '1'
-				<if test='sahlist != null and sahlist.size() > 0'>
-					and ajxx.BMSAH in
-					<foreach item='item' index='index' collection='sahlist' open='('
-							 separator=',' close=')'>
-						#{item}
-					</foreach>
-				</if>
-        ) t
-        group by wjrq,
-        		 ajlb_bm,
-                 ajlb_mc,
-				 ajmc,
-                 cbrgh,
-                 bmsah,
-		         tysah,
-                 slrq
+			from yx_sfda_ajxx ajxx
+			where ajxx.SFSC = 'N'
+			and ajxx.ajstatus = '1'
+			<if test='sahlist != null and sahlist.size() > 0'>
+				and ajxx.BMSAH in
+				<foreach item='item' index='index' collection='sahlist' open='('
+						 separator=',' close=')'>
+					#{item}
+				</foreach>
+			</if>
+			) t
+			group by wjrq,
+					ajlb_bm,
+					ajlb_mc,
+					ajmc,
+					cbrgh,
+					bmsah,
+					tysah,
+					slrq
+		)
+		<if test="sort != '' and sort != null">
+			order by ${sort}
+			<if test="order != '' and order != null">
+				${order}
+			</if>
+		</if>
     </select>
 	
 	

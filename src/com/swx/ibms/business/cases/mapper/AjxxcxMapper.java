@@ -184,7 +184,9 @@ public interface AjxxcxMapper {
 											   @Param("gh") String gh,
 											   @Param("ajlbbm") String ajlbbm,
 											   @Param("kssj") String kssj,
-											   @Param("jssj") String jssj);
+											   @Param("jssj") String jssj,
+											   @Param("sort") String sort,
+											   @Param("order") String order);
 
 	/**
 	 * 受理案件部门受案号
@@ -199,7 +201,9 @@ public interface AjxxcxMapper {
 												   @Param("gh") String gh,
 												   @Param("ajlbbm") String ajlbbm,
 												   @Param("kssj") String kssj,
-												   @Param("jssj") String jssj);
+												   @Param("jssj") String jssj,
+												   @Param("sort") String sort,
+												   @Param("order") String order);
 
 	List<Map<String, String>> selectbyAjblEjSYsah(@Param("dwbm") String dwbm,
 												  @Param("gh") String gh,
@@ -216,7 +220,9 @@ public interface AjxxcxMapper {
 
 	List<Map<String, Object>> selectbyAjblEjsj(@Param("gh") String gh,
 											   @Param("dwbm") String dwbm,
-										   	   @Param("sahlist") List<String> sahlist);
+										   	   @Param("sahlist") List<String> sahlist,
+											   @Param("sort") String sort,
+											   @Param("order") String order);
 
 	List<Map<String, Object>> selectbyAjblEjsl(@Param("sahlist") List<String> sahlist);
 

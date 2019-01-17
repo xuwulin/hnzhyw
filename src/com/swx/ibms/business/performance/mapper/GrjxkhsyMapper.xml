@@ -230,6 +230,9 @@
 		<if test="jssj != '' and jssj != null">
 			and K.jsrq &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
 		</if>
+		<if test="bmlbbm != '' and bmlbbm != null">
+			and f.ywlx = #{bmlbbm}
+		</if>
 		<if test="bmbm != null and bmbm.size() > 0">
 			and f.bmbm in
 			<foreach item='item' index='index' collection='bmbm' open='(' separator=',' close=')'>

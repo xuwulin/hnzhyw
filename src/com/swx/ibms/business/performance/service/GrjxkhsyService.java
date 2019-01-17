@@ -76,7 +76,7 @@ public interface GrjxkhsyService {
 	Map<String, Object> queryGrjxByCondition(String loger_dwbm, String loger_gh,
 											 String loger_bmbm, List<String> loger_bmyslist,
 											 List<String> loger_bmjs, String query_dwbm,
-											 String query_bmbm, String query_sfgs,
+											 String query_bmbm, String query_bmlbbm, String query_sfgs,
 											 String query_year, String query_kssj,
 											 String query_jssj, String query_name, Integer page);
 
@@ -93,6 +93,6 @@ public interface GrjxkhsyService {
 	 */
 	Map<String, Object> getGrjxOfIndex(String dwbm, String gh, List<String> bmysList, List<String> bmjsList);
 
-	Map<String, Object> exportAll(String dwbm, String dwmc, String bmbm, String bmmc, String sfgs, String year, String kssj, String jssj,
+	Map<String, Object> exportAll(String dwbm, String dwmc, String bmbm, String bmlbbm, String bmmc, String sfgs, String year, String kssj, String jssj,
 								  String name, String[] deptList, String[] queryDeptList ,String userPermissions, String nameOfExporter);
 }

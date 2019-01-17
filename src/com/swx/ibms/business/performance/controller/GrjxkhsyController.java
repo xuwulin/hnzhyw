@@ -274,6 +274,7 @@ public class GrjxkhsyController {
 	@ResponseBody
 	public String queryGrjxByCondition(@RequestParam(value="query_dwbm",required=false) String query_dwbm,
 									   @RequestParam(value="query_bmbm",required=false) String query_bmbm,
+									   @RequestParam(value="query_bmlbbm",required=false) String query_bmlbbm,
 									   @RequestParam(value="query_sfgs",required=false) String query_sfgs,
 									   @RequestParam(value="query_year",required=false) String query_year,
 									   @RequestParam(value="query_kssj",required=false) String query_kssj,
@@ -294,7 +295,7 @@ public class GrjxkhsyController {
 		Map<String, Object> res = new HashMap<>();
 		try {
 			res = grjxkhsyService.queryGrjxByCondition(loger_dwbm,loger_gh,loger_bmbm,loger_bmyslist,
-					loger_bmjs,query_dwbm,query_bmbm,query_sfgs,query_year,query_kssj,query_jssj,query_name,page);
+					loger_bmjs,query_dwbm,query_bmbm,query_bmlbbm,query_sfgs,query_year,query_kssj,query_jssj,query_name,page);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -353,6 +354,7 @@ public class GrjxkhsyController {
 	public String exportAll(@RequestParam(value="export_dwbm",required=false) String export_dwbm,
 							@RequestParam(value="export_dwmc",required=false) String export_dwmc,
 							@RequestParam(value="export_bmbm",required=false) String export_bmbm,
+							@RequestParam(value="export_bmlbbm",required=false) String export_bmlbbm,
 							@RequestParam(value="export_bmmc",required=false) String export_bmmc,
 							@RequestParam(value="export_sfgs",required=false) String export_sfgs,
 							@RequestParam(value="export_year",required=false) String export_year,
@@ -369,7 +371,7 @@ public class GrjxkhsyController {
 
 		Map<String, Object> map = new HashMap<>();
 		try {
-			map = grjxkhsyService.exportAll(export_dwbm, export_dwmc, export_bmmc, export_bmbm, export_sfgs, export_year, export_kssj, export_jssj, export_name, export_deptList, export_queryDeptList, userPermissions, mc);
+			map = grjxkhsyService.exportAll(export_dwbm, export_dwmc, export_bmmc, export_bmbm,export_bmlbbm, export_sfgs, export_year, export_kssj, export_jssj, export_name, export_deptList, export_queryDeptList, userPermissions, mc);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

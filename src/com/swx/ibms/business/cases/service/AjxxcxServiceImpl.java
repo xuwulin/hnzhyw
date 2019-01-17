@@ -543,7 +543,7 @@ public class AjxxcxServiceImpl implements AjxxcxService{
 
 	@Override
 	public Map<String, Object> selectAjblEj(String dwbm, String bmbm, String gh, String ajlbbm, Integer page,
-											Integer rows, String kssj,String jssj, String type) {
+											Integer rows, String kssj,String jssj, String type, String sort, String order) {
 
 		Map<String, Object> res = new HashMap<String, Object>();
 
@@ -555,12 +555,16 @@ public class AjxxcxServiceImpl implements AjxxcxService{
         // 查询在指定案件类别编码，指点时间段内(完成/办结)/(受理)的所有案件的部门受案号
         if (type.equals("2")) { // 办结/完成案件
         	try {
-				bmsahlist = ajxxcxMapper.selectbyAllBmsah(dwbm, gh, ajlbbm,kssj,jssj);
+				bmsahlist = ajxxcxMapper.selectbyAllBmsah(dwbm, gh, ajlbbm,kssj,jssj, sort, order);
 			} catch (Exception e) {
         		e.printStackTrace();
 			}
         } else if (type.equals("1")) { // 受理案件
-            bmsahlist = ajxxcxMapper.selectbyAllBmsahOfSl(dwbm, gh, ajlbbm,kssj,jssj);
+        	try {
+				bmsahlist = ajxxcxMapper.selectbyAllBmsahOfSl(dwbm, gh, ajlbbm,kssj,jssj, sort, order);
+			} catch (Exception e) {
+        		e.printStackTrace();
+			}
         }
 		for (Map<String,String> map : bmsahlist) {
 			map.remove("ROW_ID");
@@ -576,20 +580,20 @@ public class AjxxcxServiceImpl implements AjxxcxService{
         }
 
         //获取办案单元编码list集合（不区分主办从办）
-        List<String> badybmlistAll = ajxxcxMapper.selectAllBadybm(dwbm, gh);
+//        List<String> badybmlistAll = ajxxcxMapper.selectAllBadybm(dwbm, gh);
 
         // 获取案件类别编码集合（所有）
-        List<Map<String, String>> lblistAll = ajxxcxMapper.selectbyAjbllxAll(gh, dwbm);
+//        List<Map<String, String>> lblistAll = ajxxcxMapper.selectbyAjbllxAll(gh, dwbm);
 
         // 抽取List<Map>中values值转化为List<String>
-        List<String> ajlbBmsAll = ListCastUtils.castListMap(lblistAll);
+//        List<String> ajlbBmsAll = ListCastUtils.castListMap(lblistAll);
 
 		List<Map<String, Object>> blfsEjList = new ArrayList<>();
 
 		//查询二级表单案件名称，案件类别名称，办理时限，平均办理时间
 		List<Map<String, Object>> ajDetail = null;
 		try {
-			ajDetail = ajxxcxMapper.selectbyAjblEjsj(gh, dwbm, sahlist);
+			ajDetail = ajxxcxMapper.selectbyAjblEjsj(gh, dwbm, sahlist, sort, order);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

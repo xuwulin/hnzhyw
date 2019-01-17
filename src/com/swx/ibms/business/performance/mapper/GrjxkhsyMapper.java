@@ -73,6 +73,7 @@ public interface GrjxkhsyMapper {
 	 */
 	List<Map<String, Object>> getGrjxByCondition(@Param("dwbm") String dwbm,
                                                  @Param("bmbm") List<String> bmbm,
+                                                 @Param("bmlbbm") String bmlbbm,
                                                  @Param("gh") String gh,
                                                  @Param("sfgs") String sfgs,
                                                  @Param("year") String year,

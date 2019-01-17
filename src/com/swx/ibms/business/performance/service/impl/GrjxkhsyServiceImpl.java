@@ -658,7 +658,7 @@ public class GrjxkhsyServiceImpl implements GrjxkhsyService {
 	public Map<String, Object> queryGrjxByCondition(String loger_dwbm, String loger_gh,
 													String loger_bmbm, List<String> loger_bmyslist,
 													List<String> loger_bmjs, String query_dwbm,
-													String query_bmbm, String query_sfgs,
+													String query_bmbm, String query_bmlbbm,String query_sfgs,
 													String query_year, String query_kssj,
 													String query_jssj, String query_name, Integer page) {
 
@@ -736,7 +736,9 @@ public class GrjxkhsyServiceImpl implements GrjxkhsyService {
 								|| StringUtils.contains(jsmc, "局长")
 								|| StringUtils.contains(jsmc, "副局长")
 								|| StringUtils.contains(jsmc, "部长")
-								|| StringUtils.contains(jsmc, "副部长")) {
+								|| StringUtils.contains(jsmc, "副部长")
+								|| StringUtils.contains(jsmc, "主任")
+								|| StringUtils.contains(jsmc, "副主任")) {
 							ryjs.add("3"); // 负责人
 						}
 					}
@@ -839,7 +841,7 @@ public class GrjxkhsyServiceImpl implements GrjxkhsyService {
 					bmbmList.clear();
 					bmbmList.add(query_bmbm);
 				}
-				grjxList = grjxkhsyMapper.getGrjxByCondition(query_dwbm, bmbmList, "", query_sfgs, query_year,
+				grjxList = grjxkhsyMapper.getGrjxByCondition(query_dwbm, bmbmList, query_bmlbbm, "", query_sfgs, query_year,
 						query_kssj, query_jssj, query_name);
 
 			} else if ("2".equals(qx)) { // 分管院领导、部门负责人
@@ -859,7 +861,7 @@ public class GrjxkhsyServiceImpl implements GrjxkhsyService {
 					queryBmbmList.add("");
 				}
 
-				grjxList = grjxkhsyMapper.getGrjxByCondition(query_dwbm, queryBmbmList, "", query_sfgs, query_year,
+				grjxList = grjxkhsyMapper.getGrjxByCondition(query_dwbm, queryBmbmList, query_bmlbbm,"", query_sfgs, query_year,
 						query_kssj, query_jssj, query_name);
 			} else { // 普通人，普通人只能查看自己的个人绩效信息，默认显示所有
 				if (StringUtils.isBlank(query_bmbm)) {
@@ -875,7 +877,7 @@ public class GrjxkhsyServiceImpl implements GrjxkhsyService {
 						bmbmList.add("");
 					}
 				}
-				grjxList = grjxkhsyMapper.getGrjxByCondition(query_dwbm, bmbmList, loger_gh, query_sfgs, query_year,
+				grjxList = grjxkhsyMapper.getGrjxByCondition(query_dwbm, bmbmList, query_bmlbbm, loger_gh, query_sfgs, query_year,
 						query_kssj, query_jssj, query_name);
 			}
 
@@ -971,7 +973,9 @@ public class GrjxkhsyServiceImpl implements GrjxkhsyService {
 						} else if (StringUtils.contains(jsmc, "处长")
 								|| StringUtils.contains(jsmc, "副处长")
 								|| StringUtils.contains(jsmc, "局长")
-								|| StringUtils.contains(jsmc, "副局长")) {
+								|| StringUtils.contains(jsmc, "副局长")
+								|| StringUtils.contains(jsmc, "主任")
+								|| StringUtils.contains(jsmc, "副主任")) {
 							ryjs.add("3"); // 负责人
 						}
 					}
@@ -1071,7 +1075,7 @@ public class GrjxkhsyServiceImpl implements GrjxkhsyService {
 	}
 
 	@Override
-	public Map<String, Object> exportAll(String dwbm, String dwmc, String bmmc, String bmbm, String sfgs, String year, String kssj, String jssj,
+	public Map<String, Object> exportAll(String dwbm, String dwmc, String bmmc, String bmbm, String bmlbbm, String sfgs, String year, String kssj, String jssj,
 										 String name, String[] deptList, String[] queryDeptList, String userPermissions, String nameOfExporter) {
 
 		List<Map<String, Object>> grjxList = new ArrayList<>();
@@ -1110,12 +1114,12 @@ public class GrjxkhsyServiceImpl implements GrjxkhsyService {
 		// 得到数据
 		try {
 			if (StringUtils.equals(userPermissions, "1")) {
-				grjxList = grjxkhsyMapper.getGrjxByCondition(dwbm, bmbmList, "", sfgs, year, kssj, jssj, name);
+				grjxList = grjxkhsyMapper.getGrjxByCondition(dwbm, bmbmList, bmlbbm,"", sfgs, year, kssj, jssj, name);
 			} else if (StringUtils.equals(userPermissions, "2")) {
 				if (queryList.size() == 0) {
 					queryList.add("");
 				}
-				grjxList = grjxkhsyMapper.getGrjxByCondition(dwbm, queryList, "", sfgs, year, kssj, jssj, name);
+				grjxList = grjxkhsyMapper.getGrjxByCondition(dwbm, queryList, bmlbbm,"", sfgs, year, kssj, jssj, name);
 			}
 
 			// 个人绩效排名

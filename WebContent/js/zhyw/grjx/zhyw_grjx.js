@@ -15,6 +15,7 @@ var loger_dwbm = top.currentUserInfo.dwbm; // 登录人单位编码
 var loger_gh = top.currentUserInfo.gh; // 登录人工号
 var query_dwbm = ""; // 查询条件：单位编码
 var query_bmbm = ""; // 查询条件：部门编码
+var query_bmlbbm = ""; // 查询条件：部门类别编码
 var query_sfgs = ""; // 查询条件：是否公示
 var query_year = ""; // 查询条件：年份
 var query_kssj = ""; // 查询条件：开始时间
@@ -36,7 +37,7 @@ $(function() {
     initialUnitAndDept();
 
     // 页面加载时根据条件查询个人绩效，初始查询单位编码即为登录人的单位编码
-    queryGrjxByCondition(loger_dwbm, query_bmbm, $("#ifgs").combobox('getValue'),
+    queryGrjxByCondition(loger_dwbm, query_bmbm, query_bmlbbm, $("#ifgs").combobox('getValue'),
         query_year, query_kssj, query_jssj, query_name, query_page);
 
     var params = getRequest();
@@ -141,6 +142,17 @@ function initialUnitAndDept() {
     getDwbmComboTree("unit_tree",null,null); //引用于common.js
     // 部门树
     getBmbmSelectTree("department_tree",selected_dwbm,null,null,"196","32",null);
+    // 部门类别
+    $("#dept_tree").combobox({
+        url : rootPath + '/service/grjxBmlb/getBmlbList',
+        method : "post",
+        valueField : "bmlbbm",
+        textField : "bmlbmc",
+        // required : true,
+        // width : "260px",
+        // height : "30px",
+        editable : false,
+    });
 
     // 选择单位之后变换部门
     $("#unit_tree").combotree({
@@ -177,7 +189,7 @@ function initialUnitAndDept() {
  * @param query_jssj
  * @param query_name
  */
-function queryGrjxByCondition(query_dwbm, query_bmbm, query_sfgs, query_year, query_kssj, query_jssj, query_name, query_page) {
+function queryGrjxByCondition(query_dwbm, query_bmbm, query_bmlbbm, query_sfgs, query_year, query_kssj, query_jssj, query_name, query_page) {
     top.msgProgressTip("正在查询请稍后...");
     $.ajax({
         url: rootPath + "/service/grjxsy/queryGrjxByCondition",
@@ -186,6 +198,7 @@ function queryGrjxByCondition(query_dwbm, query_bmbm, query_sfgs, query_year, qu
         data: {
             query_dwbm: query_dwbm,
             query_bmbm: query_bmbm,
+            query_bmlbbm: query_bmlbbm,
             query_sfgs: query_sfgs,
             query_year: query_year,
             query_kssj: query_kssj,
@@ -240,10 +253,10 @@ function queryGrjxByCondition(query_dwbm, query_bmbm, query_sfgs, query_year, qu
                 getajax(currentPage);
             });
             // 下一页
-            $("#nextPage").bind("click", function() {
+            $("#nextPage").bind("click", function() {debugger
                 ++currentPage;
                 if (currentPage > Math.ceil(count / 10)) {
-                    currentPage = (count % 2 == 0 ? count / 10 : Math.ceil(count / 10));
+                    currentPage = (count % 10 == 0 ? count / 10 : Math.ceil(count / 10));
                 }
                 getajax(currentPage);
             });
@@ -301,13 +314,14 @@ function totalPageAndCurrPage(count, currentPage) {
 function cxbt() {
     query_dwbm = $("#unit_tree").combobox("getValue");
     query_bmbm = $("#department_tree").combobox("getValue");
+    query_bmlbbm = $("#dept_tree").combobox("getValue");
     query_sfgs = $("#ifgs").combotree("getValue");
     query_year = $("#grjxnfid").combobox("getValue");
     query_kssj = $("#startDate").datebox("getValue");
     query_jssj = $("#endDate").datebox("getValue");
     query_name = $("#ssrmc").val();
 
-    queryGrjxByCondition(query_dwbm, query_bmbm, query_sfgs, query_year, query_kssj, query_jssj, query_name, query_page);
+    queryGrjxByCondition(query_dwbm, query_bmbm, query_bmlbbm, query_sfgs, query_year, query_kssj, query_jssj, query_name, query_page);
 }
 
 // 加载个人绩效分页展示区方法
@@ -455,13 +469,14 @@ function jzjxxs(jxdfs) {
 function getajax(page) {
     query_dwbm = $("#unit_tree").combobox("getValue");;
     query_bmbm = $("#department_tree").combobox("getValue");
+    query_bmlbbm = $("#dept_tree").combobox("getValue");
     query_sfgs = $("#ifgs").combotree("getValue");
     query_year = $("#grjxnfid").combobox("getValue");
     query_kssj = $("#startDate").datebox("getValue");
     query_jssj = $("#endDate").datebox("getValue");
     query_name = $("#ssrmc").val();
 
-    queryGrjxByCondition(query_dwbm, query_bmbm, query_sfgs, query_year, query_kssj, query_jssj, query_name, page);
+    queryGrjxByCondition(query_dwbm, query_bmbm, query_bmlbbm, query_sfgs, query_year, query_kssj, query_jssj, query_name, page);
     resizeParentIframe();
 }
 
@@ -1772,6 +1787,7 @@ function exportAll() {
             var export_dwbm = $("#unit_tree").combobox("getValue");
             var export_dwmc = $("#unit_tree").combobox("getText");
             var export_bmbm = $("#department_tree").combobox("getValue");
+            var export_bmlbbm = $("#dept_tree").combobox("getValue");
             var export_bmmc = $("#department_tree").combobox("getText");
             var export_sfgs = $("#ifgs").combotree("getValue");
             var export_year = $("#grjxnfid").combobox("getValue");
@@ -1797,6 +1813,7 @@ function exportAll() {
                     export_dwbm: export_dwbm,
                     export_dwmc: export_dwmc,
                     export_bmbm: export_bmbm,
+                    export_bmlbbm: export_bmlbbm,
                     export_bmmc: export_bmmc,
                     export_sfgs: export_sfgs,
                     export_year: export_year,
