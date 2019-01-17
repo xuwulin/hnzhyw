@@ -51,14 +51,20 @@ var currentYear = new Date().format('yyyy');
 var currentDate = new Date().format('yyyy-MM-dd');
 var caseFlag = '2' // 案件标识，用于标识受理案件或者完结案件，默认2表示办结案件
 
+var slajObj = {}; //受理案件情况对象
+
+
 $(function (){
+
     //加载左侧树形列表
     initcontentstree($(".contents_tree"), $(".tree_ul"), $(".dagztitle"));
+
     //判断是否案管办
     var isAgb = isag();  //sfda_base.js【对页面按钮判断也在其中】
 
     //案管查看非案管人员的办案时,档案已公示时隐藏新增按钮和新增列表
     var isFileOfSelf = fileOfSelf();
+
     if(!isFileOfSelf || getRequest().sfgs == "1"){
 //    	$("#xz_title").css("display","none");
         $("#btn_sfda_bayj_sp").css("display","none");
@@ -115,6 +121,10 @@ $(function (){
         required: true,
         editable:false
     });
+
+    //档案所属人的受理案件情况
+    slajObj = getAjblSlzs();
+
 
     //如果某个人所在部门既有案管办又有非案管办的则根据所选部门展示列表
     // isag() ? $("#mulityDepartSpan").show() : $("#mulityDepartSpan").hide();
@@ -3882,16 +3892,38 @@ function getSelectIds(table_id){
     return selectIds;
 }
 
+
 function successFunction() {
     var rowTotals = $("#xqlb_table").datagrid("getData").total;
     var rowData = $("#rebuild_table").datagrid("getData");
     var slajzlTemp = 0; //受理案件总数临时变量
     var bjajzlTemp = 0; //办结案件总数临时变量
     bjajzlTemp = rowTotals;
+    slajzlTemp = parseInt(slajObj.SLAJSL);
 
     //赋值给前台
     $(".bayj_ajtj_div table tbody tr:eq(1) td:eq(1)").text(slajzlTemp);
     $(".bayj_ajtj_div table tbody tr:eq(2) td:eq(1)").text(bjajzlTemp);
+}
+
+function getAjblSlzs(){
+    var resObj = {};
+
+    var url = rootPath + "/service/ajxxcx/selectCountsOfSlaj";
+    var paramData = {
+        dwbm : dwbm,
+        gh : gh,
+        kssj : $('#ajkssj').combobox("getText"),
+        jssj : $('#ajjssj').combobox("getText")
+    };
+
+    $.ajaxSettings.async = false;
+    $.post(url,paramData,function(qeuryResObj, textStatus, jqXHR){
+        // console.log(data);
+        resObj = qeuryResObj;
+    },"json");
+    $.ajaxSettings.async = true;
+    return resObj;
 }
 
 function queryByCaseName() {

@@ -1008,6 +1008,12 @@ public class AjxxcxServiceImpl implements AjxxcxService{
 		return cbxz;
 	}
 
+	@Override
+	public List<Map<String, Object>> selectCountsOfSlaj(String dwbm, String gh, String kssj, String jssj) throws Exception {
+		List<Map<String, Object>> ajzlList = new ArrayList<>();
+		ajzlList = ajxxcxMapper.selectCountsOfSlaj(dwbm,gh,kssj,jssj);
+		return ajzlList;
+	}
 
 
 }

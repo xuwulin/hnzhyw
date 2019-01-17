@@ -210,4 +210,7 @@ public interface AjxxcxService {
 	 * 绑定承办小组到下拉框
 	 */
 	List<Map<String, Object>> getAllCbxz(String daId) throws Exception;
+
+
+	List<Map<String,Object>> selectCountsOfSlaj(String dwbm, String gh, String kssj, String jssj) throws Exception;
 }

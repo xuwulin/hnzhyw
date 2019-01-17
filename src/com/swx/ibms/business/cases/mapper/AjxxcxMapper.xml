@@ -254,7 +254,7 @@
 	<select id="selectCountsOfSlaj" resultType="java.util.HashMap">
 		select ajlb_bm,
 			   ajlb_mc,
-			   COUNT(ajlb_bm) AS slajsl
+			   NVL(COUNT(ajlb_bm),0) AS slajsl
 		from (
 			  select ajjbxx.ajlb_bm,
                      ajjbxx.ajlb_mc,

@@ -634,4 +634,20 @@ public class AjxxcxController {
 		return Constant.GSON.toJson(map);
 	}
 
+
+	@RequestMapping(value = "/selectCountsOfSlaj",method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> selectCountsOfSlaj(@RequestParam(value="dwbm",required=true)String dwbm,
+												  @RequestParam(value="gh",required=true)String gh,
+												  @RequestParam(value="kssj",required=true)String kssj,
+												  @RequestParam(value="jssj",required=true)String jssj,
+												HttpServletRequest req) throws Exception{
+		Map<String,Object> map = new HashMap<>();
+		List<Map<String, Object>> result = new ArrayList<>();
+		result = ajxxcxService.selectCountsOfSlaj(dwbm, gh, kssj, jssj);
+//		map.put("result", result);
+		map = result.get(0);
+		return map;
+	}
+
 }
