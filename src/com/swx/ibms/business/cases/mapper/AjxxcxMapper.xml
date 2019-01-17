@@ -2025,7 +2025,7 @@
 				and ajjbxx.ajlb_bm = #{ajlbbm}
 			</if>
 			<if test="ajmc != '' and ajmc != null">
-				and ajjbxx.ajmc like #{ajmc}
+				and ajjbxx.ajmc like '%${ajmc}%'
 			</if>
 
 			union all
@@ -2045,7 +2045,7 @@
 				and ajxx.ajlb_bm = #{ajlbbm}
 			</if>
 			<if test="ajmc != '' and ajmc != null">
-				and ajxx.ajname like #{ajmc}
+				and ajxx.ajname like '%${ajmc}%'
 			</if>
 		)
 		<if test="sort != '' and sort != null">
@@ -2077,7 +2077,7 @@
 				and ajjbxx.ajlb_bm = #{ajlbbm}
 			</if>
 			<if test="ajmc != '' and ajmc != null">
-				and ajjbxx.ajmc like #{ajmc}
+				and ajjbxx.ajmc like '%${ajmc}%'
 			</if>
 
 			union all
@@ -2097,7 +2097,7 @@
 				and ajxx.ajlb_bm = #{ajlbbm}
 			</if>
 			<if test="ajmc != '' and ajmc != null">
-				and ajxx.ajname like #{ajmc}
+				and ajxx.ajname like '%${ajmc}%'
 			</if>
 		)
 		<if test="sort != '' and sort != null">
