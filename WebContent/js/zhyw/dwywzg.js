@@ -135,7 +135,7 @@ function search(){
 
 //重新按条件加载列表
 function dyfyajax(mypage) {
-	var cxType = $("#dbselect").val();
+	var cxType = $("#dbselect").combobox('getValue');
 	top.msgProgressTip("正在查询……");
     $.ajax({
         url : rootPath + "/service/dbyw/getDbyw",  //fycx
