@@ -543,7 +543,7 @@ public class AjxxcxServiceImpl implements AjxxcxService{
 
 	@Override
 	public Map<String, Object> selectAjblEj(String dwbm, String bmbm, String gh, String ajlbbm, Integer page,
-											Integer rows, String kssj,String jssj, String type, String sort, String order) {
+											Integer rows, String kssj,String jssj, String type, String sort, String order, String ajmc) {
 
 		Map<String, Object> res = new HashMap<String, Object>();
 
@@ -555,13 +555,13 @@ public class AjxxcxServiceImpl implements AjxxcxService{
         // 查询在指定案件类别编码，指点时间段内(完成/办结)/(受理)的所有案件的部门受案号
         if (type.equals("2")) { // 办结/完成案件
         	try {
-				bmsahlist = ajxxcxMapper.selectbyAllBmsah(dwbm, gh, ajlbbm,kssj,jssj, sort, order);
+				bmsahlist = ajxxcxMapper.selectbyAllBmsah(dwbm, gh, ajlbbm,kssj,jssj, sort, order, ajmc);
 			} catch (Exception e) {
         		e.printStackTrace();
 			}
         } else if (type.equals("1")) { // 受理案件
         	try {
-				bmsahlist = ajxxcxMapper.selectbyAllBmsahOfSl(dwbm, gh, ajlbbm,kssj,jssj, sort, order);
+				bmsahlist = ajxxcxMapper.selectbyAllBmsahOfSl(dwbm, gh, ajlbbm,kssj,jssj, sort, order, ajmc);
 			} catch (Exception e) {
         		e.printStackTrace();
 			}

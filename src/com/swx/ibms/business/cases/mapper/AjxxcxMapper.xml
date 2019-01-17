@@ -2006,6 +2006,7 @@
 		select bmsah
 		from (
 			select ajjbxx.bmsah,
+		           ajjbxx.ajmc,
 				   ajjbxx.ajlb_mc ajlbmc,
 		           ajjbxx.slrq,
 				   (case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
@@ -2023,10 +2024,14 @@
 			<if test="ajlbbm != '' and ajlbbm != null">
 				and ajjbxx.ajlb_bm = #{ajlbbm}
 			</if>
+			<if test="ajmc != '' and ajmc != null">
+				and ajjbxx.ajmc like #{ajmc}
+			</if>
 
 			union all
 
 			select ajxx.bmsah,
+				   ajxx.ajname ajmc,
 				   ajxx.ajlb ajlbmc,
 				   ajxx.ajslrq slrq,
 				   ajxx.bjrq wjrq
@@ -2038,6 +2043,9 @@
 			and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
 			<if test="ajlbbm != '' and ajlbbm != null">
 				and ajxx.ajlb_bm = #{ajlbbm}
+			</if>
+			<if test="ajmc != '' and ajmc != null">
+				and ajxx.ajname like #{ajmc}
 			</if>
 		)
 		<if test="sort != '' and sort != null">
@@ -2053,8 +2061,9 @@
 		select bmsah
 		from (
 			select ajjbxx.bmsah,
-		    ajjbxx.ajlb_mc ajlbmc,
-			ajjbxx.slrq,
+					ajjbxx.ajmc ajmc,
+					ajjbxx.ajlb_mc ajlbmc,
+					ajjbxx.slrq,
 			(case when ajjbxx.ajlb_bm = '0201' then ajjbxx.bjrq
 				  when ajjbxx.ajlb_bm = '0301' then ajjbxx.bjrq
 				  else ajjbxx.wcrq
@@ -2067,10 +2076,14 @@
 			<if test="ajlbbm != '' and ajlbbm != null">
 				and ajjbxx.ajlb_bm = #{ajlbbm}
 			</if>
+			<if test="ajmc != '' and ajmc != null">
+				and ajjbxx.ajmc like #{ajmc}
+			</if>
 
 			union all
 
 			select ajxx.bmsah,
+				   ajxx.ajname ajmc,
 				   ajxx.ajlb ajlbmc,
 				   ajxx.ajslrq slrq,
 				   ajxx.bjrq wjrq
@@ -2082,6 +2095,9 @@
 			  and ajxx.ajslrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
 			<if test="ajlbbm != '' and ajlbbm != null">
 				and ajxx.ajlb_bm = #{ajlbbm}
+			</if>
+			<if test="ajmc != '' and ajmc != null">
+				and ajxx.ajname like #{ajmc}
 			</if>
 		)
 		<if test="sort != '' and sort != null">

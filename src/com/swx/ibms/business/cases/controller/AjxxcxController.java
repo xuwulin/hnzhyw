@@ -186,11 +186,12 @@ public class AjxxcxController {
 										   @RequestParam(value="rows",required=true)Integer rows,
 										   @RequestParam(value="kssj",required=true)String kssj,
 										   @RequestParam(value="jssj",required=true)String jssj,
+										   @RequestParam(value="ajmc",required=false)String ajmc,
 										   @RequestParam(value="sort",required=false)String sort,
 										   @RequestParam(value="order",required=false)String order,
 										   @RequestParam(value="type",required=true)String type) throws Exception{
 		try{
-			Map<String, Object> ajblEjList = ajxxcxService.selectAjblEj(dwbm, bmbm, gh, ajlbbm, page, rows, kssj, jssj, type, sort, order);
+			Map<String, Object> ajblEjList = ajxxcxService.selectAjblEj(dwbm, bmbm, gh, ajlbbm, page, rows, kssj, jssj, type, sort, order, ajmc);
 			return ajblEjList;//null
 		}catch(Exception e){
 			e.printStackTrace();

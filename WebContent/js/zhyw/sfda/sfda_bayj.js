@@ -49,6 +49,7 @@ var fag_ajId;//案件id，用于非案管修改时，在修改弹出框中赋值
 //var fag_ajStatus;
 var currentYear = new Date().format('yyyy');
 var currentDate = new Date().format('yyyy-MM-dd');
+var caseFlag = '2' // 案件标识，用于标识受理案件或者完结案件，默认2表示办结案件
 
 $(function (){
     //加载左侧树形列表
@@ -284,11 +285,6 @@ $(function (){
     // 办结案件数量
     var formatterZS = function (value, row, index) {
         var data = JSON.stringify(row);
-        // if (!!value) {
-        //     return "<a href = '#level_xqlb_id' onclick='ajblEj(" + data + ",2)'>" + value + "</a>";
-        // } else {
-        //     return "0";
-        // }
 
         if (value == '0' || typeof (value) == 'undefined') {
             return "0";
@@ -300,11 +296,6 @@ $(function (){
     // 受理案件数量
     var formatterSL = function (value, row, index) {
         var data = JSON.stringify(row);
-        // if (!!value) {
-        //     return "<a href = '#level_xqlb_id' onclick='ajblEj(" + data + ",1)'>" + value + "</a>";
-        // } else {
-        //     return "0";
-        // }
 
         if (value == '0' || typeof (value) == 'undefined') {
             return "0";
@@ -321,6 +312,7 @@ $(function (){
             $(".ajblej_page").remove();
         }
         var ajlbbm = param.AJLB_BM;
+        caseFlag = type;
 
         // var xzsj = $('#wcOrBjsj').combobox("getValue"); // 选择时间是案件完成日期/案件办结日期标识
         var xzbm = $('#departList').combobox("getValue");
@@ -335,7 +327,7 @@ $(function (){
     }
 
     /************************ 非案管人员：办案详情列表datagrid展示*************************/
-    function showxqlbDatagrid(ajlbbm, gh, dwbm, bmbm, page, rows, kssj, jssj, type){
+    function showxqlbDatagrid(ajlbbm, gh, dwbm, bmbm, page, rows, kssj, jssj, type, ajmc){
         $("#xqlb_table").datagrid({
             url : rootPath + "/service/ajxxcx/selectAjblEJ",
             // height: 500,
@@ -359,6 +351,7 @@ $(function (){
                 ajlbbm: ajlbbm,
                 kssj: kssj,
                 jssj: jssj,
+                ajmc: ajmc,
                 // xzsj: xzsj, //默认是查询完成日期
                 type: type // 用于标识是受理案件还是办结案件
             },
@@ -2289,6 +2282,12 @@ $(function (){
 
     isHideStart();
 
+    $("#queryAjmc").textbox({
+        width:"300px",
+        height:"30px",
+        prompt:"请输入案件名称"
+    });
+
 //重新计算本页面的高度
     resizeParentIframe();
 });
@@ -3883,14 +3882,30 @@ function getSelectIds(table_id){
     return selectIds;
 }
 
-function successFunction(){debugger;
+function successFunction() {
     var rowTotals = $("#xqlb_table").datagrid("getData").total;
     var rowData = $("#rebuild_table").datagrid("getData");
     var slajzlTemp = 0; //受理案件总数临时变量
     var bjajzlTemp = 0; //办结案件总数临时变量
-    bjajzlTemp=rowTotals;
+    bjajzlTemp = rowTotals;
 
     //赋值给前台
     $(".bayj_ajtj_div table tbody tr:eq(1) td:eq(1)").text(slajzlTemp);
     $(".bayj_ajtj_div table tbody tr:eq(2) td:eq(1)").text(bjajzlTemp);
+}
+
+function queryByCaseName() {
+    var caseName = $("#queryAjmc").val();
+    $("#xqlb_table").datagrid('load',{
+        gh: gh,
+        dwbm: dwbm,
+        bmbm: $('#departList').combobox("getValue"),
+        ajlbbm: '',
+        kssj: da_kssj + '01',
+        jssj: da_jssj + '31',
+        ajmc: caseName,
+        // xzsj: xzsj, //默认是查询完成日期
+        type: caseFlag // 用于标识是受理案件还是办结案件
+    });
+    $("#queryAjmc").textbox('setValue','');
 }

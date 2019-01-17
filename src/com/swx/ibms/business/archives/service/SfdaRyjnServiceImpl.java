@@ -225,7 +225,7 @@ public class SfdaRyjnServiceImpl implements SfdaRyjnService {
 
 					//4.根据单位编码，工号，开始时间，结束时间查询办案总数
 					//tyyw_gg_ajjbxx_tyyw表和yx_sfda_ajxx表（已审批）
-					basl = ajxxcxService.selectAjblEj(dwbm, bmbm,  ghAndMc.get(i).get("GH").toString(), "", 1, 10, kssj_nyr, jssj_nyr, "2", null, null);
+					basl = ajxxcxService.selectAjblEj(dwbm, bmbm,  ghAndMc.get(i).get("GH").toString(), "", 1, 10, kssj_nyr, jssj_nyr, "2", null, null, null);
 
 					//将办案数量（两表之和）加入到count中
 					count.put("BASL", Integer.parseInt(basl.get("total").toString()));
@@ -266,7 +266,7 @@ public class SfdaRyjnServiceImpl implements SfdaRyjnService {
 				//办案数量tyyw_gg_ajjbxx_tyyw表和yx_sfda_ajxx表（已审批）
 				kssj = kssj + "-01"; // 查询案件开始日期
 				jssj = jssj + "-31"; // 查询案件结束日期
-				basl = ajxxcxService.selectAjblEj(dwbm, bmbm,  gh, "",1, 10,  kssj_nyr, jssj_nyr, "2", null, null);
+				basl = ajxxcxService.selectAjblEj(dwbm, bmbm,  gh, "",1, 10,  kssj_nyr, jssj_nyr, "2", null, null, null);
 
 				//将办案数量加入到count中
 				count.put("BASL", Integer.parseInt(basl.get("total").toString()));

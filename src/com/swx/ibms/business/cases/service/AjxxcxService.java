@@ -122,8 +122,8 @@ public interface AjxxcxService {
 
 	public Map<String, Object> selectAjbl(String gh, String dwbm, String bmbm, Integer page, Integer pageSize, String kssj, String jssj);
 
-	public Map<String, Object> selectAjblEj(String dwbm, String bmbm, String gh, String ajlbbm, Integer page,
-											Integer rows, String kssj,String jssj, String type, String sort, String order);
+	public Map<String, Object> selectAjblEj(String dwbm, String bmbm, String gh, String ajlbbm, Integer page, Integer rows,
+											String kssj,String jssj, String type, String sort, String order, String ajmc);
 
 	/**
      * 根据部门受案号查询案件基本信息

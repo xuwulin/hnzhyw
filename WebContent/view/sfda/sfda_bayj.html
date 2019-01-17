@@ -189,7 +189,7 @@
         #fjxzwj span.textbox-invalid{
             border-color: #4B97D8;
         }
-        .bayj_ajtj_div table tr th, table tr td { border:1px solid #d4d4d4; padding:6px 6px;}
+        .bayj_ajtj_div table tr th, table tr td { border:1px solid #d4d4d4;}
         .bayj_ajtj_div table {min-height: 25px; line-height: 25px; text-align: center; border-collapse: collapse; }
     </style>
     <link href="../../css/bounced.css" rel="stylesheet">
@@ -304,25 +304,25 @@
                         <div class="archives_titlenrone" id="ajbl" style="position: relative;padding-right: 10px;margin-top: 6px;">
                             <div class="table_ssan_gdtys1">
                                 <div id="bayi_count_query" style="min-height: 40px;height:auto;padding:10px;">
-                                    <input type="text" id="departList" class="combo" style="width: 100px;margin-left:10px;">
+                                    <input type="text" id="departList" class="combo" style="width: 100px;margin-left:10px;display: none">
                                     <label style="font-size: 14px;color: #0674D3;display: inline-block;">完成/办结日期：</label>
                                     <!--<input type="text" id="wcOrBjsj" name="wcOrBjsj" class="combo" style="height: 30px;width: 120px;margin-left:10px;">-->
                                     <input type="text" id="ajkssj" name="ajkssj" class="textbo" style="height: 30px;"> -
                                     <input type="text" id="ajjssj" name="ajjkssj" class="textbo" style="height: 30px;">
-                                    <button id="searchAjOfTjlb" class="archives_search" style="height:30px;margin-right:68%;float: right">查询</button>
+                                    <button id="searchAjOfTjlb" class="archives_search" style="height:30px;margin-left: 10px">查询</button>
                                     <br/><br/>
                                     <div class="bayj_ajtj_div" style="font-weight: bold;font-size: 16px;" >
                                         <table>
                                             <tr>
-                                                <td rowspan="3">案件信息统计</td>
+                                                <td rowspan="3" style="padding: 6px">案件信息统计</td>
                                             </tr>
                                             <tr>
-                                                <td>受理案件总数（件）</td>
-                                                <td>0</td>
+                                                <td style="padding: 6px">受理案件总数（件）</td>
+                                                <td style="padding: 6px">0</td>
                                             </tr>
                                             <tr>
-                                                <td>完成/办结案件总数（件）</td>
-                                                <td>0</td>
+                                                <td style="padding: 6px">完成/办结案件总数（件）</td>
+                                                <td style="padding: 6px">0</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -347,8 +347,10 @@
                             </div>
 
                             <div id="exportToExcel-toolbar" style="min-height: 30px;height:auto;padding:10px;">
+                                <input id="queryAjmc" name="queryAjmc" placeholder="请输入案件名称"/>
+                                <button id="queryAjByAjmc" class="archives_search" onclick="queryByCaseName()" style="height:30px; margin-left: 10px">查询</button>
                                 <button id="exportToExcel" class="archives_search" onclick="exportCaseDetailsToExcel();"
-                                        style="height:30px;margin-left:5px; float: left">导出为Excel</button>
+                                        style="height:30px;float: right">导出为Excel</button>
                             </div>
                             <div class="table_ssan_gdtys2">
 
