@@ -281,6 +281,7 @@ function selectOldData (dalx,gdid) {
 //		  title: '<b>试运行数据</b>',
 //		  fit: true,
           fitColumns: true,
+		  scrollbarSize: 0,
           rownumbers: true,
           singleSelect: false,
           ctrlSelect: true,
@@ -4178,6 +4179,7 @@ function selectAllSkill (dalx,gdid) {
         pageSize : 10,//每页显示多少条，如果有pageList数组，在pageList中必须要有值与之对应
         pageList : [5,10,15,20],//每页显示的条数可选
         fitColumns : true,//真正的自动展开/收缩列的大小，以适应网格的宽度，防止水平滚动。列比较少的时候最好为true
+        scrollbarSize: 0,
         border : true,//定义是否显示面板边框。
         selectOnCheck : true,
         checkOnSelect : true,

@@ -598,13 +598,21 @@ public class AjxxcxServiceImpl implements AjxxcxService{
 			e.printStackTrace();
 		}
 
-		//统计文书总数
-		List<Map<String, Object>> countsOfWs = ajxxcxMapper.countFjAndWS(sahlist);
+		//统计文书总数(暂不显示)
+//		List<Map<String, Object>> countsOfWs = ajxxcxMapper.countFjAndWS(sahlist);
+		//统计备注（上传附件的形式）数量
+		List<Map<String, Object>> countsOfRemarks = null;
+		try {
+			countsOfRemarks = ajxxcxMapper.countsOfRemarks(sahlist);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		//定义合并条件常量
 		final String bmsah = "BMSAH";
 
-		ListCastUtils.mergeListMap(ajDetail, bmsah, countsOfWs);
+//		ListCastUtils.mergeListMap(ajDetail, bmsah, countsOfWs);
+		ListCastUtils.mergeListMap(ajDetail, bmsah, countsOfRemarks);
 
 		res.put("total", pager.getTotal());
 		res.put("rows", ajDetail);

@@ -183,6 +183,7 @@ $(function (){
             pageSize: 10,
             pageList: [5,10,15,20],
             fitColumns: true,
+            scrollbarSize: 0,
             border : true,//定义是否显示面板边框。
             queryParams: {//向服务器传的参数
                 gh : gh,
@@ -351,6 +352,7 @@ $(function (){
             pageSize : 10,//每页显示多少条，如果有pageList数组，在pageList中必须要有值与之对应
             pageList : [5,10,15,20],//每页显示的条数可选
             fitColumns : true,//真正的自动展开/收缩列的大小，以适应网格的宽度，防止水平滚动。列比较少的时候最好为true
+            scrollbarSize: 0,
             border : true,//定义是否显示面板边框。
             nowrap: true,
             remoteSort: true,// 使用服务器端排序
@@ -441,12 +443,34 @@ $(function (){
                         }
                     },
                 },
-                {field : 'WSSL',title : '<b>附件数量</b>',width : 50,align : 'center',
+                /*{field : 'WSSL',title : '<b>附件数量</b>',width : 50,align : 'center',hidden: true,
                     formatter : function(value, row, index) {
                         if (value) {
                             return value;
                         } else {
                             return 0;
+                        }
+                    }
+                },*/
+                {field : 'BZSL',title : '<b>备注(附件)</b>',width : 60,align : 'center',
+                    formatter : function(value, row, index) {//value:字段值；row：行记录数据；index，行索引
+                        isShowFj = "true";//点击附件数量时，只能是查看和下载不能上传
+                        showFjCount(row.BMSAH);//返回一个fjsl(附件数量)
+                        return (fjsl ? "<a href='javascript:void(0)' onclick=\"showUploadFile('" + row.BMSAH + "','','" + isShowFj + "')\">" + fjsl + "</a>" : 0);
+                    }
+                },
+                {field : 'cz',title : '<b>操作</b>',width : 70,align : 'center',
+                    formatter : function(value, row, index) {//value:字段值；row：行记录数据；index，行索引
+                        if (dlxx.isag == '1') {
+                            isShowFj = "false";
+                            return  "<a class='table_czan_ys' style='width: 60px' href='javascript:void(0)' onclick=\"showUploadFile('"+ row.BMSAH + "','','" + isShowFj + "')\">上传/删除</a>";
+                        } else{
+                            if (row.BZSL) {
+                                isShowFj = "true";
+                                return  "<a class='table_czan_ys' href='javascript:void(0)' onclick=\"showUploadFile('"+ row.BMSAH + "','','" + isShowFj + "')\">查看</a>";
+                            } else {
+                                return '';
+                            }
                         }
                     }
                 },
@@ -1274,6 +1298,7 @@ $(function (){
         pageSize : 10,//每页显示多少条，如果有pageList数组，在pageList中必须要有值与之对应
         pageList : [5,10,15,20],//每页显示的条数可选
         fitColumns : true,//真正的自动展开/收缩列的大小，以适应网格的宽度，防止水平滚动。列比较少的时候最好为true
+        scrollbarSize: 0,
         border : true,//定义是否显示面板边框。
         selectOnCheck : true,
         checkOnSelect : true,
@@ -2416,6 +2441,7 @@ function uploadFile(id,blxs,flag){
                     rows : 10,
                     ajStatus : '2'
                 });
+                $("#xqlb_table").datagrid('load');
                 // }else{
                 // 	//刷新案管新增列表
                 // 	$('#agaj_xz_table').datagrid('load',{//重新加载新增列表datagrid表格
@@ -2500,8 +2526,8 @@ function fileDelete(wjid,wjdz,wbid) { // 删除提示消息
                     $('#fjDatagridTable').datagrid('load',{
                         wbid: wbid,
                     });
-
-                    if(!isAgb){
+                    $("#xqlb_table").datagrid('load');
+                    // if(!isAgb){
                         //刷新非案管新增列表
                         $('#fagaj_xz_table').datagrid('load',{//重新加载新增列表datagrid表格
                             daid : daId,
@@ -2511,14 +2537,14 @@ function fileDelete(wjid,wjdz,wbid) { // 删除提示消息
                             rows : 10,
                             ajStatus : '2'
                         });
-                    }else{
-                        //刷新案管新增列表
-                        $('#agaj_xz_table').datagrid('load',{//重新加载新增列表datagrid表格
-                            daid : daId,
-                            page : page,
-                            pageSize : pageSize
-                        });
-                    }
+                    // }else{
+                    //     //刷新案管新增列表
+                    //     $('#agaj_xz_table').datagrid('load',{//重新加载新增列表datagrid表格
+                    //         daid : daId,
+                    //         page : page,
+                    //         pageSize : pageSize
+                    //     });
+                    // }
                 }
             });
         }

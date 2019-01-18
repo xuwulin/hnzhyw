@@ -228,7 +228,19 @@ public interface AjxxcxMapper {
 
 	List<Map<String, Object>> selectbyAjblEjsl(@Param("sahlist") List<String> sahlist);
 
+	/**
+	 * 文书数量
+	 * @param sahlist
+	 * @return
+	 */
 	List<Map<String, Object>> countFjAndWS(@Param("sahlist") List<String> sahlist);
+
+	/**
+	 * 备注数量
+	 * @param sahlist
+	 * @return
+	 */
+	List<Map<String, Object>> countsOfRemarks(@Param("sahlist") List<String> sahlist);
 
 	/**
      * 根据部门受案号查询案件基本信息

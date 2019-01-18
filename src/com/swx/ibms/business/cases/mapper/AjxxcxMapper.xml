@@ -2622,6 +2622,21 @@
 		        group by t.bmsah
     </select>
 	
+	<select id="countsOfRemarks" resultType="java.util.HashMap">
+		select count(bmsah) bzsl,
+			   bmsah
+		from(
+			select wbid as bmsah
+			from yx_fj
+			<if test='sahlist != null and sahlist.size() > 0'>
+				where wbid in
+				<foreach item='item' index='index' collection='sahlist' open='(' separator=',' close=')'>
+					#{item}
+				</foreach>
+			</if>
+			) t
+		group by t.bmsah
+	</select>
 	
 	<!-- 根据部门受案号查询案件详情 -->
 	<select id="selectAjxqByBmsah" resultType="java.util.HashMap">

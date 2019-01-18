@@ -647,7 +647,9 @@ public class AjxxcxController {
 		result = ajxxcxService.selectCountsOfSlaj(dwbm, gh, kssj, jssj);
 		int totalCounts = 0;
 		for (Map<String, Object> resMap: result) {
-			totalCounts += Integer.parseInt(resMap.get("SLAJSL").toString());
+			if (StringUtils.isNotBlank(resMap.get("SLAJSL").toString())) {
+				totalCounts += Integer.parseInt(resMap.get("SLAJSL").toString());
+			}
 		}
 		map.put("SLAJSL", totalCounts);
 		return map;
