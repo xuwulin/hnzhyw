@@ -191,8 +191,8 @@ $(function (){
                 bmbm : dlxx.bmbm,// $('#departList').combobox("getValue"),//默认选中的部门编码
                 page : 1,
                 rows : 10,
-                kssj : da_kssj + '01', //new Date().format('yyyy') + '-01-01',
-                jssj : da_jssj + '31', // new Date().format('yyyy-MM-dd'),
+                kssj : da_kssj + '-01', //new Date().format('yyyy') + '-01-01',
+                jssj : da_jssj + '-31', // new Date().format('yyyy-MM-dd'),
                 // xzsj : 'wcrq' //默认是查询完成日期
             },
             columns: columns_array, // 定义的列
@@ -3959,8 +3959,8 @@ function queryByCaseName() {
         dwbm: dwbm,
         bmbm: $('#departList').combobox("getValue"),
         ajlbbm: '',
-        kssj: da_kssj + '01',
-        jssj: da_jssj + '31',
+        kssj: da_kssj + '-01',
+        jssj: da_jssj + '-31',
         ajmc: caseName,
         // xzsj: xzsj, //默认是查询完成日期
         type: caseFlag // 用于标识是受理案件还是办结案件
