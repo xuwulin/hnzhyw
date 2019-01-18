@@ -645,8 +645,11 @@ public class AjxxcxController {
 		Map<String,Object> map = new HashMap<>();
 		List<Map<String, Object>> result = new ArrayList<>();
 		result = ajxxcxService.selectCountsOfSlaj(dwbm, gh, kssj, jssj);
-//		map.put("result", result);
-		map = result.get(0);
+		int totalCounts = 0;
+		for (Map<String, Object> resMap: result) {
+			totalCounts += Integer.parseInt(resMap.get("SLAJSL").toString());
+		}
+		map.put("SLAJSL", totalCounts);
 		return map;
 	}
 

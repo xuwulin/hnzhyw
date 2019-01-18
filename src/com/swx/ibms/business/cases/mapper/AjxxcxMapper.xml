@@ -288,7 +288,7 @@
 	-->
 	<select id="selectCountsOfBjaj" resultType="java.util.HashMap">
 		<!--这种查询方式，是将在指定时间段内已完成/办结的案件显示出来，得到对应的办结案件数（最小值为1，不可能为0）-->
-
+		<!--
 		select ajlb_bm,
 			   ajlb_mc,
 			   COUNT(ajlb_bm) AS bjajsl
@@ -318,14 +318,14 @@
 				 and ajxx.bjrq between to_date(#{kssj},'yyyy-MM-dd') and to_date(#{jssj},'yyyy-MM-dd')
 		     )
 		group by ajlb_bm,ajlb_mc
-
+		-->
 
  		<!--这种查询是将 在指定时间段内所办理的所有案件全部显示 显示受理案件数量（可以为0），办结案件数量（可以为0）
  			因为统计列表中的个人办案效率和部门办案效率都是在已完成/办结的案件的基础上进行
  			所以上面那种查询（目前使用）只是统计了有已完成/办结的案件类型
  			如果客户想把在指定时间段内没有办结的案件类型，但是由受理的案件类型也展示在统计列表中，那么久用下面这种查询方式
  		-->
-		<!--
+
 		select ajlb_bm,
 			   ajlb_mc,
 			   nvl(wm_concat(slajsl),0) slajsl,
@@ -393,7 +393,7 @@
 		      group by ajlb_bm,ajlb_mc
 			 )
 		group by ajlb_bm,ajlb_mc
-		-->
+
 	</select>
 	
 	<!-- 个人办案效率，平均办理时间：完成/办结日期在该时间段内 -->

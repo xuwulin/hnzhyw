@@ -348,7 +348,7 @@ public class AjxxcxServiceImpl implements AjxxcxService{
 
             //注：统计列表中统计的数据都是在传递进来的时间段之内的数据
 			// 获取受理案件总数：受理日期在指定日期内的案件；（获取办理的案件类别名称，案件类别编码，对应的案件数量）
-            List<Map<String, Object>> countsOfSlaj = ajxxcxMapper.selectCountsOfSlaj(dwbm, gh, kssj, jssj);
+//            List<Map<String, Object>> countsOfSlaj = ajxxcxMapper.selectCountsOfSlaj(dwbm, gh, kssj, jssj);
 
 			// 分页：注：PageHelper.startPage(page, rows)只对该语句以后的“第一个查询语句”得到的数据进行分页
 			Page<List<Map<String, String>>> pager = PageHelper.startPage(page, rows);
@@ -368,14 +368,14 @@ public class AjxxcxServiceImpl implements AjxxcxService{
             //创建一个新的list用于存放新生成的受理案件总数：存在以下几种情况
             //1.在指定时间内，当某一类受理案件数有，而办结案件数无时，此类案件不计入统计列表及不显示此类案件
             //2.在指定时间内，当某一类受理案件数无，而办结案件数有时，此类案件则要计入统计类别，此时应将此类案件的受理案件数设置为0，不设置则会显示为空
-			List<Map<String, Object>> newCountsOfSlaj = new ArrayList<>();
-
+//			List<Map<String, Object>> newCountsOfSlaj = new ArrayList<>();
+//
             String ajlbBmKey = "AJLB_BM";
-            int countsOfSlajSize = countsOfSlaj.size();
-            int countsOfBjajSize = countsOfBjaj.size();
+//            int countsOfSlajSize = countsOfSlaj.size();
+//            int countsOfBjajSize = countsOfBjaj.size();
 
             // 主要查询在指定时间内完成/办结的案件，受理案件可以为0，如果没有完成/办结的案件就不显示
-			if (countsOfBjaj != null && countsOfBjajSize != 0) {
+			/*if (countsOfBjaj != null && countsOfBjajSize != 0) {
 				for (Map<String, Object> bjajMap : countsOfBjaj) {
 					if (countsOfSlaj != null && countsOfSlajSize != 0) {
 						for (Map<String, Object> slajMap : countsOfSlaj) {
@@ -400,7 +400,7 @@ public class AjxxcxServiceImpl implements AjxxcxService{
 					}
 				}
 				ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, newCountsOfSlaj);
-			}
+			}*/
 
             // 个人办案效率指标，个人平均办理时间 统计该时间段内 完成/办结的案件
 			List<Map<String, Object>> avgTimeOfPer = null;
@@ -438,7 +438,7 @@ public class AjxxcxServiceImpl implements AjxxcxService{
 
 			//将受理案件数量和办结案件数量合并为一个List<Map<String,Object>>,key分别为：AJLB_BM、AJLB_MC、COUNTSOFSLAJ、COUNTSOFBJAJ
 			//注：countsOfBjaj也是合并之后的List
-			ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, newCountsOfSlaj);
+//			ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, newCountsOfSlaj);
 			ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, avgTimeOfPer);
 			ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, efficiencyOfDep);
 			ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, avgTimeRankOfDep);
