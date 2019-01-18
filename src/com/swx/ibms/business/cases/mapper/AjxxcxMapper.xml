@@ -328,8 +328,8 @@
 
 		select ajlb_bm,
 			   ajlb_mc,
-			   nvl(wm_concat(slajsl),0) slajsl,
-			   nvl(wm_concat(bjajsl),0) bjajsl
+			   nvl(sum(slajsl),0) slajsl,
+			   nvl(sum(bjajsl),0) bjajsl
 		from (
 			  select ajlb_bm,
 					 ajlb_mc,

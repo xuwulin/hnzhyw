@@ -340,7 +340,7 @@ public class AjxxcxServiceImpl implements AjxxcxService{
 
 //        int bmListSize = bmbmlist.size();
 
-        if (!bmbm.equals("")) {
+        if (StringUtils.isNotBlank(bmbm)) {
             //获取 当前部门下（默认是主要部门，即多部门数组中的第一个，这里的bmbm是页面传过来的)的所有人的工号list集合
 			// 注该部门下不是每个都是办案人员，所以要想知道哪些是办案人员，方式1：通过是否使用该系统并且是否创建了档案来判断
 			// 方式2：直接获取该部门的所有人员（内勤除外），目前使用的是方式2
@@ -361,20 +361,20 @@ public class AjxxcxServiceImpl implements AjxxcxService{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			if (countsOfBjaj != null && countsOfBjaj.size() > 0) {
+				//创建一个新的list用于存放新生成的办结案件总数
+				List<Map<String, Object>> newCountsOfBjaj = new ArrayList<>();
 
-            //创建一个新的list用于存放新生成的办结案件总数
-            List<Map<String, Object>> newCountsOfBjaj = new ArrayList<>();
-
-            //创建一个新的list用于存放新生成的受理案件总数：存在以下几种情况
-            //1.在指定时间内，当某一类受理案件数有，而办结案件数无时，此类案件不计入统计列表及不显示此类案件
-            //2.在指定时间内，当某一类受理案件数无，而办结案件数有时，此类案件则要计入统计类别，此时应将此类案件的受理案件数设置为0，不设置则会显示为空
+				//创建一个新的list用于存放新生成的受理案件总数：存在以下几种情况
+				//1.在指定时间内，当某一类受理案件数有，而办结案件数无时，此类案件不计入统计列表及不显示此类案件
+				//2.在指定时间内，当某一类受理案件数无，而办结案件数有时，此类案件则要计入统计类别，此时应将此类案件的受理案件数设置为0，不设置则会显示为空
 //			List<Map<String, Object>> newCountsOfSlaj = new ArrayList<>();
 //
-            String ajlbBmKey = "AJLB_BM";
+				String ajlbBmKey = "AJLB_BM";
 //            int countsOfSlajSize = countsOfSlaj.size();
 //            int countsOfBjajSize = countsOfBjaj.size();
 
-            // 主要查询在指定时间内完成/办结的案件，受理案件可以为0，如果没有完成/办结的案件就不显示
+				// 主要查询在指定时间内完成/办结的案件，受理案件可以为0，如果没有完成/办结的案件就不显示
 			/*if (countsOfBjaj != null && countsOfBjajSize != 0) {
 				for (Map<String, Object> bjajMap : countsOfBjaj) {
 					if (countsOfSlaj != null && countsOfSlajSize != 0) {
@@ -402,69 +402,99 @@ public class AjxxcxServiceImpl implements AjxxcxService{
 				ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, newCountsOfSlaj);
 			}*/
 
-            // 个人办案效率指标，个人平均办理时间 统计该时间段内 完成/办结的案件
-			List<Map<String, Object>> avgTimeOfPer = null;
+				// 个人办案效率指标，个人平均办理时间 统计该时间段内 完成/办结的案件
+				List<Map<String, Object>> avgTimeOfPer = null;
 
-			//本部门办案效率指标，查询“某个部门”下所有单个案件类型的平均办理时间，最长时间，最短时间（该时间段内办结的案件数）（只管部门，不区分人）
-			List<Map<String, Object>> efficiencyOfDep = null;
+				//本部门办案效率指标，查询“某个部门”下所有单个案件类型的平均办理时间，最长时间，最短时间（该时间段内办结的案件数）（只管部门，不区分人）
+				List<Map<String, Object>> efficiencyOfDep = null;
 
-			//本部门办案效率指标,查询某个人单个案件类型的“平均办理时间在本部门下的排名”（该时间段内办结的案件数）（区分人和部门）
-			List<Map<String, Object>> avgTimeRankOfDep = null;
+				//本部门办案效率指标,查询某个人单个案件类型的“平均办理时间在本部门下的排名”（该时间段内办结的案件数）（区分人和部门）
+				List<Map<String, Object>> avgTimeRankOfDep = null;
 
-			//本部门办案数量指标，查询“某个部门”下所有 单个案件类型 的最多办案量，最少办案量（该时间段内办结的案件数）
-			List<Map<String, Object>> countsOfDep = null;
+				//本部门办案数量指标，查询“某个部门”下所有 单个案件类型 的最多办案量，最少办案量（该时间段内办结的案件数）
+				List<Map<String, Object>> countsOfDep = null;
 
-			//本部门办案数量指标，查询“某个部门”下所有 单个案件类型 的平均办案数量（该时间段内办结的案件数）（只管部门，不区分人）
-			List<Map<String, Object>> avgCountOfDep = null;
+				//本部门办案数量指标，查询“某个部门”下所有 单个案件类型 的平均办案数量（该时间段内办结的案件数）（只管部门，不区分人）
+				List<Map<String, Object>> avgCountOfDep = null;
 
-			//本部门办案数量指标，查询“某个部门”下所有 单个案件类型 办案数量排名（该时间段内办结的案件数）（区分人和部门）
-			List<Map<String, Object>> countsRankOfDep = null;
+				//本部门办案数量指标，查询“某个部门”下所有 单个案件类型 办案数量排名（该时间段内办结的案件数）（区分人和部门）
+				List<Map<String, Object>> countsRankOfDep = null;
 
-			try {
-				avgTimeOfPer = ajxxcxMapper.selectAvgTimeOfPer(dwbm, gh, ajlbBmsAll, kssj, jssj);
+				try {
+					avgTimeOfPer = ajxxcxMapper.selectAvgTimeOfPer(dwbm, gh, ajlbBmsAll, kssj, jssj);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					efficiencyOfDep = ajxxcxMapper.selectEfficiencyOfDep(ajyjGhList, dwbm, kssj, jssj);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					avgTimeRankOfDep = ajxxcxMapper.selectAvgTimeRankOfDep(ajyjGhList, dwbm, gh, kssj, jssj);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					countsOfDep = ajxxcxMapper.selectCountsOfDep(ajyjGhList, dwbm, kssj, jssj);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					avgCountOfDep = ajxxcxMapper.selectAvgCountOfDep(ajyjGhList, bmbm, dwbm, kssj, jssj);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					countsRankOfDep = ajxxcxMapper.selectCountsRankOfDep(ajyjGhList, dwbm, gh,kssj,jssj);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
-				efficiencyOfDep = ajxxcxMapper.selectEfficiencyOfDep(ajyjGhList, dwbm, kssj, jssj);
-
-				avgTimeRankOfDep = ajxxcxMapper.selectAvgTimeRankOfDep(ajyjGhList, dwbm, gh, kssj, jssj);
-
-				countsOfDep = ajxxcxMapper.selectCountsOfDep(ajyjGhList, dwbm, kssj, jssj);
-
-				avgCountOfDep = ajxxcxMapper.selectAvgCountOfDep(ajyjGhList, bmbm, dwbm, kssj, jssj);
-
-				countsRankOfDep = ajxxcxMapper.selectCountsRankOfDep(ajyjGhList, dwbm, gh,kssj,jssj);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			//将受理案件数量和办结案件数量合并为一个List<Map<String,Object>>,key分别为：AJLB_BM、AJLB_MC、COUNTSOFSLAJ、COUNTSOFBJAJ
-			//注：countsOfBjaj也是合并之后的List
+				//将受理案件数量和办结案件数量合并为一个List<Map<String,Object>>,key分别为：AJLB_BM、AJLB_MC、COUNTSOFSLAJ、COUNTSOFBJAJ
+				//注：countsOfBjaj也是合并之后的List
 //			ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, newCountsOfSlaj);
-			ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, avgTimeOfPer);
-			ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, efficiencyOfDep);
-			ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, avgTimeRankOfDep);
-			ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, countsOfDep);
-			ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, avgCountOfDep);
-			ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, countsRankOfDep);
+				if (avgTimeOfPer!= null && avgTimeOfPer.size() > 0) {
+					ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, avgTimeOfPer);
+				}
+				if (efficiencyOfDep!= null && efficiencyOfDep.size() > 0) {
+					ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, efficiencyOfDep);
+				}
+				if (avgTimeRankOfDep!= null && avgTimeRankOfDep.size() > 0) {
+					ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, avgTimeRankOfDep);
+				}
+				if (countsOfDep!= null && countsOfDep.size() > 0) {
+					ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, countsOfDep);
+				}
+				if (avgCountOfDep!= null && avgCountOfDep.size() > 0) {
+					ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, avgCountOfDep);
+				}
+				if (countsRankOfDep!= null && countsRankOfDep.size() > 0) {
+					ListCastUtils.mergeListMap(countsOfBjaj, ajlbBmKey, countsRankOfDep);
+				}
 
-            // 查询所有案件类别编码(XT_DM_AJLBBM_TYYW表中的所有案件类别编码)
+				// 查询所有案件类别编码(XT_DM_AJLBBM_TYYW表中的所有案件类别编码)
 //            List<Map<String,String>> allAjlbbm = ajxxcxMapper.getAllAjlbbm();
 
-            // 将案件类编编码转为List
+				// 将案件类编编码转为List
 //            List<String> allAjlbbmList = ListCastUtils.castListMap(allAjlbbm);
 
-            // 判断案件类别编码是否在allAjlbbmList
+				// 判断案件类别编码是否在allAjlbbmList
 
-            newCountsOfBjaj = countsOfBjaj;
+				newCountsOfBjaj = countsOfBjaj;
 
-			if (newCountsOfBjaj != null && newCountsOfBjaj.size() != 0) {
-				res.put("total", pager.getTotal());
-			}else {
-				res.put("total", 0);
+				if (newCountsOfBjaj != null && newCountsOfBjaj.size() != 0) {
+					res.put("total", pager.getTotal());
+				}else {
+					res.put("total", 0);
+				}
+				res.put("rows", newCountsOfBjaj);
+				return res;
 			}
-			res.put("rows", newCountsOfBjaj);
+			res.put("total", 0);
+			res.put("rows",countsOfBjaj);
 			return res;
 		}
-
 		return null;
 	}
 
