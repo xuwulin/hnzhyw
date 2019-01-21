@@ -738,7 +738,8 @@ public class GrjxkhsyServiceImpl implements GrjxkhsyService {
 								|| StringUtils.contains(jsmc, "部长")
 								|| StringUtils.contains(jsmc, "副部长")
 								|| StringUtils.contains(jsmc, "主任")
-								|| StringUtils.contains(jsmc, "副主任")) {
+								|| StringUtils.contains(jsmc, "副主任")
+								|| StringUtils.contains(jsmc, "部门负责人")) {
 							ryjs.add("3"); // 负责人
 						}
 					}
@@ -974,8 +975,11 @@ public class GrjxkhsyServiceImpl implements GrjxkhsyService {
 								|| StringUtils.contains(jsmc, "副处长")
 								|| StringUtils.contains(jsmc, "局长")
 								|| StringUtils.contains(jsmc, "副局长")
+								|| StringUtils.contains(jsmc, "部长")
+								|| StringUtils.contains(jsmc, "副部长")
 								|| StringUtils.contains(jsmc, "主任")
-								|| StringUtils.contains(jsmc, "副主任")) {
+								|| StringUtils.contains(jsmc, "副主任")
+								|| StringUtils.contains(jsmc, "部门负责人")) {
 							ryjs.add("3"); // 负责人
 						}
 					}
