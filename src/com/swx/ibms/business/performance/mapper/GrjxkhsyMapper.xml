@@ -156,7 +156,7 @@
 
 	<!--查询个人绩效排名-->
 	<select id="getRankOfGrjx" resultType="java.util.HashMap">
-		select rank() over (partition by k.year,f.ywlx order by nvl(f.zpjdf,0) desc) pm,
+		select dense_rank() over (partition by k.year,f.ywlx order by nvl(f.zpjdf,0) desc) pm,
 		k.id ydkhid,
 		k.dwbm,
 		k.year,
@@ -167,7 +167,6 @@
 		<if test="year != '' and year != null">
 			and k.year = #{year}
 		</if>
-
 	</select>
 
 	<!--根据条件查询个人绩效-->
