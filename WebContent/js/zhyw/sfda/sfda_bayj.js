@@ -188,7 +188,7 @@ $(function (){
             queryParams: {//向服务器传的参数
                 gh : gh,
                 dwbm : dwbm,
-                bmbm : dlxx.bmbm,// $('#departList').combobox("getValue"),//默认选中的部门编码
+                bmbm : allInfoOfdassrArr[0].BMBM,// 存在多部门的人也只取其第一个  $('#departList').combobox("getValue"),//默认选中的部门编码
                 page : 1,
                 rows : 10,
                 kssj : da_kssj + '-01', //new Date().format('yyyy') + '-01-01',
@@ -463,7 +463,7 @@ $(function (){
                     formatter : function(value, row, index) {//value:字段值；row：行记录数据；index，行索引
                         if (dlxx.isag == '1') {
                             isShowFj = "false";
-                            return  "<a class='table_czan_ys' style='width: 60px' href='javascript:void(0)' onclick=\"showUploadFile('"+ row.BMSAH + "','','" + isShowFj + "')\">上传/删除</a>";
+                            return  "<a class='table_czan_ys' style='width: 60px' href='javascript:void(0)' onclick=\"showUploadFile('"+ row.BMSAH + "','','" + isShowFj + "')\">上传</a>";
                         } else{
                             if (row.BZSL) {
                                 isShowFj = "true";
