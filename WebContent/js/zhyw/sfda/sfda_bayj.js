@@ -122,9 +122,17 @@ $(function (){
         editable:false
     });
 
-    //档案所属人的受理案件情况
-    slajObj = getAjblSlzs();
 
+    //档案所属人的办理案件情况，受理总数、办结总数。
+    slajObj = getAjblSlzs();
+    var slajzlTemp = 0; //受理案件总数临时变量
+    var bjajzlTemp = 0; //办结案件总数临时变量
+    slajzlTemp = parseInt(slajObj.caseAccepteTotal=="undefined"?0:slajObj.caseAccepteTotal);
+    bjajzlTemp = parseInt(slajObj.caseCompleteTotal=="undefined"?0:slajObj.caseCompleteTotal);
+
+    //赋值给前台
+    $(".bayj_ajtj_div table tbody tr:eq(1) td:eq(1)").text(slajzlTemp);
+    $(".bayj_ajtj_div table tbody tr:eq(2) td:eq(1)").text(bjajzlTemp);
 
     //如果某个人所在部门既有案管办又有非案管办的则根据所选部门展示列表
     // isag() ? $("#mulityDepartSpan").show() : $("#mulityDepartSpan").hide();
@@ -475,7 +483,7 @@ $(function (){
                     }
                 },
             ] ],
-           onLoadSuccess:successFunction
+           // onLoadSuccess:successFunction
         });
 
         //重新计算本页面的高度
@@ -3918,29 +3926,20 @@ function getSelectIds(table_id){
     return selectIds;
 }
 
-
-function successFunction() {
-    var rowTotals = $("#xqlb_table").datagrid("getData").total;
-    var rowData = $("#rebuild_table").datagrid("getData");
-    var slajzlTemp = 0; //受理案件总数临时变量
-    var bjajzlTemp = 0; //办结案件总数临时变量
-    bjajzlTemp = rowTotals;
-    slajzlTemp = parseInt(slajObj.SLAJSL);
-
-    //赋值给前台
-    $(".bayj_ajtj_div table tbody tr:eq(1) td:eq(1)").text(slajzlTemp);
-    $(".bayj_ajtj_div table tbody tr:eq(2) td:eq(1)").text(bjajzlTemp);
-}
-
 function getAjblSlzs(){
     var resObj = {};
 
-    var url = rootPath + "/service/ajxxcx/selectCountsOfSlaj";
+    var url = rootPath + "/service/ajxxcx/selectCountsOfBlajzs";  //url : rootPath + "/service/ajxxcx/selectAjblEJ",
     var paramData = {
         dwbm : dwbm,
         gh : gh,
+        page : 1,
+        rows : 2000,
         kssj : $('#ajkssj').combobox("getText"),
-        jssj : $('#ajjssj').combobox("getText")
+        jssj : $('#ajjssj').combobox("getText"),
+        type: 2, // 完成/办结的案件标识
+        bmbm: "",
+        ajlbbm: ""
     };
 
     $.ajaxSettings.async = false;

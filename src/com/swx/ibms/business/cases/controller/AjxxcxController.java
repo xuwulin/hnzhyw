@@ -635,23 +635,40 @@ public class AjxxcxController {
 	}
 
 
-	@RequestMapping(value = "/selectCountsOfSlaj",method = RequestMethod.POST)
+	@RequestMapping(value = "/selectCountsOfBlajzs",method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> selectCountsOfSlaj(@RequestParam(value="dwbm",required=true)String dwbm,
+												  @RequestParam(value="bmbm",required=false)String bmbm,
 												  @RequestParam(value="gh",required=true)String gh,
+												  @RequestParam(value="page",required=true)Integer page,
+												  @RequestParam(value="rows",required=true)Integer rows,
 												  @RequestParam(value="kssj",required=true)String kssj,
 												  @RequestParam(value="jssj",required=true)String jssj,
+												  @RequestParam(value="type",required=true)String type,
+												  @RequestParam(value="ajlbbm",required=false)String ajlbbm,
 												HttpServletRequest req) throws Exception{
 		Map<String,Object> map = new HashMap<>();
 		List<Map<String, Object>> result = new ArrayList<>();
+		int slajTotal = 0;
+		int bjajTotal = 0;
+
 		result = ajxxcxService.selectCountsOfSlaj(dwbm, gh, kssj, jssj);
-		int totalCounts = 0;
+
 		for (Map<String, Object> resMap: result) {
 			if (StringUtils.isNotBlank(resMap.get("SLAJSL").toString())) {
-				totalCounts += Integer.parseInt(resMap.get("SLAJSL").toString());
+				slajTotal += Integer.parseInt(resMap.get("SLAJSL").toString());
 			}
 		}
-		map.put("SLAJSL", totalCounts);
+
+		Map<String, Object> ajblEjList = ajxxcxService.selectAjblEj(dwbm, bmbm, gh, ajlbbm, page, rows, kssj, jssj, type, StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY);
+		for (String caseStr : ajblEjList.keySet()) {  //Map.Entry<Integer, Integer> entry : map.entrySet()
+			if (StringUtils.isNotBlank(caseStr)&&StringUtils.equals("total",caseStr)) {
+				bjajTotal = Integer.parseInt(ajblEjList.get(caseStr).toString());
+			}
+		}
+
+		map.put("caseAccepteTotal", slajTotal);
+		map.put("caseCompleteTotal", bjajTotal);
 		return map;
 	}
 
