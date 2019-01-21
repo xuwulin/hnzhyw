@@ -80,7 +80,7 @@ public class QuartzManager {
     	String jobGroupName = this.JOB_GROUP_NAME;
     	String triggerName = this.TRIGGER_NAME;
     	String triggerGroupName = this.TRIGGER_GROUP_NAME;
-    	String time = "59 59 23 ? * L"; //这儿同步日期暂定为业务考核的同步日期为：每年的创建业务考核的最新日期的当晚23：59：59,默认为每周周天晚上23点执行 ：59 59 23 ? * L
+    	String time = "0 0 4 ? * L"; //这儿同步日期暂定为业务考核的同步日期为：每年的创建业务考核的最新日期的当晚23：59：59,默认为每周周天晚上23点执行 ：59 59 23 ? * L
     	
     	XtQuartzPz quartzPz = xtQuartzPzService.getLastXtQuartzPz();
     	if(quartzPz!=null) {

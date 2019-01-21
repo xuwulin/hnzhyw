@@ -29,13 +29,14 @@ public class TaskListener {
 	 */
 	public void doTask(){
 		try{
+
 			TaskService taskService = (TaskService) ApplicationContextUtils.getBean("taskServiceImpl");
-					taskService.jcgs();
-			logger.debug("---------"+DATE_FORMAT.format(Calendar.getInstance().getTime())
-			+"定时任务执行成功");
+			taskService.jcgs();
+
+			logger.debug("---------"+DATE_FORMAT.format(Calendar.getInstance().getTime())+"定时任务【Task】执行成功");
+
 		}catch(Exception e){
-			logger.debug("---------"+DATE_FORMAT.format(Calendar.getInstance().getTime())
-			+"定时任务执行失败。抛出异常为:"+e.getMessage());
+			logger.debug("---------"+DATE_FORMAT.format(Calendar.getInstance().getTime())+"定时任务【Task】执行失败。抛出异常为:"+e.getMessage());
 		}
 	}
 
