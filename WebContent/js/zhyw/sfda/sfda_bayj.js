@@ -154,15 +154,7 @@ $(function (){
             {title: '<b>本部门办案数量指标</b>', colspan: 3, width: 300,align : 'center'},
 
         ], [
-            {field: 'SLAJSL', title: '<b>受理案件<br/>总数（件）</b>', width: 150, align : 'center',formatter: formatterSL
-                /*formatter : function(value, row, index) {//value:字段值；row：行记录数据；index，行索引
-                    if (value == null || value == "" || typeof (value) == 'undefined') {
-                        return '0';
-                    } else {
-                        return value;
-                    }
-                }*/
-            },
+            {field: 'SLAJSL', title: '<b>受理案件<br/>总数（件）</b>', width: 150, align : 'center',formatter: formatterSL},
             {field: 'BJAJSL', title: '<b>完成/办结案件<br/>总数（件）</b>', width: 150, formatter: formatterZS,align : 'center'},
 
             {field: 'GRPJBLSJ', title: '<b>平均办理<br/>时间（天）</b>', width: 100,align : 'center'},
@@ -308,7 +300,7 @@ $(function (){
         if (value == '0' || typeof (value) == 'undefined') {
             return "0";
         } else {
-            return "<a href = '#level_xqlb_id' onclick='ajblEj(" + data + ",2)'>" + value + "</a>";
+            return "<a href = '#level_xqlb_id' style='font-size: 16px;'  onclick='ajblEj(" + data + ",2)'>" + value + "</a>";
         }
     };
 
@@ -319,7 +311,7 @@ $(function (){
         if (value == '0' || typeof (value) == 'undefined') {
             return "0";
         } else {
-            return "<a href = '#level_xqlb_id' onclick='ajblEj(" + data + ",1)'>" + value + "</a>";
+            return "<a href = '#level_xqlb_id' style='font-size: 16px;' onclick='ajblEj(" + data + ",1)'>" + value + "</a>";
         }
     };
 
@@ -464,7 +456,7 @@ $(function (){
                     formatter : function(value, row, index) {//value:字段值；row：行记录数据；index，行索引
                         isShowFj = "true";//点击附件数量时，只能是查看和下载不能上传
                         showFjCount(row.BMSAH);//返回一个fjsl(附件数量)
-                        return (fjsl ? "<a href='javascript:void(0)' onclick=\"showUploadFile('" + row.BMSAH + "','','" + isShowFj + "')\">" + fjsl + "</a>" : 0);
+                        return (fjsl ? "<a href='javascript:void(0)' style='font-size: 16px;'  onclick=\"showUploadFile('" + row.BMSAH + "','','" + isShowFj + "')\">" + fjsl + "</a>" : 0);
                     }
                 },
                 {field : 'cz',title : '<b>操作</b>',width : 70,align : 'center',

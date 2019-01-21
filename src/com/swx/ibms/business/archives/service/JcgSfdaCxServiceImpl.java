@@ -456,6 +456,8 @@ public class JcgSfdaCxServiceImpl implements JcgSfdaCxService {
 								|| StringUtils.contains(jsmc, "副局长")
 								|| StringUtils.contains(jsmc, "部长")
 								|| StringUtils.contains(jsmc, "副部长")
+                                || StringUtils.contains(jsmc, "科长")
+                                || StringUtils.contains(jsmc, "副科长")
 								|| StringUtils.contains(jsmc, "主任")
 								|| StringUtils.contains(jsmc, "副主任")
 								|| StringUtils.contains(jsmc, "部门负责人")) {

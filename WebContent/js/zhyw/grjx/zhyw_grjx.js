@@ -112,7 +112,7 @@ function getGrjxkhYear() {
         valueField:'id',
         async: false,
         editable : false,
-        height: 32,
+        height: 28,
         width: 202,
         textField:'text',
         onLoadSuccess:function(data){
@@ -161,7 +161,7 @@ function initialUnitAndDept() {
             selected_dwbm = data[0].id;
 
             // 部门下拉展示
-            getBmbmSelectTree("department_tree",selected_dwbm,null,null,"196","32",null); //引用于common.js
+            getBmbmSelectTree("department_tree",selected_dwbm,null,null,"196","28",null); //引用于common.js
         },
         onSelect:function(node){
 
@@ -170,7 +170,7 @@ function initialUnitAndDept() {
             selected_dwbm = node.id;
 
             //右边查询条件的部门下拉展示
-            getBmbmSelectTree("department_tree",selected_dwbm,null,null,"196","32",null); //引用于common.js
+            getBmbmSelectTree("department_tree",selected_dwbm,null,null,"196","28",null); //引用于common.js
             query_dwbm = $("#unit_tree").combobox("getValue");
             query_bmbm = $("#department_tree").combobox("getValue");
         }
