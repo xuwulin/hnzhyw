@@ -43,7 +43,7 @@
         <!-- 执行的任务调度的bean -->
         <property name="jobDetail" ref="synchroDataHandler" />
         <!-- 执行的时间   设置格式在下面 3 4 行有说明-->
-        <property name="cronExpression" value="0 0 17 13 6 ?" /> <!-- 每年的6月13日17点进行同步 -->
+        <property name="cronExpression" value="0 0 1 ? * L" /> <!-- 每年的6月13日17点进行同步 -->
     </bean>
 
     <!-- 定时启动配置 -->

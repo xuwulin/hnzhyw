@@ -76,14 +76,14 @@ $("#bmzdpzTable").datagrid({
 	columns:[[
 	          {field:'dwmc',title:'单位名称',align:'center',width:'15%'},
 	          {field:'bmmc',title:'部门名称',align:'center',width:'15%'},
-	          {field:'splx',title:'审批/操作类型',align:'center',width:'15%',formatter:function(value,row,index){
+	          {field:'splx',title:'功能/操作类型',align:'center',width:'15%',formatter:function(value,row,index){
 	        	  if (value) {
 					return lxMcString(value);
 				  }else{
 					return "";	
 				  }
 	          }},
-	          {field:'dlbm',title:'审批/操作人',align:'center',width:'12%'},
+	          {field:'dlbm',title:'权限/操作人',align:'center',width:'12%'},
 	          {field:'name',title:'说明',align:'center',width:'20%'},
 	          {field:'formatter',title:'操作',align:'center',width:'18%',formatter:function(value,row,index){
 				   var data = JSON.stringify(row);
