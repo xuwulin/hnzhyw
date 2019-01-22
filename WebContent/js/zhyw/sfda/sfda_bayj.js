@@ -52,6 +52,7 @@ var currentDate = new Date().format('yyyy-MM-dd');
 var caseFlag = '2' // 案件标识，用于标识受理案件或者完结案件，默认2表示办结案件
 
 var slajObj = {}; //受理案件情况对象
+var isAdmin = false; // 是否是档案管理员
 
 
 $(function (){
@@ -61,6 +62,8 @@ $(function (){
 
     //判断是否案管办
     var isAgb = isag();  //sfda_base.js【对页面按钮判断也在其中】
+
+    isDaGly();
 
     //案管查看非案管人员的办案时,档案已公示时隐藏新增按钮和新增列表
     var isFileOfSelf = fileOfSelf();
@@ -461,7 +464,7 @@ $(function (){
                 },
                 {field : 'cz',title : '<b>操作</b>',width : 70,align : 'center',
                     formatter : function(value, row, index) {//value:字段值；row：行记录数据；index，行索引
-                        if (dlxx.isag == '1') {
+                        if (isAdmin) {
                             isShowFj = "false";
                             return  "<a class='table_czan_ys' style='width: 60px' href='javascript:void(0)' onclick=\"showUploadFile('"+ row.BMSAH + "','','" + isShowFj + "')\">上传</a>";
                         } else{
@@ -3957,4 +3960,25 @@ function queryByCaseName() {
         type: caseFlag // 用于标识是受理案件还是办结案件
     });
     $("#queryAjmc").textbox('setValue','');
+}
+
+// 是否是档案管理员，档案指定统一创建人：XT_SP_BMZDPZ表，splx为13
+function isDaGly() {
+    // var result = false;
+    $.ajax({
+        url : rootPath + "/service/sfdacj/isFileCreater",
+        type : 'get',
+        async : false,
+        dataType : 'json',
+        data:{
+            dwbm: dlxx.dwbm,
+            gh: dlxx.gh,
+        },
+        success : function(data) {
+            if (data == "success") {
+                isAdmin = true;
+            }
+        }
+    });
+    // return result;
 }
