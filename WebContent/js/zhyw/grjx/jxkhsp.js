@@ -116,7 +116,7 @@ $.ajax({
     async : false,
     data:{'wbid':spstid,'splx':splx,'lcid':obj.lcid},
     dataType:'json',
-    success : function(data) {debugger
+    success : function(data) {
         for(var i=data.length-1;i>=0;i--){
             //为审批详情页面Table下的tr、td赋值
             addRow(data[i]);
@@ -337,7 +337,7 @@ function updatesplc(ty){
         async : false,
         data:{'wbid':spstid,'splx':splx,'lcid':obj.lcid},
         dataType:'json',
-        success : function(data) {debugger
+        success : function(data) {
             $('#splc').empty();
             $('#splc').append(" <tr  id='splctr1' style="+"'"+"background: #d8ecff;height: 31px;line-height: 31px;text-align: left;color: #134671"+"'"+"><td style="+"'"+"width: 40px"+"'"+"></td><td>单位名称</td><td>部门名称</td><td>处理人</td><td>处理意见</td><td>处理时间</td><td>处理结果</td></tr>");
             for(var i=data.length-1;i>=0;i--){

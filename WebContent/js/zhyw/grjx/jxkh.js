@@ -974,6 +974,8 @@ function showSlDetail(queryNo,gxfz,zxmbm) {
             url: rootPath + '/service/ajws/getAj',
             pagination:true,
             width: 1200,
+            scrollbarSize: 0,
+            fitColumns : true,
             pageSize:10,
             pageNumber:1,
             method : 'get',
@@ -997,6 +999,8 @@ function showSlDetail(queryNo,gxfz,zxmbm) {
             url: rootPath + '/service/ajws/getAjOfAccepted',
             pagination:true,
             width: 1200,
+            scrollbarSize: 0,
+            fitColumns : true,
             pageSize:10,
             pageNumber:1,
             method : 'get',
@@ -1104,7 +1108,6 @@ function showSlDetail(queryNo,gxfz,zxmbm) {
         queryUrl = rootPath + '/service/ajws/getCountsOfZj';
         columns = columns_bjaj2;
     }
-
 
     $("#countsDatagrid").datagrid({
         url:queryUrl,

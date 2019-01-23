@@ -705,7 +705,7 @@ function issptg(splx, spstid) {
 			"lcid" : paramssss.lcid
 		},
 		dataType : 'json',
-		success : function(data) {debugger
+		success : function(data) {
 			if (data != '' && data != null && typeof (data) != 'undefined') {
                 spzt = data.spzt;
                 lcid = data.lcid;

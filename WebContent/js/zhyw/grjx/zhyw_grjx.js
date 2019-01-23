@@ -254,7 +254,7 @@ function queryGrjxByCondition(query_dwbm, query_bmbm, query_bmlbbm, query_sfgs, 
                 getajax(currentPage);
             });
             // 下一页
-            $("#nextPage").bind("click", function() {debugger
+            $("#nextPage").bind("click", function() {
                 ++currentPage;
                 if (currentPage > Math.ceil(count / 10)) {
                     currentPage = (count % 10 == 0 ? count / 10 : Math.ceil(count / 10));
