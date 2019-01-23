@@ -135,20 +135,22 @@ public class GrjxAjWsServiceImpl implements GrjxAjWsService {
                     wsInfo = grjxAjWsMapper.getOtherWs(bmsahs, tysahs, fz, gh, bmlbbm);
                     // 刑申 的其他文书中的 备案审查类案件（0901）的文书只需要查询出刑事申诉备案审查表（文书名称）的日期即以后的文书
                     if ((StringUtils.equals(bmlbbm, "1")) && wsInfo.size() > 0) {
-                        Date nzrq = null;
+                        Date nzrq = new Date();
                         // 1.获取 刑事申诉备案审查表(文书名称) 的拟制日期
                         for (Map<String, Object> map : wsInfo) {
-                            if (map.get("AJLB_BM").equals("0901")) {
-                                if (map.get("WSMBBH").equals("100000090042") || map.get("WSMC").equals("刑事申诉备案审查表")) {
-                                    nzrq = DateUtil.stringtoDate(map.get("NZRQ").toString(), "yyyy-MM-dd HH:mm:ss");
+                            if (map.containsKey("AJLB_BM") && map.get("AJLB_BM").equals("0901")) {
+                                if (map.containsKey("WSMC") && map.get("WSMC").equals("刑事申诉备案审查表")) {
+                                    if (map.containsKey("NZRQ")) {
+                                        nzrq = DateUtil.stringtoDate(map.get("NZRQ").toString(), "yyyy-MM-dd HH:mm:ss");
+                                    }
                                     break;
                                 }
                             }
                         }
                         // 2.过滤掉该拟制日期之前的文书和 控告申诉登记表 控告申诉首办移送函
                         for (Map<String, Object> map : wsInfo) {
-                            if (map.get("AJLB_BM").equals("0901")) {
-                                if (DateUtil.stringtoDate(map.get("NZRQ").toString(),"yyyy-MM-dd HH:mm:ss").compareTo(nzrq) >= 0) {
+                            if (map.containsKey("AJLB_BM") && map.get("AJLB_BM").equals("0901")) {
+                                if (map.containsKey("NZRQ") && (DateUtil.stringtoDate(map.get("NZRQ").toString(),"yyyy-MM-dd HH:mm:ss").compareTo(nzrq) >= 0)) {
                                     wsInfoTmp.add(map);
                                 }
                             } else if (!(map.get("WSMC").equals("控告申诉登记表") || map.get("WSMC").equals("控告申诉首办移送函"))) {
