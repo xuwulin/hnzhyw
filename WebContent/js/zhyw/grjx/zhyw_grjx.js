@@ -1241,13 +1241,13 @@ $("#save_btn_grjx").click(function () {
         {"field": "pjdf", "title": "评价得分", "width": 45, "rowspan": 2, "align": "center"}
     ],
         [
-            {"field": "zpdf", "title": "本人自评", "width": 45, "align": "center", "editor": true},
+            {"field": "zpdf", "title": "得分", "width": 30, "align": "center", "editor": true},
             {"field": "zpzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "bmdf", "title": "部门评分", "width": 45, "align": "center", "editor": true},
+            {"field": "bmdf", "title": "得分", "width": 30, "align": "center", "editor": true},
             {"field": "bmzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "fglddf", "title": "分管领导评分", "width": 65, "align": "center", "editor": true},
+            {"field": "fglddf", "title": "得分", "width": 40, "align": "center", "editor": true},
             {"field": "fgldzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "rsbdf", "title": "考核委员会评分", "width": 75, "align": "center", "editor": true},
+            {"field": "rsbdf", "title": "得分", "width": 55, "align": "center", "editor": true},
             {"field": "rsbzl", "title": "备注", "width": 30, "formatter": true, "align": "center"}
         ]];
 
@@ -1266,11 +1266,11 @@ $("#save_btn_grjx").click(function () {
         {"field": "pjdf", "title": "评价得分", "width": 45, "rowspan": 2, "align": "center"}
     ],
         [
-            {"field": "zpdf", "title": "本人自评", "width": 45, "align": "center", "editor": true},
+            {"field": "zpdf", "title": "得分", "width": 30, "align": "center", "editor": true},
             {"field": "zpzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "fglddf", "title": "分管领导评分", "width": 65, "align": "center", "editor": true},
+            {"field": "fglddf", "title": "得分", "width": 40, "align": "center", "editor": true},
             {"field": "fgldzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "rsbdf", "title": "考核委员会评分", "width": 75, "align": "center", "editor": true},
+            {"field": "rsbdf", "title": "得分", "width": 55, "align": "center", "editor": true},
             {"field": "rsbzl", "title": "备注", "width": 30, "formatter": true, "align": "center"}
         ]];
 
@@ -1288,9 +1288,9 @@ $("#save_btn_grjx").click(function () {
         {"field": "pjdf", "title": "评价得分", "width": 45, "rowspan": 2, "align": "center"}
     ],
         [
-            {"field": "zpdf", "title": "本人自评", "width": 45, "align": "center", "editor": true},
+            {"field": "zpdf", "title": "得分", "width": 30, "align": "center", "editor": true},
             {"field": "zpzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "rsbdf", "title": "考核委员会评分", "width": 75, "align": "center", "editor": true},
+            {"field": "rsbdf", "title": "得分", "width": 55, "align": "center", "editor": true},
             {"field": "rsbzl", "title": "备注", "width": 30, "formatter": true, "align": "center"}
         ]];
 
@@ -1311,15 +1311,15 @@ $("#save_btn_grjx").click(function () {
         {"field": "pjdf", "title": "评价得分", "width": 45, "rowspan": 2, "align": "center"}
     ],
         [
-            {"field": "zpdf", "title": "本人自评", "width": 45, "align": "center", "editor": true},
+            {"field": "zpdf", "title": "得分", "width": 30, "align": "center", "editor": true},
             {"field": "zpzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "jcgdf", "title": "检察官评分", "width": 50, "align": "center", "editor": true},
+            {"field": "jcgdf", "title": "得分", "width": 35, "align": "center", "editor": true},
             {"field": "jcgzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "bmdf", "title": "部门评分", "width": 45, "align": "center", "editor": true},
+            {"field": "bmdf", "title": "得分", "width": 30, "align": "center", "editor": true},
             {"field": "bmzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "fglddf", "title": "分管领导评分", "width": 65, "align": "center", "editor": true},
+            {"field": "fglddf", "title": "得分", "width": 45, "align": "center", "editor": true},
             {"field": "fgldzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "rsbdf", "title": "考核委员会评分", "width": 75, "align": "center", "editor": true},
+            {"field": "rsbdf", "title": "得分", "width": 60, "align": "center", "editor": true},
             {"field": "rsbzl", "title": "备注", "width": 30, "formatter": true, "align": "center"}
         ]];
 
@@ -1339,13 +1339,13 @@ $("#save_btn_grjx").click(function () {
         {"field": "pjdf", "title": "评价得分", "width": 45, "rowspan": 2, "align": "center"}
     ],
         [
-            {"field": "zpdf", "title": "本人自评", "width": 45, "align": "center", "editor": true},
+            {"field": "zpdf", "title": "得分", "width": 30, "align": "center", "editor": true},
             {"field": "zpzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "bmdf", "title": "部门评分", "width": 45, "align": "center", "editor": true},
+            {"field": "bmdf", "title": "得分", "width": 30, "align": "center", "editor": true},
             {"field": "bmzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "fglddf", "title": "分管领导评分", "width": 65, "align": "center", "editor": true},
+            {"field": "fglddf", "title": "得分", "width": 40, "align": "center", "editor": true},
             {"field": "fgldzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "rsbdf", "title": "考核委员会评分", "width": 75, "align": "center", "editor": true},
+            {"field": "rsbdf", "title": "得分", "width": 55, "align": "center", "editor": true},
             {"field": "rsbzl", "title": "备注", "width": 30, "formatter": true, "align": "center"}
         ]];
 
@@ -1363,13 +1363,13 @@ $("#save_btn_grjx").click(function () {
         {"field": "pjdf", "title": "评价得分", "width": 45, "rowspan": 2, "align": "center"}
     ],
         [
-            {"field": "zpdf", "title": "本人自评", "width": 40, "align": "center", "editor": true},
+            {"field": "zpdf", "title": "得分", "width": 30, "align": "center", "editor": true},
             {"field": "zpzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "bmdf", "title": "部门评分", "width": 40, "align": "center", "editor": true},
+            {"field": "bmdf", "title": "得分", "width": 30, "align": "center", "editor": true},
             {"field": "bmzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "fglddf", "title": "分管领导评分", "width": 50, "align": "center", "editor": true},
+            {"field": "fglddf", "title": "得分", "width": 40, "align": "center", "editor": true},
             {"field": "fgldzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "rsbdf", "title": "考核委员会评分", "width": 55, "align": "center", "editor": true},
+            {"field": "rsbdf", "title": "得分", "width": 55, "align": "center", "editor": true},
             {"field": "rsbzl", "title": "备注", "width": 30, "formatter": true, "align": "center"}
         ]];
 
@@ -1386,11 +1386,11 @@ $("#save_btn_grjx").click(function () {
         {"field": "pjdf", "title": "评价得分", "width": 45, "rowspan": 2, "align": "center"}
     ],
         [
-            {"field": "zpdf", "title": "本人自评", "width": 45, "align": "center", "editor": true},
+            {"field": "zpdf", "title": "得分", "width": 30, "align": "center", "editor": true},
             {"field": "zpzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "fglddf", "title": "分管领导评分", "width": 65, "align": "center", "editor": true},
+            {"field": "fglddf", "title": "得分", "width": 40, "align": "center", "editor": true},
             {"field": "fgldzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "rsbdf", "title": "考核委员会评分", "width": 75, "align": "center", "editor": true},
+            {"field": "rsbdf", "title": "得分", "width": 55, "align": "center", "editor": true},
             {"field": "rsbzl", "title": "备注", "width": 30, "formatter": true, "align": "center"}
         ]];
 
@@ -1406,9 +1406,9 @@ $("#save_btn_grjx").click(function () {
         {"field": "pjdf", "title": "评价得分", "width": 45, "rowspan": 2, "align": "center"}
     ],
         [
-            {"field": "zpdf", "title": "本人自评", "width": 45, "align": "center", "editor": true},
+            {"field": "zpdf", "title": "得分", "width": 30, "align": "center", "editor": true},
             {"field": "zpzl", "title": "备注", "width": 30, "formatter": true, "align": "center"},
-            {"field": "rsbdf", "title": "考核委员会评分", "width": 75, "align": "center", "editor": true},
+            {"field": "rsbdf", "title": "得分", "width": 55, "align": "center", "editor": true},
             {"field": "rsbzl", "title": "备注", "width": 30, "formatter": true, "align": "center"}
         ]];
 

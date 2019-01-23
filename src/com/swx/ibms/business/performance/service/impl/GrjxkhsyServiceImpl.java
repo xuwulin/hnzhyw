@@ -675,6 +675,7 @@ public class GrjxkhsyServiceImpl implements GrjxkhsyService {
 		List<JSBM> loger_jsbm = null;
 
 		String bmbm = "";
+		String bmbm2 = "";
 		String bmyss = "";
 		String[] bmbmArr = null;
 		List<String> bmbmList = new ArrayList<>();
@@ -785,10 +786,10 @@ public class GrjxkhsyServiceImpl implements GrjxkhsyService {
 						bmbm = bmbm + "," + fgbmbm;
 					}
 				} else if (ryjs.size() > 0 && ryjs.get(i).equals("3")) { // 部门负责人
-					if (bmbm.equals("")) {
-						bmbm = bmbm + bmjsStrArray[1];
+					if (bmbm2.equals("")) {
+						bmbm2 = bmbm2 + bmjsStrArray[1];
 					} else {
-						bmbm = bmbm + "," + bmjsStrArray[1];
+						bmbm2 = bmbm2 + "," + bmjsStrArray[1];
 					}
 				} else {
 					if (bmbm.equals("")) {
@@ -822,6 +823,10 @@ public class GrjxkhsyServiceImpl implements GrjxkhsyService {
 			if (bmbm.startsWith(",")) {
 				bmbm = bmbm.substring(1);
 			}
+		}
+
+		if (qx.equals("2")) {
+			bmbm = bmbm2;
 		}
 
 		bmbm = bmbm.replace("(", "").
