@@ -14,12 +14,10 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.swx.ibms.common.utils.DateUtil.countExcludeWorkday;
+import static com.swx.ibms.common.utils.DateUtil.dateToString;
 
 
 /**
@@ -128,14 +126,39 @@ public class GrjxAjWsServiceImpl implements GrjxAjWsService {
         }
 
         List<Map<String, Object>> wsInfo = new ArrayList<>();
-        Page pager = PageHelper.startPage(page, rows);
+        List<Map<String, Object>> wsInfoTmp = new ArrayList<>();
+        Page pager = null;
         try {
             if (bmsahs.size() > 0 && tysahs.size() > 0) {
                 // 其他文书
                 if (queryNo.equals("2")) {
                     wsInfo = grjxAjWsMapper.getOtherWs(bmsahs, tysahs, fz, gh, bmlbbm);
+                    // 刑申 的其他文书中的 备案审查类案件（0901）的文书只需要查询出刑事申诉备案审查表（文书名称）的日期即以后的文书
+                    if ((StringUtils.equals(bmlbbm, "1")) && wsInfo.size() > 0) {
+                        Date nzrq = null;
+                        // 1.获取 刑事申诉备案审查表(文书名称) 的拟制日期
+                        for (Map<String, Object> map : wsInfo) {
+                            if (map.get("AJLB_BM").equals("0901")) {
+                                if (map.get("WSMBBH").equals("100000090042") || map.get("WSMC").equals("刑事申诉备案审查表")) {
+                                    nzrq = DateUtil.stringtoDate(map.get("NZRQ").toString(), "yyyy-MM-dd HH:mm:ss");
+                                    break;
+                                }
+                            }
+                        }
+                        // 2.过滤掉该拟制日期之前的文书和 控告申诉登记表 控告申诉首办移送函
+                        for (Map<String, Object> map : wsInfo) {
+                            if (map.get("AJLB_BM").equals("0901")) {
+                                if (DateUtil.stringtoDate(map.get("NZRQ").toString(),"yyyy-MM-dd HH:mm:ss").compareTo(nzrq) >= 0) {
+                                    wsInfoTmp.add(map);
+                                }
+                            } else if (!(map.get("WSMC").equals("控告申诉登记表") || map.get("WSMC").equals("控告申诉首办移送函"))) {
+                                wsInfoTmp.add(map);
+                            }
+                        }
+                    }
                     // 2分/3分文书
                 } else if (queryNo.equals("1")) {
+                    pager = PageHelper.startPage(page, rows);
                     wsInfo = grjxAjWsMapper.getWsByScore(bmsahs, tysahs, fz, gh, bmlbbm);
                 }
             }
@@ -144,8 +167,13 @@ public class GrjxAjWsServiceImpl implements GrjxAjWsService {
             LOG.error(StringUtils.EMPTY, e);
         }
 
-        resMap.put("total", pager.getTotal());
-        resMap.put("rows", wsInfo);
+        if (wsInfoTmp.size() > 0) {
+            resMap.put("total", wsInfoTmp.size());
+            resMap.put("rows", wsInfoTmp);
+        } else {
+            resMap.put("total", pager.getTotal());
+            resMap.put("rows", wsInfo);
+        }
 
         return resMap;
     }
@@ -247,6 +275,7 @@ public class GrjxAjWsServiceImpl implements GrjxAjWsService {
         Map<String,Object> resMap = new HashMap<String,Object>();
         List<Map<String, Object>> listInfo = new ArrayList<>();
         List<Map<String, Object>> ajInfo = new ArrayList<>();
+        List<Map<String, Object>> ajInfoTmp = new ArrayList<>();
         int countsOfQuery = 0;
         List<String> bmsahs = new ArrayList<>();
         List<String> tysahs = new ArrayList<>();
@@ -255,18 +284,19 @@ public class GrjxAjWsServiceImpl implements GrjxAjWsService {
             // bmblbm 为7表示检技
             if (StringUtils.equals(bmlbbm, "7")) {
                 ajInfo = grjxAjWsMapper.queryBjAj(dwbm, gh, kssj, jssj);
-            } else {
+            } else if (StringUtils.equals(bmlbbm, "1"))  {
+                // 刑申
                 ajInfo = grjxAjWsMapper.getAj(dwbm, gh, kssj, jssj);
-                // 刑事申诉案件需要排除备案审查案件
+                // 刑申的应制作未制作文书只针对：刑事申诉审查案件（0901）
                 for (int i = 0; i < ajInfo.size(); i++) {
-                    if (ajInfo.get(i).get("AJLB_BM").equals("0902")) {
-                        ajInfo.remove(i);
+                    if (ajInfo.get(i).get("AJLB_BM").equals("0901")) {
+                        ajInfoTmp.add(ajInfo.get(i));
                     }
                 }
             }
 
-            if (ajInfo.size() > 0) {
-                for (Map<String, Object> map : ajInfo) {
+            if (ajInfoTmp.size() > 0) {
+                for (Map<String, Object> map : ajInfoTmp) {
                     // 查询 应制作而未制作文书 的案件
                     countsOfQuery = grjxAjWsMapper.getCountsOfNotMadeWs(map.get("BMSAH").toString(), map.get("TYSAH").toString());
                     // 如果数量为0,则表示该案件是 “应该制作文书但是却没有制作文书的案件”，要将此案件查询出来显示
@@ -287,7 +317,7 @@ public class GrjxAjWsServiceImpl implements GrjxAjWsService {
             if (bmsahs.size() > 0) {
                 if (StringUtils.equals(bmlbbm, "7")) {
                     listInfo = grjxAjWsMapper.getWjajsByBmsahs(bmsahs);
-                } else {
+                } else if (StringUtils.equals(bmlbbm, "1")) {
                     listInfo = grjxAjWsMapper.getAjsByBmsahs(bmsahs);
                 }
             }

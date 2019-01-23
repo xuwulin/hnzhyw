@@ -635,6 +635,9 @@ public class GrjxYwkhfzServiceImpl implements GrjxYwkhfzService {
         double ratio = 0;
         int sum = 0; // 本部门办结案件数量总和
         double avg = 0; // 本部门办结案件数量平均值
+        if (bmbm.length() > 4) {
+            bmbm = bmbm.substring(0,4); // 因为要求本部门平均办案数量，故只能取一个部门（如果存在多个部门），因为不确定哪一个是主要部门，所以只能取第一个部门，如果不对，暂时只能改数据库的bmbm为考核的bmbm
+        }
 
         try {
             // 本人办结案件数量

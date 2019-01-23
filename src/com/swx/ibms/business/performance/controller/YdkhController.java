@@ -808,6 +808,7 @@ public class YdkhController {
 								   @RequestParam(value="bmlbbm",required=true)String bmlbbm,
 								   @RequestParam(value="table_head",required=true)String table_head,
 								   @RequestParam(value="jslx",required=true)String jslx,
+								   @RequestParam(value="bmbmsStr",required=true)String bmbmsStr,
 								   HttpServletRequest request) throws ParseException {
 		Map<String,Object> resMap = new HashMap<>(Constant.NUM_10);
 		Integer grjxResult = 0 ;
@@ -920,7 +921,7 @@ public class YdkhController {
 				ydkhqbtg.setDwjb(dwjb);
 				ydkhqbtg.setYear(year);
 				ydkhqbtg.setYwlx(grjxBmlbbm);
-				ydkhqbtg.setBmbm(ry.getBmbm());
+				ydkhqbtg.setBmbm(bmbmsStr);
 				ydkhqbtg.setZbkpgl(grjxKhnr); //个人绩效datagrid表体【从个人绩效指标配置表的表获取】
 				ydkhqbtg.setZbkpbt(table_head);// 个人绩效datagrid表头【从个人绩效指标配置表头表获取】 grjxKhBt
 				ydkhqbtg.setRylx(typeid); // 人员类型id

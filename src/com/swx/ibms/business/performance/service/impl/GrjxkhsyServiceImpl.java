@@ -848,7 +848,6 @@ public class GrjxkhsyServiceImpl implements GrjxkhsyService {
 						query_kssj, query_jssj, query_name);
 
 			} else if ("2".equals(qx)) { // 分管院领导、部门负责人
-
 				if (StringUtils.isBlank(query_bmbm)) {
 					queryBmbmList = bmbmList;
 				} else {

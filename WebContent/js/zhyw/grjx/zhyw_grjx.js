@@ -26,6 +26,7 @@ var currentPage = 1;
 var userPermissions = ""; // 用户权限，用于个人绩效首页的导出
 var deptList = null;
 var queryDeptList = null; // 能够查询的部门，用于个人绩效首页的导出
+var dlxx = top.currentUserInfo;// 当前登录信息
 
 $(function() {
 
@@ -1684,12 +1685,19 @@ $("#save_btn_grjx").click(function () {
     }*/
 
     var tableHeadJson = JSON.stringify(tableHead);
+    var bmbmArr = dlxx.bmbmList;
+    var bmbmsStr = "";
+    for (var i = 0; i < bmbmArr.length; i++) {
+        bmbmsStr += bmbmArr[i] + ",";
+    }
+    bmbmsStr = bmbmsStr.substring(0, bmbmsStr.length - 1);
 
     //先查询该时间段个人绩效是否存在，存在则给出提示不添加
     $("#grjx_add_form").form('submit',{
         url : rootPath + "/service/ydkh/addGrjxAndDetail",
         onSubmit : function (params) {
             params.table_head = tableHeadJson; // 表头
+            params.bmbmsStr = bmbmsStr;
             var isValid = $(this).form('validate');
             if(!isValid){
                 top.msgAlertInfo("请填写数据再操作！");
@@ -1706,7 +1714,6 @@ $("#save_btn_grjx").click(function () {
                 top.msgAlertInfo("已存在该年度的个人绩效，请勿重复创建！");
                 return;
             }else{
-
                 if(resObj&&parseInt(resObj.khzbResult)<=0){
                     top.msgAlertInfo("请联系管理员配置相关考核指标后再添加个人绩效！");
                     return;

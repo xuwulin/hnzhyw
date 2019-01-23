@@ -173,72 +173,105 @@
 	<select id="getGrjxByCondition" resultType="java.util.HashMap">
 		select a.*
 		from (
-		select t.*,
-		(select r1.mc mc
-		from XT_ZZJG_RYBM_tyyw r1
-		where r1.dwbm = t.dwbm
-		and r1.gh = t.gh
-		union
-		select r2.mc mc
-		from xt_zzjg_rybm r2
-		where r2.dwbm = t.dwbm
-		and r2.gh = t.gh
-		) mc,
-		(select bmlbmc
-		from XT_GRJX_BMLB b
-		where b.bmlbbm = t.ywlx
-		) bmlbmc,
-		(select ry.name
-		from XT_GRJX_RYTYPE ry
-		where ry.id = t.rylx
-		) rylxmc
-		from (
-		select k.id ydkhid,
-		k.dwbm,
-		(select d.dwmc
-		from xt_zzjg_dwbm_tyyw d
-		where d.dwbm = #{dwbm}
-		) dwmc,
-		k.gh,
-		k.year,
-		k.ydkhzf,
-		k.sfgs,
-		f.ywlx,
-		dbms_lob.substr(f.zbkpdf,4000,1) zbkpdf,
-		nvl(f.zpjdf, 0) zpjdf,
-		nvl(f.ywzf, 0) ywzf,
-		f.pdjb,
-		f.bmbm,
-		f.pdjbmc,
-		f.rylx
-		from YX_GRJX_YDKH k
-		inner join YX_GRJX_YWKHFZ f on k.id = f.ydkhid
-		where k.dwbm = #{dwbm}
-		<if test="gh != '' and gh != null">
-			and k.gh = #{gh}
-		</if>
-		<if test="sfgs != '' and sfgs != null">
-			and k.sfgs = #{sfgs}
-		</if>
-		<if test="year != '' and year != null">
-			and k.year = #{year}
-		</if>
-		<if test="kssj != '' and kssj != null">
-			and K.ksrq &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
-		</if>
-		<if test="jssj != '' and jssj != null">
-			and K.jsrq &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
-		</if>
-		<if test="bmlbbm != '' and bmlbbm != null">
-			and f.ywlx = #{bmlbbm}
-		</if>
-		<if test="bmbm != null and bmbm.size() > 0">
-			and f.bmbm in
-			<foreach item='item' index='index' collection='bmbm' open='(' separator=',' close=')'>
-				#{item}
-			</foreach>
-		</if>
-		) t
+			select t.*,
+				(select r1.mc mc
+				from XT_ZZJG_RYBM_tyyw r1
+				where r1.dwbm = t.dwbm
+				and r1.gh = t.gh
+				union
+				select r2.mc mc
+				from xt_zzjg_rybm r2
+				where r2.dwbm = t.dwbm
+				and r2.gh = t.gh
+				) mc,
+				(select bmlbmc
+				from XT_GRJX_BMLB b
+				where b.bmlbbm = t.ywlx
+				) bmlbmc,
+				(select ry.name
+				from XT_GRJX_RYTYPE ry
+				where ry.id = t.rylx
+				) rylxmc
+			from (
+				select k.id ydkhid,
+					k.dwbm,
+					(select d.dwmc
+					from xt_zzjg_dwbm_tyyw d
+					where d.dwbm = #{dwbm}
+					) dwmc,
+					k.gh,
+					k.year,
+					k.ydkhzf,
+					k.sfgs,
+					f.ywlx,
+					dbms_lob.substr(f.zbkpdf,4000,1) zbkpdf,
+					nvl(f.zpjdf, 0) zpjdf,
+					nvl(f.ywzf, 0) ywzf,
+					f.pdjb,
+					f.bmbm,
+					f.pdjbmc,
+					f.rylx
+				from YX_GRJX_YDKH k
+				inner join YX_GRJX_YWKHFZ f on k.id = f.ydkhid
+				where k.dwbm = #{dwbm}
+				<if test="gh != '' and gh != null">
+					and k.gh = #{gh}
+				</if>
+				<if test="sfgs != '' and sfgs != null">
+					and k.sfgs = #{sfgs}
+				</if>
+				<if test="year != '' and year != null">
+					and k.year = #{year}
+				</if>
+				<if test="kssj != '' and kssj != null">
+					and K.ksrq &gt;= to_date(#{kssj}, 'yyyy-MM-dd')
+				</if>
+				<if test="jssj != '' and jssj != null">
+					and K.jsrq &lt;= to_date(#{jssj}, 'yyyy-MM-dd')
+				</if>
+				<if test="bmlbbm != '' and bmlbbm != null">
+					and f.ywlx = #{bmlbbm}
+				</if>
+				<if test="bmbm != null and bmbm.size() > 0">
+					and (case when length(f.bmbm) = 4 then f.bmbm
+					          when length(f.bmbm) > 4 then
+					            case when substr(f.bmbm,1,4) in
+										<foreach item='item' index='index' collection='bmbm' open='(' separator=',' close=')'>
+											#{item}
+										</foreach>
+										then substr(f.bmbm,1,4)
+									 when substr(f.bmbm,6,9) in
+										<foreach item='item' index='index' collection='bmbm' open='(' separator=',' close=')'>
+											#{item}
+										</foreach>
+										then substr(f.bmbm,6,9)
+									 when substr(f.bmbm,11,14) in
+										<foreach item='item' index='index' collection='bmbm' open='(' separator=',' close=')'>
+											#{item}
+										</foreach>
+										then substr(f.bmbm,11,14)
+									 when substr(f.bmbm,16,19) in
+										<foreach item='item' index='index' collection='bmbm' open='(' separator=',' close=')'>
+											#{item}
+										</foreach>
+										then substr(f.bmbm,16,19)
+									 when substr(f.bmbm,21,24) in
+										<foreach item='item' index='index' collection='bmbm' open='(' separator=',' close=')'>
+											#{item}
+										</foreach>
+										then substr(f.bmbm,21,24)
+									 when substr(f.bmbm,26,29) in
+										<foreach item='item' index='index' collection='bmbm' open='(' separator=',' close=')'>
+											#{item}
+										</foreach>
+										then substr(f.bmbm,26,29)
+								end
+						end) in
+					<foreach item='item' index='index' collection='bmbm' open='(' separator=',' close=')'>
+						#{item}
+					</foreach>
+				</if>
+			) t
 		) a
 		<if test="mc != '' and mc != null">
 			where a.mc = #{mc}

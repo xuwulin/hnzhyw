@@ -1722,18 +1722,19 @@
 	<!--其他文书-->
 	<select id="getOtherWs" resultType="java.util.HashMap">
 		select w.bmsah,
-		w.tysah,
-		w.wsmc,
-		nvl(w.wsbh,'') wsbh,
-		nvl(w.wsmbbh,'') wsmbbh,
-		w.nzrxm,
-		w.nzrq,
-		w.sprq,
-		a.ajmc
+			w.tysah,
+			w.wsmc,
+			nvl(w.wsbh,'') wsbh,
+			nvl(w.wsmbbh,'') wsmbbh,
+			w.nzrxm,
+			w.nzrq,
+			w.sprq,
+			a.ajmc,
+			a.ajlb_bm
 		from YX_WS_SL_TYYW w
 		inner join TYYW_GG_AJJBXX_TYYW a on w.bmsah = a.bmsah and w.tysah = a.tysah
 		where w.sfsc = 'N'
-		and w.nzrgh = #{gh}
+		  and w.nzrgh = #{gh}
 		<if test="bmsahs!=null and bmsahs!='' ">
 			and w.bmsah in
 			<foreach collection="bmsahs" index="index" item="item" open="(" separator="," close=")">
@@ -1748,11 +1749,11 @@
 		</if>
 		<if test="fz != null and fz != ''">
 			and (w.wsmbbh not in (
-			select f.ws_num
-			from XT_GRJX_WSFZ f
-			where f.fz in ('2','3')
-			and f.ssbm = #{bmlbbm}
-			and f.delflag = 'N'
+								select f.ws_num
+								from XT_GRJX_WSFZ f
+								where f.fz in ('2','3')
+								and f.ssbm = #{bmlbbm}
+								and f.delflag = 'N'
 			)
 			or w.wsmbbh is null)
 		</if>

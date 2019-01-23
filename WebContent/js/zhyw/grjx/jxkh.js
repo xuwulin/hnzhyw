@@ -556,9 +556,9 @@ function formatterSl(value, row, index) {
 var columns_ws = [[
     {field:'BMSAH',title:'部门受案号',align:'center',hidden :true},
     {field:'TYSAH',title:'统一受案号',align:'center',hidden :true},
-    {field:'WSMC',title:'文书名称',align:'center', width: '30%',formatter: formatterName},
-    {field:'AJMC',title:'案件名称',align:'center', width: '30%',formatter: formatterName},
-    {field:'WSBH',title:'文书编号',align:'center', width: '5%',
+    {field:'WSMC',title:'文书名称',align:'center', width: '25%',formatter: formatterName},
+    {field:'AJMC',title:'案件名称',align:'center', width: '20%',formatter: formatterName},
+    {field:'WSBH',title:'文书编号',align:'center', width: '7%',
         formatter: function (value, row, index) {
             if (value) {
                 return value;
@@ -567,7 +567,7 @@ var columns_ws = [[
             }
         }
     },
-    {field:'WSMBBH',title:'文书模板编号',align:'center', width: '8%',
+    {field:'WSMBBH',title:'文书模板编号',align:'center', width: '11%',
         formatter: function (value, row, index) {
             if (value) {
                 return value;
@@ -577,7 +577,7 @@ var columns_ws = [[
         }
     },
     {field:'NZRXM',title:'拟制人',align:'center', width: '5%',formatter: formatterName},
-    {field:'NZRQ',title:'拟稿日期',align:'center', width: '10%',
+    {field:'NZRQ',title:'拟稿日期',align:'center', width: '15%',
         formatter: function (value, row, index) {
             if (value) {
                 return (new Date(value).format("yyyy-MM-dd hh:mm:ss"));
@@ -586,7 +586,7 @@ var columns_ws = [[
             }
         }
     },
-    {field:'SPRQ',title:'文书审批日期',align:'center', width: '10%',
+    {field:'SPRQ',title:'文书审批日期',align:'center', width: '15%',
         formatter: function (value, row, index) {
             if (value) {
                 return (new Date(value).format("yyyy-MM-dd hh:mm:ss"));
@@ -1105,11 +1105,15 @@ function showSlDetail(queryNo,gxfz,zxmbm) {
         columns = columns_bjaj2;
     }
 
+
     $("#countsDatagrid").datagrid({
         url:queryUrl,
         pagination:true,
+        height:310,
         width: 1200,
-        pageSize:10,
+        scrollbarSize: 0,
+        fitColumns : true,
+        pageSize:bmlbbm == '1' && queryNo == '2' ? 100000 : 10, // 刑申的其他文书查询出后还要进行过滤，到时pageHelper分页不正确，所以不分页
         pageNumber:1,
         method : 'get',
         queryParams: {
@@ -1127,7 +1131,7 @@ function showSlDetail(queryNo,gxfz,zxmbm) {
         rownumbers:true,
         selectOnCheck : true,
         checkOnSelect : true,
-        pageList:[10],
+        pageList:bmlbbm == '1' && queryNo == '2' ? [100000] : [10],
         columns:columns,
     });
 }
