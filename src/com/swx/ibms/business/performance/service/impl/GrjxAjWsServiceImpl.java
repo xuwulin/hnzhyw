@@ -127,7 +127,7 @@ public class GrjxAjWsServiceImpl implements GrjxAjWsService {
 
         List<Map<String, Object>> wsInfo = new ArrayList<>();
         List<Map<String, Object>> wsInfoTmp = new ArrayList<>();
-        Page pager = null;
+        Page pager = PageHelper.startPage(page, rows);
         try {
             if (bmsahs.size() > 0 && tysahs.size() > 0) {
                 // 其他文书
@@ -158,7 +158,6 @@ public class GrjxAjWsServiceImpl implements GrjxAjWsService {
                     }
                     // 2分/3分文书
                 } else if (queryNo.equals("1")) {
-                    pager = PageHelper.startPage(page, rows);
                     wsInfo = grjxAjWsMapper.getWsByScore(bmsahs, tysahs, fz, gh, bmlbbm);
                 }
             }
@@ -167,7 +166,7 @@ public class GrjxAjWsServiceImpl implements GrjxAjWsService {
             LOG.error(StringUtils.EMPTY, e);
         }
 
-        if (wsInfoTmp.size() > 0) {
+        if (queryNo.equals("2")) {
             resMap.put("total", wsInfoTmp.size());
             resMap.put("rows", wsInfoTmp);
         } else {
