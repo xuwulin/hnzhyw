@@ -153,7 +153,7 @@ public class GrjxAjWsServiceImpl implements GrjxAjWsService {
                                 if (map.containsKey("NZRQ") && (DateUtil.stringtoDate(map.get("NZRQ").toString(),"yyyy-MM-dd HH:mm:ss").compareTo(nzrq) >= 0)) {
                                     wsInfoTmp.add(map);
                                 }
-                            } else if (!(map.get("WSMC").equals("控告申诉登记表") || map.get("WSMC").equals("控告申诉首办移送函"))) {
+                            } else if (map.containsKey("WSMC") && !(map.get("WSMC").equals("控告申诉登记表") || map.get("WSMC").equals("控告申诉首办移送函"))) {
                                 wsInfoTmp.add(map);
                             }
                         }
